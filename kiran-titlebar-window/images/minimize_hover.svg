@@ -1,0 +1,15 @@
+<svg id="minimize_s" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #edb33f;
+      }
+
+      .cls-2 {
+        fill: #b8892b;
+      }
+    </style>
+  </defs>
+  <circle id="minimize_s-2" data-name="minimize_s" class="cls-1" cx="8" cy="8" r="8"/>
+  <rect id="矩形_1393" data-name="矩形 1393" class="cls-2" x="3" y="7" width="10" height="2"/>
+</svg>
