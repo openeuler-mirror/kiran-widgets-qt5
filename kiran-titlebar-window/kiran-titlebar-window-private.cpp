@@ -14,6 +14,8 @@
 
 using namespace Kiran;
 
+#define DEFAULT_THEME_PATH ":/kiran-titlebar-window-themes/black_theme.qss"
+
 KiranTitlebarWindowPrivate::KiranTitlebarWindowPrivate(KiranTitlebarWindow *ptr)
     : q_ptr(ptr),
       m_layout(nullptr),
@@ -77,7 +79,7 @@ void KiranTitlebarWindowPrivate::init()
     setWindowContentWidget(contentWidget);
 
     ///加载样式表
-    QFile file(":/themes/black_theme.qss");
+    QFile file(DEFAULT_THEME_PATH);
     if( file.open(QIODevice::ReadOnly) ){
         QString titlebarStyle = file.readAll();
         q_func()->setStyleSheet(q_func()->styleSheet()+titlebarStyle);

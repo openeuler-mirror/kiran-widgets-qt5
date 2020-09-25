@@ -1,8 +1,8 @@
 QT += widgets
 
-TEMPLATE = lib
+#TEMPLATE = lib
 #测试用
-#TEMPLATE = app
+TEMPLATE = app
 
 CONFIG += c++11
 

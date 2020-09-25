@@ -12,8 +12,8 @@ HEADERS += \
     $$PWD/xlib-helper.h
 
 RESOURCES += \
-    $$PWD/images.qrc \
-    $$PWD/themes.qrc
+    $$PWD/kiran-titlebar-window-images.qrc \
+    $$PWD/kiran-titlebar-window-themes.qrc
 
 OTHER_FILES += \
     $$PWD/examples/KiranTitlebarWindow_UI/* \
