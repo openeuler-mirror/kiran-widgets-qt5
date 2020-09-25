@@ -3,7 +3,6 @@ QT += widgets
 TEMPLATE = lib
 #测试用
 #TEMPLATE = app
-DEFINES += EXAMPLES
 
 CONFIG += c++11
 
@@ -18,4 +17,8 @@ OTHER_FILES += \
 target.path = /usr/lib
 INSTALLS +=  target
 
+
+target_examples.path = $$DESTDIR/usr/share/kiranwidgets-qt5/examples/
+target_includes.path = $$DESTDIR/usr/include/kiranwidgets-qt5/
+INSTALLS += target_examples target_includes
 include(kiran-titlebar-window/kiran-titlebar-window.pri)

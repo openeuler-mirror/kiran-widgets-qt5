@@ -22,12 +22,5 @@ OTHER_FILES += \
 
 LIBS += -lX11
 
-contains(DEFINES,EXAMPLES){
-    kiran_titlebar_window_examples.files = $$PWD/examples/*
-    kiran_titlebar_window_examples.path =  $$DESTDIR/usr/share/kiranwidgets-qt5/examples/
-    INSTALLS += kiran_titlebar_window_examples
-}
-
-kiran_titlebar_window_include.files = $$PWD/kiran-titlebar-window.h
-kiran_titlebar_window_include.path = $$DESTDIR/usr/include/kiranwidgets-qt5/
-INSTALLS += kiran_titlebar_window_include
+target_examples.files += $$PWD/examples/*
+target_includes.files += $$PWD/kiran-titlebar-window.h
