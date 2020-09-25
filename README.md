@@ -3,7 +3,7 @@ kiran桌面环境的相关**Qt控件**的封装
 
 ## 编译
 1.  安装编译依赖  
-   `sudo yum install gcc-c++ qt5-qtbase qt5-qtbase-devel libX11 libX11-devel`
+   `sudo yum install gcc-c++ qt5-qtbase qt5-qtbase-devel qt5-qtx11extras qt5-qtx11extras-devel libX11 libX11-devel`
 2. **源码根目录**下创建**build**目录`mkdir build`
 3. 进行**build**目录,执行`qmake-qt5 ..`生成**Makefile**
 4. 执行`make`进行编译
