@@ -24,10 +24,10 @@ LIBS += -lX11
 
 contains(DEFINES,EXAMPLES){
     kiran_titlebar_window_examples.files = $$PWD/examples/*
-    kiran_titlebar_window_examples.path =  $$DESTDIR/usr/share/kiranwidget-qt5/examples/
+    kiran_titlebar_window_examples.path =  $$DESTDIR/usr/share/kiranwidgets-qt5/examples/
     INSTALLS += kiran_titlebar_window_examples
 }
 
 kiran_titlebar_window_include.files = $$PWD/kiran-titlebar-window.h
-kiran_titlebar_window_include.path = $$DESTDIR/usr/include/kiranwidget-qt5/
+kiran_titlebar_window_include.path = $$DESTDIR/usr/include/kiranwidgets-qt5/
 INSTALLS += kiran_titlebar_window_include
