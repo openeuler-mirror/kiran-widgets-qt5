@@ -1,15 +1,14 @@
-#include "titlebar-window-ui.h"
-#include "ui_titlebar-window-ui.h"
+#include "titlebar-window-simple.h"
+#include "ui_titlebar-window-simple.h"
 
-TitlebarWindowUI::TitlebarWindowUI(QWidget *parent) :
-    KiranTitlebarWindow(parent),
-    ui(new Ui::TitlebarWindowUI)
+TitlebarWindowSimple::TitlebarWindowSimple(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::TitlebarWindowSimple)
 {
-    setWindowTitle("TitlebarWindowUI");
-    ui->setupUi(getWindowContentWidget());
+    ui->setupUi(this);
 }
 
-TitlebarWindowUI::~TitlebarWindowUI()
+TitlebarWindowSimple::~TitlebarWindowSimple()
 {
     delete ui;
 }

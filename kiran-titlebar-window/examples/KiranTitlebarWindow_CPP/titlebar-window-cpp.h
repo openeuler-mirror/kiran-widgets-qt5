@@ -3,21 +3,17 @@
 
 #include <QWidget>
 
-#include <kiranwidget-qt5/kiran-titlebar-window.h>
-namespace Ui {
-class TitlebarWindowUI;
-}
-
-class TitlebarWindowUI : public KiranTitlebarWindow
+#include <kiranwidgets-qt5/kiran-titlebar-window.h>
+class TitlebarWindowCPP : public KiranTitlebarWindow
 {
     Q_OBJECT
 
 public:
-    explicit TitlebarWindowUI(QWidget *parent = nullptr);
-    ~TitlebarWindowUI();
+    explicit TitlebarWindowCPP(QWidget *parent = nullptr);
+    ~TitlebarWindowCPP();
 
 private:
-    Ui::TitlebarWindowUI *ui;
+    void initUI();
 };
 
 #endif // TITLEBARWINDOWUI_H

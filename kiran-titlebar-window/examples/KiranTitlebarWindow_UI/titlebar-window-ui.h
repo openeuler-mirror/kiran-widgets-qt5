@@ -3,7 +3,7 @@
 
 #include <QWidget>
 
-#include <kiranwidget-qt5/kiran-titlebar-window.h>
+#include <kiranwidgets-qt5/kiran-titlebar-window.h>
 namespace Ui {
 class TitlebarWindowUI;
 }
