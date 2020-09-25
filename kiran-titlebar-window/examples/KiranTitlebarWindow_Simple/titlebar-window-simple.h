@@ -1,23 +1,22 @@
-#ifndef TITLEBARWINDOWUI_H
-#define TITLEBARWINDOWUI_H
+#ifndef TITLEBARWINDOWSIMPLE_H
+#define TITLEBARWINDOWSIMPLE_H
 
 #include <QWidget>
 
-#include <kiranwidget-qt5/kiran-titlebar-window.h>
 namespace Ui {
-class TitlebarWindowUI;
+class TitlebarWindowSimple;
 }
 
-class TitlebarWindowUI : public KiranTitlebarWindow
+class TitlebarWindowSimple : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit TitlebarWindowUI(QWidget *parent = nullptr);
-    ~TitlebarWindowUI();
+    explicit TitlebarWindowSimple(QWidget *parent = nullptr);
+    ~TitlebarWindowSimple();
 
 private:
-    Ui::TitlebarWindowUI *ui;
+    Ui::TitlebarWindowSimple *ui;
 };
 
-#endif // TITLEBARWINDOWUI_H
+#endif // TITLEBARWINDOWSIMPLE_H

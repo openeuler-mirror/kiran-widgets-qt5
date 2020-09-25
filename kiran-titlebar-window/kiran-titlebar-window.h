@@ -118,5 +118,5 @@ protected:
 private:
     KiranTitlebarWindowPrivate* d_ptr;
 };
-
+Q_DECLARE_OPERATORS_FOR_FLAGS(KiranTitlebarWindow::TitlebarButtonHintFlags)
 #endif // KIRANTITLEBARWINDOW_H
