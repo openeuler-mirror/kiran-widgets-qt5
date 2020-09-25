@@ -160,10 +160,12 @@ void KiranTitlebarWindowPrivate::handlerMouseButtonPressEvent(QMouseEvent *ev)
     if( m_resizeable && !q_func()->isMaximized() ){
         CursorPositionEnums postion = getCursorPosition(ev->globalPos());
         if( postion!=CursorPosition_None ){
+            QPoint pos = QCursor::pos();
+            pos *= q_func()->devicePixelRatio();
             XLibHelper::sendResizeEvent(QX11Info::display(),
                                         postion,q_ptr->winId(),
-                                        QCursor::pos().x(),
-                                        QCursor::pos().y());
+                                        pos.x(),
+                                        pos.y());
             return;
         }
     }
@@ -188,10 +190,12 @@ void KiranTitlebarWindowPrivate::handlerMouseMoveEvent(QMouseEvent *ev)
 {
     ///判断是否点击标题栏区域
     if( m_titlebarIsPressed ){
+        QPoint pos = QCursor::pos();
+        pos *= q_func()->devicePixelRatio();
         XLibHelper::sendWMMoveEvent(QX11Info::display(),
                                     q_func()->winId(),
-                                    QCursor::pos().x(),
-                                    QCursor::pos().y());
+                                    pos.x(),
+                                    pos.y());
         ///NOTE:在此之后获取不到MouseRelease事件,需复位按钮按压
         m_titlebarIsPressed = false;
         ev->accept();

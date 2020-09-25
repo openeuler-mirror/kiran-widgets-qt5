@@ -157,16 +157,16 @@ bool KiranTitlebarWindow::event(QEvent *event)
         d_func()->handlerMouseMoveEvent(dynamic_cast<QMouseEvent*>(event));
         break;
     case QEvent::ShowToParent:
+    {
         d_func()->updateStyle(false);
-        XLibHelper::SetShadowWidth(QX11Info::display(),winId(),SHADOW_BORDER_WIDTH,SHADOW_BORDER_WIDTH,SHADOW_BORDER_WIDTH,SHADOW_BORDER_WIDTH);
+        int shadowBorderWidth = SHADOW_BORDER_WIDTH*devicePixelRatio();
+        XLibHelper::SetShadowWidth(QX11Info::display(),winId(),shadowBorderWidth,shadowBorderWidth,shadowBorderWidth,shadowBorderWidth);
         break;
+    }
     case QEvent::MouseButtonDblClick:
         d_func()->handlerMouseDoubleClickEvent(dynamic_cast<QMouseEvent*>(event));
         break;
     case QEvent::WindowStateChange:
-        qInfo() << windowState();
-        qInfo() << windowIcon();
-        qInfo() << windowTitle();
         d_func()->updateStyle(windowState()==Qt::WindowFullScreen);
     default:
         break;
