@@ -57,6 +57,18 @@ void KiranTitlebarWindowPrivate::init()
     if(m_layout!=nullptr){
         delete m_layout;
     }
+    m_layout = nullptr;
+    m_frame = nullptr;
+    m_frameLayout = nullptr;
+    m_titlebarWidget = nullptr;
+    m_titleIcon = nullptr;
+    m_title = nullptr;
+    m_customLayout = nullptr;
+    m_btnMin = nullptr;
+    m_btnMax = nullptr;
+    m_btnClose = nullptr;
+    m_windowContentWidgetWrapper = nullptr;
+    m_windowContentWidget = nullptr;
 
     initOtherWidget();
 
@@ -94,6 +106,7 @@ void KiranTitlebarWindowPrivate::setWindowContentWidget(QWidget *widget)
 {
     if( m_windowContentWidget!=nullptr ){
         delete m_windowContentWidget;
+        m_windowContentWidget = nullptr;
     }
     m_windowContentWidget = widget;
     m_windowContentWidget->setParent(m_windowContentWidgetWrapper);

@@ -20,9 +20,7 @@ isEmpty( LIB_DIR ){
 }
 
 target.path = $$DESTDIR/$${LIB_DIR}
-INSTALLS +=  target
-
 target_examples.path = $$DESTDIR/usr/share/kiranwidgets-qt5/examples/
 target_includes.path = $$DESTDIR/usr/include/kiranwidgets-qt5/
-INSTALLS += target_examples target_includes
+INSTALLS += target target_examples target_includes
 include(kiran-titlebar-window/kiran-titlebar-window.pri)
