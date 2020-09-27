@@ -13,7 +13,7 @@ TitlebarWindowCPP::TitlebarWindowCPP(QWidget *parent) :
     ///设置窗口图标
     setIcon(QIcon::fromTheme("window"));
     ///设置窗口按钮
-    setButtonsHint(KiranTitlebarWindow::TitlebarMinimizeButtonHint|KiranTitlebarWindow::TitlebarCloseButtonHint);
+    setButtonHints(KiranTitlebarWindow::TitlebarMinimizeButtonHint|KiranTitlebarWindow::TitlebarCloseButtonHint);
     ///设置是否允许窗口拖拽Resize
     setResizeable(false);
     ///标题栏添加自定义控件
@@ -21,9 +21,9 @@ TitlebarWindowCPP::TitlebarWindowCPP(QWidget *parent) :
     edit->setPlaceholderText("KiranTitlebarWindowCPP");
     QToolButton* btn = new QToolButton;
     btn->setText("BUTTON");
-    getTitleBarCustomLayout()->addWidget(edit);
-    getTitleBarCustomLayout()->addWidget(btn);
-    getTitleBarCustomLayout()->setSpacing(10);
+    getTitlebarCustomLayout()->addWidget(edit);
+    getTitlebarCustomLayout()->addWidget(btn);
+    getTitlebarCustomLayout()->setSpacing(10);
 
     ///初始化自定义标题栏窗口内容
     initUI();

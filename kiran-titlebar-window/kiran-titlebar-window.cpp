@@ -45,7 +45,7 @@ void KiranTitlebarWindow::setTitle(const QString &text)
     d_func()->setTitle(text);
 }
 
-void KiranTitlebarWindow::setButtonsHint(TitlebarButtonHintFlags hints)
+void KiranTitlebarWindow::setButtonHints(TitlebarButtonHintFlags hints)
 {
     d_func()->setButtonHints(hints);
 }
@@ -113,7 +113,7 @@ QWidget *KiranTitlebarWindow::getWindowContentWidget()
     return d_func()->m_windowContentWidget;
 }
 
-QHBoxLayout *KiranTitlebarWindow::getTitleBarCustomLayout()
+QHBoxLayout *KiranTitlebarWindow::getTitlebarCustomLayout()
 {
     return d_func()->m_customLayout;
 }

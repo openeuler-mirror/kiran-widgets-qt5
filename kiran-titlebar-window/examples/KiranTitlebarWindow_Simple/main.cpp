@@ -16,7 +16,7 @@ int main(int argc,char* argv[])
     ///设置窗口图标
     window.setIcon(QIcon::fromTheme("window"));
     ///设置窗口按钮
-    window.setButtonsHint(KiranTitlebarWindow::TitlebarMinimizeButtonHint|KiranTitlebarWindow::TitlebarCloseButtonHint);
+    window.setButtonHints(KiranTitlebarWindow::TitlebarMinimizeButtonHint|KiranTitlebarWindow::TitlebarCloseButtonHint);
     ///设置是否允许窗口拖拽Resize
     window.setResizeable(false);
     ///标题栏添加自定义控件
@@ -24,9 +24,9 @@ int main(int argc,char* argv[])
     edit->setPlaceholderText("TitlebarWindowSimple");
     QToolButton* btn = new QToolButton;
     btn->setText("BUTTON");
-    window.getTitleBarCustomLayout()->addWidget(edit);
-    window.getTitleBarCustomLayout()->addWidget(btn);
-    window.getTitleBarCustomLayout()->setSpacing(10);
+    window.getTitlebarCustomLayout()->addWidget(edit);
+    window.getTitlebarCustomLayout()->addWidget(btn);
+    window.getTitlebarCustomLayout()->setSpacing(10);
     TitlebarWindowSimple simple;
     window.setWindowContentWidget(&simple);
 

@@ -45,10 +45,10 @@ public:
     QWidget* getWindowContentWidget();
 
     /**
-     * @brief 获取标题栏自定义布局，可自行添加控件
+     * @brief 获取标题栏部分自定义布局，可自行添加控件
      * @return 窗口内容部件布局
      */
-    QHBoxLayout* getTitleBarCustomLayout();
+    QHBoxLayout* getTitlebarCustomLayout();
 
     /**
      * @brief 设置窗口图标
@@ -66,7 +66,7 @@ public:
      * @brief 设置标题栏按钮
      * @param 标题栏按钮flag
      */
-    void setButtonsHint(TitlebarButtonHintFlags hints);
+    void setButtonHints(TitlebarButtonHintFlags hints);
 
     /**
      * @brief 设置窗口是否允许改变大小
@@ -75,25 +75,25 @@ public:
     void setResizeable(bool resizeable);
 
     /**
-     * @brief  窗口内容窗口距底部边距
+     * @brief  contentWidget距底部边距
      * @return 边距
      */
     int contentWrapperMarginBottom() const;
 
     /**
-     * @brief  窗口内容窗口距右边边距
+     * @brief  contentWidget距右边边距
      * @return 边距
      */
     int contentWrapperMarginRight() const;
 
     /**
-     * @brief  窗口内容窗口距左边边距
+     * @brief  contentWidget距左边边距
      * @return 边距
      */
     int contentWrapperMarginLeft() const;
 
     /**
-     * @brief  提供给样式表一个属性值，混成开关两种样式
+     * @brief  提供给样式表一个属性值，方便设置混成开关两种样式
      * @return 混成是否开启
      */
     bool compositingRunning() const;
