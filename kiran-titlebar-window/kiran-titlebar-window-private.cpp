@@ -208,7 +208,7 @@ void KiranTitlebarWindowPrivate::handlerMouseMoveEvent(QMouseEvent *ev)
 
 void KiranTitlebarWindowPrivate::handlerMouseDoubleClickEvent(QMouseEvent *ev)
 {
-    if( ev->button()!=Qt::LeftButton ){
+    if( (ev->button()!=Qt::LeftButton) || !m_resizeable ){
         return;
     }
 
