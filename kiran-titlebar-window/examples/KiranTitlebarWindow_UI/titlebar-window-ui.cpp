@@ -24,8 +24,13 @@ TitlebarWindowUI::TitlebarWindowUI(QWidget *parent) :
     getTitlebarCustomLayout()->addWidget(edit);
     getTitlebarCustomLayout()->addWidget(btn);
     getTitlebarCustomLayout()->setSpacing(10);
-    ///NOTE:通过UI文件初始化自定义标题栏的内容窗口
+    ///WARNING:因为传入setupUI的参数为KiranTitlebarWindow创建的自定义窗口控件，而不是this
+    ///1.导致在ui文件中添加的信号和槽的连接将异常
+    ///2.不能通过右键控件“转到槽”来添加槽函数。
+    ///若需要通过2的方式添加槽函数的话，需要在setupUI之后调用QMetaObject::connectSlotsByName(this)
+    ///才能正确通过槽函数名称连接相应控件的信号
     ui->setupUi(getWindowContentWidget());
+    setContentWrapperMarginBottom(0);
 }
 
 TitlebarWindowUI::~TitlebarWindowUI()
