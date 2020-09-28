@@ -35,8 +35,8 @@ private:
 
 protected:
     void initOtherWidget();
-    void updateStyle(bool fullScreen = false);
-
+    void enableShadow(bool fullScreen = false);
+    void updateShadowStyle(bool active);
     Kiran::CursorPositionEnums getCursorPosition(QPoint pos);
 
 private:

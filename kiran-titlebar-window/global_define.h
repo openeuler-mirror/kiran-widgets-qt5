@@ -4,6 +4,7 @@
 #include <QObject>
 
 #define SHADOW_BORDER_WIDTH 10
+#define DEFAULT_THEME_PATH ":/kiran-titlebar-window-themes/black_theme.qss"
 
 namespace Kiran {
 

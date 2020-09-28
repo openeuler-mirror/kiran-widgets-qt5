@@ -14,7 +14,11 @@
 
 using namespace Kiran;
 
-#define DEFAULT_THEME_PATH ":/kiran-titlebar-window-themes/black_theme.qss"
+static const QColor inactivatedColor("#222222");
+static const int    inactivatedBlurRadius = 10;
+
+static const QColor activatedColor("#000000");
+static const int    activatedBlurRadius = 18;
 
 KiranTitlebarWindowPrivate::KiranTitlebarWindowPrivate(KiranTitlebarWindow *ptr)
     : q_ptr(ptr),
@@ -39,9 +43,6 @@ KiranTitlebarWindowPrivate::KiranTitlebarWindowPrivate(KiranTitlebarWindow *ptr)
 
     m_shadowEffect = new QGraphicsDropShadowEffect(q_ptr);
     m_shadowEffect->setOffset(0, 0);
-    m_shadowEffect->setColor(QColor("#444444"));
-    m_shadowEffect->setBlurRadius(15);
-
     q_func()->setGraphicsEffect(m_shadowEffect);
 }
 
@@ -330,16 +331,25 @@ void KiranTitlebarWindowPrivate::initOtherWidget()
     windowContentWidgetWrapperLayout->setMargin(0);
 }
 
-void KiranTitlebarWindowPrivate::updateStyle(bool fullScreen)
+void KiranTitlebarWindowPrivate::enableShadow(bool fullScreen)
 {
     bool showShadow = m_isCompositingManagerRunning && (!fullScreen);
 
-    if( m_shadowEffect ){
+    if( Q_LIKELY(m_shadowEffect) ){
         m_shadowEffect->setEnabled( showShadow );
     }
 
-    if( m_layout ){
+    if( Q_LIKELY(m_layout) ){
         m_layout->setMargin(showShadow?SHADOW_BORDER_WIDTH:0);
+    }
+}
+
+void KiranTitlebarWindowPrivate::updateShadowStyle(bool active)
+{
+    bool showShadow = m_isCompositingManagerRunning && (!(q_func()->windowState()&Qt::WindowFullScreen));
+    if( Q_LIKELY(m_shadowEffect && showShadow) ){
+        m_shadowEffect->setColor(active?activatedColor:inactivatedColor);
+        m_shadowEffect->setBlurRadius(active?activatedBlurRadius:inactivatedBlurRadius);
     }
 }
 

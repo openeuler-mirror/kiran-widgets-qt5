@@ -2,7 +2,6 @@ KiranTitlebarWindow{
     qproperty-contentWrapperMarginLeft:1;
     qproperty-contentWrapperMarginRight:1;
     qproperty-contentWrapperMarginBottom:6;
-    background-color:white;
 }
 
 KiranTitlebarWindow[compositingRunning="true"] QFrame#KiranTitlebarFrame{
