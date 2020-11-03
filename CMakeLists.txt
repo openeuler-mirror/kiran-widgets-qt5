@@ -2,12 +2,6 @@ cmake_minimum_required(VERSION 3.5)
 
 option(install-examples "install examples" ON)
 
-if (EXISTS ${LIB_DIR})
-    message('LIB_DIR:${LIB_DIR}')
-else ()
-    set(LIB_DIR "/usr/lib/")
-endif ()
-
 project(kiranwidgets-qt5)
 
 set(CMAKE_CXX_STANDARD 11)
