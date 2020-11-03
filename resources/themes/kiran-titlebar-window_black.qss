@@ -43,34 +43,34 @@ QPushButton#KiranTitlebarMinButton{
 }
 
 QPushButton#KiranTitlebarCloseButton{
-    image:url(:/kiran-titlebar-window-images/close_normal.svg);
+    image:url(:/kiranwidgets-qt5/images/titlebar-window/close_normal.svg);
 }
 QPushButton#KiranTitlebarCloseButton:hover{
-    image:url(:/kiran-titlebar-window-images/close_hover.svg);
+    image:url(:/kiranwidgets-qt5/images/titlebar-window/close_hover.svg);
 
 }
 QPushButton#KiranTitlebarCloseButton:pressed{
-    image:url(:/kiran-titlebar-window-images/close_press.svg);
+    image:url(:/kiranwidgets-qt5/images/titlebar-window/close_press.svg);
 }
 
 
 QPushButton#KiranTitlebarMaxButton{
-    image:url(:/kiran-titlebar-window-images/Windowing_normal.svg);
+    image:url(:/kiranwidgets-qt5/images/titlebar-window/Windowing_normal.svg);
 }
 QPushButton#KiranTitlebarMaxButton:hover{
-    image:url(:/kiran-titlebar-window-images/Windowing_hover.svg);
+    image:url(:/kiranwidgets-qt5/images/titlebar-window/Windowing_hover.svg);
 }
 QPushButton#KiranTitlebarMaxButton:pressed{
-    image:url(:/kiran-titlebar-window-images/Windowing_press.svg);
+    image:url(:/kiranwidgets-qt5/images/titlebar-window/Windowing_press.svg);
 }
 
 
 QPushButton#KiranTitlebarMinButton{
-    image:url(:/kiran-titlebar-window-images/minimize_normal.svg);
+    image:url(:/kiranwidgets-qt5/images/titlebar-window/minimize_normal.svg);
 }
 QPushButton#KiranTitlebarMinButton:hover{
-    image:url(:/kiran-titlebar-window-images/minimize_hover.svg);
+    image:url(:/kiranwidgets-qt5/images/titlebar-window/minimize_hover.svg);
 }
 QPushButton#KiranTitlebarMinButton:pressed{
-    image:url(:/kiran-titlebar-window-images/minimize_press.svg);
+    image:url(:/kiranwidgets-qt5/images/titlebar-window/minimize_press.svg);
 }

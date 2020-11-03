@@ -5,7 +5,9 @@
 
 class QHBoxLayout;
 class KiranTitlebarWindowPrivate;
-Q_DECLARE_METATYPE(QMargins)
+
+
+///TODO: @bug 移动窗口过后，窗体收不到鼠标悬浮事件
 class Q_DECL_EXPORT KiranTitlebarWindow : public QWidget
 {
     Q_OBJECT
@@ -114,7 +116,7 @@ protected:
      * @brief 窗口事件获取，交由私有类处理
      */
     bool event(QEvent *event) override;
-
+    bool nativeEvent(const QByteArray &eventType, void *message, long *result) override;
 private:
     KiranTitlebarWindowPrivate* d_ptr;
 };

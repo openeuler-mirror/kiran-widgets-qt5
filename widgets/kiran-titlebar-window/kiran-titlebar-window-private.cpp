@@ -1,5 +1,5 @@
 #include "kiran-titlebar-window-private.h"
-#include "xlib-helper.h"
+#include "../../public/xlib-helper.h"
 #include "global_define.h"
 
 #include <QDebug>
@@ -165,6 +165,7 @@ void KiranTitlebarWindowPrivate::handlerMouseButtonPressEvent(QMouseEvent *ev)
         if( postion!=CursorPosition_None ){
             QPoint pos = QCursor::pos();
             pos *= q_func()->devicePixelRatio();
+            qInfo() << "sendResizeEvent";
             XLibHelper::sendResizeEvent(QX11Info::display(),
                                         postion,q_ptr->winId(),
                                         pos.x(),
@@ -189,6 +190,7 @@ void KiranTitlebarWindowPrivate::handlerMouseButtonReleaseEvent(QMouseEvent *ev)
     }
 }
 
+#include <QApplication>
 void KiranTitlebarWindowPrivate::handlerMouseMoveEvent(QMouseEvent *ev)
 {
     ///判断是否点击标题栏区域
@@ -201,7 +203,7 @@ void KiranTitlebarWindowPrivate::handlerMouseMoveEvent(QMouseEvent *ev)
                                     pos.y());
         ///NOTE:在此之后获取不到MouseRelease事件,需复位按钮按压
         m_titlebarIsPressed = false;
-        ev->accept();
+//        ev->accept();
         return;
     }
 }
@@ -223,6 +225,7 @@ void KiranTitlebarWindowPrivate::handlerMouseDoubleClickEvent(QMouseEvent *ev)
 
 void KiranTitlebarWindowPrivate::initOtherWidget()
 {
+
     ///主布局
     m_layout = new QVBoxLayout(q_ptr);
     m_layout->setObjectName("KiranTitlebarMainLayout");
@@ -230,7 +233,9 @@ void KiranTitlebarWindowPrivate::initOtherWidget()
     m_layout->setSpacing(0);
 
     ///背景
+
     m_frame =  new QFrame(q_ptr);
+    m_frame->setAttribute(Qt::WA_Hover);
     m_layout->addWidget(m_frame);
     m_frame->setObjectName("KiranTitlebarFrame");
     m_frameLayout = new QVBoxLayout(m_frame);
@@ -239,6 +244,7 @@ void KiranTitlebarWindowPrivate::initOtherWidget()
 
     ///标题栏
     m_titlebarWidget = new QWidget(m_frame);
+    m_titlebarWidget->setFocusPolicy(Qt::NoFocus);
     m_titlebarWidget->setObjectName("KiranTitlebarWidget");
     m_titlebarWidget->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Fixed);
     m_titlebarWidget->setFixedHeight(60);
@@ -304,6 +310,7 @@ void KiranTitlebarWindowPrivate::initOtherWidget()
     m_btnMin->setObjectName("KiranTitlebarMinButton");
     m_btnMin->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
     m_btnMin->setVisible(false);
+    m_btnMin->setFocusPolicy(Qt::ClickFocus);
     titlebarRightlayout->addWidget(m_btnMin,0,Qt::AlignVCenter);
 
     //最大化
@@ -311,6 +318,7 @@ void KiranTitlebarWindowPrivate::initOtherWidget()
     m_btnMax->setObjectName("KiranTitlebarMaxButton");
     m_btnMax->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
     m_btnMax->setVisible(false);
+    m_btnMax->setFocusPolicy(Qt::ClickFocus);
     titlebarRightlayout->addWidget(m_btnMax,0,Qt::AlignVCenter);
 
     //关闭
@@ -318,6 +326,7 @@ void KiranTitlebarWindowPrivate::initOtherWidget()
     m_btnClose->setObjectName("KiranTitlebarCloseButton");
     m_btnClose->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
     m_btnClose->setVisible(false);
+    m_btnClose->setFocusPolicy(Qt::ClickFocus);
     titlebarRightlayout->addWidget(m_btnClose,0,Qt::AlignVCenter);
     setButtonHints(m_buttonHints);
 

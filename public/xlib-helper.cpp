@@ -24,7 +24,7 @@ bool sendWMMoveResizeEvent(Display* display,EwmhMoveResizeDirection direction,qu
     xEvent.xclient.data.l[3] = Button1;
     xEvent.xclient.data.l[4] = 0;
 
-    XUngrabPointer(display, CurrentTime);
+    XUngrabPointer(display, QX11Info::appTime());
     Status sendEvRes = XSendEvent(display, QX11Info::appRootWindow(QX11Info::appScreen()),
                                   False, SubstructureNotifyMask | SubstructureRedirectMask,
                                   &xEvent);
@@ -99,4 +99,9 @@ int XLibHelper::SetShadowWidth(Display *xdisplay,
     XFlush(xdisplay);
 
     return s;
+}
+
+bool XLibHelper::cancelWMMove(Display* display,quint64 xid,int x, int y)
+{
+    return sendWMMoveResizeEvent(display,WM_MOVERESIZE_CANCEL,xid,x,y);
 }

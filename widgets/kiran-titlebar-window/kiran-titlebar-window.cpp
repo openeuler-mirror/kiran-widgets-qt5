@@ -1,7 +1,7 @@
 #include "kiran-titlebar-window.h"
 #include "kiran-titlebar-window-private.h"
 #include "global_define.h"
-#include "xlib-helper.h"
+#include "../../public/xlib-helper.h"
 
 #include <QDebug>
 #include <QMouseEvent>
@@ -17,9 +17,7 @@ KiranTitlebarWindow::KiranTitlebarWindow()
     setAttribute(Qt::WA_Hover);
 
     d_func()->init();
-
     setTitle(qApp->applicationName());
-
     initConnect();
 }
 
@@ -136,6 +134,10 @@ void KiranTitlebarWindow::initConnect()
         Q_UNUSED(checked);
         close();
     });
+    connect(qApp,&QApplication::focusChanged,[this](QWidget *old, QWidget *now){
+        qInfo() << "old focus:" << ((old!=nullptr)?old->objectName():"nullptr");
+        qInfo() << "new focus:" << ((now!= nullptr)?now->objectName():"nullptr");
+    });
 }
 
 bool KiranTitlebarWindow::event(QEvent *event)
@@ -161,13 +163,13 @@ bool KiranTitlebarWindow::event(QEvent *event)
         d_func()->enableShadow(false);
         ///NOTE:获取缩放率x(阴影边框宽度+窗口边框)
         int shadowBorderWidth = (SHADOW_BORDER_WIDTH+1)*devicePixelRatio();
-        XLibHelper::SetShadowWidth(QX11Info::display(),winId(),shadowBorderWidth,shadowBorderWidth,shadowBorderWidth,shadowBorderWidth);
         break;
     }
     case QEvent::MouseButtonDblClick:
         d_func()->handlerMouseDoubleClickEvent(dynamic_cast<QMouseEvent*>(event));
         break;
     case QEvent::WindowStateChange:
+        qInfo() << windowState();
         d_func()->enableShadow(windowState()& Qt::WindowFullScreen);
         break;
     case QEvent::ActivationChange:
@@ -177,4 +179,32 @@ bool KiranTitlebarWindow::event(QEvent *event)
         break;
     }
     return QWidget::event(event);
+}
+
+#include <xcb/xcb_event.h>
+#include <xcb/xcb.h>
+bool KiranTitlebarWindow::nativeEvent(const QByteArray &eventType, void *message, long *result) {
+    if( eventType != "xcb_generic_event_t" ){
+        return QWidget::nativeEvent(eventType,message,result);
+    }
+    xcb_generic_event_t * xcb_event = (xcb_generic_event_t*) message;
+    if( xcb_event->response_type == 35 ){
+        return QWidget::nativeEvent(eventType,message,result);
+    }
+    if( xcb_event->response_type == 10 ){
+        xcb_focus_out_event_t*  xcb_focus_out = (xcb_focus_out_event_t*)(xcb_event);
+        qInfo() << "FocusOut:" << xcb_focus_out->event;
+    }else if( xcb_event->response_type == 9 ) {
+        xcb_focus_in_event_t* xcb_focus_in = (xcb_focus_in_event_t*)(xcb_event);
+        qInfo() << "FocusIn:" << xcb_focus_in->event;
+        qInfo() << "FocusObject:" << qApp->focusObject();
+        qInfo() << "FocusWindow:" << qApp->focusWindow();
+//        qInfo() << "focus object name" << (qApp->focusWidget()?qApp->focusWidget():"nullptr");
+        qInfo() << "windowHasFocus:" <<  hasFocus();
+        qInfo() << "isActiveWindow:" << isActiveWindow();
+    }else{
+        qInfo() << xcb_event->response_type <<  xcb_event_get_label(xcb_event->response_type);
+    }
+
+    return QWidget::nativeEvent(eventType,message,result);
 }

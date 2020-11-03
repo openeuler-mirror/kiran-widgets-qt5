@@ -8,6 +8,7 @@ TitlebarWindowUI::TitlebarWindowUI(QWidget *parent) :
     KiranTitlebarWindow(),
     ui(new Ui::TitlebarWindowUI)
 {
+    setFocusPolicy(Qt::StrongFocus);
     ///设置窗口标题栏
     setTitle("TitlebarWindowUI");
     ///设置窗口图标
@@ -20,6 +21,7 @@ TitlebarWindowUI::TitlebarWindowUI(QWidget *parent) :
     QLineEdit* edit = new QLineEdit;
     edit->setPlaceholderText("KiranTitlebarWindowUI");
     QToolButton* btn = new QToolButton;
+    btn->setStyleSheet("QToolButton:hover{background:pink;}");
     btn->setText("BUTTON");
     getTitlebarCustomLayout()->addWidget(edit);
     getTitlebarCustomLayout()->addWidget(btn);

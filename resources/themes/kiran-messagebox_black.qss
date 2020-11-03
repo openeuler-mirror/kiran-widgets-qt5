@@ -1,0 +1,36 @@
+QDialogButtonBox > QPushButton{
+    color:white;
+    border-radius:10px;
+    border:1px solid rgba(255,255,255,0.1);
+    background:rgba(255,255,255,0.05);
+}
+
+
+QDialogButtonBox > QPushButton#btn_Ok,
+QDialogButtonBox > QPushButton#btn_Save,
+QDialogButtonBox > QPushButton#btn_Save_All,
+QDialogButtonBox > QPushButton#btn_Open,
+QDialogButtonBox > QPushButton#btn_Yes,
+QDialogButtonBox > QPushButton#btn_Yes_To_All
+QDialogButtonBox > QPushButton#btn_Retry,
+QDialogButtonBox > QPushButton#btn_Ignore
+QDialogButtonBox > QPushButton#btn_Apply{
+    background:#43a3f2;
+    border:none;
+}
+
+
+QFrame#KiranMessageBoxFrame{
+    background-color:#222222;
+    border-radius:8px;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+QDialogButtonBox{
+    dialogbuttonbox-buttons-have-icons: 0;
+    button-layout: 0;
+}
+
+QLabel{
+    color:white;
+}
