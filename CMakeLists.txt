@@ -2,12 +2,6 @@ cmake_minimum_required(VERSION 3.5)
 
 option(install-examples "install examples" ON)
 
-add_definitions()
-
-if( install-examples )
-    install(DIRECTORY examples DESTINATION ${CMAKE_INSTALL_PREFIX}/usr/share/${PROJECT_NAME}/ )
-endif()
-
 if (EXISTS ${LIB_DIR})
     message('LIB_DIR:${LIB_DIR}')
 else ()
@@ -48,9 +42,12 @@ add_library(${PROJECT_NAME} SHARED
         ${RESOURCES}
         ${QM_FILES})
 
-install(TARGETS ${PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_PREFIX}/${LIB_DIR})
-install(FILES ${DEVEL_HEADER} DESTINATION ${CMAKE_INSTALL_PREFIX}/usr/include/kiranwidgets-qt5/)
-install(FILES ${QM_FILES} DESTINATION ${CMAKE_INSTALL_PREFIX}/usr/share/${PROJECT_NAME}/translations/)
+install(TARGETS ${PROJECT_NAME} DESTINATION ${LIB_INSTALL_DIR}/)
+install(FILES ${DEVEL_HEADER} DESTINATION ${INCLUDE_INSTALL_DIR}/${PROJECT_NAME}/)
+install(FILES ${QM_FILES} DESTINATION ${SHARE_INSTALL_PREFIX}/${PROJECT_NAME}/translations/)
+if( install-examples )
+    install(DIRECTORY examples DESTINATION ${SHARE_INSTALL_PREFIX}/${PROJECT_NAME}/ )
+endif()
 
 target_include_directories(${PROJECT_NAME} PRIVATE
         widgets/
