@@ -165,7 +165,6 @@ void KiranTitlebarWindowPrivate::handlerMouseButtonPressEvent(QMouseEvent *ev)
         if( postion!=CursorPosition_None ){
             QPoint pos = QCursor::pos();
             pos *= q_func()->devicePixelRatio();
-            qInfo() << "sendResizeEvent";
             XLibHelper::sendResizeEvent(QX11Info::display(),
                                         postion,q_ptr->winId(),
                                         pos.x(),
@@ -175,7 +174,6 @@ void KiranTitlebarWindowPrivate::handlerMouseButtonPressEvent(QMouseEvent *ev)
     }
 
     if( m_titlebarWidget->frameGeometry().contains(ev->pos()) ){
-        qDebug() << "mouse button press titlebar";
         m_titlebarIsPressed = true;
     }
 }
@@ -183,7 +181,6 @@ void KiranTitlebarWindowPrivate::handlerMouseButtonPressEvent(QMouseEvent *ev)
 void KiranTitlebarWindowPrivate::handlerMouseButtonReleaseEvent(QMouseEvent *ev)
 {
     if(  ev->button() == Qt::LeftButton ){
-        qDebug() << "mouse button release";
         if(m_titlebarIsPressed){
             m_titlebarIsPressed = false;
         }
