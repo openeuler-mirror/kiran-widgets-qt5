@@ -343,11 +343,9 @@ void KiranTitlebarWindowPrivate::initOtherWidget()
 void KiranTitlebarWindowPrivate::enableShadow(bool fullScreen)
 {
     bool showShadow = m_isCompositingManagerRunning && (!fullScreen);
-
     if( Q_LIKELY(m_shadowEffect) ){
         m_shadowEffect->setEnabled( showShadow );
     }
-
     if( Q_LIKELY(m_layout) ){
         m_layout->setMargin(showShadow?SHADOW_BORDER_WIDTH:0);
     }

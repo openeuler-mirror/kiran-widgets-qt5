@@ -116,7 +116,7 @@ protected:
      * @brief 窗口事件获取，交由私有类处理
      */
     bool event(QEvent *event) override;
-    bool nativeEvent(const QByteArray &eventType, void *message, long *result) override;
+
 private:
     KiranTitlebarWindowPrivate* d_ptr;
 };
