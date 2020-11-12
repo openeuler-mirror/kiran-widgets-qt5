@@ -7,9 +7,10 @@
 #include <QGSettings>
 #include <QFontDatabase>
 #include <QVariant>
+#include <QDebug>
 
-#define MARCO_GENERAL_SCHEMA            "org.mate.interface"
-#define MARCO_GENERAL_KEY_TITLE_FONT    "titlebar-font"
+#define MARCO_GENERAL_SCHEMA            "org.mate.Marco.general"
+#define MARCO_GENERAL_KEY_TITLE_FONT    "titlebarFont"
 
 MarcoTitleFontMonitor::MarcoTitleFontMonitor() :FontMonitor(nullptr){
 

@@ -6,8 +6,8 @@
 class QHBoxLayout;
 class KiranTitlebarWindowPrivate;
 
-
-///TODO: @bug 移动窗口过后，窗体收不到鼠标悬浮事件
+///FIXME: @bug 移动窗口过后，窗体收不到鼠标悬浮事件,考虑窗口管理器引起
+///TODO: 需要将部分信号槽或事件处理清理到Private类中
 class Q_DECL_EXPORT KiranTitlebarWindow : public QWidget
 {
     Q_OBJECT

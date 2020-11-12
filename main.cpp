@@ -7,20 +7,10 @@
 
 #include "kiran-titlebar-window/kiran-titlebar-window.h"
 #include "kiran-message-box/kiran-message-box.h"
-
+#include "font-monitor/font-monitor-factory.h"
 int main(int argc,char* argv[])
 {
     QApplication app(argc,argv);
-#if 1
-    KiranTitlebarWindow window;
-    window.setObjectName("KiranTitlebarWindow");
-    window.setTitle("Test");
-    window.setMinimumSize(640,480);
 
-    QLineEdit *edit = new QLineEdit(window.getWindowContentWidget());
-    window.show();
-#else
-    KiranMessageBox::infomation(nullptr,"Warning","test",KiranMessageBox::Yes|KiranMessageBox::No);
-#endif
     return app.exec();
 }

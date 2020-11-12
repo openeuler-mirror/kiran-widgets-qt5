@@ -48,35 +48,22 @@ KiranTitlebarWindowPrivate::KiranTitlebarWindowPrivate(KiranTitlebarWindow *ptr)
 
 KiranTitlebarWindowPrivate::~KiranTitlebarWindowPrivate()
 {
-
+    delete m_titleFontMonitor;
 }
 
 void KiranTitlebarWindowPrivate::init()
 {
-    if(m_frame!=nullptr){
-        delete m_frame;
-    }
-
-    if(m_layout!=nullptr){
-        delete m_layout;
-    }
-    m_layout = nullptr;
-    m_frame = nullptr;
-    m_frameLayout = nullptr;
-    m_titlebarWidget = nullptr;
-    m_titleIcon = nullptr;
-    m_title = nullptr;
-    m_customLayout = nullptr;
-    m_btnMin = nullptr;
-    m_btnMax = nullptr;
-    m_btnClose = nullptr;
-    m_windowContentWidgetWrapper = nullptr;
-    m_windowContentWidget = nullptr;
-
     initOtherWidget();
 
+    m_titleFontMonitor = FontMonitorFactory::createAppTitleFontMonitor();
+    if( m_titleFontMonitor!= nullptr ){
+        updateTitleFont(QFont());
+        qInfo() << "connect update font:" << connect(m_titleFontMonitor,&FontMonitor::fontChanged,
+                this,&KiranTitlebarWindowPrivate::updateTitleFont);
+    }
+
     ///内容栏
-    QWidget*contentWidget = new QWidget;
+    auto contentWidget = new QWidget;
     setWindowContentWidget(contentWidget);
 
     ///加载样式表
@@ -200,7 +187,6 @@ void KiranTitlebarWindowPrivate::handlerMouseMoveEvent(QMouseEvent *ev)
                                     pos.y());
         ///NOTE:在此之后获取不到MouseRelease事件,需复位按钮按压
         m_titlebarIsPressed = false;
-//        ev->accept();
         return;
     }
 }
@@ -222,7 +208,6 @@ void KiranTitlebarWindowPrivate::handlerMouseDoubleClickEvent(QMouseEvent *ev)
 
 void KiranTitlebarWindowPrivate::initOtherWidget()
 {
-
     ///主布局
     m_layout = new QVBoxLayout(q_ptr);
     m_layout->setObjectName("KiranTitlebarMainLayout");
@@ -230,7 +215,6 @@ void KiranTitlebarWindowPrivate::initOtherWidget()
     m_layout->setSpacing(0);
 
     ///背景
-
     m_frame =  new QFrame(q_ptr);
     m_frame->setAttribute(Qt::WA_Hover);
     m_layout->addWidget(m_frame);
@@ -271,6 +255,7 @@ void KiranTitlebarWindowPrivate::initOtherWidget()
     m_title->setObjectName("KiranTitlebarTitle");
     m_title->setAlignment(Qt::AlignVCenter|Qt::AlignLeft);
     m_title->setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Expanding);
+    m_title->installEventFilter(this);
     titlebarLeftLayout->addWidget(m_title,0,Qt::AlignLeft|Qt::AlignVCenter);
 
     //占位
@@ -384,4 +369,19 @@ CursorPositionEnums KiranTitlebarWindowPrivate::getCursorPosition(QPoint pos)
     }
 
     return positions;
+}
+
+void KiranTitlebarWindowPrivate::updateTitleFont(QFont font) {
+    if(m_titleFontMonitor!= nullptr){
+        qInfo() << "update title font" << m_titleFontMonitor->currentFont();
+        m_title->setFont(m_titleFontMonitor->currentFont());
+    }
+}
+
+bool KiranTitlebarWindowPrivate::eventFilter(QObject *obj, QEvent *event) {
+    //NOTE:用户标题栏暂时需要使用窗口管理器单独设置的字体，不和程序字体通用
+    if(obj==m_title&&event->type()==QEvent::ApplicationFontChange){
+        return true;
+    }
+    return QObject::eventFilter(obj, event);
 }
