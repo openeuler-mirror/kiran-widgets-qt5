@@ -55,6 +55,7 @@ void KiranTitlebarWindowPrivate::init()
 {
     initOtherWidget();
 
+    /// 标题栏字体监控
     m_titleFontMonitor = FontMonitorFactory::createAppTitleFontMonitor();
     if( m_titleFontMonitor!= nullptr ){
         updateTitleFont(QFont());
@@ -62,16 +63,19 @@ void KiranTitlebarWindowPrivate::init()
                 this,&KiranTitlebarWindowPrivate::updateTitleFont);
     }
 
-    ///内容栏
+    /// 内容栏
     auto contentWidget = new QWidget;
     setWindowContentWidget(contentWidget);
 
-    ///加载样式表
+    /// 加载样式表
     QFile file(DEFAULT_THEME_PATH);
     if( file.open(QIODevice::ReadOnly) ){
         QString titlebarStyle = file.readAll();
         q_func()->setStyleSheet(q_func()->styleSheet()+titlebarStyle);
     }
+
+    /// 处理窗口事件
+    q_ptr->installEventFilter(this);
 }
 
 void KiranTitlebarWindowPrivate::setIcon(const QIcon &icon)
@@ -293,6 +297,10 @@ void KiranTitlebarWindowPrivate::initOtherWidget()
     m_btnMin->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
     m_btnMin->setVisible(false);
     m_btnMin->setFocusPolicy(Qt::ClickFocus);
+    connect(m_btnMin,&QPushButton::clicked,[this](bool checked){
+        Q_UNUSED(checked);
+        q_ptr->showMinimized();
+    });
     titlebarRightlayout->addWidget(m_btnMin,0,Qt::AlignVCenter);
 
     //最大化
@@ -301,6 +309,14 @@ void KiranTitlebarWindowPrivate::initOtherWidget()
     m_btnMax->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
     m_btnMax->setVisible(false);
     m_btnMax->setFocusPolicy(Qt::ClickFocus);
+    connect(m_btnMax,&QPushButton::clicked,[this](bool checked){
+        Q_UNUSED(checked);
+        if(q_ptr->isMaximized()){
+            q_ptr->showNormal();
+        }else{
+            q_ptr->showMaximized();
+        }
+    });
     titlebarRightlayout->addWidget(m_btnMax,0,Qt::AlignVCenter);
 
     //关闭
@@ -309,7 +325,12 @@ void KiranTitlebarWindowPrivate::initOtherWidget()
     m_btnClose->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
     m_btnClose->setVisible(false);
     m_btnClose->setFocusPolicy(Qt::ClickFocus);
+    connect(m_btnClose,&QPushButton::clicked,[this](bool checked){
+        Q_UNUSED(checked);
+        q_ptr->close();
+    });
     titlebarRightlayout->addWidget(m_btnClose,0,Qt::AlignVCenter);
+
     setButtonHints(m_buttonHints);
 
     ///内容窗口包装
@@ -382,6 +403,48 @@ bool KiranTitlebarWindowPrivate::eventFilter(QObject *obj, QEvent *event) {
     //NOTE:用户标题栏暂时需要使用窗口管理器单独设置的字体，不和程序字体通用
     if(obj==m_title&&event->type()==QEvent::ApplicationFontChange){
         return true;
+    }
+    // 对窗口事件进行处理
+    if( obj==q_ptr ){
+        switch (event->type()) {
+            case QEvent::HoverMove:
+                handlerHoverMoveEvent(dynamic_cast<QHoverEvent*>(event));
+                break;
+            case QEvent::Leave:
+                handlerLeaveEvent();
+                break;
+            case QEvent::MouseButtonPress:
+                handlerMouseButtonPressEvent(dynamic_cast<QMouseEvent*>(event));
+                break;
+            case QEvent::MouseButtonRelease:
+                handlerMouseButtonReleaseEvent(dynamic_cast<QMouseEvent*>(event));
+                break;
+            case QEvent::MouseMove:
+                handlerMouseMoveEvent(dynamic_cast<QMouseEvent*>(event));
+                break;
+            case QEvent::ShowToParent:
+            {
+                enableShadow(false);
+                XLibHelper::SetShadowWidth(QX11Info::display(),
+                                           q_ptr->winId(),
+                                           SHADOW_BORDER_WIDTH,
+                                           SHADOW_BORDER_WIDTH,
+                                           SHADOW_BORDER_WIDTH,
+                                           SHADOW_BORDER_WIDTH);
+                break;
+            }
+            case QEvent::MouseButtonDblClick:
+                handlerMouseDoubleClickEvent(dynamic_cast<QMouseEvent*>(event));
+                break;
+            case QEvent::WindowStateChange:
+                enableShadow(q_ptr->windowState()& Qt::WindowMaximized);
+                break;
+            case QEvent::ActivationChange:
+                updateShadowStyle(q_ptr->isActiveWindow());
+                break;
+            default:
+                break;
+        }
     }
     return QObject::eventFilter(obj, event);
 }

@@ -7,7 +7,6 @@ class QHBoxLayout;
 class KiranTitlebarWindowPrivate;
 
 ///FIXME: @bug 移动窗口过后，窗体收不到鼠标悬浮事件,考虑窗口管理器引起
-///TODO: 需要将部分信号槽或事件处理清理到Private类中
 class Q_DECL_EXPORT KiranTitlebarWindow : public QWidget
 {
     Q_OBJECT
@@ -105,16 +104,7 @@ public slots:
     void setContentWrapperMarginRight(int contentWrapperMarginRight);
     void setContentWrapperMarginLeft(int contentWrapperMarginLeft);
 
-private:
-    /**
-     * @brief 初始化连接关键信号槽
-     */
-    void initConnect();
-
 protected:
-    /**
-     * @brief 窗口事件获取，交由私有类处理
-     */
     bool event(QEvent *event) override;
 
 private:
