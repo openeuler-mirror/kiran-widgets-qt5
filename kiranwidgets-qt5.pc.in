@@ -5,6 +5,6 @@ IncludeDir=@INCLUDE_INSTALL_DIR@
 Name: @PROJECT_NAME@
 Description: kiran desktop widgets
 Version: @KIRANWIDGETS_VERSION@
-Requires:   Qt5Widgets Qt5Network Qt5X11Extras x11 xcb xcb-util
+Requires:   Qt5Widgets Qt5Network Qt5X11Extras x11 xcb xcb-util gsettings-qt
 Libs: -L${LibDir}/  -l${Name}
 Cflags: -I${IncludeDir}/${Name}
