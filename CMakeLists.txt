@@ -4,6 +4,18 @@ option(install-examples "install examples" ON)
 
 project(kiranwidgets-qt5)
 
+#VERSION　 so版本
+#影响生成的二进制共享库文件名 eg:libxxxx.so.${VERSION}
+#格式:     主版本号-次版本号-发行版本号
+#主版本:   不同主版本不兼容，主版本升级应需同时升级SOVERSION
+#次版本:   增量升级，向后兼容
+#发行版本: 对次版本的升级，不影响兼容
+set(KIRANWIDGETS_VERSION     1.0.0)
+
+#SOVERSION API版本  影响安装做的软链接的名 eg:libxxx.so.${SOVERSION} -> libxxx.so.{VERSION}
+#就是主版本号,程序链接的就是该符号
+set(KIRANWIDGETS_API_VERSION 1)
+
 find_package(PkgConfig REQUIRED)
 pkg_search_module(GSETTINGS_QT REQUIRED gsettings-qt)
 
@@ -62,9 +74,21 @@ target_link_libraries(${PROJECT_NAME}
         xcb-util
         ${GSETTINGS_QT_LIBRARIES})
 
+#安装SO
 install(TARGETS ${PROJECT_NAME} DESTINATION ${LIB_INSTALL_DIR}/)
+
+#开发头文件
 install(FILES ${DEVEL_HEADER} DESTINATION ${INCLUDE_INSTALL_DIR}/${PROJECT_NAME}/)
+
+#pkgconig
+configure_file( kiranwidgets-qt5.pc.in kiranwidgets-qt5.pc @ONLY)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kiranwidgets-qt5.pc
+        DESTINATION ${LIB_INSTALL_DIR}/pkgconfig/)
+
+#翻译
 install(FILES ${QM_FILES} DESTINATION ${SHARE_INSTALL_PREFIX}/${PROJECT_NAME}/translations/)
+
+#demo
 if( install-examples )
     install(DIRECTORY examples DESTINATION ${SHARE_INSTALL_PREFIX}/${PROJECT_NAME}/ )
 endif()
