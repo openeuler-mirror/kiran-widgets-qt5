@@ -75,33 +75,33 @@ bool KiranTitlebarWindow::compositingRunning() const
     return d_func()->m_isCompositingManagerRunning;
 }
 
-void KiranTitlebarWindow::setContentWrapperMarginBottom(int contentWrapperMarginBottom)
+void KiranTitlebarWindow::setContentWrapperMarginBottom(int margin)
 {
     QMargins contentMargins = d_func()->m_windowContentWidgetWrapper->contentsMargins();
-    if(contentMargins.bottom()==contentWrapperMarginBottom){
+    if(contentMargins.bottom() == margin){
         return;
     }
-    contentMargins.setBottom(contentWrapperMarginBottom);
+    contentMargins.setBottom(margin);
     d_func()->m_windowContentWidgetWrapper->setContentsMargins(contentMargins);
 }
 
-void KiranTitlebarWindow::setContentWrapperMarginRight(int contentWrapperMarginRight)
+void KiranTitlebarWindow::setContentWrapperMarginRight(int margin)
 {
     QMargins contentMargins = d_func()->m_windowContentWidgetWrapper->contentsMargins();
-    if(contentMargins.right()==contentWrapperMarginRight){
+    if(contentMargins.right() == margin){
         return;
     }
-    contentMargins.setRight(contentWrapperMarginRight);
+    contentMargins.setRight(margin);
     d_func()->m_windowContentWidgetWrapper->setContentsMargins(contentMargins);
 }
 
-void KiranTitlebarWindow::setContentWrapperMarginLeft(int contentWrapperMarginLeft)
+void KiranTitlebarWindow::setContentWrapperMarginLeft(int margin)
 {
     QMargins contentMargins = d_func()->m_windowContentWidgetWrapper->contentsMargins();
-    if(contentMargins.left()==contentWrapperMarginLeft){
+    if(contentMargins.left() == margin){
         return;
     }
-    contentMargins.setLeft(contentWrapperMarginLeft);
+    contentMargins.setLeft(margin);
     d_func()->m_windowContentWidgetWrapper->setContentsMargins(contentMargins);
 }
 

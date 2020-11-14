@@ -56,6 +56,7 @@ bool MarcoTitleFontMonitor::isVaild() {
 
 void MarcoTitleFontMonitor::handlerChanged(const QString &key) {
     if( key == MARCO_GENERAL_KEY_TITLE_FONT ){
+        qInfo() << "MarcoTitleFont changed:" << currentFont();
         emit fontChanged(currentFont());
     }
 }

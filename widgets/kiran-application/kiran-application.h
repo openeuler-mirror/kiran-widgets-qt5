@@ -12,6 +12,15 @@
 
 //TODO:监控全局主题的变化，加载全局主题，发送主题变化事件，应用程序接收后可在样式后追加特殊样式
 
+
+/// 重新定义qApp宏，转换QCoreApplication全局单例为KiranApplication, 只在KiranApplication时有效
+#if defined(qApp)
+#undef qApp
+#endif
+
+class KiranApplication;
+#define qApp (static_cast<KiranApplication*>(QCoreApplication::instance()))
+
 class KiranApplicationPrivate;
 class Q_DECL_EXPORT KiranApplication : public QApplication {
     Q_OBJECT

@@ -8,6 +8,7 @@
 #include <QVariant>
 #include <QFont>
 #include <QFontDatabase>
+#include <QDebug>
 
 #define MATE_INTERFACE_SCHEMA   "org.mate.interface"
 #define MATE_INTERFACE_KEY_FONT "fontName"
@@ -59,6 +60,7 @@ bool MateDesktopFontMonitor::initMonitor() {
 
 void MateDesktopFontMonitor::handlerChanged(const QString &key) {
     if( key == MATE_INTERFACE_KEY_FONT ){
+        qInfo() << "MateDesktopFont changed:" << currentFont();
         emit fontChanged(currentFont());
     }
 };
