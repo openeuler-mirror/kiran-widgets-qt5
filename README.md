@@ -71,3 +71,16 @@ kiran桌面环境的相关**Qt控件**的封装
 
 ##### instantiation 实例化使用
 实例化定制按钮，使用KiranMessageBox
+
+### KiranApplication
+#### 头文件位置
+/usr/include/kiranwidgets-qt5/kiran-applicaiton.h  
+封装了字体监控的方法,和普通的Application使用方法一样  
+暂时支持
+- org.mate.interface fontName的配置
+- ...
+
+### KiranSingleApplication
+#### 头文件位置
+/usr/include/kiranwidgets-qt5/kiran-single-application.h  
+派生于KiranApplication,增加了进程单例功能
