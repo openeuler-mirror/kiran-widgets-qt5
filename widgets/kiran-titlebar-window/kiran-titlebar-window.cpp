@@ -18,7 +18,6 @@ KiranTitlebarWindow::KiranTitlebarWindow()
 
     d_func()->init();
     setTitle(qApp->applicationName());
-    initConnect();
 }
 
 KiranTitlebarWindow::~KiranTitlebarWindow()
@@ -76,33 +75,33 @@ bool KiranTitlebarWindow::compositingRunning() const
     return d_func()->m_isCompositingManagerRunning;
 }
 
-void KiranTitlebarWindow::setContentWrapperMarginBottom(int contentWrapperMarginBottom)
+void KiranTitlebarWindow::setContentWrapperMarginBottom(int margin)
 {
     QMargins contentMargins = d_func()->m_windowContentWidgetWrapper->contentsMargins();
-    if(contentMargins.bottom()==contentWrapperMarginBottom){
+    if(contentMargins.bottom() == margin){
         return;
     }
-    contentMargins.setBottom(contentWrapperMarginBottom);
+    contentMargins.setBottom(margin);
     d_func()->m_windowContentWidgetWrapper->setContentsMargins(contentMargins);
 }
 
-void KiranTitlebarWindow::setContentWrapperMarginRight(int contentWrapperMarginRight)
+void KiranTitlebarWindow::setContentWrapperMarginRight(int margin)
 {
     QMargins contentMargins = d_func()->m_windowContentWidgetWrapper->contentsMargins();
-    if(contentMargins.right()==contentWrapperMarginRight){
+    if(contentMargins.right() == margin){
         return;
     }
-    contentMargins.setRight(contentWrapperMarginRight);
+    contentMargins.setRight(margin);
     d_func()->m_windowContentWidgetWrapper->setContentsMargins(contentMargins);
 }
 
-void KiranTitlebarWindow::setContentWrapperMarginLeft(int contentWrapperMarginLeft)
+void KiranTitlebarWindow::setContentWrapperMarginLeft(int margin)
 {
     QMargins contentMargins = d_func()->m_windowContentWidgetWrapper->contentsMargins();
-    if(contentMargins.left()==contentWrapperMarginLeft){
+    if(contentMargins.left() == margin){
         return;
     }
-    contentMargins.setLeft(contentWrapperMarginLeft);
+    contentMargins.setLeft(margin);
     d_func()->m_windowContentWidgetWrapper->setContentsMargins(contentMargins);
 }
 
@@ -116,65 +115,7 @@ QHBoxLayout *KiranTitlebarWindow::getTitlebarCustomLayout()
     return d_func()->m_customLayout;
 }
 
-void KiranTitlebarWindow::initConnect()
-{
-    connect(d_func()->m_btnMin,&QPushButton::clicked,[this](bool checked){
-        Q_UNUSED(checked);
-        showMinimized();
-    });
-    connect(d_func()->m_btnMax,&QPushButton::clicked,[this](bool checked){
-        Q_UNUSED(checked);
-        if(isMaximized()){
-            showNormal();
-        }else{
-            showMaximized();
-        }
-    });
-    connect(d_func()->m_btnClose,&QPushButton::clicked,[this](bool checked){
-        Q_UNUSED(checked);
-        close();
-    });
-}
-
 bool KiranTitlebarWindow::event(QEvent *event)
 {
-    switch (event->type()) {
-    case QEvent::HoverMove:
-        d_func()->handlerHoverMoveEvent(dynamic_cast<QHoverEvent*>(event));
-        break;
-    case QEvent::Leave:
-        d_func()->handlerLeaveEvent();
-        break;
-    case QEvent::MouseButtonPress:
-        d_func()->handlerMouseButtonPressEvent(dynamic_cast<QMouseEvent*>(event));
-        break;
-    case QEvent::MouseButtonRelease:
-        d_func()->handlerMouseButtonReleaseEvent(dynamic_cast<QMouseEvent*>(event));
-        break;
-    case QEvent::MouseMove:
-        d_func()->handlerMouseMoveEvent(dynamic_cast<QMouseEvent*>(event));
-        break;
-    case QEvent::ShowToParent:
-    {
-        d_func()->enableShadow(false);
-        XLibHelper::SetShadowWidth(QX11Info::display(),winId(),
-                                   SHADOW_BORDER_WIDTH,
-                                   SHADOW_BORDER_WIDTH,
-                                   SHADOW_BORDER_WIDTH,
-                                   SHADOW_BORDER_WIDTH);
-        break;
-    }
-    case QEvent::MouseButtonDblClick:
-        d_func()->handlerMouseDoubleClickEvent(dynamic_cast<QMouseEvent*>(event));
-        break;
-    case QEvent::WindowStateChange:
-        d_func()->enableShadow(windowState()& Qt::WindowMaximized);
-        break;
-    case QEvent::ActivationChange:
-        d_func()->updateShadowStyle(isActiveWindow());
-        break;
-    default:
-        break;
-    }
     return QWidget::event(event);
 }

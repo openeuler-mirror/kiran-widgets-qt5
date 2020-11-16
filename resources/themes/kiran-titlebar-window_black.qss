@@ -29,7 +29,6 @@ KiranTitlebarWindow[compositingRunning="false"] QWidget#KiranTitlebarWidget{
 
 QLabel#KiranTitlebarTitle{
     color:white;
-    font-size:14px;
 }
 
 /*PushButton*/

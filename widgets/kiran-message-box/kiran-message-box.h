@@ -44,29 +44,51 @@ public:
     explicit KiranMessageBox(QWidget *parent = nullptr);
     ~KiranMessageBox();
 
+    /// 创建消息对话框
+    /// \param parent   -   指定显示在哪个窗口中央，置null则为当前屏幕中央
+    /// \param title    -   标题
+    /// \param text     -   显示内容
+    /// \param buttons  -   显示的按钮
+    /// \return 用户点击的按钮
     static KiranStandardButton message(QWidget *parent,
                                        const QString &title,
                                        const QString &text,
                                        KiranStandardButtons buttons);
 
-    /// @brief 设置消息框标题
+    /// 设置窗口标题
+    /// \param title - 标题
     void setTitle(const QString &title);
 
-    /// @brief 设置消息内容
+    /// 设置窗口显示内容
+    /// \param text - 内容
     void setText(const QString &text);
 
+    /// 添加按钮
+    /// \param button - 按钮
+    /// \param role   - 按钮作用
     void addButton(QPushButton *button,QDialogButtonBox::ButtonRole role);
+
+    /// 移除按钮
+    /// \param button - 按钮
     void removeButton(QPushButton *button);
+
+    /// 移除所有的按钮
+    /// \param button - 按钮
     void cleanButton(QPushButton *button);
 
+    /// 按钮的大小
+    /// \return 按钮大小
     QSize buttonSize();
+
+    /// 设置按钮大小
+    /// \param size - 按钮大小
     void setButtonSize(const QSize &size);
 
+    /// 获取用户点击的按钮
+    /// \return 按钮
     QPushButton *clickedButton();
+
 protected:
-    /**
-     * @brief 窗口事件获取，交由私有类处理
-     */
     bool event(QEvent *event) override;
 
 private:

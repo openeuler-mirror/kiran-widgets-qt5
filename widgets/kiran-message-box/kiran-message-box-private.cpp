@@ -134,6 +134,8 @@ void KiranMessageBoxPrivate::init(const QString &title,
     m_dialogButtonBox->setFixedHeight(40);
     m_dialogButtonBox->layout()->setSpacing(58);
     m_frameLayout->addWidget(m_dialogButtonBox);
+
+    q_ptr->setMinimumSize(300,180);
 }
 
 void KiranMessageBoxPrivate::setIcon(const QString &iconPath)

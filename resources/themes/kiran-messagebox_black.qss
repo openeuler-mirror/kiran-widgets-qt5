@@ -1,17 +1,27 @@
+/*自定义按钮的样式*/
 QDialogButtonBox > QPushButton{
     color:white;
     border-radius:10px;
-    border:1px solid rgba(255,255,255,0.1);
     background:rgba(255,255,255,0.05);
 }
 
+QDialogButtonBox > QPushButton:hover{
+    border:1px solid rgba(67,163,242,0.1);
+    background:rgba(255,255,255,0.1);
+}
 
+QDialogButtonBox > QPushButton:pressed{
+    border:1px solid rgba(67,163,242,0.01);
+    background:rgba(0,0,0,0.1);
+}
+
+/*内置按钮样式*/
 QDialogButtonBox > QPushButton#btn_Ok,
 QDialogButtonBox > QPushButton#btn_Save,
 QDialogButtonBox > QPushButton#btn_Save_All,
 QDialogButtonBox > QPushButton#btn_Open,
 QDialogButtonBox > QPushButton#btn_Yes,
-QDialogButtonBox > QPushButton#btn_Yes_To_All
+QDialogButtonBox > QPushButton#btn_Yes_To_All,
 QDialogButtonBox > QPushButton#btn_Retry,
 QDialogButtonBox > QPushButton#btn_Ignore
 QDialogButtonBox > QPushButton#btn_Apply{
@@ -19,6 +29,29 @@ QDialogButtonBox > QPushButton#btn_Apply{
     border:none;
 }
 
+QDialogButtonBox > QPushButton#btn_Ok:hover,
+QDialogButtonBox > QPushButton#btn_Save:hover,
+QDialogButtonBox > QPushButton#btn_Save_All:hover,
+QDialogButtonBox > QPushButton#btn_Open:hover,
+QDialogButtonBox > QPushButton#btn_Yes:hover,
+QDialogButtonBox > QPushButton#btn_Yes_To_All:hover,
+QDialogButtonBox > QPushButton#btn_Retry:hover,
+QDialogButtonBox > QPushButton#btn_Ignore:hover,
+QDialogButtonBox > QPushButton#btn_Apply:hover{
+    background:#79c3ff;
+}
+
+QDialogButtonBox > QPushButton#btn_Ok:pressed,
+QDialogButtonBox > QPushButton#btn_Save:pressed,
+QDialogButtonBox > QPushButton#btn_Save_All:pressed,
+QDialogButtonBox > QPushButton#btn_Open:pressed,
+QDialogButtonBox > QPushButton#btn_Yes:pressed,
+QDialogButtonBox > QPushButton#btn_Yes_To_All:pressed,
+QDialogButtonBox > QPushButton#btn_Retry:pressed,
+QDialogButtonBox > QPushButton#btn_Ignore:pressed,
+QDialogButtonBox > QPushButton#btn_Apply:pressed{
+    background:#1568ad;
+}
 
 QFrame#KiranMessageBoxFrame{
     background-color:#222222;

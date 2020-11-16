@@ -5,7 +5,7 @@ kiran桌面环境的相关**Qt控件**的封装
 1.  安装编译依赖  
    `sudo yum install cmake gcc-c++ qt5-qtbase-devel qt5-qtx11extras-devel libX11-devel`
 2. **源码根目录**下创建**build**目录`mkdir build`
-3. 进行**build**目录,执行`cmake  -DCMAKE_INSTALL_PREFIX=/ ..`生成**Makefile**
+3. 进行**build**目录,执行`cmake -DCMAKE_INSTALL_PREFIX=/usr -DSHARE_INSTALL_PREFIX=/usr/share -DINCLUDE_INSTALL_DIR=/usr/include -DLIB_INSTALL_DIR=/usr/lib ..`生成**Makefile**
 4. 执行`make`进行编译
 
 ## 安装
@@ -71,3 +71,16 @@ kiran桌面环境的相关**Qt控件**的封装
 
 ##### instantiation 实例化使用
 实例化定制按钮，使用KiranMessageBox
+
+### KiranApplication
+#### 头文件位置
+/usr/include/kiranwidgets-qt5/kiran-applicaiton.h  
+封装了字体监控的方法,和普通的Application使用方法一样  
+暂时支持
+- org.mate.interface fontName的配置
+- ...
+
+### KiranSingleApplication
+#### 头文件位置
+/usr/include/kiranwidgets-qt5/kiran-single-application.h  
+派生于KiranApplication,增加了进程单例功能
