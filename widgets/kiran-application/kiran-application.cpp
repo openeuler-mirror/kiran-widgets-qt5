@@ -9,6 +9,7 @@ KiranApplication::KiranApplication(int &argc, char **argv, int appFlags)
     : QApplication(argc,argv,appFlags),d_ptr(new KiranApplicationPrivate(this)){
     d_ptr->init();
     d_ptr->setAdaptiveAppFont(true);
+    d_ptr->initKiranStyle();
 };
 
 KiranApplication::~KiranApplication(){

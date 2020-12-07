@@ -23,8 +23,9 @@ public:
 private:
     void updateAppFont();
 
-    //NOTE:暂时不向外提供该接口
+    //NOTE:暂时不向外提供设置是否自适应字体的接口
     void setAdaptiveAppFont(bool enable);
+    void initKiranStyle();
     bool adaptiveAppFont();
 
 private slots:

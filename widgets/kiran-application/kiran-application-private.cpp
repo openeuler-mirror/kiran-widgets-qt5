@@ -4,6 +4,7 @@
 
 #include "kiran-application-private.h"
 #include "../font-monitor/font-monitor-factory.h"
+#include "style.h"
 
 #include <QDebug>
 
@@ -52,4 +53,9 @@ void KiranApplicationPrivate::handlerFontChanged(QFont font) {
     if( fm == m_appFontMonitor ){
         updateAppFont();
     }
+}
+
+void KiranApplicationPrivate::initKiranStyle()
+{
+    qApp->setStyle(new Kiran::Style(Kiran::KIRAN_BLACK));
 }

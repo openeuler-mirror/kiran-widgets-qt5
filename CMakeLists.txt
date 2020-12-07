@@ -37,8 +37,10 @@ set(TS_FILES "translations/kiranwidgets-qt5.zh_CN.ts")
 set(DEVEL_HEADER
         "widgets/kiran-titlebar-window/kiran-titlebar-window.h"
         "widgets/kiran-message-box/kiran-message-box.h"
+        "widgets/kiran-switch-button/kiran-switch-button.h"
         "widgets/kiran-application/kiran-application.h"
-        "widgets/kiran-single-application/kiran-single-application.h" )
+        "widgets/kiran-single-application/kiran-single-application.h"
+        "widgets/kiran-style/style-data/style-property-helper.h")
 
 include_directories("${CMAKE_BINARY_DIR}")
 
@@ -62,7 +64,9 @@ target_include_directories(${PROJECT_NAME} PRIVATE
         widgets/
         public/
         widgets/kiran-application/
-        ${GSETTINGS_QT_INCLUDE_DIRS})
+        widgets/kiran-style/
+        ${GSETTINGS_QT_INCLUDE_DIRS}
+        ${Qt5Gui_PRIVATE_INCLUDE_DIRS})
 
 target_link_libraries(${PROJECT_NAME}
         Qt5::Widgets
