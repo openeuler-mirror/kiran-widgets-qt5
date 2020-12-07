@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.5)
 
+#是否安装examples选项
 option(install-examples "install examples" ON)
+
+#构建测试代码选项
+option(build-tests "build tests" OFF)
 
 project(kiranwidgets-qt5)
 
@@ -83,7 +87,7 @@ install(TARGETS ${PROJECT_NAME} DESTINATION ${LIB_INSTALL_DIR}/)
 #开发头文件
 install(FILES ${DEVEL_HEADER} DESTINATION ${INCLUDE_INSTALL_DIR}/${PROJECT_NAME}/)
 
-#pkgconig
+#pkgconfig
 configure_file( kiranwidgets-qt5.pc.in kiranwidgets-qt5.pc @ONLY)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kiranwidgets-qt5.pc
         DESTINATION ${LIB_INSTALL_DIR}/pkgconfig/)
@@ -94,4 +98,8 @@ install(FILES ${QM_FILES} DESTINATION ${SHARE_INSTALL_PREFIX}/${PROJECT_NAME}/tr
 #demo
 if( install-examples )
     install(DIRECTORY examples DESTINATION ${SHARE_INSTALL_PREFIX}/${PROJECT_NAME}/ )
+endif()
+
+if( build-tests )
+    add_subdirectory(test)
 endif()
