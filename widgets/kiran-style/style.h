@@ -7,6 +7,7 @@
 
 #include <QCommonStyle>
 #include <QProxyStyle>
+#include <QIcon>
 
 #include "kiran-global-defines.h"
 #include "style-data/style-detail-fetcher.h"
@@ -14,6 +15,8 @@
 ///TODO: 暂时不加入动画
 ///NOTE: 暂时不考虑支持QML
 ///NOTE: 不考虑高度是否能容下字体和和上下FrameOutline高度，只考虑样式统一!
+
+typedef QHash<QStyle::StandardPixmap, QIcon> IconCache;
 
 namespace Kiran {
     using ParentStyleClass = QProxyStyle;
@@ -78,6 +81,10 @@ namespace Kiran {
         /// 获取给定的标准图标
         QIcon standardIcon(StandardPixmap standardIcon, const QStyleOption *opt = nullptr,
                            const QWidget *widget = nullptr) const override;
+        QIcon titleBarButtonIcon(StyleDetailFetcher* fetcher,StandardPixmap standardIcon,
+                                 const QStyleOption *opt = nullptr,const QWidget *widget = nullptr) const;
+        QIcon toolBarExtensionIcon(StandardPixmap standardIcon, const QStyleOption *opt = nullptr,
+                                 const QWidget *widget = nullptr) const;
 
         /// 根据调色板的样式特定要求更改调色板
         void polish(QPalette &p) override;
@@ -97,7 +104,7 @@ namespace Kiran {
     private:
         StyleEnum m_styleType;
         StyleDetailFetcher *m_detailFetcher;
-
+        IconCache m_iconCache;
     };
 }
 

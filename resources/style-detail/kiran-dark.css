@@ -109,7 +109,7 @@ Button:hover{
 Button:pressed{
     FlatTextColor: #1568ad;
 
-    NormalBackground: rgba(255,255,255,0.1);
+    NormalBackground: rgba(0,0,0,0.1);
     NormalBorderWidth: 2;
     NormalBorderColor: rgba(67,163,242,0.3);
 
@@ -289,4 +289,44 @@ ComboBoxItem{
 
 ComboBoxItem:hover{
     Background: rgba(255,255,255,0.1);
+}
+
+ScrollBarSlider{
+    Background:rgba(255,255,255,0.1);
+}
+
+ScrollBarSlider:hover{
+    Background:rgba(255,255,255,0.3);
+}
+
+TabBarTab{
+    Background:rgba(255,255,255,0.05);
+    BorderColor:rgba(255,255,255,0.1);
+}
+
+TabBarTab:hover{
+    Background:rgba(255,255,255,0.1);
+    BorderColor:none;
+}
+
+TabBarTab:selected{
+    Background:#2eb3ff;
+    BorderColor:none;
+}
+
+/*TitleBar:Normal,Min,Max,Close*/
+TitleBarButtonIcon{
+    SignColor: white;
+}
+
+TitleBarButtonIcon::selected{
+    SignColor: white;
+}
+
+TitleBarButtonIcon:active{
+    SignColor: white;
+}
+
+TitleBarButtonIcon:disabled{
+    SignColor: white;
 }

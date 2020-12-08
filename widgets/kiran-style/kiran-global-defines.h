@@ -108,8 +108,8 @@ namespace Kiran{
 
         // scrollbars
         ScrollBar_Extend = 14,
-        ScrollBar_SliderWidth = 8,
-        ScrollBar_MinSliderHeight = 24,
+        ScrollBar_SliderWidth = 6,//滑块宽度
+        ScrollBar_MinSliderHeight = 24,//滑块最小高度
         ScrollBar_NoButtonHeight = (ScrollBar_Extend - ScrollBar_SliderWidth) / 2,
         ScrollBar_SingleButtonHeight = 0,
         ScrollBar_DoubleButtonHeight = 0,
@@ -137,13 +137,15 @@ namespace Kiran{
         Slider_ControlThickness = 24,
 
         // tabbar
-        TabBar_TabMarginHeight = 9,
-        TabBar_TabMarginWidth = 8,
+        TabBar_TabMarginHeight = 8,
+        TabBar_TabMarginWidth = 16,
         TabBar_TabMinWidth = 80,
         TabBar_TabMinHeight = 36,
-        TabBar_TabItemSpacing = 8,
-        TabBar_TabOverlap = 1,
+        TabBar_TabItemSpacing = 8,//一个Tab内的文字图标等的间隙
+        TabBar_TabOverlap = 0,
         TabBar_BaseOverlap = 0,
+        TabBar_TabItemRadius = 4,
+        TabBar_TabSpacing = 4,//Tab与Tab之间的间隔
 
         // tab widget
         TabWidget_MarginWidth = 4,
@@ -192,6 +194,14 @@ namespace Kiran{
         ArrowRight
     };
 
+    //* button type
+    enum TitleBarButtonType
+    {
+        ButtonClose,
+        ButtonMaximize,
+        ButtonMinimize,
+        ButtonRestore
+    };
 }
 
 

@@ -13,12 +13,12 @@ using namespace Kiran;
 
 QRect DrawCommonHelper::centerRect(const QRect &rect, int width, int height)
 {
-    return QRect(rect.left() + (rect.width() - width)/2, rect.top() + (rect.height() - height)/2, width, height);
+    return QRect(rect.left() + (rect.width() - width) / 2, rect.top() + (rect.height() - height) / 2, width, height);
 }
 
-QRect DrawCommonHelper::centerRect(const QRect &rect, const QSize& size )
+QRect DrawCommonHelper::centerRect(const QRect &rect, const QSize &size)
 {
-    return centerRect( rect, size.width(), size.height() );
+    return centerRect(rect, size.width(), size.height());
 }
 
 //* adjust rect based on provided margins
@@ -85,7 +85,7 @@ DrawCommonHelper::drawSpinboxArrow(QPainter *painter, const QRect &rect, const Q
 
     ///以SpinboxFrame作为裁切路径
     QPainterPath backgroundPath;
-        spinboxRect.adjusted(1, 1, -1, -1);
+    spinboxRect.adjusted(1, 1, -1, -1);
     backgroundPath = getRoundedRectanglePath(spinboxRect, spinboxRadius, spinboxRadius, spinboxRadius, spinboxRadius);
 
     painter->setClipPath(backgroundPath, Qt::ReplaceClip);
@@ -237,20 +237,20 @@ bool DrawCommonHelper::isCompositingManagerRuning()
     return QX11Info::isCompositingManagerRunning();
 }
 
-void DrawCommonHelper::drawSeparator(QPainter *painter, const QRect &rect, QColor color,bool vertical)
+void DrawCommonHelper::drawSeparator(QPainter *painter, const QRect &rect, QColor color, bool vertical)
 {
     painter->save();
 
-    painter->setRenderHint( QPainter::Antialiasing, false );
-    painter->setBrush( Qt::NoBrush );
-    painter->setPen( color );
+    painter->setRenderHint(QPainter::Antialiasing, false);
+    painter->setBrush(Qt::NoBrush);
+    painter->setPen(color);
 
-    if( vertical ){
-        painter->translate( rect.width()/2, 0 );
-        painter->drawLine( rect.topLeft(), rect.bottomLeft() );
+    if (vertical) {
+        painter->translate(rect.width() / 2, 0);
+        painter->drawLine(rect.topLeft(), rect.bottomLeft());
     } else {
-        painter->translate( 0, rect.height()/2 );
-        painter->drawLine( rect.topLeft(), rect.topRight() );
+        painter->translate(0, rect.height() / 2);
+        painter->drawLine(rect.topLeft(), rect.topRight());
     }
 
     painter->restore();
@@ -261,12 +261,12 @@ void DrawCommonHelper::drawMenuCheckedIndicator(QPainter *painter, const QRect &
 {
     painter->save();
 
-    painter->setRenderHint(QPainter::Antialiasing,true);
+    painter->setRenderHint(QPainter::Antialiasing, true);
 
-    if( bgColor.isValid() ){
+    if (bgColor.isValid()) {
         QPainterPath bgPath;
         bgPath.addEllipse(rect);
-        painter->fillPath(bgPath,bgColor);
+        painter->fillPath(bgPath, bgColor);
     }
 
     QRectF markerRect(rect);
@@ -285,8 +285,8 @@ void DrawCommonHelper::drawMenuCheckedIndicator(QPainter *painter, const QRect &
     painter->restore();
 }
 
-void DrawCommonHelper::drawArrow(QPainter* painter, const QRect& rect,
-                                 const QColor& color, ArrowOrientation orientation )
+void DrawCommonHelper::drawArrow(QPainter *painter, const QRect &rect,
+                                 const QColor &color, ArrowOrientation orientation)
 {
 #if 0
     // define polygon
@@ -323,22 +323,90 @@ void DrawCommonHelper::drawArrow(QPainter* painter, const QRect& rect,
 
     return;
 #else
-    QRect markRect(rect.adjusted(1,1,-1,-1));
-    QPen pen(color,1.5);
+    QRect markRect(rect.adjusted(1, 1, -1, -1));
+    QPen pen(color, 1.5);
     pen.setCapStyle(Qt::RoundCap);
     pen.setJoinStyle(Qt::RoundJoin);
 
     painter->save();
 
-    painter->setRenderHint(QPainter::HighQualityAntialiasing,true);
+    painter->setRenderHint(QPainter::HighQualityAntialiasing, true);
     painter->setPen(pen);
 
     QPainterPath path;
-    path.moveTo(markRect.left() + markRect.width()/3, markRect.top()+markRect.height()/2.4);
+    path.moveTo(markRect.left() + markRect.width() / 3, markRect.top() + markRect.height() / 2.4);
     path.lineTo(markRect.center().x(), markRect.bottom() - markRect.height() / 2.5);
-    path.lineTo(markRect.right() - markRect.width()/3,markRect.top()+markRect.height()/2.4 );
+    path.lineTo(markRect.right() - markRect.width() / 3, markRect.top() + markRect.height() / 2.4);
     painter->drawPath(path);
 
     painter->restore();
 #endif
+}
+
+void
+DrawCommonHelper::drawDecorationButton(QPainter *painter,
+                                       const QRect &rect,
+                                       const QColor &color,
+                                       TitleBarButtonType buttonType)
+{
+    painter->save();
+    painter->setViewport(rect);
+    painter->setWindow(0, 0, 18, 18);
+    painter->setRenderHints(QPainter::Antialiasing, false);
+
+    // initialize pen
+    QPen pen;
+    pen.setCapStyle(Qt::RoundCap);
+    pen.setJoinStyle(Qt::MiterJoin);
+
+    painter->setBrush(Qt::NoBrush);
+
+    pen.setColor(color);
+    pen.setCapStyle(Qt::RoundCap);
+    pen.setJoinStyle(Qt::MiterJoin);
+    pen.setWidthF(2.0 * qMax(1.0, 18.0 / rect.width()));
+    painter->setPen(pen);
+
+    switch (buttonType) {
+        case ButtonClose: {
+            painter->setRenderHints(QPainter::Antialiasing, true);
+            painter->drawLine(QPointF(5, 5), QPointF(13, 13));
+            painter->drawLine(13, 5, 5, 13);
+            break;
+        }
+
+        case ButtonMaximize: {
+            painter->drawPolyline(QPolygonF()
+                                          << QPointF(4, 4)
+                                          << QPointF(4, 14)
+                                          << QPointF(14, 14)
+                                          << QPointF(14, 4));
+            break;
+        }
+
+        case ButtonMinimize: {
+
+            painter->drawPolyline(QPolygonF()
+                                          << QPointF(4, 14)
+                                          << QPointF(14, 14));
+            break;
+        }
+
+        case ButtonRestore: {
+            painter->setPen(pen);
+            QPolygonF rect = QPolygonF() << QPointF(0, 0)
+                                         << QPointF(8, 0)
+                                         << QPointF(8, 8)
+                                         << QPointF(0, 8);
+            painter->drawPolygon(rect.translated(7, 3));
+            painter->drawPolygon(rect.translated(3, 7));
+            break;
+        }
+
+        default:
+            break;
+    }
+
+    painter->restore();
+    return;
 }

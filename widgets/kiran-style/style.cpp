@@ -13,6 +13,7 @@
 #include "style-helper/draw-menu-helper.h"
 #include "style-helper/draw-combo-box-helper.h"
 #include "style-helper/draw-scroll-bar-helper.h"
+#include "style-helper/draw-tab-bar-helper.h"
 
 #include "delegate/combo-box-item-delegate.h"
 
@@ -54,25 +55,34 @@ Style::~Style() = default;
 void Style::drawPrimitive(QStyle::PrimitiveElement pe, const QStyleOption *opt,
                           QPainter *p, const QWidget *w) const
 {
-    typedef bool (*DrawPrimitiveFunc)(const Style *,const QStyleOption*, QPainter *, StyleDetailFetcher *, const QWidget *);
-    static const QMap<QStyle::PrimitiveElement,DrawPrimitiveFunc> drawPrimitiveFuncMap = {
-            {PE_Frame,                DrawFrameHelper::drawFramePrimitive},
-            {PE_FrameLineEdit,        DrawLineEditHelper::drawFrameLineEditPrimitive},
-            {PE_PanelButtonTool,      DrawButtonHelper::drawPanelButtonToolPrimitive},
-            {PE_IndicatorRadioButton, DrawButtonHelper::drawIndicatorRadioButton},
-            {PE_IndicatorCheckBox,    DrawButtonHelper::drawIndicatorCheckBox},
-            {PE_PanelMenu,            DrawMenuHelper::drawPanelMenuPrimitive},
-            {PE_FrameFocusRect,    nullptr}
+    typedef bool (*DrawPrimitiveFunc)(const Style *, const QStyleOption *, QPainter *, StyleDetailFetcher *,
+                                      const QWidget *);
+    static const QMap<QStyle::PrimitiveElement, DrawPrimitiveFunc> drawPrimitiveFuncMap = {
+            {PE_Frame,                 DrawFrameHelper::drawFramePrimitive},
+            {PE_FrameLineEdit,         DrawLineEditHelper::drawFrameLineEditPrimitive},
+
+            {PE_PanelButtonTool,       DrawButtonHelper::drawPanelButtonToolPrimitive},
+
+            {PE_IndicatorRadioButton,  DrawButtonHelper::drawIndicatorRadioButton},
+            {PE_IndicatorCheckBox,     DrawButtonHelper::drawIndicatorCheckBox},
+
+            {PE_PanelMenu,             DrawMenuHelper::drawPanelMenuPrimitive},
+
+            {PE_PanelScrollAreaCorner, DrawScrollBarHelper::drawScrollAreaCornerPrimitive},
+
+            {PE_IndicatorTabClose,     DrawTabBarHelper::drawIndicatorTabClosePrimitive},
+
+            {PE_FrameFocusRect,        nullptr}
     };
 
-    auto iter =  drawPrimitiveFuncMap.find(pe);
+    auto iter = drawPrimitiveFuncMap.find(pe);
 
     p->save();
-    if( iter==drawPrimitiveFuncMap.end() ){
+    if (iter == drawPrimitiveFuncMap.end()) {
         ParentStyleClass::drawPrimitive(pe, opt, p, w);
-    }else{
-        if(*iter){
-            (*iter)(this,opt,p,m_detailFetcher,w);
+    } else {
+        if (*iter) {
+            (*iter)(this, opt, p, m_detailFetcher, w);
         }
     }
     p->restore();
@@ -81,27 +91,43 @@ void Style::drawPrimitive(QStyle::PrimitiveElement pe, const QStyleOption *opt,
 void Style::drawControl(ControlElement element, const QStyleOption *opt,
                         QPainter *p, const QWidget *w) const
 {
-    typedef bool (*DrawControlFunc) (const Style*,const QStyleOption*,QPainter*,StyleDetailFetcher*,const QWidget*);
-    static const QMap<QStyle::ControlElement,DrawControlFunc> drawControlFuncMap = {
-        {CE_PushButtonBevel,  DrawButtonHelper::drawPushButtonBevelControl},
-        {CE_PushButtonLabel,  DrawButtonHelper::drawPushButtonLabelControl},
-        {CE_PushButton,       DrawButtonHelper::drawPushButtonControl},
-        {CE_ToolButtonLabel,  DrawButtonHelper::drawToolButtonLabelControl},
-        {CE_CheckBoxLabel,    DrawButtonHelper::drawCheckBoxLabelControl},
-        {CE_RadioButtonLabel, DrawButtonHelper::drawCheckBoxLabelControl},
-        {CE_MenuBarEmptyArea, DrawMenuHelper::drawMenuBarEmptryAreaControl},
-        {CE_MenuBarItem,      DrawMenuHelper::drawMenuBarItemControl},
-        {CE_MenuEmptyArea,    DrawMenuHelper::drawMenuEmptryAreaControl},
-        {CE_MenuItem,         DrawMenuHelper::drawMenuItemControl}
+    typedef bool (*DrawControlFunc)(const Style *, const QStyleOption *, QPainter *, StyleDetailFetcher *,
+                                    const QWidget *);
+    static const QMap<QStyle::ControlElement, DrawControlFunc> drawControlFuncMap = {
+
+            {CE_PushButtonBevel,  DrawButtonHelper::drawPushButtonBevelControl},
+            {CE_PushButtonLabel,  DrawButtonHelper::drawPushButtonLabelControl},
+            {CE_PushButton,       DrawButtonHelper::drawPushButtonControl},
+
+            {CE_ToolButtonLabel,  DrawButtonHelper::drawToolButtonLabelControl},
+
+            {CE_CheckBoxLabel,    DrawButtonHelper::drawCheckBoxLabelControl},
+            {CE_RadioButtonLabel, DrawButtonHelper::drawCheckBoxLabelControl},
+
+            {CE_MenuBarEmptyArea, DrawMenuHelper::drawMenuBarEmptryAreaControl},
+            {CE_MenuBarItem,      DrawMenuHelper::drawMenuBarItemControl},
+            {CE_MenuEmptyArea,    DrawMenuHelper::drawMenuEmptryAreaControl},
+            {CE_MenuItem,         DrawMenuHelper::drawMenuItemControl},
+
+            {CE_ScrollBarAddLine, DrawScrollBarHelper::drawScrollBarAddLineControl},
+            {CE_ScrollBarSubLine, DrawScrollBarHelper::drawScrollBarSubLineControl},
+            {CE_ScrollBarAddPage, DrawScrollBarHelper::drawScrollBarAddPageControl},
+            {CE_ScrollBarSubPage, DrawScrollBarHelper::drawScrollBarSubPageControl},
+            {CE_ScrollBarSlider,  DrawScrollBarHelper::drawScrollBarSliderControl},
+
+            {CE_TabBarTab,        DrawTabBarHelper::drawTabBarTabControl},
+            {CE_TabBarTabLabel,   DrawTabBarHelper::drawTabBarTabLabelControl},
+            {CE_TabBarTabShape,   DrawTabBarHelper::drawTabBarTabShapeControl}
+
     };
 
     auto iter = drawControlFuncMap.find(element);
     p->save();
-    if( iter==drawControlFuncMap.end() ){
-        ParentStyleClass::drawControl(element,opt,p,w);
-    }else{
-        if(*iter){
-            (*iter)(this,opt,p,m_detailFetcher,w);
+    if (iter == drawControlFuncMap.end()) {
+        ParentStyleClass::drawControl(element, opt, p, w);
+    } else {
+        if (*iter) {
+            (*iter)(this, opt, p, m_detailFetcher, w);
         }
     }
     p->restore();
@@ -111,14 +137,24 @@ QRect Style::subElementRect(QStyle::SubElement se, const QStyleOption *opt,
                             const QWidget *widget) const
 {
     switch (se) {
-        case SE_LineEditContents: return DrawLineEditHelper::lineEditContentsRect(this,opt,widget);
+        case SE_LineEditContents:
+            return DrawLineEditHelper::lineEditContentsRect(this, opt, widget);
         case SE_CheckBoxContents:
-        case SE_RadioButtonContents: return DrawButtonHelper::checkBoxContentsRect(this,opt,widget);
+        case SE_RadioButtonContents:
+            return DrawButtonHelper::checkBoxContentsRect(this, opt, widget);
         case SE_RadioButtonIndicator:
         case SE_CheckBoxIndicator:
-            return ParentStyleClass::subElementRect(SE_CheckBoxIndicator, opt, widget).translated(Metrics::CheckBox_ItemSpacing,0);
+            //fixme:修改
+            return ParentStyleClass::subElementRect(SE_CheckBoxIndicator, opt, widget).translated(
+                    Metrics::CheckBox_ItemSpacing, 0);
+        case SE_TabBarTabLeftButton:
+            return DrawTabBarHelper::tabBarTabLeftButtonElementRect(this, opt, widget);
+        case SE_TabBarTabRightButton:
+            return DrawTabBarHelper::tabBarTabRightButtonElementRect(this, opt, widget);
+        case SE_TabBarTabText:
+            return DrawTabBarHelper::tabBarTabTabTextElementRect(this, opt, widget);
         default:
-            return ParentStyleClass::subElementRect(se, opt, widget);;
+            return ParentStyleClass::subElementRect(se, opt, widget);
     }
 }
 
@@ -126,22 +162,23 @@ QRect Style::subElementRect(QStyle::SubElement se, const QStyleOption *opt,
 void Style::drawComplexControl(QStyle::ComplexControl cc,
                                const QStyleOptionComplex *opt, QPainter *p, const QWidget *w) const
 {
-    typedef bool (*DrawComplexControlFunc) (const Style*,const QStyleOptionComplex*,StyleDetailFetcher*,QPainter*,const QWidget*);
-    static const QMap<ComplexControl,DrawComplexControlFunc> drawComplexControlFuncMap = {
-            {CC_SpinBox,DrawSpinboxHelper::drawSpinBoxCompleControl},
-            {CC_ToolButton,DrawButtonHelper::drawToolButtonComplexControl},
-            {CC_ComboBox,DrawComboBoxHelper::drawComboBoxComplexControl},
-            {CC_ScrollBar,DrawScrollBarHelper::drawScrollBarComplexControl}
+    typedef bool (*DrawComplexControlFunc)(const Style *, const QStyleOptionComplex *, StyleDetailFetcher *, QPainter *,
+                                           const QWidget *);
+    static const QMap<ComplexControl, DrawComplexControlFunc> drawComplexControlFuncMap = {
+            {CC_SpinBox,    DrawSpinboxHelper::drawSpinBoxCompleControl},
+            {CC_ToolButton, DrawButtonHelper::drawToolButtonComplexControl},
+            {CC_ComboBox,   DrawComboBoxHelper::drawComboBoxComplexControl},
+            {CC_ScrollBar,  DrawScrollBarHelper::drawScrollBarComplexControl}
     };
 
-    auto iter =  drawComplexControlFuncMap.find(cc);
+    auto iter = drawComplexControlFuncMap.find(cc);
 
     p->save();
-    if( iter==drawComplexControlFuncMap.end() ){
-        ParentStyleClass::drawComplexControl(cc,opt,p,w);
-    }else{
-        if( *iter ){
-            (*iter)(this,opt,m_detailFetcher,p,w);
+    if (iter == drawComplexControlFuncMap.end()) {
+        ParentStyleClass::drawComplexControl(cc, opt, p, w);
+    } else {
+        if (*iter) {
+            (*iter)(this, opt, m_detailFetcher, p, w);
         }
     }
     p->restore();
@@ -151,7 +188,12 @@ QStyle::SubControl Style::hitTestComplexControl(QStyle::ComplexControl cc,
                                                 const QStyleOptionComplex *opt, const QPoint &pt,
                                                 const QWidget *w) const
 {
-    return ParentStyleClass::hitTestComplexControl(cc, opt, pt, w);
+    switch (cc) {
+        case QStyle::CC_ScrollBar:
+            return DrawScrollBarHelper::hitTestScrollBarComplexControl(this, opt, pt, w);
+        default:
+            return ParentStyleClass::hitTestComplexControl(cc, opt, pt, w);;
+    }
 }
 
 QRect Style::subControlRect(QStyle::ComplexControl cc,
@@ -159,10 +201,12 @@ QRect Style::subControlRect(QStyle::ComplexControl cc,
                             const QWidget *w) const
 {
     switch (cc) {
-        case QStyle::CC_SpinBox: return DrawSpinboxHelper::spinBoxSubControlRect(this,opt,sc,w);
-        case QStyle::CC_ComboBox: return DrawComboBoxHelper::comboBoxSubControlRect(this,opt,sc,w);
-        //TODO: scrollbar
-//        case QStyle::CC_ScrollBar: return DrawScrollBarHelper::scrollBarSubControlRect(this,opt,sc,w);
+        case QStyle::CC_SpinBox:
+            return DrawSpinboxHelper::spinBoxSubControlRect(this, opt, sc, w);
+        case QStyle::CC_ComboBox:
+            return DrawComboBoxHelper::comboBoxSubControlRect(this, opt, sc, w);
+        case QStyle::CC_ScrollBar:
+            return DrawScrollBarHelper::scrollBarSubControlRect(this, opt, sc, w);
         default:
             return ParentStyleClass::subControlRect(cc, opt, sc, w);
     }
@@ -173,9 +217,14 @@ QSize Style::sizeFromContents(QStyle::ContentsType element, const QStyleOption *
 {
     switch (element) {
         case CT_CheckBox:
-        case CT_RadioButton:    return DrawButtonHelper::checkBoxSizeFromContents(this,option, size, widget);
-        case CT_LineEdit:       return DrawLineEditHelper::lineEditSizeFromContents(this,option,size,widget);
-        case CT_MenuItem:       return DrawMenuHelper::menuItemSizeFromContents(this,option,size,widget);
+        case CT_RadioButton:
+            return DrawButtonHelper::checkBoxSizeFromContents(this, option, size, widget);
+        case CT_LineEdit:
+            return DrawLineEditHelper::lineEditSizeFromContents(this, option, size, widget);
+        case CT_MenuItem:
+            return DrawMenuHelper::menuItemSizeFromContents(this, option, size, widget);
+        case CT_TabBarTab:
+            return DrawTabBarHelper::tabBarTabSizeFromContents(this, option, size, widget);
         default:
             return ParentStyleClass::sizeFromContents(element, option, size, widget);
     }
@@ -185,8 +234,10 @@ QSize Style::sizeFromContents(KiranContentsType ct, const QStyleOption *opt, con
                               const QWidget *widget) const
 {
     switch (ct) {
-        case CT_SwitchButton: return DrawButtonHelper::switchButtonSizeFromContents(this,opt,contentsSize,widget);
-        default:return contentsSize;
+        case CT_SwitchButton:
+            return DrawButtonHelper::switchButtonSizeFromContents(this, opt, contentsSize, widget);
+        default:
+            return contentsSize;
     }
 }
 
@@ -199,9 +250,10 @@ int Style::pixelMetric(QStyle::PixelMetric metric, const QStyleOption *option,
         case PM_DefaultFrameWidth:
             if (widget && widget->inherits("QComboBoxPrivateContainer")) return 1;
             if (qobject_cast<const QMenu *>(widget)) return Metrics::Menu_FrameWidth;
-            if (qobject_cast<const QLineEdit *>(widget)||
-                qobject_cast<const QTextEdit*>(widget)||
-                qobject_cast<const QPlainTextEdit*>(widget) ) return Metrics::LineEdit_FrameWidth;
+            if (qobject_cast<const QLineEdit *>(widget) ||
+                qobject_cast<const QTextEdit *>(widget) ||
+                qobject_cast<const QPlainTextEdit *>(widget))
+                return Metrics::LineEdit_FrameWidth;
             if (qobject_cast<const QAbstractScrollArea *>(widget)) return Metrics::ScrollArea_FrameWidth;
             // fallback
             return Metrics::Frame_FrameWidth;
@@ -262,7 +314,7 @@ int Style::pixelMetric(QStyle::PixelMetric metric, const QStyleOption *option,
         case PM_MenuButtonIndicator:
             return Metrics::MenuButton_IndicatorWidth;
         case PM_MenuVMargin:
-            if( qobject_cast<const QComboBox*>(widget) )
+            if (qobject_cast<const QComboBox *>(widget))
                 return 0;
             else
                 return 6;
@@ -335,7 +387,10 @@ int Style::pixelMetric(QStyle::PixelMetric metric, const QStyleOption *option,
             return Metrics::Splitter_SplitterWidth;
         case PM_DockWidgetSeparatorExtent:
             return Metrics::Splitter_SplitterWidth;
-            // fallback
+        case PM_ScrollView_ScrollBarOverlap:
+            return 0;
+        case PM_ScrollView_ScrollBarSpacing:
+            return 0;
         default:
             return ParentStyleClass::pixelMetric(metric, option, widget);
     }
@@ -393,7 +448,9 @@ int Style::styleHint(QStyle::StyleHint sh, const QStyleOption *opt,
         case SH_GroupBox_TextLabelVerticalAlignment:
             return Qt::AlignVCenter;
         case SH_TabBar_Alignment:
-            return Qt::AlignVCenter|Qt::AlignLeft;
+            return Qt::AlignVCenter | Qt::AlignLeft;
+        case SH_TabBar_CloseButtonPosition:
+            return QTabBar::RightSide;
         case SH_ToolBox_SelectedPageTitleBold:
             return false;
         case SH_ScrollBar_MiddleClickAbsolutePosition:
@@ -428,7 +485,124 @@ int Style::styleHint(QStyle::StyleHint sh, const QStyleOption *opt,
 QIcon Style::standardIcon(QStyle::StandardPixmap standardIcon,
                           const QStyleOption *opt, const QWidget *widget) const
 {
+    if (m_iconCache.contains(standardIcon)) {
+        return m_iconCache.value(standardIcon);
+    }
+
+    QIcon icon;
+    switch (standardIcon) {
+
+        case SP_TitleBarNormalButton:
+        case SP_TitleBarMinButton:
+        case SP_TitleBarMaxButton:
+        case SP_TitleBarCloseButton:
+        case SP_DockWidgetCloseButton:
+            icon = titleBarButtonIcon(m_detailFetcher,standardIcon, opt, widget);
+            break;
+
+//        case SP_ToolBarHorizontalExtensionButton:
+//        case SP_ToolBarVerticalExtensionButton:
+//            icon = toolBarExtensionIcon(standardIcon, opt, widget);
+//            break;
+    }
+
+    if( !icon.isNull() ){
+        IconCache *cache = const_cast<IconCache*>(&m_iconCache);
+        cache->insert(standardIcon,icon);
+        return icon;
+    }
+
     return ParentStyleClass::standardIcon(standardIcon, opt, widget);
+}
+
+QIcon Style::titleBarButtonIcon(StyleDetailFetcher *fetcher,
+                                QStyle::StandardPixmap standardIcon,
+                                const QStyleOption *opt, const QWidget *widget) const
+{
+    TitleBarButtonType buttonType;
+    switch (standardIcon) {
+        case SP_TitleBarNormalButton:
+            buttonType = ButtonRestore;
+            break;
+        case SP_TitleBarMinButton:
+            buttonType = ButtonMinimize;
+            break;
+        case SP_TitleBarMaxButton:
+            buttonType = ButtonMaximize;
+            break;
+        case SP_TitleBarCloseButton:
+        case SP_DockWidgetCloseButton:
+            buttonType = ButtonClose;
+            break;
+        default:
+            return QIcon();
+    }
+
+    struct IconData {
+        QColor _color;
+        QIcon::Mode _mode;
+        QIcon::State _state;
+    };
+
+    QList<IconData> iconTypes = {
+            {QColor(), QIcon::Normal,   QIcon::Off},
+            {QColor(), QIcon::Selected, QIcon::Off},
+            {QColor(), QIcon::Active,   QIcon::Off},
+            {QColor(), QIcon::Disabled, QIcon::Off},
+
+            {QColor(), QIcon::Normal,   QIcon::On},
+            {QColor(), QIcon::Selected, QIcon::On},
+            {QColor(), QIcon::Active,   QIcon::On},
+            {QColor(), QIcon::Disabled, QIcon::On}
+    };
+
+    static const QMap<QIcon::Mode, quint64> iconModeToPseudoClassMap = {
+            {QIcon::Normal,   QCss::PseudoClass_Unspecified},
+            {QIcon::Selected, QCss::PseudoClass_Selected},
+            {QIcon::Active,   QCss::PseudoClass_Active},
+            {QIcon::Disabled, QCss::PseudoClass_Disabled}
+    };
+
+    static const QList<int> iconSizes = {8, 16, 22, 32, 48};
+
+    //初始化iconTypes中的颜色
+    for (IconData &iconType:iconTypes) {
+        auto iter = iconModeToPseudoClassMap.find(iconType._mode);
+        if (iter == iconModeToPseudoClassMap.end()) {
+            continue;
+        }
+        quint64 pseudoClass =
+                iter.value() | (iconType._state == QIcon::On ? QCss::PseudoClass_On : QCss::PseudoClass_Off);
+        iconType._color = fetcher->getColor(StyleDetailFetcher::TitleBarButtonIcon_SignColor,
+                                            pseudoClass);
+    }
+
+    // output icon
+    QIcon icon;
+    for (const IconData &iconData: iconTypes) {
+        for (const int &iconSize: iconSizes) {
+            // create pixmap
+            QPixmap pixmap(iconSize, iconSize);
+            pixmap.fill(Qt::transparent);
+
+            // create painter and render
+            QPainter painter(&pixmap);
+            DrawCommonHelper::drawDecorationButton(&painter, pixmap.rect(), iconData._color, buttonType);
+            painter.end();
+
+            // store
+            icon.addPixmap(pixmap, iconData._mode, iconData._state);
+        }
+    }
+
+    return icon;
+}
+
+QIcon Style::toolBarExtensionIcon(QStyle::StandardPixmap standardIcon,
+                                  const QStyleOption *opt,
+                                  const QWidget *widget) const
+{
+    return QIcon();
 }
 
 void Style::polish(QPalette &palette)
@@ -455,18 +629,19 @@ void Style::polish(QWidget *widget)
         qobject_cast<QToolButton *>(widget) ||
         qobject_cast<QCheckBox *>(widget) ||
         qobject_cast<QRadioButton *>(widget) ||
-        qobject_cast<QMenu*>(widget) ||
-        widget->inherits("QComboBoxPrivateContainer") ) {
+        qobject_cast<QMenu *>(widget) ||
+        widget->inherits("QComboBoxPrivateContainer") ||
+        qobject_cast<QTabBar *>(widget)) {
         widget->setAttribute(Qt::WA_Hover);
     }
 
-    if( qobject_cast<QMenu*>(widget) ||
-        widget->inherits("QComboBoxPrivateContainer") ){
+    if (qobject_cast<QMenu *>(widget) ||
+        widget->inherits("QComboBoxPrivateContainer")) {
         widget->setAttribute(Qt::WA_TranslucentBackground);
     }
 
-    if( QComboBox*comboBox = qobject_cast<QComboBox*>(widget) ){
-        comboBox->setItemDelegate(new ComboBoxItemDelegate(comboBox,comboBox->view()));
+    if (QComboBox *comboBox = qobject_cast<QComboBox *>(widget)) {
+        comboBox->setItemDelegate(new ComboBoxItemDelegate(comboBox, comboBox->view()));
     }
 
     if (auto toolBtn = qobject_cast<QToolButton *>(widget)) {
@@ -491,20 +666,23 @@ void Style::unpolish(QApplication *application)
 
 bool Style::isKiranStyle()
 {
-    return qobject_cast<Style*>(qApp->style());
+    return qobject_cast<Style *>(qApp->style());
 }
 
 Style *Style::castToKiranStyle()
 {
-    return qobject_cast<Style*>(qApp->style());
+    return qobject_cast<Style *>(qApp->style());
 }
 
 void Style::drawControl(KiranControlElement ce, const QStyleOption *opt, QPainter *p, const QWidget *w) const
 {
     p->save();
     switch (ce) {
-        case CE_SwitchButton: DrawButtonHelper::drawSwitchButtonControl(this,opt,p,m_detailFetcher,w);break;
-        default: break;
+        case CE_SwitchButton:
+            DrawButtonHelper::drawSwitchButtonControl(this, opt, p, m_detailFetcher, w);
+            break;
+        default:
+            break;
     }
     p->restore();
 }
@@ -513,8 +691,11 @@ void Style::drawPrimitive(KiranPrimitiveElement pe, const QStyleOption *opt, QPa
 {
     p->save();
     switch (pe) {
-        case PE_SwitchButtonIndicator: DrawButtonHelper::drawSwitchButtonIndicatorPrimitive(this,opt,p,m_detailFetcher,w); break;
-        default: break;
+        case PE_SwitchButtonIndicator:
+            DrawButtonHelper::drawSwitchButtonIndicatorPrimitive(this, opt, p, m_detailFetcher, w);
+            break;
+        default:
+            break;
     }
     p->restore();
 }
@@ -522,8 +703,11 @@ void Style::drawPrimitive(KiranPrimitiveElement pe, const QStyleOption *opt, QPa
 QRect Style::subElementRect(KiranSubElement se, const QStyleOption *opt, const QWidget *widget) const
 {
     switch (se) {
-        case SE_SwitchButtonContents: return DrawButtonHelper::switchButtonContetnsRect(this,opt,widget);
-        case SE_SwitchButtonIndicator: return DrawButtonHelper::switchButtonIndicatorRect(this,opt,widget);
-        default:return opt->rect;
+        case SE_SwitchButtonContents:
+            return DrawButtonHelper::switchButtonContetnsRect(this, opt, widget);
+        case SE_SwitchButtonIndicator:
+            return DrawButtonHelper::switchButtonIndicatorRect(this, opt, widget);
+        default:
+            return opt->rect;
     }
 }

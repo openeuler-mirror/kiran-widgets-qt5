@@ -16,6 +16,7 @@ public:
     ~Widget();
 
 public:
+    void initTabBar();
     void initPushButtonTab();
     void initSwitchButtonTab();
     void initComboBoxTab();

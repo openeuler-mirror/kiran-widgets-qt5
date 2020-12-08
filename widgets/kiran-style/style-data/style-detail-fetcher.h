@@ -101,7 +101,14 @@ namespace Kiran{
             SwitchButton_BorderWidth,
             SwitchButton_BorderColor,
             SwitchButton_Background,
-            SwitchButton_IndicatorCircularBackground
+            SwitchButton_IndicatorCircularBackground,
+
+            ScrollBarSlider_Background,
+
+            TabBarTab_Background,
+            TabBarTab_BorderColor,
+
+            TitleBarButtonIcon_SignColor
         };
         Q_ENUM(StyleDetailPropertyName)
 

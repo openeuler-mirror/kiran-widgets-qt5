@@ -13,6 +13,10 @@ using namespace Kiran;
 bool DrawFrameHelper::drawFramePrimitive(const Style *style, const QStyleOption *opt, QPainter *painter,
                                                 StyleDetailFetcher *detaulFetcher, const QWidget *widget)
 {
+    if( widget->inherits("QScrollArea") ){
+        return true;
+    }
+
     const QRect &rect(opt->rect);
     const QStyle::State &state(opt->state);
     bool enabled(state & QStyle::State_Enabled);

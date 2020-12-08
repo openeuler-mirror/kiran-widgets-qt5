@@ -30,9 +30,12 @@ Widget::Widget(QWidget *parent)
         }
     });
 
+    initTabBar();
     initPushButtonTab();
     initSwitchButtonTab();
     initComboBoxTab();
+
+
 }
 
 Widget::~Widget()
@@ -101,5 +104,10 @@ void Widget::initComboBoxTab()
     actionGroup->addAction(action4);
 
     ui->bth_hasMenu->setMenu(egMenu);
+}
+
+void Widget::initTabBar()
+{
+    ui->tabWidget->tabBar()->setTabIcon(0,QIcon::fromTheme("system-file-manager"));
 }
 

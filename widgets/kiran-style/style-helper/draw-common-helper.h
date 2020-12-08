@@ -54,6 +54,9 @@ namespace Kiran {
         void drawMenuCheckedIndicator(QPainter* painter,const QRect& rect,QColor bgColor,QColor signColor);
 
         void drawArrow(QPainter* painter, const QRect& rect,const QColor& color, ArrowOrientation orientation );
+
+        void drawDecorationButton( QPainter* painter, const QRect& rect,
+                                   const QColor& color, TitleBarButtonType buttonType );
     };
 }
 
