@@ -17,6 +17,7 @@ KiranTitlebarWindow::KiranTitlebarWindow()
     setAttribute(Qt::WA_Hover);
 
     d_func()->init();
+    QWidget::ensurePolished();
     setTitle(qApp->applicationName());
 }
 
