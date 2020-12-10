@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.5)
 option(install-examples "install examples" ON)
 
 #构建测试代码选项
-option(build-tests "build tests" OFF
+option(build-tests "build tests" OFF)
 
 project(kiranwidgets-qt5)
 
@@ -48,7 +48,7 @@ set(DEVEL_HEADER
 
 include_directories("${CMAKE_BINARY_DIR}")
 
-find_package(Qt5 COMPONENTS Widgets Network X11Extras LinguistTools)
+find_package(Qt5 COMPONENTS Widgets Svg Network X11Extras LinguistTools)
 
 qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 
@@ -74,6 +74,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 
 target_link_libraries(${PROJECT_NAME}
         Qt5::Widgets
+        Qt5::Svg
         Qt5::X11Extras
         Qt5::Network
         X11

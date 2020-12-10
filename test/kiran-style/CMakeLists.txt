@@ -24,6 +24,7 @@ add_executable(${PROJECT_NAME}
 target_include_directories(${PROJECT_NAME} PRIVATE
         ../../widgets/kiran-application/
         ../../widgets/kiran-style/
-        ../../widgets/kiran-switch-button)
+        ../../widgets/kiran-switch-button
+        ../../widgets/kiran-search-box)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Widgets kiranwidgets-qt5)

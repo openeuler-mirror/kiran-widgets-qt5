@@ -86,10 +86,12 @@ Kiran::DrawScrollBarHelper::drawScrollBarSliderControl(const Kiran::Style *style
 
     QColor brushColor = fetcher->getColor(StyleDetailFetcher::ScrollBarSlider_Background,pseudoClass);
 
-    p->setRenderHint( QPainter::Antialiasing, true );
-    p->setPen(Qt::NoPen);
-    p->setBrush(brushColor);
-    p->drawRect(opt->rect);
+    if(brushColor.isValid()){
+        p->setRenderHint( QPainter::Antialiasing, true );
+        p->setPen(Qt::NoPen);
+        p->setBrush(brushColor);
+        p->drawRect(opt->rect);
+    }
 
     return true;
 }

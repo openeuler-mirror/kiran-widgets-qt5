@@ -131,6 +131,7 @@ bool DrawTabBarHelper::drawTabBarTabLabelControl(const Style *style, const QStyl
     QRect rect(opt->rect);
 
     QRect iconRect, textRect;
+
     tabLayout(style, tabOption, widget, &textRect, &iconRect);
     textRect = style->subElementRect(QStyle::SE_TabBarTabText, opt, widget);
 
@@ -261,7 +262,7 @@ QRect DrawTabBarHelper::tabBarTabRightButtonElementRect(const Style *style,
                                                         const QStyleOption *opt,
                                                         const QWidget *w)
 {
-    const QStyleOptionTab *tabOption(qstyleoption_cast<const QStyleOptionTabV3 *>(opt));
+    const QStyleOptionTab *tabOption(qstyleoption_cast<const QStyleOptionTab *>(opt));
     if (!tabOption || tabOption->rightButtonSize.isEmpty()) return QRect();
 
     QRect tabRect(opt->rect);
@@ -369,12 +370,12 @@ bool DrawTabBarHelper::drawIndicatorTabClosePrimitive(const Style *style,
     QIcon icon(style->standardIcon(QStyle::SP_TitleBarCloseButton, opt, widget));
     if (icon.isNull()) return false;
 
-
     // store state
     const QStyle::State &state(opt->state);
     bool enabled(state & QStyle::State_Enabled);
-    bool active(state & QStyle::State_Raised);
+    bool raised(state & QStyle::State_Raised);
     bool sunken(state & QStyle::State_Sunken);
+    bool hover(state & QStyle::State_MouseOver);
 
     // decide icon mode and state
     QIcon::Mode iconMode;
@@ -384,8 +385,7 @@ bool DrawTabBarHelper::drawIndicatorTabClosePrimitive(const Style *style,
         iconState = QIcon::Off;
 
     } else {
-
-        if (active) iconMode = QIcon::Active;
+        if (hover) iconMode = QIcon::Active;
         else iconMode = QIcon::Normal;
 
         iconState = sunken ? QIcon::On : QIcon::Off;
@@ -395,12 +395,33 @@ bool DrawTabBarHelper::drawIndicatorTabClosePrimitive(const Style *style,
     int iconWidth(style->pixelMetric(QStyle::PM_SmallIconSize, opt, widget));
     QSize iconSize(iconWidth, iconWidth);
 
-
     // get pixmap
     QPixmap pixmap(icon.pixmap(iconSize, iconMode, iconState));
 
     // render
     style->drawItemPixmap(painter, opt->rect, Qt::AlignCenter, pixmap);
 
+    return true;
+}
+
+QRect DrawTabBarHelper::tabBarTearIndicatorLeftRect(const Style *style, const QStyleOption *opt, const QWidget *w)
+{
+    return QRect();
+}
+
+QRect DrawTabBarHelper::tabBarTearIndicatorRightRect(const Style *style, const QStyleOption *opt, const QWidget *w)
+{
+    return QRect();
+}
+
+bool DrawTabBarHelper::drawIndicatorTabTearLeft(const Style *style, const QStyleOption *opt, QPainter *painter,
+                                                StyleDetailFetcher *detaulFetcher, const QWidget *widget)
+{
+    return true;
+}
+
+bool DrawTabBarHelper::drawIndicatorTabTearRight(const Style *style, const QStyleOption *opt, QPainter *painter,
+                                                 StyleDetailFetcher *detaulFetcher, const QWidget *widget)
+{
     return true;
 }

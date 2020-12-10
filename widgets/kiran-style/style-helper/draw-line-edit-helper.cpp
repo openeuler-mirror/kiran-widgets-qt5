@@ -33,6 +33,10 @@ bool DrawLineEditHelper::drawFrameLineEditPrimitive(const Style *style,const QSt
     bool enabled = (opt->state & QStyle::State_Enabled);
     bool hasFocus = (opt->state & QStyle::State_HasFocus);
 
+    if( widget && widget->parentWidget() && widget->parentWidget()->inherits("KiranSearchBox") ){
+        return true;
+    }
+
     ///NOTE:由于输入框聚焦会有Sunken状态会导致去匹配pressed的样式，所以需要指定特殊的伪选择器
     quint64 specialPseudo = hasFocus ? QCss::PseudoClass_Focus : 0;
 
@@ -44,7 +48,6 @@ bool DrawLineEditHelper::drawFrameLineEditPrimitive(const Style *style,const QSt
     DrawCommonHelper::drawFrame(painter, rect,
                                 radius, borderWidth,
                                 background, border);
-
 
     return true;
 }

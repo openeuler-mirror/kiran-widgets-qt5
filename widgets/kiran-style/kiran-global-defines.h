@@ -13,7 +13,9 @@ namespace Kiran{
     };
 
     enum KiranPrimitiveElement{
-        PE_SwitchButtonIndicator = QStyle::PE_CustomBase+1
+        PE_SwitchButtonIndicator = QStyle::PE_CustomBase+1,
+        PE_SearchBoxIndicator,
+        PE_SearchBoxFrame,
     };
 
     enum KiranControlElement{
@@ -138,10 +140,10 @@ namespace Kiran{
 
         // tabbar
         TabBar_TabMarginHeight = 8,
-        TabBar_TabMarginWidth = 16,
+        TabBar_TabMarginWidth = 10,
         TabBar_TabMinWidth = 80,
         TabBar_TabMinHeight = 36,
-        TabBar_TabItemSpacing = 8,//一个Tab内的文字图标等的间隙
+        TabBar_TabItemSpacing = 10,//一个Tab内的文字图标等的间隙
         TabBar_TabOverlap = 0,
         TabBar_BaseOverlap = 0,
         TabBar_TabItemRadius = 4,

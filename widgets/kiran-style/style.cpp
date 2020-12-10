@@ -14,6 +14,7 @@
 #include "style-helper/draw-combo-box-helper.h"
 #include "style-helper/draw-scroll-bar-helper.h"
 #include "style-helper/draw-tab-bar-helper.h"
+#include "style-helper/draw-search-box-helper.h"
 
 #include "delegate/combo-box-item-delegate.h"
 
@@ -57,6 +58,7 @@ void Style::drawPrimitive(QStyle::PrimitiveElement pe, const QStyleOption *opt,
 {
     typedef bool (*DrawPrimitiveFunc)(const Style *, const QStyleOption *, QPainter *, StyleDetailFetcher *,
                                       const QWidget *);
+
     static const QMap<QStyle::PrimitiveElement, DrawPrimitiveFunc> drawPrimitiveFuncMap = {
             {PE_Frame,                 DrawFrameHelper::drawFramePrimitive},
             {PE_FrameLineEdit,         DrawLineEditHelper::drawFrameLineEditPrimitive},
@@ -71,6 +73,8 @@ void Style::drawPrimitive(QStyle::PrimitiveElement pe, const QStyleOption *opt,
             {PE_PanelScrollAreaCorner, DrawScrollBarHelper::drawScrollAreaCornerPrimitive},
 
             {PE_IndicatorTabClose,     DrawTabBarHelper::drawIndicatorTabClosePrimitive},
+            {PE_IndicatorTabTearLeft,  DrawTabBarHelper::drawIndicatorTabTearLeft},
+            {PE_IndicatorTabTearRight, DrawTabBarHelper::drawIndicatorTabTearRight},
 
             {PE_FrameFocusRect,        nullptr}
     };
@@ -117,8 +121,7 @@ void Style::drawControl(ControlElement element, const QStyleOption *opt,
 
             {CE_TabBarTab,        DrawTabBarHelper::drawTabBarTabControl},
             {CE_TabBarTabLabel,   DrawTabBarHelper::drawTabBarTabLabelControl},
-            {CE_TabBarTabShape,   DrawTabBarHelper::drawTabBarTabShapeControl}
-
+            {CE_TabBarTabShape,   DrawTabBarHelper::drawTabBarTabShapeControl},
     };
 
     auto iter = drawControlFuncMap.find(element);
@@ -145,14 +148,18 @@ QRect Style::subElementRect(QStyle::SubElement se, const QStyleOption *opt,
         case SE_RadioButtonIndicator:
         case SE_CheckBoxIndicator:
             //fixme:修改
-            return ParentStyleClass::subElementRect(SE_CheckBoxIndicator, opt, widget).translated(
-                    Metrics::CheckBox_ItemSpacing, 0);
+            return ParentStyleClass::subElementRect(SE_CheckBoxIndicator, opt, widget).
+                    translated(Metrics::CheckBox_ItemSpacing, 0);
         case SE_TabBarTabLeftButton:
             return DrawTabBarHelper::tabBarTabLeftButtonElementRect(this, opt, widget);
         case SE_TabBarTabRightButton:
             return DrawTabBarHelper::tabBarTabRightButtonElementRect(this, opt, widget);
         case SE_TabBarTabText:
             return DrawTabBarHelper::tabBarTabTabTextElementRect(this, opt, widget);
+        case SE_TabBarTearIndicatorLeft:
+            return DrawTabBarHelper::tabBarTearIndicatorLeftRect(this, opt, widget);
+        case SE_TabBarTearIndicatorRight:
+            return DrawTabBarHelper::tabBarTearIndicatorRightRect(this, opt, widget);
         default:
             return ParentStyleClass::subElementRect(se, opt, widget);
     }
@@ -497,7 +504,7 @@ QIcon Style::standardIcon(QStyle::StandardPixmap standardIcon,
         case SP_TitleBarMaxButton:
         case SP_TitleBarCloseButton:
         case SP_DockWidgetCloseButton:
-            icon = titleBarButtonIcon(m_detailFetcher,standardIcon, opt, widget);
+            icon = titleBarButtonIcon(m_detailFetcher, standardIcon, opt, widget);
             break;
 
 //        case SP_ToolBarHorizontalExtensionButton:
@@ -506,9 +513,9 @@ QIcon Style::standardIcon(QStyle::StandardPixmap standardIcon,
 //            break;
     }
 
-    if( !icon.isNull() ){
-        IconCache *cache = const_cast<IconCache*>(&m_iconCache);
-        cache->insert(standardIcon,icon);
+    if (!icon.isNull()) {
+        IconCache *cache = const_cast<IconCache *>(&m_iconCache);
+        cache->insert(standardIcon, icon);
         return icon;
     }
 
@@ -544,38 +551,32 @@ QIcon Style::titleBarButtonIcon(StyleDetailFetcher *fetcher,
         QIcon::State _state;
     };
 
+    QColor disabledColor = fetcher->getColor(StyleDetailFetcher::TitleBarButtonIcon_SignDisabledColor);
+    QColor pressedColor = fetcher->getColor(StyleDetailFetcher::TitleBarButtonIcon_SignPressedColor);
+    QColor hoverColor = fetcher->getColor(StyleDetailFetcher::TitleBarButtonIcon_SignHoverColor);
+    QColor normalColor = fetcher->getColor(StyleDetailFetcher::TitleBarButtonIcon_SignNormalColor);
+
+    ///QIcon::State
+    ///     QIcon::On  按钮按下
+    ///     QIcon::Off 按钮没被按下
+    ///QIcon::Mode
+    ///     QIcon::Normal    默认状态
+    ///     QIcon::Selected  选中
+    ///     QIcon::Active    悬浮
+    ///     QIocn::Disabled  按钮禁用
     QList<IconData> iconTypes = {
-            {QColor(), QIcon::Normal,   QIcon::Off},
-            {QColor(), QIcon::Selected, QIcon::Off},
-            {QColor(), QIcon::Active,   QIcon::Off},
-            {QColor(), QIcon::Disabled, QIcon::Off},
+            {normalColor, QIcon::Normal,   QIcon::Off},
+            {hoverColor, QIcon::Selected, QIcon::Off},
+            {hoverColor, QIcon::Active,   QIcon::Off},
+            {disabledColor, QIcon::Disabled, QIcon::Off},
 
-            {QColor(), QIcon::Normal,   QIcon::On},
-            {QColor(), QIcon::Selected, QIcon::On},
-            {QColor(), QIcon::Active,   QIcon::On},
-            {QColor(), QIcon::Disabled, QIcon::On}
-    };
-
-    static const QMap<QIcon::Mode, quint64> iconModeToPseudoClassMap = {
-            {QIcon::Normal,   QCss::PseudoClass_Unspecified},
-            {QIcon::Selected, QCss::PseudoClass_Selected},
-            {QIcon::Active,   QCss::PseudoClass_Active},
-            {QIcon::Disabled, QCss::PseudoClass_Disabled}
+            {pressedColor, QIcon::Normal,   QIcon::On},
+            {pressedColor, QIcon::Selected, QIcon::On},
+            {pressedColor, QIcon::Active,   QIcon::On},
+            {disabledColor, QIcon::Disabled, QIcon::On}
     };
 
     static const QList<int> iconSizes = {8, 16, 22, 32, 48};
-
-    //初始化iconTypes中的颜色
-    for (IconData &iconType:iconTypes) {
-        auto iter = iconModeToPseudoClassMap.find(iconType._mode);
-        if (iter == iconModeToPseudoClassMap.end()) {
-            continue;
-        }
-        quint64 pseudoClass =
-                iter.value() | (iconType._state == QIcon::On ? QCss::PseudoClass_On : QCss::PseudoClass_Off);
-        iconType._color = fetcher->getColor(StyleDetailFetcher::TitleBarButtonIcon_SignColor,
-                                            pseudoClass);
-    }
 
     // output icon
     QIcon icon;
@@ -693,6 +694,12 @@ void Style::drawPrimitive(KiranPrimitiveElement pe, const QStyleOption *opt, QPa
     switch (pe) {
         case PE_SwitchButtonIndicator:
             DrawButtonHelper::drawSwitchButtonIndicatorPrimitive(this, opt, p, m_detailFetcher, w);
+            break;
+        case PE_SearchBoxIndicator:
+            DrawSearchBoxHelper::drawSearchBoxIndicatorPrimitive(this,opt,p,m_detailFetcher,w);
+            break;
+        case PE_SearchBoxFrame:
+            DrawSearchBoxHelper::drawSearchBoxFramePrimitive(this,opt,p,m_detailFetcher,w);
             break;
         default:
             break;

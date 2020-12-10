@@ -55,7 +55,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>5</number>
      </property>
      <property name="tabsClosable">
       <bool>true</bool>
@@ -221,7 +221,7 @@
          </property>
          <property name="icon">
           <iconset>
-           <normaloff>../../../../usr/share/kiran-account-manager/account-icons/2.png</normaloff>../../../../usr/share/kiran-account-manager/account-icons/2.png</iconset>
+           <normaloff>../../../../../../../../usr/share/kiran-account-manager/account-icons/2.png</normaloff>../../../../../../../../usr/share/kiran-account-manager/account-icons/2.png</iconset>
          </property>
         </widget>
        </item>
@@ -573,6 +573,12 @@ lineedit-password-character: 9678;
         </widget>
        </item>
       </layout>
+     </widget>
+     <widget class="QWidget" name="tab_7">
+      <attribute name="title">
+       <string>SearchBox</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_8"/>
      </widget>
     </widget>
    </item>

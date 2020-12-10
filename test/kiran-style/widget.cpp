@@ -3,6 +3,7 @@
 
 #include "kiran-application.h"
 #include "kiran-switch-button.h"
+#include "kiran-search-box.h"
 #include "style-data/style-property-helper.h"
 
 #include <QApplication>
@@ -10,6 +11,7 @@
 #include <QMenu>
 #include <QTabBar>
 #include <QCheckBox>
+#include <QDebug>
 
 using namespace Kiran;
 
@@ -34,8 +36,7 @@ Widget::Widget(QWidget *parent)
     initPushButtonTab();
     initSwitchButtonTab();
     initComboBoxTab();
-
-
+    initSearchBox();
 }
 
 Widget::~Widget()
@@ -109,5 +110,14 @@ void Widget::initComboBoxTab()
 void Widget::initTabBar()
 {
     ui->tabWidget->tabBar()->setTabIcon(0,QIcon::fromTheme("system-file-manager"));
+}
+
+void Widget::initSearchBox()
+{
+    KiranSearchBox* searchBox = new KiranSearchBox(this);
+    searchBox->getLineEdit()->setPlaceholderText("KiranSearchBox");
+    searchBox->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
+    QBoxLayout* layout = qobject_cast<QBoxLayout*>(ui->tabWidget->widget(5)->layout());
+    layout->addWidget(searchBox,0,Qt::AlignVCenter);
 }
 

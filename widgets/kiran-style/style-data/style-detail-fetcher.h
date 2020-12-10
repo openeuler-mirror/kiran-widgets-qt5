@@ -106,9 +106,17 @@ namespace Kiran{
             ScrollBarSlider_Background,
 
             TabBarTab_Background,
-            TabBarTab_BorderColor,
 
-            TitleBarButtonIcon_SignColor
+            TitleBarButtonIcon_SignPressedColor,
+            TitleBarButtonIcon_SignHoverColor,
+            TitleBarButtonIcon_SignNormalColor,
+            TitleBarButtonIcon_SignDisabledColor,
+
+            SearchBox_Icon,
+            SearchBox_Background,
+            SearchBox_BorderRadius,
+            SearchBox_BorderWidth,
+            SearchBox_BorderColor
         };
         Q_ENUM(StyleDetailPropertyName)
 
@@ -137,7 +145,7 @@ namespace Kiran{
 
         QColor getColor( const QWidget* widget,const QStyleOption* styleOption,
                          StyleDetailPropertyName selector,quint64 specialqseudo = 0);
-        QColor getColor( StyleDetailPropertyName selector,quint64 pseudoClass );
+        QColor getColor( StyleDetailPropertyName selector,quint64 pseudoClass = QCss::PseudoClass_Unspecified);
 
         QBrush getBrush( const QWidget* widget,const QStyleOption* styleOption
                          ,StyleDetailPropertyName selector,quint64 specialqseudo = 0);
@@ -147,9 +155,9 @@ namespace Kiran{
                     StyleDetailPropertyName selector,quint64 specialqseudo = 0);
         int getInt( StyleDetailPropertyName selector,quint64 pseudoClass );
 
-        QUrl getUrl( const QWidget* widget,const QStyleOption* styleOption,
+        QString getUrl( const QWidget* widget,const QStyleOption* styleOption,
                      StyleDetailPropertyName selector,quint64 specialqseudo = 0);
-        QUrl getUrl( StyleDetailPropertyName selector,quint64 pseudoClass );
+        QString getUrl( StyleDetailPropertyName selector,quint64 pseudoClass );
 
         qreal getReal( const QWidget* widget,const QStyleOption* styleOption,
                        StyleDetailPropertyName selector,quint64 specialqseudo = 0);

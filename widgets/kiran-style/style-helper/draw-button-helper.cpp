@@ -450,9 +450,18 @@ bool DrawButtonHelper::drawToolButtonComplexControl(const Style *style, const QS
 
     if (toolButtonOption->subControls & QStyle::SC_ToolButton || isDockWidgetTitleButton) {
         copy.rect = buttonRect;
-        //TODO:inTabbar的QToolButton样式
-        //菜单打开时绘制按钮按下的样式
-        if (sunken && hasPopupMenu && !(toolButtonOption->activeSubControls & QStyle::SC_ToolButton)) {
+        if( inTabBar ) {
+            QRect rect(opt->rect);
+            QColor background("#222222");
+            p->setPen(Qt::NoPen);
+            p->setBrush(background);
+            switch (toolButtonOption->arrowType) {
+                case Qt::UpArrow: p->drawRect(rect.adjusted(1, 1, -2, -1)); break;
+                case Qt::DownArrow: p->drawRect(rect.adjusted(1, 0, -2, -2)); break;
+                case Qt::LeftArrow: p->drawRect(rect.adjusted(0, 0, 0, 0)); break;
+                case Qt::RightArrow: p->drawRect(rect.adjusted(0, 0, 0, 0)); break;
+            }
+        } else if (sunken && hasPopupMenu && !(toolButtonOption->activeSubControls & QStyle::SC_ToolButton)) {
             QStyleOptionToolButton btn(copy);
             btn.state |= QStyle::State_Raised;
             btn.state &= ~QStyle::State_Sunken;

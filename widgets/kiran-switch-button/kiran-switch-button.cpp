@@ -20,7 +20,7 @@ KiranSwitchButton::KiranSwitchButton(QWidget *parent)
 
 KiranSwitchButton::~KiranSwitchButton()
 {
-
+    delete d_ptr;
 }
 
 bool KiranSwitchButton::event(QEvent *e)

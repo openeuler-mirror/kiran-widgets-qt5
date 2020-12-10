@@ -20,6 +20,8 @@ public:
     void initPushButtonTab();
     void initSwitchButtonTab();
     void initComboBoxTab();
+    void initSearchBox();
+
 private:
     Ui::Widget *ui;
 };

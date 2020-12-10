@@ -299,34 +299,46 @@ ScrollBarSlider:hover{
     Background:rgba(255,255,255,0.3);
 }
 
+ScrollBarSlider:disabled{
+    Background:none;
+}
+
 TabBarTab{
     Background:rgba(255,255,255,0.05);
-    BorderColor:rgba(255,255,255,0.1);
 }
 
 TabBarTab:hover{
     Background:rgba(255,255,255,0.1);
-    BorderColor:none;
 }
 
 TabBarTab:selected{
     Background:#2eb3ff;
-    BorderColor:none;
 }
 
-/*TitleBar:Normal,Min,Max,Close*/
 TitleBarButtonIcon{
-    SignColor: white;
+    SignPressedColor: rgba(255,255,255,0.4);
+    SignHoverColor: rgba(255,255,255,0.6);
+    SignNormalColor: white;
+    SignDisabledColor: gray;
 }
 
-TitleBarButtonIcon::selected{
-    SignColor: white;
+SearchBox{
+    Icon: url(:/kiran-style/style-detail/search.svg);
+    Background: none;
+    BorderRadius:6;
+    BorderWidth: 1;
+    BorderColor: rgba(255,255,255,0.2);
 }
 
-TitleBarButtonIcon:active{
-    SignColor: white;
+SearchBox:focus{
+    BorderColor: rgb(33,166,255);
+    BorderWidth: 1;
 }
 
-TitleBarButtonIcon:disabled{
-    SignColor: white;
+SearchBox:disabled{
+    Icon: url(:/kiran-style/style-detail/search_disabled.svg);
+    Background: rgba(255,255,255,0.05);
+    BorderRadius:6;
+    BorderWidth: 0;
+    BorderColor: rgba(255,255,255,0.2);
 }

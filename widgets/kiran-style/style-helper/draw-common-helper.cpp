@@ -65,7 +65,6 @@ void DrawCommonHelper::drawFrame(QPainter *painter, const QRect &rect,
     } else {
         painter->setPen(Qt::NoPen);
     }
-
     frameRect.adjust(dwidthHalf, dwidthHalf, -dwidthHalf, -dwidthHalf);
 
     // set brush
@@ -198,7 +197,7 @@ void DrawCommonHelper::drawCheckBoxIndicator(QPainter *painter, const QRect &rec
 {
     painter->setRenderHint(QPainter::Antialiasing, true);
     QRect frameRect(rect);
-    frameRect.adjust(2, 2, -2, -2);
+    frameRect.adjust(1, 1, -1, -1);
 
     painter->save();
     drawFrame(painter, frameRect, 2, 1, bgColor, border);
@@ -364,7 +363,7 @@ DrawCommonHelper::drawDecorationButton(QPainter *painter,
     pen.setColor(color);
     pen.setCapStyle(Qt::RoundCap);
     pen.setJoinStyle(Qt::MiterJoin);
-    pen.setWidthF(2.0 * qMax(1.0, 18.0 / rect.width()));
+    pen.setWidthF(1.5 * qMax(1.0,  rect.width()/18.0 ));
     painter->setPen(pen);
 
     switch (buttonType) {

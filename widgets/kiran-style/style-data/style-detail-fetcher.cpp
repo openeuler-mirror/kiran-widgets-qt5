@@ -427,14 +427,14 @@ int Kiran::StyleDetailFetcher::getInt( StyleDetailPropertyName selector,
     return getValue<int>(selector,pseudoClass,VALUE_TYPE_INT);
 }
 
-QUrl Kiran::StyleDetailFetcher::getUrl( const QWidget* widget,const QStyleOption* styleOption,
+QString Kiran::StyleDetailFetcher::getUrl( const QWidget* widget,const QStyleOption* styleOption,
                                         StyleDetailPropertyName selector,quint64 specialqseudo){
-    return getValue<QUrl>(widget,styleOption,selector,VALUE_TYPE_URL,specialqseudo);
+    return getValue<QString>(widget,styleOption,selector,VALUE_TYPE_URL,specialqseudo);
 }
 
-QUrl Kiran::StyleDetailFetcher::getUrl( StyleDetailPropertyName selector,
+QString Kiran::StyleDetailFetcher::getUrl( StyleDetailPropertyName selector,
                                         quint64 pseudoClass ){
-    return getValue<QUrl>(selector,pseudoClass,VALUE_TYPE_URL);
+    return getValue<QString>(selector,pseudoClass,VALUE_TYPE_URL);
 }
 
 qreal Kiran::StyleDetailFetcher::getReal( const QWidget* widget,const QStyleOption* styleOption,

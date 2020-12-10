@@ -23,4 +23,10 @@
     <qresource prefix="/kiran-style">
         <file>style-detail/kiran-dark.css</file>
     </qresource>
+
+    <!--主题图标-->
+    <qresource prefix="/kiran-style">
+        <file>style-detail/search.svg</file>
+        <file>style-detail/search_disabled.svg</file>
+    </qresource>
 </RCC>

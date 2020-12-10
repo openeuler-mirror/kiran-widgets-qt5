@@ -23,13 +23,18 @@ namespace Kiran{
         QRect tabBarTabRightButtonElementRect(const Style *style, const QStyleOption *opt, const QWidget *w);
         //定位TabBar文字绘制位置
         QRect tabBarTabTabTextElementRect(const Style *style, const QStyleOption *opt, const QWidget *w);
+        //当QTabBar的Tab过多时显示的左箭头绘制位置
+        QRect tabBarTearIndicatorLeftRect(const Style *style, const QStyleOption *opt, const QWidget *w);
+        //当QTabBar的Tab过多时显示的右箭头绘制位置
+        QRect tabBarTearIndicatorRightRect(const Style *style,const QStyleOption *opt, const QWidget *w);
 
         ///绘制TabBar上的关闭按钮
         bool drawIndicatorTabClosePrimitive(const Style* style ,const QStyleOption* opt,QPainter* painter,StyleDetailFetcher* detaulFetcher,const QWidget* widget);
+        bool drawIndicatorTabTearLeft(const Style* style ,const QStyleOption* opt,QPainter* painter,StyleDetailFetcher* detaulFetcher,const QWidget* widget);
+        bool drawIndicatorTabTearRight(const Style* style ,const QStyleOption* opt,QPainter* painter,StyleDetailFetcher* detaulFetcher,const QWidget* widget);
 
         ///绘制TabBar Tab
         bool drawTabBarTabControl(const Style *style, const QStyleOption *opt,QPainter *p,StyleDetailFetcher *fetcher,const QWidget *widget);
-
         ///绘制Tab的形状
         bool drawTabBarTabLabelControl(const Style *style, const QStyleOption *opt, QPainter *p, StyleDetailFetcher *fetcher, const QWidget *widget);
         ///绘制Tab的文本和图片

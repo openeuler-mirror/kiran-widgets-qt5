@@ -15,7 +15,7 @@ public:
     {
 
     }
-    ~KiranSwitchButtonPrivate();
+    ~KiranSwitchButtonPrivate()=default;
 
 private:
     KiranSwitchButton* q_ptr;
