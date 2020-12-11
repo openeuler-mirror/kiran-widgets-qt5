@@ -116,7 +116,9 @@ namespace Kiran{
             SearchBox_Background,
             SearchBox_BorderRadius,
             SearchBox_BorderWidth,
-            SearchBox_BorderColor
+            SearchBox_BorderColor,
+
+            IndicatorArrow_Icon
         };
         Q_ENUM(StyleDetailPropertyName)
 

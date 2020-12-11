@@ -8,11 +8,13 @@
 #include <QPainter>
 #include <QStyle>
 #include <QSpinBox>
+#include <QStyle>
 
 #include "kiran-global-defines.h"
 
 namespace Kiran {
-
+    class Style;
+    class StyleDetailFetcher;
     namespace DrawCommonHelper {
 
         bool isCompositingManagerRuning();
@@ -53,7 +55,13 @@ namespace Kiran {
 
         void drawMenuCheckedIndicator(QPainter* painter,const QRect& rect,QColor bgColor,QColor signColor);
 
-        void drawArrow(QPainter* painter, const QRect& rect,const QColor& color, ArrowOrientation orientation );
+        bool drawIndicatorArrowUpPrimitive(const Style *style, const QStyleOption *opt, QPainter *painter,StyleDetailFetcher *detaulFetcher, const QWidget *widget);
+        bool drawIndicatorArrowDownPrimitive(const Style *style, const QStyleOption *opt, QPainter *painter,StyleDetailFetcher *detaulFetcher, const QWidget *widget);
+        bool drawIndicatorArrowLeftPrimitive(const Style *style, const QStyleOption *opt, QPainter *painter,StyleDetailFetcher *detaulFetcher, const QWidget *widget);
+        bool drawIndicatorArrowRightPrimitive(const Style *style, const QStyleOption *opt, QPainter *painter,StyleDetailFetcher *detaulFetcher, const QWidget *widget);
+
+
+        void drawArrow(StyleDetailFetcher* fetcher,QPainter* painter, const QStyleOption* option,const QWidget* widget,ArrowOrientation orientation );
 
         void drawDecorationButton( QPainter* painter, const QRect& rect,
                                    const QColor& color, TitleBarButtonType buttonType );

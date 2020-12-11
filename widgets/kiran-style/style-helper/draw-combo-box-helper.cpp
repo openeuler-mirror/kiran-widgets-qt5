@@ -63,7 +63,11 @@ bool DrawComboBoxHelper::drawComboBoxComplexControl(const Kiran::Style *style, c
 
     if (opt->subControls & QStyle::SC_ComboBoxArrow) {
         QRect arrowRect = style->subControlRect(QStyle::CC_ComboBox, opt, QStyle::SC_ComboBoxArrow, w);
-        DrawCommonHelper::drawArrow(p, arrowRect, indicatorColor, ArrowDown);
+        QStyleOption tempOption;
+        tempOption.rect = arrowRect;
+        tempOption.direction = opt->direction;
+        tempOption.state = opt->state;
+        DrawCommonHelper::drawArrow(fetcher,p, &tempOption, w, ArrowDown);
     }
 
     return true;
@@ -81,11 +85,10 @@ QRect DrawComboBoxHelper::comboBoxSubControlRect(const Kiran::Style *style, cons
             return rect;
         case QStyle::SC_ComboBoxArrow: {
             QRect arrowRect(
-                    rect.right() - rect.height() + 1,
-                    rect.top(),
-                    rect.height(),
-                    rect.height());
-
+                    rect.right() - Metrics::ComboBox_ItemSpacing - Metrics::ComboBox_ArrowSize,
+                    rect.top()+(rect.height()-Metrics::ComboBox_ArrowSize)/2,
+                    Metrics::ComboBox_ArrowSize,
+                    Metrics::ComboBox_ArrowSize);
             return arrowRect;
         }
         case QStyle::SC_ComboBoxEditField: {

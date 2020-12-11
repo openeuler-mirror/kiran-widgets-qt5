@@ -23,10 +23,12 @@ namespace Kiran{
         QRect tabBarTabRightButtonElementRect(const Style *style, const QStyleOption *opt, const QWidget *w);
         //定位TabBar文字绘制位置
         QRect tabBarTabTabTextElementRect(const Style *style, const QStyleOption *opt, const QWidget *w);
-        //当QTabBar的Tab过多时显示的左箭头绘制位置
+        ///NOTE:TearIndicator是啥?
         QRect tabBarTearIndicatorLeftRect(const Style *style, const QStyleOption *opt, const QWidget *w);
-        //当QTabBar的Tab过多时显示的右箭头绘制位置
         QRect tabBarTearIndicatorRightRect(const Style *style,const QStyleOption *opt, const QWidget *w);
+        ///TabBar过多时，显示左右移动TabBar显示Tab的按钮
+        QRect tabBarScrollLeftButtonRect(const Style *style,const QStyleOption *opt, const QWidget *w);
+        QRect tabBarScrollRightButtonRect(const Style *style,const QStyleOption *opt, const QWidget *w);
 
         ///绘制TabBar上的关闭按钮
         bool drawIndicatorTabClosePrimitive(const Style* style ,const QStyleOption* opt,QPainter* painter,StyleDetailFetcher* detaulFetcher,const QWidget* widget);

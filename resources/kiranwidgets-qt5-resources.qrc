@@ -28,5 +28,10 @@
     <qresource prefix="/kiran-style">
         <file>style-detail/search.svg</file>
         <file>style-detail/search_disabled.svg</file>
+
+        <file>style-detail/arrow.svg</file>
+        <file>style-detail/arrow_hover.svg</file>
+        <file>style-detail/arrow_pressed.svg</file>
+        <file>style-detail/arrow_disabled.svg</file>
     </qresource>
 </RCC>

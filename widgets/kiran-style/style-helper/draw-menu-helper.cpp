@@ -290,7 +290,7 @@ bool DrawMenuHelper::drawMenuItemControl(const Style *style, const QStyleOption 
             QColor arrowColor = fetcher->getColor(widget,opt,StyleDetailFetcher::Menu_SubMenuArrowColor);
 
             // draw
-            DrawCommonHelper::drawArrow(p,subMenuArrowRect,arrowColor,orientation);
+            DrawCommonHelper::drawArrow(fetcher,p,opt,widget,orientation);
         }
     }
 

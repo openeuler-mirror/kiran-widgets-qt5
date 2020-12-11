@@ -3,11 +3,14 @@
 //
 
 #include "draw-common-helper.h"
+#include "style.h"
 
 #include <QtMath>
 #include <QDebug>
 #include <QApplication>
 #include <QX11Info>
+#include <QStyle>
+#include <QSvgRenderer>
 
 using namespace Kiran;
 
@@ -284,62 +287,49 @@ void DrawCommonHelper::drawMenuCheckedIndicator(QPainter *painter, const QRect &
     painter->restore();
 }
 
-void DrawCommonHelper::drawArrow(QPainter *painter, const QRect &rect,
-                                 const QColor &color, ArrowOrientation orientation)
+void DrawCommonHelper::drawArrow(StyleDetailFetcher* fetcher,
+                                 QPainter *painter,
+                                 const QStyleOption* option,
+                                 const QWidget* widget,
+                                 ArrowOrientation orientation)
 {
-#if 0
-    // define polygon
-    QPolygonF arrow;
+    QRect rect(option->rect);
+    QRect markRect(rect.adjusted(1, 1, -1, -1));
+    QString iconUrl = fetcher->getUrl(widget,option,StyleDetailFetcher::IndicatorArrow_Icon);
+
+    qreal rorateAngle = 0.0;
     switch (orientation) {
+        case ArrowNone:
+            return;
         case ArrowUp:
-            arrow << QPointF(-4, 2) << QPointF(0, -2) << QPointF(4, 2);
+            rorateAngle = -90;
             break;
         case ArrowDown:
-            arrow << QPointF(-4, -2) << QPointF(0, 2) << QPointF(4, -2);
+            rorateAngle = 90;
             break;
         case ArrowLeft:
-            arrow << QPointF(2, -4) << QPointF(-2, 0) << QPointF(2, 4);
+            rorateAngle = 180;
             break;
         case ArrowRight:
-            arrow << QPointF(-2, -4) << QPointF(2, 0) << QPointF(-2, 4);
+            rorateAngle = 0.0;
             break;
         default:
             break;
     }
 
-    QPen pen(color, 1.2);
-    pen.setCapStyle(Qt::FlatCap);
-    pen.setJoinStyle(Qt::MiterJoin);
-
+    QSvgRenderer renderer(iconUrl);
+    if( !renderer.isValid() ){
+        return;
+    }
+    qInfo() << "markRect" << markRect;
     painter->save();
-    painter->setRenderHints(QPainter::Antialiasing);
-    painter->translate(QRectF(rect).center());
-    painter->setBrush(color);
-    painter->setPen(pen);
-    painter->drawPolygon(arrow);
-
-    painter->restore();
-
-    return;
-#else
-    QRect markRect(rect.adjusted(1, 1, -1, -1));
-    QPen pen(color, 1.5);
-    pen.setCapStyle(Qt::RoundCap);
-    pen.setJoinStyle(Qt::RoundJoin);
-
-    painter->save();
-
     painter->setRenderHint(QPainter::HighQualityAntialiasing, true);
-    painter->setPen(pen);
-
-    QPainterPath path;
-    path.moveTo(markRect.left() + markRect.width() / 3, markRect.top() + markRect.height() / 2.4);
-    path.lineTo(markRect.center().x(), markRect.bottom() - markRect.height() / 2.5);
-    path.lineTo(markRect.right() - markRect.width() / 3, markRect.top() + markRect.height() / 2.4);
-    painter->drawPath(path);
-
+    painter->translate(markRect.center());
+    painter->rotate(rorateAngle);
+    markRect.moveLeft(-markRect.width()/2);
+    markRect.moveTop(-markRect.height()/2);
+    renderer.render(painter,markRect);
     painter->restore();
-#endif
 }
 
 void
@@ -408,4 +398,35 @@ DrawCommonHelper::drawDecorationButton(QPainter *painter,
 
     painter->restore();
     return;
+}
+
+bool DrawCommonHelper::drawIndicatorArrowUpPrimitive(const Style *style, const QStyleOption *opt, QPainter *painter,
+                                                     StyleDetailFetcher *detaulFetcher, const QWidget *widget)
+{
+    DrawCommonHelper::drawArrow(detaulFetcher,painter,opt,widget,ArrowUp);
+    return true;
+}
+
+bool DrawCommonHelper::drawIndicatorArrowDownPrimitive(const Style *style, const QStyleOption *opt, QPainter *painter,
+                                                       StyleDetailFetcher *detaulFetcher, const QWidget *widget)
+{
+    DrawCommonHelper::drawArrow(detaulFetcher,painter,opt,widget,ArrowDown);
+    return true;
+
+}
+
+bool DrawCommonHelper::drawIndicatorArrowLeftPrimitive(const Style *style, const QStyleOption *opt, QPainter *painter,
+                                                       StyleDetailFetcher *detaulFetcher, const QWidget *widget)
+{
+    DrawCommonHelper::drawArrow(detaulFetcher,painter,opt,widget,ArrowLeft);
+    return true;
+
+}
+
+bool DrawCommonHelper::drawIndicatorArrowRightPrimitive(const Style *style, const QStyleOption *opt, QPainter *painter,
+                                                        StyleDetailFetcher *detaulFetcher, const QWidget *widget)
+{
+    DrawCommonHelper::drawArrow(detaulFetcher,painter,opt,widget,ArrowRight);
+    return true;
+
 }

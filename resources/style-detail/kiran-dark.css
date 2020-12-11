@@ -322,6 +322,22 @@ TitleBarButtonIcon{
     SignDisabledColor: gray;
 }
 
+IndicatorArrow{
+    Icon:url(:/kiran-style/style-detail/arrow.svg)
+}
+
+IndicatorArrow:disabled{
+    Icon:url(:/kiran-style/style-detail/arrow_disabled.svg)
+}
+
+IndicatorArrow:hover{
+    Icon:url(:/kiran-style/style-detail/arrow_hover.svg)
+}
+
+IndicatorArrow:pressed{
+    Icon:url(:/kiran-style/style-detail/arrow_pressed.svg)
+}
+
 SearchBox{
     Icon: url(:/kiran-style/style-detail/search.svg);
     Background: none;

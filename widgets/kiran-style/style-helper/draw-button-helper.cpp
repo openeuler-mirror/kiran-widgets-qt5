@@ -456,8 +456,8 @@ bool DrawButtonHelper::drawToolButtonComplexControl(const Style *style, const QS
             p->setPen(Qt::NoPen);
             p->setBrush(background);
             switch (toolButtonOption->arrowType) {
-                case Qt::UpArrow: p->drawRect(rect.adjusted(1, 1, -2, -1)); break;
-                case Qt::DownArrow: p->drawRect(rect.adjusted(1, 0, -2, -2)); break;
+                case Qt::UpArrow: p->drawRect(rect.adjusted(0, 0, 0, 0)); break;
+                case Qt::DownArrow: p->drawRect(rect.adjusted(0, 0, 0, 0)); break;
                 case Qt::LeftArrow: p->drawRect(rect.adjusted(0, 0, 0, 0)); break;
                 case Qt::RightArrow: p->drawRect(rect.adjusted(0, 0, 0, 0)); break;
             }

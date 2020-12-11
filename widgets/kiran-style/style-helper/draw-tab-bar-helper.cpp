@@ -425,3 +425,37 @@ bool DrawTabBarHelper::drawIndicatorTabTearRight(const Style *style, const QStyl
 {
     return true;
 }
+
+QRect DrawTabBarHelper::tabBarScrollLeftButtonRect(const Style *style, const QStyleOption *opt, const QWidget *w)
+{
+    const bool vertical = opt->rect.width() < opt->rect.height();
+    const Qt::LayoutDirection direction = w->layoutDirection();
+    const int buttonWidth = style->pixelMetric(QStyle::PM_TabBarScrollButtonWidth, nullptr,w);
+
+    QRect rect;
+    if(vertical){
+        rect = QRect(0,0,opt->rect.width(),buttonWidth);
+    }else{//不是垂直的情况下，需要考虑是否是反向布局
+        rect = QRect(0,0,buttonWidth,opt->rect.height());
+        rect = QStyle::visualRect(opt->direction,opt->rect,rect);
+    }
+
+    return rect;
+}
+
+QRect DrawTabBarHelper::tabBarScrollRightButtonRect(const Style *style, const QStyleOption *opt, const QWidget *w)
+{
+    const bool vertical = opt->rect.width() < opt->rect.height();
+    const Qt::LayoutDirection direction = w->layoutDirection();
+    const int buttonWidth = style->pixelMetric(QStyle::PM_TabBarScrollButtonWidth, nullptr,w);
+
+    QRect rect;
+    if(vertical){
+        rect = QRect(0,opt->rect.height()-buttonWidth,opt->rect.width(),buttonWidth);
+    }else{//不是垂直的情况下，需要考虑是否是反向布局
+        rect = QRect(opt->rect.width()-buttonWidth,0,buttonWidth,opt->rect.height());
+        rect = QStyle::visualRect(opt->direction,opt->rect,rect);
+    }
+
+    return rect;
+}

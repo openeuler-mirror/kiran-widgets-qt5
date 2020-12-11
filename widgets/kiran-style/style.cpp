@@ -76,6 +76,11 @@ void Style::drawPrimitive(QStyle::PrimitiveElement pe, const QStyleOption *opt,
             {PE_IndicatorTabTearLeft,  DrawTabBarHelper::drawIndicatorTabTearLeft},
             {PE_IndicatorTabTearRight, DrawTabBarHelper::drawIndicatorTabTearRight},
 
+            {PE_IndicatorArrowUp,      DrawCommonHelper::drawIndicatorArrowUpPrimitive},
+            {PE_IndicatorArrowDown,    DrawCommonHelper::drawIndicatorArrowDownPrimitive},
+            {PE_IndicatorArrowLeft,    DrawCommonHelper::drawIndicatorArrowLeftPrimitive},
+            {PE_IndicatorArrowRight,   DrawCommonHelper::drawIndicatorArrowRightPrimitive},
+
             {PE_FrameFocusRect,        nullptr}
     };
 
@@ -142,6 +147,7 @@ QRect Style::subElementRect(QStyle::SubElement se, const QStyleOption *opt,
     switch (se) {
         case SE_LineEditContents:
             return DrawLineEditHelper::lineEditContentsRect(this, opt, widget);
+
         case SE_CheckBoxContents:
         case SE_RadioButtonContents:
             return DrawButtonHelper::checkBoxContentsRect(this, opt, widget);
@@ -150,6 +156,7 @@ QRect Style::subElementRect(QStyle::SubElement se, const QStyleOption *opt,
             //fixme:修改
             return ParentStyleClass::subElementRect(SE_CheckBoxIndicator, opt, widget).
                     translated(Metrics::CheckBox_ItemSpacing, 0);
+
         case SE_TabBarTabLeftButton:
             return DrawTabBarHelper::tabBarTabLeftButtonElementRect(this, opt, widget);
         case SE_TabBarTabRightButton:
@@ -160,6 +167,10 @@ QRect Style::subElementRect(QStyle::SubElement se, const QStyleOption *opt,
             return DrawTabBarHelper::tabBarTearIndicatorLeftRect(this, opt, widget);
         case SE_TabBarTearIndicatorRight:
             return DrawTabBarHelper::tabBarTearIndicatorRightRect(this, opt, widget);
+        case SE_TabBarScrollLeftButton:
+            return DrawTabBarHelper::tabBarScrollLeftButtonRect(this,opt,widget);
+        case SE_TabBarScrollRightButton:
+            return DrawTabBarHelper::tabBarScrollRightButtonRect(this,opt,widget);;
         default:
             return ParentStyleClass::subElementRect(se, opt, widget);
     }
@@ -353,22 +364,25 @@ int Style::pixelMetric(QStyle::PixelMetric metric, const QStyleOption *option,
         case PM_TabCloseIndicatorWidth:
         case PM_TabCloseIndicatorHeight:
             return pixelMetric(PM_SmallIconSize, option, widget);
-            // scrollbars
+        ///TabBar Tab过多时 需左右移动显示的滚动条的按钮宽度
+        case PM_TabBarScrollButtonWidth:
+            return Metrics::TabBar_ScrollButtonWidth;
+        ///scrollbars
         case PM_ScrollBarExtent:
             return Metrics::ScrollBar_Extend;
         case PM_ScrollBarSliderMin:
             return Metrics::ScrollBar_MinSliderHeight;
-            // title bar
+        ///title bar
         case PM_TitleBarHeight:
             return 2 * Metrics::TitleBar_MarginWidth + pixelMetric(PM_SmallIconSize, option, widget);
-            // sliders
+        ///sliders
         case PM_SliderThickness:
             return Metrics::Slider_ControlThickness;
         case PM_SliderControlThickness:
             return Metrics::Slider_ControlThickness;
         case PM_SliderLength:
             return Metrics::Slider_ControlThickness;
-            // checkboxes and radio buttons
+        // checkboxes and radio buttons
         case PM_IndicatorWidth:
             return Metrics::CheckBox_Size;
         case PM_IndicatorHeight:
@@ -377,13 +391,13 @@ int Style::pixelMetric(QStyle::PixelMetric metric, const QStyleOption *option,
             return Metrics::CheckBox_Size;
         case PM_ExclusiveIndicatorHeight:
             return Metrics::CheckBox_Size;
-            // list heaaders
+        // list heaaders
         case PM_HeaderMarkSize:
             return Metrics::Header_ArrowSize;
         case PM_HeaderMargin:
             return Metrics::Header_MarginWidth;
-            // dock widget
-            // return 0 here, since frame is handled directly in polish
+        // dock widget
+        // return 0 here, since frame is handled directly in polish
         case PM_DockWidgetFrameWidth:
             return 0;
         case PM_DockWidgetTitleMargin:
@@ -565,14 +579,14 @@ QIcon Style::titleBarButtonIcon(StyleDetailFetcher *fetcher,
     ///     QIcon::Active    悬浮
     ///     QIocn::Disabled  按钮禁用
     QList<IconData> iconTypes = {
-            {normalColor, QIcon::Normal,   QIcon::Off},
-            {hoverColor, QIcon::Selected, QIcon::Off},
-            {hoverColor, QIcon::Active,   QIcon::Off},
+            {normalColor,   QIcon::Normal,   QIcon::Off},
+            {hoverColor,    QIcon::Selected, QIcon::Off},
+            {hoverColor,    QIcon::Active,   QIcon::Off},
             {disabledColor, QIcon::Disabled, QIcon::Off},
 
-            {pressedColor, QIcon::Normal,   QIcon::On},
-            {pressedColor, QIcon::Selected, QIcon::On},
-            {pressedColor, QIcon::Active,   QIcon::On},
+            {pressedColor,  QIcon::Normal,   QIcon::On},
+            {pressedColor,  QIcon::Selected, QIcon::On},
+            {pressedColor,  QIcon::Active,   QIcon::On},
             {disabledColor, QIcon::Disabled, QIcon::On}
     };
 
@@ -696,10 +710,10 @@ void Style::drawPrimitive(KiranPrimitiveElement pe, const QStyleOption *opt, QPa
             DrawButtonHelper::drawSwitchButtonIndicatorPrimitive(this, opt, p, m_detailFetcher, w);
             break;
         case PE_SearchBoxIndicator:
-            DrawSearchBoxHelper::drawSearchBoxIndicatorPrimitive(this,opt,p,m_detailFetcher,w);
+            DrawSearchBoxHelper::drawSearchBoxIndicatorPrimitive(this, opt, p, m_detailFetcher, w);
             break;
         case PE_SearchBoxFrame:
-            DrawSearchBoxHelper::drawSearchBoxFramePrimitive(this,opt,p,m_detailFetcher,w);
+            DrawSearchBoxHelper::drawSearchBoxFramePrimitive(this, opt, p, m_detailFetcher, w);
             break;
         default:
             break;

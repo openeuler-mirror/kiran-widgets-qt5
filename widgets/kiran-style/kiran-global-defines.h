@@ -71,7 +71,9 @@ namespace Kiran{
 
         // combobox
         ComboBox_FrameWidth = 7,
-        ComboBox_ItemSpacing = 6,
+        ComboBox_ItemSpacing = 16,
+        ComboBox_ArrowSize = 16,
+
 
         // spinbox
         SpinBox_FrameWidth = LineEdit_FrameWidth,
@@ -90,8 +92,8 @@ namespace Kiran{
         SwitchButton_FocusMarginWidth = 3,
         SwitchButton_IndicatorCircularSize = 16,
         SwitchButton_IndicatorCircularSpacing = 4,
-        SwitchButton_IndicatorWidth = 48,
-        SwitchButton_IndicatorHeight = 22,
+        SwitchButton_IndicatorWidth = 54,
+        SwitchButton_IndicatorHeight = 24,
         SwitchButton_ItemSpacing = 8,
 
         // tool buttons
@@ -148,7 +150,7 @@ namespace Kiran{
         TabBar_BaseOverlap = 0,
         TabBar_TabItemRadius = 4,
         TabBar_TabSpacing = 4,//Tab与Tab之间的间隔
-
+        TabBar_ScrollButtonWidth = 16,//QTabBar Tab过多时，左右移动Tab显示的按钮宽度
         // tab widget
         TabWidget_MarginWidth = 4,
 
