@@ -7,6 +7,7 @@
 
 #include <QStyle>
 
+#define  KIRAN_DEFAULT_ANIMATION_FPS 40
 namespace Kiran{
     enum StyleEnum {
         KIRAN_BLACK
@@ -126,8 +127,8 @@ namespace Kiran{
         ToolBar_ItemSpacing = 0,
 
         // progressbars
-        ProgressBar_BusyIndicatorSize = 24,
-        ProgressBar_Thickness = 3,
+        ProgressBar_BusyIndicatorSize = 50,
+        ProgressBar_Thickness = 8,
         ProgressBar_ItemSpacing = 3,
 
         // mdi title bar

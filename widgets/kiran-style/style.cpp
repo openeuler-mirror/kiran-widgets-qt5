@@ -15,6 +15,7 @@
 #include "style-helper/draw-scroll-bar-helper.h"
 #include "style-helper/draw-tab-bar-helper.h"
 #include "style-helper/draw-search-box-helper.h"
+#include "style-helper/draw-progress-bar-helper.h"
 
 #include "delegate/combo-box-item-delegate.h"
 
@@ -40,6 +41,7 @@
 #include <QApplication>
 #include <QComboBox>
 #include <QListView>
+#include <private/qstyleanimation_p.h>
 
 using namespace Kiran;
 
@@ -127,6 +129,11 @@ void Style::drawControl(ControlElement element, const QStyleOption *opt,
             {CE_TabBarTab,        DrawTabBarHelper::drawTabBarTabControl},
             {CE_TabBarTabLabel,   DrawTabBarHelper::drawTabBarTabLabelControl},
             {CE_TabBarTabShape,   DrawTabBarHelper::drawTabBarTabShapeControl},
+
+            {CE_ProgressBar,        DrawProgressBarHelper::drawProgressBarControl},
+            {CE_ProgressBarGroove,  DrawProgressBarHelper::drawProgressBarGrooveControl},
+            {CE_ProgressBarContents,DrawProgressBarHelper::drawProgressBarContentsControl},
+            {CE_ProgressBarLabel,   DrawProgressBarHelper::drawProgressBarLabelControl}
     };
 
     auto iter = drawControlFuncMap.find(element);
@@ -170,7 +177,15 @@ QRect Style::subElementRect(QStyle::SubElement se, const QStyleOption *opt,
         case SE_TabBarScrollLeftButton:
             return DrawTabBarHelper::tabBarScrollLeftButtonRect(this,opt,widget);
         case SE_TabBarScrollRightButton:
-            return DrawTabBarHelper::tabBarScrollRightButtonRect(this,opt,widget);;
+            return DrawTabBarHelper::tabBarScrollRightButtonRect(this,opt,widget);
+
+        case SE_ProgressBarGroove:
+            return DrawProgressBarHelper::progressBarGrooveRect(this,opt,widget);
+        case SE_ProgressBarContents:
+            return DrawProgressBarHelper::progressBarContentsRect(this,opt,widget);
+        case SE_ProgressBarLabel:
+            return DrawProgressBarHelper::progressBarLabelRect(this,opt,widget);
+
         default:
             return ParentStyleClass::subElementRect(se, opt, widget);
     }
@@ -243,6 +258,8 @@ QSize Style::sizeFromContents(QStyle::ContentsType element, const QStyleOption *
             return DrawMenuHelper::menuItemSizeFromContents(this, option, size, widget);
         case CT_TabBarTab:
             return DrawTabBarHelper::tabBarTabSizeFromContents(this, option, size, widget);
+        case CT_ProgressBar:
+            return DrawProgressBarHelper::progressBarSizeFromContents(this,option,size,widget);
         default:
             return ParentStyleClass::sizeFromContents(element, option, size, widget);
     }
@@ -727,5 +744,39 @@ QRect Style::subElementRect(KiranSubElement se, const QStyleOption *opt, const Q
             return DrawButtonHelper::switchButtonIndicatorRect(this, opt, widget);
         default:
             return opt->rect;
+    }
+}
+
+QList<const QObject *> Style::animationTargets() const
+{
+    return animations.keys();
+}
+
+QStyleAnimation *Style::animation(const QObject *target) const
+{
+    return animations.value(target);
+}
+
+void Style::removeAnimation()
+{
+    QObject *animation = sender();
+    if (animation)
+        animations.remove(animation->parent());
+}
+
+void Style::startAnimation(QStyleAnimation *animation) const
+{
+    stopAnimation(animation->target());
+    connect(animation, SIGNAL(destroyed()), SLOT(removeAnimation()), Qt::UniqueConnection);
+    animations.insert(animation->target(), animation);
+    animation->start();
+}
+
+void Style::stopAnimation(const QObject *target) const
+{
+    QStyleAnimation *animation = animations.take(target);
+    if (animation) {
+        animation->stop();
+        delete animation;
     }
 }

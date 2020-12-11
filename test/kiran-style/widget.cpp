@@ -37,6 +37,7 @@ Widget::Widget(QWidget *parent)
     initSwitchButtonTab();
     initComboBoxTab();
     initSearchBox();
+    initProgressBar();
 }
 
 Widget::~Widget()
@@ -120,3 +121,10 @@ void Widget::initSearchBox()
     layout->addWidget(searchBox,0,Qt::AlignVCenter);
 }
 
+void Widget::initProgressBar()
+{
+    ui->progressBar->setMinimum(0);
+    ui->progressBar->setMaximum(60);
+    ui->progressBar->setValue(50);
+    ui->progressBar->setOrientation(Qt::Horizontal);
+}

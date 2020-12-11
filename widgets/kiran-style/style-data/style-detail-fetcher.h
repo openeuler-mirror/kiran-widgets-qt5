@@ -118,7 +118,10 @@ namespace Kiran{
             SearchBox_BorderWidth,
             SearchBox_BorderColor,
 
-            IndicatorArrow_Icon
+            IndicatorArrow_Icon,
+
+            ProgressBar_GrooveColor,
+            ProgressBar_ContentColor
         };
         Q_ENUM(StyleDetailPropertyName)
 

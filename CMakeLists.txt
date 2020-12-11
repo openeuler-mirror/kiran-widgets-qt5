@@ -70,7 +70,8 @@ target_include_directories(${PROJECT_NAME} PRIVATE
         widgets/kiran-application/
         widgets/kiran-style/
         ${GSETTINGS_QT_INCLUDE_DIRS}
-        ${Qt5Gui_PRIVATE_INCLUDE_DIRS})
+        ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
+        ${Qt5Widgets_PRIVATE_INCLUDE_DIRS})
 
 target_link_libraries(${PROJECT_NAME}
         Qt5::Widgets

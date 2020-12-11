@@ -21,6 +21,7 @@ public:
     void initSwitchButtonTab();
     void initComboBoxTab();
     void initSearchBox();
+    void initProgressBar();
 
 private:
     Ui::Widget *ui;

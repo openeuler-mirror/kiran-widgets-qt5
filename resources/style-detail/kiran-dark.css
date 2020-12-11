@@ -345,3 +345,9 @@ SearchBox{
 SearchBox:disabled{
     Icon: url(:/kiran-style/style-detail/search_disabled.svg);
 }
+
+
+ProgressBar{
+    GrooveColor: rgba(255,255,255,0.1);
+    ContentColor: #21a6ff;
+}

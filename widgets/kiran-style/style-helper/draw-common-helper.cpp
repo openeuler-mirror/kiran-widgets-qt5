@@ -430,3 +430,42 @@ bool DrawCommonHelper::drawIndicatorArrowRightPrimitive(const Style *style, cons
     return true;
 
 }
+
+void DrawCommonHelper::renderProgressBarBusyContents(QPainter *painter, const QRect &rect, const QColor &color,
+                                                     const QColor &outline, bool horizontal, bool reverse, int progress)
+{
+    painter->setRenderHint( QPainter::Antialiasing, true );
+
+    QRectF baseRect( rect );
+    QRectF contentRect;
+    if (horizontal) {
+        contentRect = QRect(baseRect.left(), baseRect.top(), Metrics::ProgressBar_BusyIndicatorSize, baseRect.height());
+        contentRect.translate(fabs(progress - 50) / 50.0 * (baseRect.width() - contentRect.width()), 0);
+    }
+    else {
+        contentRect = QRect(baseRect.left(), baseRect.top(), baseRect.width(), Metrics::ProgressBar_BusyIndicatorSize);
+        contentRect.translate(0, fabs(progress - 50) / 50.0 * (baseRect.height() - contentRect.height()));
+    }
+
+    painter->setBrush(color);
+    painter->setPen(outline.isValid()?outline:Qt::NoPen);
+    painter->drawRect(contentRect.translated(0.5, 0.5));
+}
+
+void DrawCommonHelper::renderProgressBarGroove(QPainter* painter, const QRect& rect,
+                                     const QColor& color , const QColor& outline)
+{
+
+    // setup painter
+    painter->setRenderHint( QPainter::Antialiasing, true );
+    painter->setRenderHint( QPainter::SmoothPixmapTransform, true );
+
+    QRectF baseRect( rect );
+
+    // content
+    if( color.isValid() ){
+        painter->setPen( outline.isValid()?outline:Qt::NoPen );
+        painter->setBrush( color );
+        painter->drawRect( baseRect.translated(0.5, 0.5) );
+    }
+}

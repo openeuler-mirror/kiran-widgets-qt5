@@ -18,6 +18,8 @@
 
 typedef QHash<QStyle::StandardPixmap, QIcon> IconCache;
 
+class QStyleAnimation;
+
 namespace Kiran {
     using ParentStyleClass = QProxyStyle;
 
@@ -101,10 +103,20 @@ namespace Kiran {
         /// 取消初始化整个程序
         void unpolish(QApplication *application) override;
 
+    public:
+        QList<const QObject*> animationTargets() const;
+        QStyleAnimation* animation(const QObject *target) const;
+        void startAnimation(QStyleAnimation *animation) const;
+        void stopAnimation(const QObject *target) const;
+
+    public Q_SLOTS:
+        void removeAnimation();
+
     private:
         StyleEnum m_styleType;
         StyleDetailFetcher *m_detailFetcher;
         IconCache m_iconCache;
+        mutable QHash<const QObject*, QStyleAnimation*> animations;
     };
 }
 
