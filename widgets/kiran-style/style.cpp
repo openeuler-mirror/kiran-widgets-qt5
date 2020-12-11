@@ -53,7 +53,11 @@ Style::Style(StyleEnum type)
 
 }
 
-Style::~Style() = default;
+Style::~Style(){
+    for(auto iter=animations.begin();iter!=animations.end();iter++){
+        delete iter.value();
+    }
+};
 
 void Style::drawPrimitive(QStyle::PrimitiveElement pe, const QStyleOption *opt,
                           QPainter *p, const QWidget *w) const
