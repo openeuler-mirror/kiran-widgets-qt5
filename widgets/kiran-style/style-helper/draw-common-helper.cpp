@@ -321,7 +321,7 @@ void DrawCommonHelper::drawArrow(StyleDetailFetcher* fetcher,
     if( !renderer.isValid() ){
         return;
     }
-    qInfo() << "markRect" << markRect;
+
     painter->save();
     painter->setRenderHint(QPainter::HighQualityAntialiasing, true);
     painter->translate(markRect.center());

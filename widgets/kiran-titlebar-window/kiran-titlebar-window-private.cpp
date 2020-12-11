@@ -59,8 +59,7 @@ void KiranTitlebarWindowPrivate::init()
     m_titleFontMonitor = FontMonitorFactory::createAppTitleFontMonitor();
     if( m_titleFontMonitor!= nullptr ){
         updateTitleFont(QFont());
-        qInfo() << "connect update font:" << connect(m_titleFontMonitor,&FontMonitor::fontChanged,
-                this,&KiranTitlebarWindowPrivate::updateTitleFont);
+        connect(m_titleFontMonitor,&FontMonitor::fontChanged,this,&KiranTitlebarWindowPrivate::updateTitleFont);
     }
 
     /// 内容栏

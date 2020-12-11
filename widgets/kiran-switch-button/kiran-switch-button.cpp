@@ -58,7 +58,6 @@ QSize KiranSwitchButton::sizeHint() const
         size = kiranStyle->sizeFromContents(Kiran::CT_SwitchButton,&optionButton,size,this);
     }
 
-    qInfo() << size;
     return size;
 }
 

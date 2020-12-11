@@ -565,9 +565,6 @@ bool DrawButtonHelper::drawSwitchButtonIndicatorPrimitive(const Style *style, co
     //背景
     if( isChecked ){
         QPainterPath backgroundPath;
-        if(  !(opt->state & QStyle::State_Enabled) ){
-            qInfo() << "disabled " << "ischecked:" << "bgcolor" << bgColor.red() << bgColor.green() << bgColor.blue();
-        }
         backgroundPath.addRoundedRect(opt->rect,radius,radius);
         p->fillPath(backgroundPath,bgColor);
 
