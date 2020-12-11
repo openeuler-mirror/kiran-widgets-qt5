@@ -10,6 +10,7 @@
 #include <QRect>
 #include <private/qcssparser_p.h>
 #include <QWidget>
+#include <QDebug>
 
 using namespace Kiran;
 
@@ -23,13 +24,15 @@ QSize DrawLineEditHelper::lineEditSizeFromContents(const Style* style,const QSty
     int frameWidth(style->pixelMetric(QStyle::PM_DefaultFrameWidth, option, widget));
 
     bool isKiranSearchBox(widget->inherits("KiranSearchBox"));
-
-    QSize size = DrawCommonHelper::expandSize(contentsSize,frameWidth);
+    bool flat(frameOption->lineWidth == 0);
+    QSize size = contentsSize;
+    if( !flat ){
+        size = DrawCommonHelper::expandSize(size,frameWidth);
+    }
     ///KiranSearchBox特殊处理，大小需加上高度，为画上搜索框图标
     if(isKiranSearchBox){
         size.rwidth()+=size.height();
     }
-
     return size;
 }
 
