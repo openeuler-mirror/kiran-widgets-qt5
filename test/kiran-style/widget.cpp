@@ -115,7 +115,6 @@ void Widget::initTabBar()
 void Widget::initSearchBox()
 {
     KiranSearchBox* searchBox = new KiranSearchBox(this);
-    searchBox->getLineEdit()->setPlaceholderText("KiranSearchBox");
     searchBox->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
     QBoxLayout* layout = qobject_cast<QBoxLayout*>(ui->tabWidget->widget(5)->layout());
     layout->addWidget(searchBox,0,Qt::AlignVCenter);

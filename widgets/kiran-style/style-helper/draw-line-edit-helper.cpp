@@ -20,9 +20,17 @@ QSize DrawLineEditHelper::lineEditSizeFromContents(const Style* style,const QSty
     const QStyleOptionFrame *frameOption(qstyleoption_cast<const QStyleOptionFrame *>(option));
     if (!frameOption) return contentsSize;
 
-    bool flat(frameOption->lineWidth == 0);
     int frameWidth(style->pixelMetric(QStyle::PM_DefaultFrameWidth, option, widget));
-    return flat ? contentsSize : DrawCommonHelper::expandSize(contentsSize, frameWidth);
+
+    bool isKiranSearchBox(widget->inherits("KiranSearchBox"));
+
+    QSize size = DrawCommonHelper::expandSize(contentsSize,frameWidth);
+    ///KiranSearchBox特殊处理，大小需加上高度，为画上搜索框图标
+    if(isKiranSearchBox){
+        size.rwidth()+=size.height();
+    }
+
+    return size;
 }
 
 bool DrawLineEditHelper::drawFrameLineEditPrimitive(const Style *style,const QStyleOption *opt, QPainter *painter,
@@ -54,22 +62,20 @@ bool DrawLineEditHelper::drawFrameLineEditPrimitive(const Style *style,const QSt
 
 QRect DrawLineEditHelper::lineEditContentsRect(const Style *style, const QStyleOption *opt, const QWidget *widget)
 {
+    QRect rect(opt->rect);
     const auto frameOption(qstyleoption_cast<const QStyleOptionFrame *>(opt));
-    if (!frameOption) return opt->rect;
-
-    bool flat(frameOption->lineWidth == 0);
-    if (flat) {
+    if (!frameOption) {
         return opt->rect;
     }
 
-    QRect rect(opt->rect);
-
     int frameWidth(style->pixelMetric(QStyle::PM_DefaultFrameWidth, opt, widget));
+    bool isKiranSearchBox(widget->inherits("KiranSearchBox"));
+    QRect contentsRect = rect.adjusted(frameWidth,frameWidth,-frameWidth,-frameWidth);
 
-    ///LineEdit矩形能够加FrameWidth的话返回带边距的内容矩形
-    if (rect.height() >= opt->fontMetrics.height() + 2 * frameWidth) {
-        return rect.adjusted(frameWidth, frameWidth, -frameWidth, -frameWidth);
-    } else {
-        return rect;
+    //预留出搜索框绘制搜索图标
+    if(isKiranSearchBox){
+        contentsRect.adjust(rect.size().height(),0,0,0);
     }
+
+    return contentsRect;
 }

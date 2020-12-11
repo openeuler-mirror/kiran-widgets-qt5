@@ -15,23 +15,6 @@
 
 using namespace Kiran;
 
-bool DrawSearchBoxHelper::drawSearchBoxFramePrimitive(const Style *style,
-                                                      const QStyleOption *opt,
-                                                      QPainter *p,
-                                                      StyleDetailFetcher *fetcher,
-                                                      const QWidget *widget)
-{
-    const QStyle::State & state = opt->state;
-
-    QColor backgroundColor = fetcher->getColor(widget,opt,StyleDetailFetcher::SearchBox_Background);
-    QColor borderColor = fetcher->getColor(widget,opt,StyleDetailFetcher::SearchBox_BorderColor);
-    int radius = fetcher->getInt(widget,opt,StyleDetailFetcher::SearchBox_BorderRadius);
-    int borderWidth = fetcher->getInt(widget,opt,StyleDetailFetcher::SearchBox_BorderWidth);
-
-    DrawCommonHelper::drawFrame(p,opt->rect,radius,borderWidth,backgroundColor,borderColor);
-    return true;
-}
-
 bool DrawSearchBoxHelper::drawSearchBoxIndicatorPrimitive(const Style *style,
                                                           const QStyleOption *opt,
                                                           QPainter *p,
@@ -42,6 +25,7 @@ bool DrawSearchBoxHelper::drawSearchBoxIndicatorPrimitive(const Style *style,
 
     QRect rect(opt->rect);
     rect.moveLeft(Metrics::LineEdit_FrameWidth/2);
+    rect.setWidth(opt->rect.height());
     QString searchIcon = fetcher->getUrl(StyleDetailFetcher::SearchBox_Icon,
                                          enabled?QCss::PseudoClass_Unspecified:QCss::PseudoClass_Disabled);
     QSvgRenderer renderer(searchIcon);

@@ -14,8 +14,7 @@ namespace Kiran{
 
     enum KiranPrimitiveElement{
         PE_SwitchButtonIndicator = QStyle::PE_CustomBase+1,
-        PE_SearchBoxIndicator,
-        PE_SearchBoxFrame,
+        PE_SearchBoxIndicator
     };
 
     enum KiranControlElement{

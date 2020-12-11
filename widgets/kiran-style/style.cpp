@@ -712,9 +712,6 @@ void Style::drawPrimitive(KiranPrimitiveElement pe, const QStyleOption *opt, QPa
         case PE_SearchBoxIndicator:
             DrawSearchBoxHelper::drawSearchBoxIndicatorPrimitive(this, opt, p, m_detailFetcher, w);
             break;
-        case PE_SearchBoxFrame:
-            DrawSearchBoxHelper::drawSearchBoxFramePrimitive(this, opt, p, m_detailFetcher, w);
-            break;
         default:
             break;
     }

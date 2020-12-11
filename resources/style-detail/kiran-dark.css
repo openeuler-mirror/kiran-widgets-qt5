@@ -340,21 +340,8 @@ IndicatorArrow:pressed{
 
 SearchBox{
     Icon: url(:/kiran-style/style-detail/search.svg);
-    Background: none;
-    BorderRadius:6;
-    BorderWidth: 1;
-    BorderColor: rgba(255,255,255,0.2);
-}
-
-SearchBox:focus{
-    BorderColor: rgb(33,166,255);
-    BorderWidth: 1;
 }
 
 SearchBox:disabled{
     Icon: url(:/kiran-style/style-detail/search_disabled.svg);
-    Background: rgba(255,255,255,0.05);
-    BorderRadius:6;
-    BorderWidth: 0;
-    BorderColor: rgba(255,255,255,0.2);
 }

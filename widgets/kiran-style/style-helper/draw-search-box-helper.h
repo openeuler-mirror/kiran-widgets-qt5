@@ -12,9 +12,6 @@ namespace Kiran {
     class Style;
     class StyleDetailFetcher;
     namespace DrawSearchBoxHelper {
-        bool drawSearchBoxFramePrimitive(const Style *style, const QStyleOption *opt, QPainter *p,
-                                         StyleDetailFetcher *fetcher, const QWidget *widget);
-
         bool drawSearchBoxIndicatorPrimitive(const Style *style, const QStyleOption *opt, QPainter *p,
                                              StyleDetailFetcher *fetcher, const QWidget *widget);
     };
