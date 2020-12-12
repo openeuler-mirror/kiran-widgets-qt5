@@ -20,11 +20,16 @@ bool DrawButtonHelper::drawPanelButtonToolPrimitive(const Style *style, const QS
                                                     const QWidget *widget)
 {
     bool isDockWidgetTitleButton = widget->inherits("QDockWidgetTitleButton");
-
+    bool inTabBar = (widget&&widget->parentWidget()&&widget->parentWidget()->inherits("QTabBar"));
     if (isDockWidgetTitleButton) {
         QColor toolColor = fetcher->getColor(widget, opt, StyleDetailFetcher::ToolButton_Background);
         DrawCommonHelper::drawFrame(p, opt->rect, 0, 0, toolColor, QColor());
-    } else {
+    } else if(inTabBar){
+        QColor background("#222222");
+        p->setPen(Qt::NoPen);
+        p->setBrush(background);
+        p->drawRect(opt->rect);
+    }else {
         int borderWidth, borderRadius;
         QColor bgColor, borderColor;
         bgColor = fetcher->getColor(widget, opt, StyleDetailFetcher::Button_NormalBackground);
@@ -33,7 +38,6 @@ bool DrawButtonHelper::drawPanelButtonToolPrimitive(const Style *style, const QS
         borderWidth = fetcher->getInt(widget, opt, StyleDetailFetcher::Button_NormalBorderWidth);
         DrawCommonHelper::drawFrame(p, opt->rect, borderRadius, borderWidth, bgColor, borderColor);
     }
-
     return true;
 }
 
@@ -450,17 +454,15 @@ bool DrawButtonHelper::drawToolButtonComplexControl(const Style *style, const QS
 
     if (toolButtonOption->subControls & QStyle::SC_ToolButton || isDockWidgetTitleButton) {
         copy.rect = buttonRect;
+        ///FIXME: 若QTabBar父控件存在样式表或自身存在样式表，Style为QStyleSheetStyle
+        ///      在StyleSheetStyle::drawComplexControl(CC_ToolButton)中
+        ///      会直接调用到QWindowsStyle::drawComplexControl导致样式不统一
+        ///TODO: 需要把drawToolButtonCoplexComtrol和QCommonStyle中进行统一保证样式统一
         if( inTabBar ) {
             QRect rect(opt->rect);
             QColor background("#222222");
             p->setPen(Qt::NoPen);
             p->setBrush(background);
-            switch (toolButtonOption->arrowType) {
-                case Qt::UpArrow: p->drawRect(rect.adjusted(0, 0, 0, 0)); break;
-                case Qt::DownArrow: p->drawRect(rect.adjusted(0, 0, 0, 0)); break;
-                case Qt::LeftArrow: p->drawRect(rect.adjusted(0, 0, 0, 0)); break;
-                case Qt::RightArrow: p->drawRect(rect.adjusted(0, 0, 0, 0)); break;
-            }
         } else if (sunken && hasPopupMenu && !(toolButtonOption->activeSubControls & QStyle::SC_ToolButton)) {
             QStyleOptionToolButton btn(copy);
             btn.state |= QStyle::State_Raised;

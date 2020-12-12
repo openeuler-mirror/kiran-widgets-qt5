@@ -50,7 +50,7 @@ Style::Style(StyleEnum type)
           m_styleType(type),
           m_detailFetcher(new StyleDetailFetcher(type, this))
 {
-
+    setObjectName("kiran-style");
 }
 
 Style::~Style(){
@@ -632,13 +632,6 @@ QIcon Style::titleBarButtonIcon(StyleDetailFetcher *fetcher,
     }
 
     return icon;
-}
-
-QIcon Style::toolBarExtensionIcon(QStyle::StandardPixmap standardIcon,
-                                  const QStyleOption *opt,
-                                  const QWidget *widget) const
-{
-    return QIcon();
 }
 
 void Style::polish(QPalette &palette)

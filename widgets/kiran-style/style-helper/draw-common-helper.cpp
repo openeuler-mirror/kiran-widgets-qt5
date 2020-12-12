@@ -294,7 +294,10 @@ void DrawCommonHelper::drawArrow(StyleDetailFetcher* fetcher,
                                  ArrowOrientation orientation)
 {
     QRect rect(option->rect);
-    QRect markRect(rect.adjusted(1, 1, -1, -1));
+    int markSize = qMin(rect.width(),rect.height());
+    QRect markRect(0,0,markSize,markSize);
+    markRect.moveCenter(rect.center());
+
     QString iconUrl = fetcher->getUrl(widget,option,StyleDetailFetcher::IndicatorArrow_Icon);
 
     qreal rorateAngle = 0.0;

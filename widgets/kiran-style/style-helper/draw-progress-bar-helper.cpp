@@ -89,7 +89,7 @@ QRect DrawProgressBarHelper::progressBarContentsRect(const Style *style, const Q
                                                      const QWidget *widget)
 {
     const QStyleOptionProgressBar* progressBarOption( qstyleoption_cast<const QStyleOptionProgressBar*>( option ) );
-    if( !progressBarOption ) return QRect();
+    if( !progressBarOption ) return {};
 
     // get groove rect
     QRect rect( progressBarGrooveRect( style,option, widget ) );
@@ -149,7 +149,6 @@ QRect DrawProgressBarHelper::progressBarLabelRect(const Style *style, const QSty
     rect.setWidth(textWidth);
 
     ProgressBarTextPosition textPosition = PropertyHelper::getProgressBarTextPosition(qobject_cast<const QProgressBar*>(widget));
-    qInfo() << textPosition;
     switch (textPosition) {
         case PROGRESS_TEXT_LEFT:
             rect.moveLeft(option->rect.left()+1);

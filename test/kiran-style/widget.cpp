@@ -16,10 +16,10 @@
 using namespace Kiran;
 
 Widget::Widget(QWidget *parent)
-    : QWidget(parent)
+    : KiranTitlebarWindow()
     , ui(new Ui::Widget)
 {
-    ui->setupUi(this);
+    ui->setupUi(getWindowContentWidget());
     ui->checkBox_2->setCheckState(Qt::Checked);
     connect(ui->checkBox_2,&QCheckBox::stateChanged,[this](int state){
         auto setAllWidgetEnable = [this](bool enable){
@@ -31,6 +31,8 @@ Widget::Widget(QWidget *parent)
             setAllWidgetEnable(true);
         }
     });
+
+    qInfo() << ui->tabWidget->tabBar()->style()->objectName();
 
     initTabBar();
     initPushButtonTab();
