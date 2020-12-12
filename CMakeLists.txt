@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.5)
 option(install-examples "install examples" ON)
 
 #构建测试代码选项
-option(build-tests "build tests" OFF)
+option(build-tests "build tests" ON)
 
 project(kiranwidgets-qt5)
 
@@ -31,20 +31,32 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
-file(GLOB_RECURSE PUBLIC_CPP "public/*.cpp")
-file(GLOB_RECURSE PUBLIC_H "public/*.h")
-file(GLOB_RECURSE WIDGET_CPP "widgets/*.cpp")
-file(GLOB_RECURSE WIDGET_H "widgets/*.h")
+#公共部分代码
+file(GLOB_RECURSE PUBLIC_CPP "src/public/*.cpp")
+file(GLOB_RECURSE PUBLIC_H "src/public/*.h")
+
+#widgets源码
+file(GLOB_RECURSE WIDGET_CPP "src/widgets/*.cpp")
+file(GLOB_RECURSE WIDGET_H "src/widgets/*.h")
+
+#style源码
+file(GLOB_RECURSE STYLE_CPP "src/kiran-style/*.cpp")
+file(GLOB_RECURSE STYLE_H   "src/kiran-style/*.h")
+
+#资源文件
 file(GLOB_RECURSE RESOURCES "resources/*.qrc")
+
+#翻译
 set(TS_FILES "translations/kiranwidgets-qt5.zh_CN.ts")
 
+#开发头文件,需提供到devel包的文件
 set(DEVEL_HEADER
-        "widgets/kiran-titlebar-window/kiran-titlebar-window.h"
-        "widgets/kiran-message-box/kiran-message-box.h"
-        "widgets/kiran-switch-button/kiran-switch-button.h"
-        "widgets/kiran-application/kiran-application.h"
-        "widgets/kiran-single-application/kiran-single-application.h"
-        "widgets/kiran-style/style-data/style-property-helper.h")
+        "src/widgets/kiran-titlebar-window/kiran-titlebar-window.h"
+        "src/widgets/kiran-message-box/kiran-message-box.h"
+        "src/widgets/kiran-switch-button/kiran-switch-button.h"
+        "src/widgets/kiran-application/kiran-application.h"
+        "src/widgets/kiran-single-application/kiran-single-application.h"
+        "src/kiran-style/style-data/style-property-helper.h")
 
 include_directories("${CMAKE_BINARY_DIR}")
 
@@ -57,6 +69,8 @@ add_library(${PROJECT_NAME} SHARED
         ${PUBLIC_H}
         ${WIDGET_CPP}
         ${WIDGET_H}
+        ${STYLE_CPP}
+        ${STYLE_H}
         ${RESOURCES}
         ${QM_FILES})
 
@@ -65,10 +79,10 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
         SOVERSION ${KIRANWIDGETS_API_VERSION})
 
 target_include_directories(${PROJECT_NAME} PRIVATE
-        widgets/
-        public/
-        widgets/kiran-application/
-        widgets/kiran-style/
+        src/widgets/
+        src/public/
+        src/widgets/kiran-application/
+        src/kiran-style/
         ${GSETTINGS_QT_INCLUDE_DIRS}
         ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
         ${Qt5Widgets_PRIVATE_INCLUDE_DIRS})

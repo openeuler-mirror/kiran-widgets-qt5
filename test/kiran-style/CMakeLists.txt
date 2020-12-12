@@ -22,10 +22,10 @@ add_executable(${PROJECT_NAME}
         ${FORMS})
 
 target_include_directories(${PROJECT_NAME} PRIVATE
-        ../../widgets/kiran-application/
-        ../../widgets/kiran-style/
-        ../../widgets/kiran-switch-button
-        ../../widgets/kiran-search-box
-        ../../widgets/kiran-titlebar-window)
+        ../../src/widgets/kiran-application/
+        ../../src/kiran-style/
+        ../../src/widgets/kiran-switch-button
+        ../../src/widgets/kiran-search-box
+        ../../src/widgets/kiran-titlebar-window)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Widgets kiranwidgets-qt5)

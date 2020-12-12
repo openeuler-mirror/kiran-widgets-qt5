@@ -32,8 +32,6 @@ Widget::Widget(QWidget *parent)
         }
     });
 
-    qInfo() << ui->tabWidget->tabBar()->style()->objectName();
-
     initTabBar();
     initPushButtonTab();
     initSwitchButtonTab();
