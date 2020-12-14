@@ -23,21 +23,18 @@
 #ifndef SINGLE_APPLICATION_H
 #define SINGLE_APPLICATION_H
 
-#include "kiran-application.h"
-
 #include <QtCore/QtGlobal>
 #include <QtNetwork/QLocalSocket>
+#include <kiran-application.h>
 
-///FIXME:need update
 
 class KiranSingleApplicationPrivate;
-
 /**
  * @brief The SingleApplication class handles multiple instances of the same
  * Application
  * @see QCoreApplication
  */
-class Q_DECL_EXPORT KiranSingleApplication : public KiranApplication
+class KiranSingleApplication : public KiranApplication
 {
     Q_OBJECT
 
@@ -83,7 +80,7 @@ public:
      * Usually 4*timeout would be the worst case (fail) scenario.
      * @see See the corresponding QAPPLICATION_CLASS constructor for reference
      */
-    explicit KiranSingleApplication( int &argc, char *argv[], bool allowSecondary = false, Options options = Mode::User, int timeout = 1000 );
+    explicit KiranSingleApplication(int &argc, char *argv[], bool allowSecondary = false, Options options = Mode::User, int timeout = 1000 );
     ~KiranSingleApplication() override;
 
     /**
@@ -138,6 +135,7 @@ Q_SIGNALS:
 private:
     KiranSingleApplicationPrivate *d_ptr;
     Q_DECLARE_PRIVATE(KiranSingleApplication)
+    void abortSafely();
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(KiranSingleApplication::Options)

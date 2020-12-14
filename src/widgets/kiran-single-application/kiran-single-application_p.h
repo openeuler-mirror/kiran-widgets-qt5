@@ -41,8 +41,8 @@ struct InstancesInfo {
     bool primary;
     quint32 secondary;
     qint64 primaryPid;
-    quint16 checksum;
     char primaryUser[128];
+    quint16 checksum; // Must be the last field
 };
 
 struct ConnectionInfo {
@@ -52,7 +52,7 @@ struct ConnectionInfo {
 };
 
 class KiranSingleApplicationPrivate : public QObject {
-    Q_OBJECT
+Q_OBJECT
 public:
     enum ConnectionType : quint8 {
         InvalidConnection = 0,
@@ -67,20 +67,21 @@ public:
     };
     Q_DECLARE_PUBLIC(KiranSingleApplication)
 
-    KiranSingleApplicationPrivate( KiranSingleApplication *q_ptr );
+    KiranSingleApplicationPrivate(KiranSingleApplication *q_ptr );
     ~KiranSingleApplicationPrivate() override;
 
-    QString getUsername();
+    static QString getUsername();
     void genBlockServerName();
-    void initializeMemoryBlock();
+    void initializeMemoryBlock() const;
     void startPrimary();
     void startSecondary();
-    void connectToPrimary(int msecs, ConnectionType connectionType );
-    quint16 blockChecksum();
-    qint64 primaryPid();
-    QString primaryUser();
+    bool connectToPrimary( int msecs, ConnectionType connectionType );
+    quint16 blockChecksum() const;
+    qint64 primaryPid() const;
+    QString primaryUser() const;
     void readInitMessageHeader(QLocalSocket *socket);
     void readInitMessageBody(QLocalSocket *socket);
+    static void randomSleep();
 
     KiranSingleApplication *q_ptr;
     QSharedMemory *memory;
