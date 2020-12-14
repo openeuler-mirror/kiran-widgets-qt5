@@ -18,7 +18,13 @@ public:
     explicit KiranProgressBar(QWidget *parent = nullptr);
     ~KiranProgressBar();
 
+    /// NOTE: textPosition 只在KiranStyle下使用才生效
+    /// 设置进度显示位置
+    /// \param position 进度显示位置
     void setTextPosition(Kiran::ProgressBarTextPosition position);
+
+    /// 获取进度显示位置
+    /// \return 进度文本显示位置
     Kiran::ProgressBarTextPosition getTextPosition();
 
 protected:

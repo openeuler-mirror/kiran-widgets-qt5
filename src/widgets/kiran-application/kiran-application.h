@@ -26,7 +26,6 @@ class Q_DECL_EXPORT KiranApplication : public QApplication {
     Q_OBJECT
     Q_DECLARE_PRIVATE(KiranApplication)
     Q_DISABLE_COPY(KiranApplication)
-
 public:
     KiranApplication(int &argc, char **argv, int appFlags= ApplicationFlags);
     ~KiranApplication();

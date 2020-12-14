@@ -10,6 +10,8 @@
 class KiranSearchBoxPrivate;
 class QLineEdit;
 class QStyleOption;
+
+/// NOTE:搜索框，只有才KiranStyle下才支持绘制搜索图标，其他Style下绘制出来只是个普通输入框
 class Q_DECL_EXPORT KiranSearchBox :public QLineEdit{
     Q_OBJECT
     Q_DECLARE_PRIVATE(KiranSearchBox)
@@ -18,6 +20,7 @@ public:
     ~KiranSearchBox();
 
 protected:
+    ///NOTE:预留
     bool event(QEvent *event) override;
     void paintEvent(QPaintEvent *) override;
     virtual bool eventFilter(QObject *watched, QEvent *event) override;

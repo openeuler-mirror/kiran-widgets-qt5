@@ -10,6 +10,7 @@
 class KiranSwitchButtonPrivate;
 class QStyleOptionButton;
 
+/// SwitchButton，仅在KiranStyle下生效，其他Style中仅绘制成Button
 class Q_DECL_EXPORT KiranSwitchButton : public QAbstractButton{
     Q_OBJECT
     Q_DECLARE_PRIVATE(KiranSwitchButton);

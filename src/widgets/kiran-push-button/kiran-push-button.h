@@ -18,7 +18,13 @@ public:
     KiranPushButton(const QIcon& icon, const QString &text, QWidget *parent = nullptr);
     ~KiranPushButton();
 
+    /// NOTE:只在KiranStyle下才能生效
+    /// 设置按钮类型(KiranStyle提供了三种内置按钮样式)
+    /// \param buttonType   按钮类型
     void setButtonType(Kiran::ButtonType buttonType);
+
+    /// 获取按钮类型
+    /// \return 按钮类型
     Kiran::ButtonType getButtonType();
 
 protected:

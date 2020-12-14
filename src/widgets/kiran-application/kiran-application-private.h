@@ -8,6 +8,7 @@
 #include "kiran-application.h"
 
 #include <QObject>
+#include <QFont>
 
 class FontMonitor;
 class KiranApplicationPrivate : public QObject{
