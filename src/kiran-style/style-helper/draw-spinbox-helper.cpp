@@ -5,6 +5,7 @@
 #include "draw-common-helper.h"
 #include "draw-spinbox-helper.h"
 #include "style.h"
+#include "style-property-helper.h"
 
 #include <QStyleOption>
 #include <QPainter>
@@ -100,21 +101,17 @@ DrawSpinboxHelper::spinBoxSubControlRect(const Style *style,const QStyleOptionCo
     bool hasFrame = spinBoxOption->frame;
     QRect rect(spinBoxOption->rect);
 
-    ///TODO:从PropertyHelper中尝试读取属性
+    SpinboxArrowPosition position = PropertyHelper::getSpinboxButtonPosition(w);
 
-    enum SpinboxArrowPosition {
-        ARROW_TWO_SIDERS,       ///左右两侧
-        ARROW_HORIZONTAL_STACK, ///左右堆叠
-        ARROW_VERTICAL_STACK    ///上下堆叠
-    } position;
-
-    if (rect.width() < (rect.height() * 2 + 24)) {///左右堆叠两个正方形按钮,留空不够
-        position = ARROW_VERTICAL_STACK;
-    } else if ((rect.width() >= (rect.height() * 2 + 24)) &&
-               (rect.width() < (rect.height() * 2 + 24 + 180))) {///左右堆叠两个正方形按钮，留空正常，按钮放两侧
-        position = ARROW_TWO_SIDERS;
-    } else {
-        position = ARROW_HORIZONTAL_STACK;
+    if ( position == ARROW_POSITION_AUTOMATIC ){
+        if (rect.width() < (rect.height() * 2 + 24)) {///左右堆叠两个正方形按钮,留空不够
+            position = ARROW_VERTICAL_STACK;
+        } else if ((rect.width() >= (rect.height() * 2 + 24)) &&
+                   (rect.width() < (rect.height() * 2 + 24 + 180))) {///左右堆叠两个正方形按钮，留空正常，按钮放两侧
+            position = ARROW_TWO_SIDERS;
+        } else {
+            position = ARROW_HORIZONTAL_STACK;
+        }
     }
 
     switch (subControl) {

@@ -7,11 +7,6 @@
 
 namespace Kiran{
 
-    ///支持的主题枚举
-    enum StyleEnum {
-        KIRAN_BLACK
-    };
-
     enum ButtonType {
         BUTTON_Normal,  ///普通按钮
         BUTTON_Default, ///默认按钮，突出显示

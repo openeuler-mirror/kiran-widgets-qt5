@@ -55,11 +55,9 @@ set(DEVEL_HEADER
         "src/widgets/kiran-message-box/kiran-message-box.h"
         "src/widgets/kiran-switch-button/kiran-switch-button.h"
         "src/widgets/kiran-application/kiran-application.h"
-        "src/widgets/kiran-progress-bar/kiran-progress-bar.h"
-        "src/widgets/kiran-push-button/kiran-push-button.h"
         "src/widgets/kiran-search-box/kiran-search-box.h"
-        "src/widgets/kiran-spin-box/kiran-spin-box.h"
         "src/widgets/kiran-single-application/kiran-single-application.h"
+        "src/kiran-style/style-property-helper.h"
         "src/kiran-style/kiran-public-define.h" )
 
 include_directories("${CMAKE_BINARY_DIR}")

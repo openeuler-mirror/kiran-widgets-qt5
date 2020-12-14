@@ -39,13 +39,13 @@ void PropertyHelper::setButtonType(QPushButton *btn, ButtonType type)
     btn->setProperty(PROPERTY_KIRAN_BUTTON_TYPE,type);
 }
 
-void PropertyHelper::setSpinboxButtonPosition(QSpinBox *spinBox,
+void PropertyHelper::setSpinboxButtonPosition(QWidget *spinBox,
                                                      SpinboxArrowPosition position)
 {
     spinBox->setProperty(PROPERTY_KIRAN_SPINBOX_POSITION,position);
 }
 
-SpinboxArrowPosition PropertyHelper::getSpinboxButtonPosition(QSpinBox *spinBox)
+SpinboxArrowPosition PropertyHelper::getSpinboxButtonPosition(const QWidget *spinBox)
 {
     SpinboxArrowPosition position = ARROW_POSITION_AUTOMATIC;
     QVariant var = spinBox->property(PROPERTY_KIRAN_SPINBOX_POSITION);

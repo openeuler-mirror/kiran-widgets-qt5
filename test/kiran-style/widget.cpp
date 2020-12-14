@@ -32,6 +32,8 @@ Widget::Widget(QWidget *parent)
         }
     });
 
+    PropertyHelper::setSpinboxButtonPosition(ui->timeEdit,Kiran::ARROW_TWO_SIDERS);
+
     initTabBar();
     initPushButtonTab();
     initSwitchButtonTab();
@@ -127,4 +129,5 @@ void Widget::initProgressBar()
     ui->progressBar->setMaximum(60);
     ui->progressBar->setValue(50);
     ui->progressBar->setOrientation(Qt::Horizontal);
+    PropertyHelper::setProgressBarTextProsition(ui->progressBar,Kiran::PROGRESS_TEXT_RIGHT);
 }
