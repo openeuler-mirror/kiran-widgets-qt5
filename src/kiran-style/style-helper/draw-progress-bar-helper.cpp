@@ -5,7 +5,7 @@
 #include "draw-progress-bar-helper.h"
 #include "draw-common-helper.h"
 #include "style.h"
-#include "style-data/style-property-helper.h"
+#include "style-property-helper.h"
 
 #include <QStyleOption>
 #include <QDebug>

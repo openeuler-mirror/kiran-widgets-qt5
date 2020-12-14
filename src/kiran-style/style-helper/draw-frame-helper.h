@@ -8,7 +8,7 @@
 #include <QStyle>
 #include <QStyleOption>
 
-#include "style-data/style-detail-fetcher.h"
+#include "style-detail-fetcher.h"
 
 namespace Kiran{
     class Style;

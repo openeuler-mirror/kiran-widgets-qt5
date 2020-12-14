@@ -9,8 +9,9 @@
 #include <QProxyStyle>
 #include <QIcon>
 
-#include "kiran-global-defines.h"
-#include "style-data/style-detail-fetcher.h"
+#include "kiran-private-defines.h"
+#include "kiran-public-define.h"
+#include "style-detail-fetcher.h"
 
 ///TODO: 暂时不加入动画
 

@@ -56,7 +56,7 @@ set(DEVEL_HEADER
         "src/widgets/kiran-switch-button/kiran-switch-button.h"
         "src/widgets/kiran-application/kiran-application.h"
         "src/widgets/kiran-single-application/kiran-single-application.h"
-        "src/kiran-style/style-data/style-property-helper.h")
+        "src/kiran-style/style-property-helper.h")
 
 include_directories("${CMAKE_BINARY_DIR}")
 

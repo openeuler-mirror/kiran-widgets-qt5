@@ -12,7 +12,8 @@
 #include <QUrl>
 #include <QMutex>
 
-#include "kiran-global-defines.h"
+#include "kiran-private-defines.h"
+#include "kiran-public-define.h"
 
 namespace Kiran{
     ///TODO:匹配规则加上特殊匹配,处理特殊情况，例如标题栏聚焦会有按下的样式

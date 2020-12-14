@@ -3,7 +3,7 @@
 //
 
 #include "style.h"
-#include "style-data/style-detail-fetcher.h"
+#include "style-detail-fetcher.h"
 
 #include "style-helper/draw-common-helper.h"
 #include "style-helper/draw-frame-helper.h"

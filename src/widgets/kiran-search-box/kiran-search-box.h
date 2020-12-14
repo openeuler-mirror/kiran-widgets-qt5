@@ -10,7 +10,7 @@
 class KiranSearchBoxPrivate;
 class QLineEdit;
 class QStyleOption;
-class KiranSearchBox :public QLineEdit{
+class Q_DECL_EXPORT KiranSearchBox :public QLineEdit{
     Q_OBJECT
     Q_DECLARE_PRIVATE(KiranSearchBox)
 public:

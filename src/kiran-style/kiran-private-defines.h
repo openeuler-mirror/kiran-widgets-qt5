@@ -9,10 +9,6 @@
 
 #define  KIRAN_DEFAULT_ANIMATION_FPS 40
 namespace Kiran{
-    enum StyleEnum {
-        KIRAN_BLACK
-    };
-
     enum KiranPrimitiveElement{
         PE_SwitchButtonIndicator = QStyle::PE_CustomBase+1,
         PE_SearchBoxIndicator

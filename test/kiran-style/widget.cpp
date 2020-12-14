@@ -4,7 +4,7 @@
 #include "kiran-application.h"
 #include "kiran-switch-button.h"
 #include "kiran-search-box.h"
-#include "style-data/style-property-helper.h"
+#include "style-property-helper.h"
 
 #include <QApplication>
 #include <QAction>

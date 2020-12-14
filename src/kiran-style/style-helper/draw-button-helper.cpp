@@ -7,10 +7,10 @@
 #include <QPushButton>
 #include <QDebug>
 
-#include "style-data/style-property-helper.h"
+#include "style-property-helper.h"
+#include "style-detail-fetcher.h"
 #include "draw-common-helper.h"
 #include "style.h"
-#include "style-data/style-detail-fetcher.h"
 #include "draw-button-helper.h"
 
 using namespace Kiran;

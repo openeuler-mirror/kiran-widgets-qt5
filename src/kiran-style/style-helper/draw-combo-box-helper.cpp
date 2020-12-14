@@ -3,7 +3,7 @@
 //
 
 #include "draw-combo-box-helper.h"
-#include "style-data/style-detail-fetcher.h"
+#include "style-detail-fetcher.h"
 #include "draw-common-helper.h"
 #include "style.h"
 

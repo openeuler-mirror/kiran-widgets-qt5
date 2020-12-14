@@ -4,7 +4,7 @@
 
 #include "draw-line-edit-helper.h"
 #include "draw-common-helper.h"
-#include "style-data/style-detail-fetcher.h"
+#include "style-detail-fetcher.h"
 #include "style.h"
 
 #include <QRect>

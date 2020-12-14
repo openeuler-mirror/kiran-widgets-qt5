@@ -10,7 +10,7 @@
 class KiranSwitchButtonPrivate;
 class QStyleOptionButton;
 
-class KiranSwitchButton : public QAbstractButton{
+class Q_DECL_EXPORT KiranSwitchButton : public QAbstractButton{
     Q_OBJECT
     Q_DECLARE_PRIVATE(KiranSwitchButton);
 public:

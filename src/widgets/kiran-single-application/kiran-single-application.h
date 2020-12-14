@@ -28,6 +28,8 @@
 #include <QtCore/QtGlobal>
 #include <QtNetwork/QLocalSocket>
 
+///FIXME:need update
+
 class KiranSingleApplicationPrivate;
 
 /**
