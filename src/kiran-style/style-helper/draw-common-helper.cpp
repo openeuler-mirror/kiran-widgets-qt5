@@ -451,7 +451,7 @@ void DrawCommonHelper::renderProgressBarBusyContents(QPainter *painter, const QR
     }
 
     painter->setBrush(color);
-    painter->setPen(outline.isValid()?outline:Qt::NoPen);
+    painter->setPen(outline.isValid()?outline:Qt::transparent);
     painter->drawRect(contentRect.translated(0.5, 0.5));
 }
 
@@ -460,14 +460,14 @@ void DrawCommonHelper::renderProgressBarGroove(QPainter* painter, const QRect& r
 {
 
     // setup painter
-    painter->setRenderHint( QPainter::Antialiasing, true );
+//    painter->setRenderHint( QPainter::Antialiasing, true );
     painter->setRenderHint( QPainter::SmoothPixmapTransform, true );
 
     QRectF baseRect( rect );
 
     // content
     if( color.isValid() ){
-        painter->setPen( outline.isValid()?outline:Qt::NoPen );
+        painter->setPen( outline.isValid()?outline:Qt::transparent );
         painter->setBrush( color );
         painter->drawRect( baseRect.translated(0.5, 0.5) );
     }

@@ -196,7 +196,7 @@ bool DrawProgressBarHelper::drawProgressBarGrooveControl(const Style *style, con
                                                          const QWidget *widget)
 {
     QColor grooveColor = fetcher->getColor(widget,opt,StyleDetailFetcher::ProgressBar_GrooveColor);
-    DrawCommonHelper::renderProgressBarGroove(p,opt->rect,grooveColor,Qt::transparent);
+    DrawCommonHelper::renderProgressBarGroove(p,opt->rect,grooveColor,QColor());
     return true;
 }
 
