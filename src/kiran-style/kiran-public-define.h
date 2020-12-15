@@ -7,12 +7,14 @@
 
 namespace Kiran{
 
+    /// KiranStyle中内置的三种按钮样式
     enum ButtonType {
         BUTTON_Normal,  ///普通按钮
         BUTTON_Default, ///默认按钮，突出显示
         BUTTON_Warning  ///警告按钮，突出警示显示
     };
 
+    /// Spinbox类型(包括QSpinBox,QTimeEdit,QDateEdit,QDateTimeEdit等)上下按钮位置枚举
     enum SpinboxArrowPosition {
         ARROW_POSITION_AUTOMATIC,   ///自动根据位置进行定位
         ARROW_TWO_SIDERS,           ///左右两侧
@@ -20,7 +22,7 @@ namespace Kiran{
         ARROW_VERTICAL_STACK        ///上下堆叠
     };
 
-    ///进度条进度显示位置
+    /// QProgressBar进度条进度文本显示位置
     enum ProgressBarTextPosition {
         PROGRESS_TEXT_LEFT,     // 水平-左侧 垂直-上侧
         PROGRESS_TEXT_CENTER,   // 中间
