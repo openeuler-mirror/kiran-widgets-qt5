@@ -7,11 +7,11 @@
 #include <QPushButton>
 #include <QDebug>
 
+#include "style.h"
+#include "draw-common-helper.h"
+#include "draw-button-helper.h"
 #include "style-property-helper.h"
 #include "style-detail-fetcher.h"
-#include "draw-common-helper.h"
-#include "style.h"
-#include "draw-button-helper.h"
 
 using namespace Kiran;
 
@@ -20,16 +20,17 @@ bool DrawButtonHelper::drawPanelButtonToolPrimitive(const Style *style, const QS
                                                     const QWidget *widget)
 {
     bool isDockWidgetTitleButton = widget->inherits("QDockWidgetTitleButton");
-    bool inTabBar = (widget&&widget->parentWidget()&&widget->parentWidget()->inherits("QTabBar"));
-    if (isDockWidgetTitleButton) {
+    bool inTabBar = (widget && widget->parentWidget() && widget->parentWidget()->inherits("QTabBar"));
+
+    if (isDockWidgetTitleButton) {///在DockWidget中的TitleButton特殊绘制
         QColor toolColor = fetcher->getColor(widget, opt, StyleDetailFetcher::ToolButton_Background);
         DrawCommonHelper::drawFrame(p, opt->rect, 0, 0, toolColor, QColor());
-    } else if(inTabBar){
-        QColor background("#222222");
+    } else if (inTabBar) {///在TabBar中的按钮特殊绘制
+        QColor background = opt->palette.color(QPalette::Window);
         p->setPen(Qt::NoPen);
         p->setBrush(background);
         p->drawRect(opt->rect);
-    }else {
+    } else {///普通QToolButton
         int borderWidth, borderRadius;
         QColor bgColor, borderColor;
         bgColor = fetcher->getColor(widget, opt, StyleDetailFetcher::Button_NormalBackground);
@@ -45,9 +46,10 @@ bool DrawButtonHelper::drawIndicatorRadioButton(const Style *style, const QStyle
                                                 StyleDetailFetcher *fetcher, const QWidget *widget)
 {
     const QRect &rect(opt->rect);
+    bool isOn = opt->state & QStyle::State_On;
+
     QColor color = fetcher->getColor(widget, opt, StyleDetailFetcher::RadioButton_IndicatorColor);
 
-    bool isOn = opt->state & QStyle::State_On;
     DrawCommonHelper::drawRadioButtonIndicator(p, rect, color, isOn);
 
     return true;
@@ -56,19 +58,21 @@ bool DrawButtonHelper::drawIndicatorRadioButton(const Style *style, const QStyle
 bool DrawButtonHelper::drawIndicatorCheckBox(const Style *style, const QStyleOption *opt, QPainter *p,
                                              StyleDetailFetcher *fetcher, const QWidget *widget)
 {
-    const QStyleOptionButton *optionButton(qstyleoption_cast<const QStyleOptionButton*>(opt));
-    if( !optionButton ){
+    auto optionButton(qstyleoption_cast<const QStyleOptionButton *>(opt));
+    if (!optionButton) {
         return true;
     }
+
+
     CheckBoxIndicatorState checkState(CheckOff);
-    if( opt->state & QStyle::State_NoChange )
+    if (opt->state & QStyle::State_NoChange)
         checkState = CheckPartial;
-    else if( opt->state & QStyle::State_On )
+    else if (opt->state & QStyle::State_On)
         checkState = CheckOn;
 
-    QColor bgColor = fetcher->getColor(widget,opt,StyleDetailFetcher::CheckBox_IndicatorBackground);
-    QColor signColor = fetcher->getColor(widget,opt,StyleDetailFetcher::CheckBox_IndicatorSign);
-    QColor borderColor = fetcher->getColor(widget,opt,StyleDetailFetcher::CheckBox_BorderColor);
+    QColor bgColor = fetcher->getColor(widget, opt, StyleDetailFetcher::CheckBox_IndicatorBackground);
+    QColor signColor = fetcher->getColor(widget, opt, StyleDetailFetcher::CheckBox_IndicatorSign);
+    QColor borderColor = fetcher->getColor(widget, opt, StyleDetailFetcher::CheckBox_BorderColor);
 
     DrawCommonHelper::drawCheckBoxIndicator(p, opt->rect, borderColor, bgColor, signColor, checkState);
     return true;
@@ -77,25 +81,23 @@ bool DrawButtonHelper::drawIndicatorCheckBox(const Style *style, const QStyleOpt
 bool DrawButtonHelper::drawPushButtonBevelControl(const Style *style, const QStyleOption *opt, QPainter *p,
                                                   StyleDetailFetcher *fetcher, const QWidget *widget)
 {
-    const QStyleOptionButton *buttonOption = nullptr;
-    buttonOption = qstyleoption_cast<const QStyleOptionButton *>(opt);
+    auto buttonOption = qstyleoption_cast<const QStyleOptionButton *>(opt);
     if (!buttonOption) {
         return true;
     }
 
-    ///提取出来
     bool on = buttonOption->state & QStyle::State_On;
     bool flat = buttonOption->features & QStyleOptionButton::Flat;
 
-    StyleDetailFetcher::StyleDetailPropertyName bgColorProperty,borderColorProperty,borderWidthProperty;
+    StyleDetailFetcher::StyleDetailPropertyName bgColorProperty, borderColorProperty, borderWidthProperty;
 
-    if( flat ){
+    if (flat) { //flat button绘制选项
         bgColorProperty = StyleDetailFetcher::Button_FlatBackground;
         borderColorProperty = StyleDetailFetcher::Button_FlatBorderColor;
         borderWidthProperty = StyleDetailFetcher::Button_FlatBorderWidth;
-    }else{
-        auto btn = qobject_cast<const QPushButton*>(widget);
-        if( !btn ){
+    } else { //根据按钮类型获取绘制选项
+        auto btn = qobject_cast<const QPushButton *>(widget);
+        if (!btn) {
             return true;
         }
         ButtonType buttonType = PropertyHelper::getButtonType(btn);
@@ -118,20 +120,19 @@ bool DrawButtonHelper::drawPushButtonBevelControl(const Style *style, const QSty
         }
     }
 
+    /// 获取绘制选项
     int specialPseudo = 0;
     int radius, borderWidth;
     QColor bgColor, borderColor;
-
-    if(on){
+    //特殊处理按钮按下激活的状态
+    if (on) {
         specialPseudo = QCss::PseudoClass_Pressed;
     }
 
     radius = fetcher->getInt(widget, opt, StyleDetailFetcher::Button_Radius, specialPseudo);
-
+    borderWidth = fetcher->getInt(widget, opt, borderWidthProperty, specialPseudo);
     bgColor = fetcher->getColor(widget, opt, bgColorProperty, specialPseudo);
-    borderColor = fetcher->getColor(widget, opt, borderColorProperty,specialPseudo);
-    borderWidth = fetcher->getInt(widget, opt, borderWidthProperty,specialPseudo);
-
+    borderColor = fetcher->getColor(widget, opt, borderColorProperty, specialPseudo);
 
     DrawCommonHelper::drawFrame(p, opt->rect, radius, borderWidth, bgColor, borderColor);
     return true;
@@ -140,7 +141,7 @@ bool DrawButtonHelper::drawPushButtonBevelControl(const Style *style, const QSty
 bool DrawButtonHelper::drawPushButtonLabelControl(const Style *style, const QStyleOption *opt, QPainter *p,
                                                   StyleDetailFetcher *fetcher, const QWidget *widget)
 {
-    const QStyleOptionButton *buttonOption(qstyleoption_cast<const QStyleOptionButton *>(opt));
+    auto buttonOption(qstyleoption_cast<const QStyleOptionButton *>(opt));
     if (!buttonOption)
         return true;
 
@@ -150,13 +151,10 @@ bool DrawButtonHelper::drawPushButtonLabelControl(const Style *style, const QSty
     const bool mouseOver(opt->state & QStyle::State_MouseOver);
     const bool hasFocus(opt->state & QStyle::State_HasFocus);
     const bool flat(buttonOption->features & QStyleOptionButton::Flat);
-
     const bool hasText(!buttonOption->text.isEmpty());
     const bool hasIcon((flat || !hasText) && !buttonOption->icon.isNull());
-
-    QRect contentsRect(opt->rect);
-
     const QSize iconSize = buttonOption->iconSize;
+    QRect contentsRect(opt->rect);
 
     // text
     int textFlags(Qt::AlignCenter);
@@ -167,14 +165,15 @@ bool DrawButtonHelper::drawPushButtonLabelControl(const Style *style, const QSty
     else
         textFlags |= Qt::TextHideMnemonic;
 
-
     QRect iconRect;
     QRect textRect;
 
-    if (hasText && !hasIcon) textRect = contentsRect;
-    else if (hasIcon && !hasText) iconRect = contentsRect;
-    else {
-        /// 图标和文字一起靠中间
+    if (hasText && !hasIcon) {
+        textRect = contentsRect;
+    } else if (hasIcon && !hasText) {
+        iconRect = contentsRect;
+    } else {
+        // 图标和文字一起靠中间
         const int contentsWidth(iconSize.width() + textSize.width() + Metrics::Button_ItemSpacing);
         iconRect = QRect(QPoint(contentsRect.left() + (contentsRect.width() - contentsWidth) / 2,
                                 contentsRect.top() + (contentsRect.height() - iconSize.height()) / 2), iconSize);
@@ -182,9 +181,11 @@ bool DrawButtonHelper::drawPushButtonLabelControl(const Style *style, const QSty
                                 contentsRect.top() + (contentsRect.height() - textSize.height()) / 2), textSize);
     }
 
-    // handle right to left
-    if (iconRect.isValid()) iconRect = style->proxy()->visualRect(opt->direction, opt->rect, iconRect);
-    if (textRect.isValid()) textRect = style->proxy()->visualRect(opt->direction, opt->rect, textRect);
+    // 处理从右到左的布局方向
+    if (iconRect.isValid())
+        iconRect = QStyle::visualRect(opt->direction, opt->rect, iconRect);
+    if (textRect.isValid())
+        textRect = QStyle::visualRect(opt->direction, opt->rect, textRect);
 
     // 图片居中iconRect
     if (iconRect.isValid()) {
@@ -195,9 +196,8 @@ bool DrawButtonHelper::drawPushButtonLabelControl(const Style *style, const QSty
         iconRect = tempRect;
     }
 
-    // render icon
+    // 绘制图标
     if (hasIcon && iconRect.isValid()) {
-        // icon state and mode
         const QIcon::State iconState(sunken ? QIcon::On : QIcon::Off);
         QIcon::Mode iconMode;
         if (!enabled) iconMode = QIcon::Disabled;
@@ -208,14 +208,15 @@ bool DrawButtonHelper::drawPushButtonLabelControl(const Style *style, const QSty
         buttonOption->icon.paint(p, iconRect, Qt::AlignCenter, iconMode, iconState);
     }
 
-    // render text
+    // 绘制文本
     if (hasText && textRect.isValid()) {
+        int menuButtonIndicatorSize = style->pixelMetric(QStyle::PM_MenuButtonIndicator,buttonOption,widget);
         QColor textColor = fetcher->getColor(widget, opt, flat ? StyleDetailFetcher::Button_FlatTextColor
-                                                                          : StyleDetailFetcher::Button_TextColor);
+                                                               : StyleDetailFetcher::Button_TextColor);
         p->setPen(textColor);
 
         if (buttonOption->features & QStyleOptionButton::HasMenu)
-            textRect = textRect.adjusted(0, 0, -style->proxy()->pixelMetric(QStyle::PM_MenuButtonIndicator, buttonOption, widget), 0);
+            textRect = textRect.adjusted(0, 0,-menuButtonIndicatorSize, 0);
 
         p->drawText(textRect, textFlags, buttonOption->text);
     }
@@ -226,8 +227,7 @@ bool DrawButtonHelper::drawPushButtonLabelControl(const Style *style, const QSty
 bool DrawButtonHelper::drawPushButtonControl(const Style *style, const QStyleOption *opt, QPainter *p,
                                              StyleDetailFetcher *fetcher, const QWidget *widget)
 {
-    const QStyleOptionButton *buttonOption = nullptr;
-    buttonOption = qstyleoption_cast<const QStyleOptionButton *>(opt);
+    auto buttonOption = qstyleoption_cast<const QStyleOptionButton *>(opt);
     if (!buttonOption) {
         return true;
     }
@@ -244,7 +244,7 @@ bool DrawButtonHelper::drawPushButtonControl(const Style *style, const QStyleOpt
 bool DrawButtonHelper::drawToolButtonLabelControl(const Style *style, const QStyleOption *opt, QPainter *p,
                                                   StyleDetailFetcher *fetcher, const QWidget *widget)
 {
-    const QStyleOptionToolButton *buttonOption(qstyleoption_cast<const QStyleOptionToolButton *>(opt));
+    auto buttonOption(qstyleoption_cast<const QStyleOptionToolButton *>(opt));
     if (!buttonOption)
         return true;
 
@@ -350,11 +350,13 @@ bool DrawButtonHelper::drawToolButtonLabelControl(const Style *style, const QSty
     // 绘制文字
     if (hasText && textRect.isValid()) {
         QColor textColor = fetcher->getColor(widget, opt, flat ? StyleDetailFetcher::Button_FlatTextColor
-                                                                          : StyleDetailFetcher::Button_TextColor);
+                                                               : StyleDetailFetcher::Button_TextColor);
         p->setPen(textColor);
 
         if (buttonOption->features & QStyleOptionButton::HasMenu)
-            textRect = textRect.adjusted(0, 0, -style->proxy()->pixelMetric(QStyle::PM_MenuButtonIndicator, buttonOption, widget), 0);
+            textRect = textRect.adjusted(0, 0,
+                                         -style->proxy()->pixelMetric(QStyle::PM_MenuButtonIndicator, buttonOption,
+                                                                      widget), 0);
 
         p->drawText(textRect, textFlags, buttonOption->text);
     }
@@ -365,41 +367,39 @@ bool DrawButtonHelper::drawToolButtonLabelControl(const Style *style, const QSty
 bool DrawButtonHelper::drawCheckBoxLabelControl(const Style *style, const QStyleOption *opt, QPainter *p,
                                                 StyleDetailFetcher *fetcher, const QWidget *widget)
 {
-    const QStyleOptionButton* buttonOption( qstyleoption_cast<const QStyleOptionButton*>(opt) );
-    if( !buttonOption ) return true;
+    const QStyleOptionButton *buttonOption(qstyleoption_cast<const QStyleOptionButton *>(opt));
+    if (!buttonOption) return true;
 
-    const QRect& rect( opt->rect );
+    const QRect &rect(opt->rect);
 
-    const QStyle::State& state( opt->state );
-    bool enabled( state & QStyle::State_Enabled );
+    const QStyle::State &state(opt->state);
+    bool enabled(state & QStyle::State_Enabled);
 
     // 是否反向布局从右到左
-    bool reverseLayout( opt->direction == Qt::RightToLeft );
+    bool reverseLayout(opt->direction == Qt::RightToLeft);
     // 文字对齐标志
-    int alignmentFlag( Qt::AlignVCenter | (reverseLayout ? Qt::AlignRight:Qt::AlignLeft ) );
+    int alignmentFlag(Qt::AlignVCenter | (reverseLayout ? Qt::AlignRight : Qt::AlignLeft));
 
-    QRect textRect( rect );
+    QRect textRect(rect);
     const QIcon &buttonIcon = buttonOption->icon;
 
     //图标
-    if( !buttonIcon.isNull() ){
-        //获取当前状态的图标
-        const QIcon::Mode mode( enabled ? QIcon::Normal : QIcon::Disabled );
-        //转换成图片
-        QPixmap pixmap( buttonOption->icon.pixmap(  buttonOption->iconSize, mode ) );
-        //绘制
-        style->drawItemPixmap( p, rect,alignmentFlag, pixmap );
+    if (!buttonIcon.isNull()) {
+        const QIcon::Mode mode(enabled ? QIcon::Normal : QIcon::Disabled);
+        QPixmap pixmap(buttonOption->icon.pixmap(buttonOption->iconSize, mode));
+        style->drawItemPixmap(p, rect, alignmentFlag, pixmap);
         //重新定位文字绘制矩形
-        textRect.setLeft( textRect.left() + buttonOption->iconSize.width() + 4 );
+        textRect.setLeft(textRect.left() + buttonOption->iconSize.width() + 4);
         //适配从右往左的布局
-        textRect = style->visualRect( opt->direction,opt->rect, textRect );
+        textRect = style->visualRect(opt->direction, opt->rect, textRect);
     }
 
     //文本
-    if( !buttonOption->text.isEmpty() ) {
-        textRect = opt->fontMetrics.boundingRect( textRect, alignmentFlag, buttonOption->text );
-        style->drawItemText( p, textRect, alignmentFlag, opt->palette, enabled, buttonOption->text, QPalette::WindowText );
-        bool hasFocus( enabled && ( state & QStyle::State_HasFocus ) );
+    if (!buttonOption->text.isEmpty()) {
+        textRect = opt->fontMetrics.boundingRect(textRect, alignmentFlag, buttonOption->text);
+        style->drawItemText(p, textRect, alignmentFlag, opt->palette, enabled, buttonOption->text,
+                            QPalette::WindowText);
+        bool hasFocus(enabled && (state & QStyle::State_HasFocus));
     }
 
     return true;
@@ -408,13 +408,13 @@ bool DrawButtonHelper::drawCheckBoxLabelControl(const Style *style, const QStyle
 QRect DrawButtonHelper::checkBoxContentsRect(const Style *style, const QStyleOption *opt, const QWidget *w)
 {
     return style->visualRect(opt->direction, opt->rect,
-                      opt->rect.adjusted(Metrics::CheckBox_Size + 2 * Metrics::CheckBox_ItemSpacing, 0, 0, 0));
+                             opt->rect.adjusted(Metrics::CheckBox_Size + 2 * Metrics::CheckBox_ItemSpacing, 0, 0, 0));
 }
 
 bool DrawButtonHelper::drawToolButtonComplexControl(const Style *style, const QStyleOptionComplex *opt,
-                                                    StyleDetailFetcher *fetcher,QPainter* p, const QWidget *widget)
+                                                    StyleDetailFetcher *fetcher, QPainter *p, const QWidget *widget)
 {
-    const QStyleOptionToolButton *toolButtonOption(qstyleoption_cast<const QStyleOptionToolButton *>(opt));
+    auto toolButtonOption(qstyleoption_cast<const QStyleOptionToolButton *>(opt));
     if (!toolButtonOption)
         return true;
 
@@ -458,7 +458,7 @@ bool DrawButtonHelper::drawToolButtonComplexControl(const Style *style, const QS
         ///      在StyleSheetStyle::drawComplexControl(CC_ToolButton)中
         ///      会直接调用到QWindowsStyle::drawComplexControl导致样式不统一
         ///TODO: 需要把drawToolButtonCoplexComtrol和QCommonStyle中进行统一保证样式统一
-        if( inTabBar ) {
+        if (inTabBar) {
             QRect rect(opt->rect);
             QColor background("#222222");
             p->setPen(Qt::NoPen);
@@ -531,14 +531,15 @@ QSize DrawButtonHelper::checkBoxSizeFromContents(const Style *style, const QStyl
     return size;
 }
 
-QSize DrawButtonHelper::switchButtonSizeFromContents(const Style *style, const QStyleOption *opt, const QSize &contentSize,
+QSize
+DrawButtonHelper::switchButtonSizeFromContents(const Style *style, const QStyleOption *opt, const QSize &contentSize,
                                                const QWidget *w)
 {
     QSize size(contentSize);
 
-    size.setHeight(qMax(size.height(),int(Metrics::SwitchButton_IndicatorHeight)));
+    size.setHeight(qMax(size.height(), int(Metrics::SwitchButton_IndicatorHeight)));
 
-    size = DrawCommonHelper::expandSize(size,0,Metrics::SwitchButton_FocusMarginWidth);
+    size = DrawCommonHelper::expandSize(size, 0, Metrics::SwitchButton_FocusMarginWidth);
 
     size.rwidth() += Metrics::SwitchButton_ItemSpacing;
     size.rwidth() += Metrics::SwitchButton_IndicatorWidth;
@@ -549,36 +550,38 @@ QSize DrawButtonHelper::switchButtonSizeFromContents(const Style *style, const Q
 bool DrawButtonHelper::drawSwitchButtonIndicatorPrimitive(const Style *style, const QStyleOption *opt, QPainter *p,
                                                           StyleDetailFetcher *fetcher, const QWidget *widget)
 {
-    p->setRenderHint(QPainter::Antialiasing,true);
+    p->setRenderHint(QPainter::Antialiasing, true);
 
-    bool isChecked = opt->state&QStyle::State_On;
+    bool isChecked = opt->state & QStyle::State_On;
 
     int pseudoStatus = QCss::PseudoClass_Unspecified;
 
-    int radius = opt->rect.height()/2;
-    int borderWidth = fetcher->getInt(widget,opt,StyleDetailFetcher::SwitchButton_BorderWidth);
+    int radius = opt->rect.height() / 2;
+    int borderWidth = fetcher->getInt(widget, opt, StyleDetailFetcher::SwitchButton_BorderWidth);
     int indicatorCircularSize = Metrics::SwitchButton_IndicatorCircularSize;
     int indicatorCircularSpacing = Metrics::SwitchButton_IndicatorCircularSpacing;
 
-    QColor borderColor = fetcher->getColor(widget,opt,StyleDetailFetcher::SwitchButton_BorderColor,pseudoStatus);
-    QColor bgColor = fetcher->getColor(widget,opt,StyleDetailFetcher::SwitchButton_Background,pseudoStatus);
-    QColor indicatorCircularColor = fetcher->getColor(widget, opt, StyleDetailFetcher::SwitchButton_IndicatorCircularBackground,pseudoStatus);
+    QColor borderColor = fetcher->getColor(widget, opt, StyleDetailFetcher::SwitchButton_BorderColor, pseudoStatus);
+    QColor bgColor = fetcher->getColor(widget, opt, StyleDetailFetcher::SwitchButton_Background, pseudoStatus);
+    QColor indicatorCircularColor = fetcher->getColor(widget, opt,
+                                                      StyleDetailFetcher::SwitchButton_IndicatorCircularBackground,
+                                                      pseudoStatus);
 
     //背景
-    if( isChecked ){
+    if (isChecked) {
         QPainterPath backgroundPath;
-        backgroundPath.addRoundedRect(opt->rect,radius,radius);
-        p->fillPath(backgroundPath,bgColor);
+        backgroundPath.addRoundedRect(opt->rect, radius, radius);
+        p->fillPath(backgroundPath, bgColor);
 
         //indicator
-        QRect indicatorCircularRect(opt->rect.right()-indicatorCircularSpacing-indicatorCircularSize,
-                                    opt->rect.y()+(opt->rect.height()-indicatorCircularSize)/2,
+        QRect indicatorCircularRect(opt->rect.right() - indicatorCircularSpacing - indicatorCircularSize,
+                                    opt->rect.y() + (opt->rect.height() - indicatorCircularSize) / 2,
                                     indicatorCircularSize,
                                     indicatorCircularSize);
 
         QPainterPath painterPath;
         painterPath.addEllipse(indicatorCircularRect);
-        p->fillPath(painterPath,indicatorCircularColor);
+        p->fillPath(painterPath, indicatorCircularColor);
     } else {
         //border
         p->save();
@@ -586,18 +589,18 @@ bool DrawButtonHelper::drawSwitchButtonIndicatorPrimitive(const Style *style, co
         pen.setColor(borderColor);
         pen.setWidth(borderWidth);
         p->setPen(pen);
-        p->drawRoundedRect(opt->rect,radius,radius);
+        p->drawRoundedRect(opt->rect, radius, radius);
         p->restore();
 
         //indicator
-        QRect indicatorCircularRect(opt->rect.x()+indicatorCircularSpacing,
-                                    opt->rect.y()+(opt->rect.height()-indicatorCircularSize)/2,
+        QRect indicatorCircularRect(opt->rect.x() + indicatorCircularSpacing,
+                                    opt->rect.y() + (opt->rect.height() - indicatorCircularSize) / 2,
                                     indicatorCircularSize,
                                     indicatorCircularSize);
 
         QPainterPath painterPath;
         painterPath.addEllipse(indicatorCircularRect);
-        p->fillPath(painterPath,indicatorCircularColor);
+        p->fillPath(painterPath, indicatorCircularColor);
     }
 
     return true;
@@ -606,25 +609,26 @@ bool DrawButtonHelper::drawSwitchButtonIndicatorPrimitive(const Style *style, co
 bool DrawButtonHelper::drawSwitchButtonControl(const Style *style, const QStyleOption *opt, QPainter *p,
                                                StyleDetailFetcher *fetcher, const QWidget *widget)
 {
-    const QStyleOptionButton* optionButton = qstyleoption_cast<const QStyleOptionButton*>(opt);
-    if( !optionButton ){
+    const QStyleOptionButton *optionButton = qstyleoption_cast<const QStyleOptionButton *>(opt);
+    if (!optionButton) {
         return true;
     }
 
     bool enabled = opt->state & QStyle::State_Enabled;
-    bool reverseLayout( opt->direction == Qt::RightToLeft );
-    int alignmentFlag( Qt::AlignVCenter | (reverseLayout ? Qt::AlignRight:Qt::AlignLeft ) );
+    bool reverseLayout(opt->direction == Qt::RightToLeft);
+    int alignmentFlag(Qt::AlignVCenter | (reverseLayout ? Qt::AlignRight : Qt::AlignLeft));
 
-    QRect indicatorRect,contentsRect;
+    QRect indicatorRect, contentsRect;
 
-    indicatorRect = style->subElementRect(SE_SwitchButtonIndicator,opt,widget);
-    contentsRect = style->subElementRect(SE_SwitchButtonContents,opt,widget);
+    indicatorRect = style->subElementRect(SE_SwitchButtonIndicator, opt, widget);
+    contentsRect = style->subElementRect(SE_SwitchButtonContents, opt, widget);
 
     QStyleOptionButton indicatorOption(*optionButton);
     indicatorOption.rect = indicatorRect;
     style->drawPrimitive(PE_SwitchButtonIndicator, &indicatorOption, p, widget);
 
-    style->drawItemText(p,contentsRect,alignmentFlag,opt->palette,enabled,optionButton->text,QPalette::WindowText);
+    style->drawItemText(p, contentsRect, alignmentFlag, opt->palette, enabled, optionButton->text,
+                        QPalette::WindowText);
 
     return true;
 }
@@ -634,16 +638,17 @@ QRect DrawButtonHelper::switchButtonContetnsRect(const Style *style, const QStyl
     QRect contentsRect(opt->rect);
     return style->visualRect(opt->direction,
                              opt->rect,
-                             contentsRect.adjusted(Metrics::SwitchButton_ItemSpacing+Metrics::SwitchButton_IndicatorWidth+1,
-                                                   0,0,0));
+                             contentsRect.adjusted(
+                                     Metrics::SwitchButton_ItemSpacing + Metrics::SwitchButton_IndicatorWidth + 1,
+                                     0, 0, 0));
 }
 
 QRect DrawButtonHelper::switchButtonIndicatorRect(const Style *style, const QStyleOption *opt, const QWidget *w)
 {
     return style->visualRect(opt->direction,
                              opt->rect,
-                             QRect(opt->rect.x()+1,
-                                   opt->rect.y()+(opt->rect.height()-Metrics::SwitchButton_IndicatorHeight)/2,
+                             QRect(opt->rect.x() + 1,
+                                   opt->rect.y() + (opt->rect.height() - Metrics::SwitchButton_IndicatorHeight) / 2,
                                    Metrics::SwitchButton_IndicatorWidth,
                                    Metrics::SwitchButton_IndicatorHeight));
 }
