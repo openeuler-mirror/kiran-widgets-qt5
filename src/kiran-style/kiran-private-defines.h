@@ -1,7 +1,10 @@
-//
-// Created by lxh on 2020/11/24.
-//
-
+/*
+ * @file   kiran-private-defines.h
+ * @brief  KiranStyle所使用的相关私有定义和枚举值
+ * @author liuxinhao <liuxinhao@kylinos.com.cn>
+ * @copyright (c) 2020 KylinSec. All rights reserved.
+ */
+ 
 #ifndef KIRANSTYLE_KIRAN_GLOBAL_DEFINES_H
 #define KIRANSTYLE_KIRAN_GLOBAL_DEFINES_H
 

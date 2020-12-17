@@ -1,6 +1,10 @@
-//
-// Created by lxh on 2020/12/11.
-//
+/*
+ * @file   draw-progress-bar-helper.h
+ * @brief  绘制进度条
+ * @author liuxinhao <liuxinhao@kylinos.com.cn>
+ * @copyright (c) 2020 KylinSec. All rights reserved.
+ */
+ 
 
 #ifndef KIRANWIDGETS_QT5_DRAW_PROGRESS_BAR_HELPER_H
 #define KIRANWIDGETS_QT5_DRAW_PROGRESS_BAR_HELPER_H
@@ -14,6 +18,9 @@ class QPainter;
 namespace Kiran {
     class Style;
     class StyleDetailFetcher;
+    /**
+     * @brief 绘制进度条的相关方法
+     */
     namespace DrawProgressBarHelper {
         //sizeFromContents
         QSize progressBarSizeFromContents(const Style *style, const QStyleOption *opt,

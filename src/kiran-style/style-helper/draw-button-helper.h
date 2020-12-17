@@ -1,7 +1,10 @@
-//
-// Created by lxh on 2020/11/27.
-//
-
+/*
+ * @file   draw-button-helper.h
+ * @brief  绘制QPushButton、QToolButton、QCheckBox、QRadioButton、SwitchButton等细节
+ * @author liuxinhao <liuxinhao@kylinos.com.cn>
+ * @copyright (c) 2020 KylinSec. All rights reserved.
+ */
+ 
 #ifndef KIRANSTYLE_DRAW_BUTTON_HELPER_H
 #define KIRANSTYLE_DRAW_BUTTON_HELPER_H
 
@@ -12,8 +15,11 @@ class QPainter;
 namespace Kiran{
     class Style;
     class StyleDetailFetcher;
+    /**
+     * @brief 绘制Button的相关方法
+     */
     namespace DrawButtonHelper {
-        ///pushbutton
+        /* pushbutton */
         bool drawPushButtonControl(const Style* style,const QStyleOption* opt,
                                    QPainter* p, StyleDetailFetcher* fetcher,const QWidget* widget);
         bool drawPushButtonBevelControl(const Style* style,const QStyleOption* opt,
@@ -21,7 +27,7 @@ namespace Kiran{
         bool drawPushButtonLabelControl(const Style* style,const QStyleOption* opt,
                                         QPainter* p, StyleDetailFetcher* fetcher,const QWidget* widget);
 
-        ///toolbutton
+        /* toolbutton */
         bool drawToolButtonComplexControl(const Style* style,const QStyleOptionComplex* opt,
                                           StyleDetailFetcher* fetcher,QPainter *p,const QWidget* widget);
         bool drawToolButtonLabelControl(const Style* style,const QStyleOption* opt,
@@ -29,7 +35,7 @@ namespace Kiran{
         bool drawPanelButtonToolPrimitive(const Style* style , const QStyleOption* opt,
                                           QPainter* p, StyleDetailFetcher* fetcher, const QWidget* widget);
 
-        ///checkbox,radiobutton
+        /* checkbox,radiobutton */
         QSize checkBoxSizeFromContents(const Style *style, const QStyleOption *opt,
                                        const QSize &contentsSize,const QWidget *w,
                                        StyleDetailFetcher *detailFetcher);
@@ -41,7 +47,7 @@ namespace Kiran{
         bool drawIndicatorRadioButton(const Style* style,const QStyleOption* opt,
                                       QPainter* p,StyleDetailFetcher* fetcher,const QWidget* widget);
 
-        ///switchbutton
+        /* switchbutton */
         QSize switchButtonSizeFromContents(const Style* style,const QStyleOption* opt,
                                            const QSize& contentSize,const QWidget*w);
         QRect switchButtonContetnsRect(const Style* style,const QStyleOption* opt,const QWidget* w);

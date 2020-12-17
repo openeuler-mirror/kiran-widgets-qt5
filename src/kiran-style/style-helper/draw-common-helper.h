@@ -1,7 +1,10 @@
-//
-// Created by lxh on 2020/11/19.
-//
-
+/*
+ * @file   draw-common-helper.h
+ * @brief  绘制通用的一些细节等方法
+ * @author liuxinhao <liuxinhao@kylinos.com.cn>
+ * @copyright (c) 2020 KylinSec. All rights reserved.
+ */
+ 
 #ifndef KIRANSTYLE_DRAW_COMMON_HELPER_H
 #define KIRANSTYLE_DRAW_COMMON_HELPER_H
 

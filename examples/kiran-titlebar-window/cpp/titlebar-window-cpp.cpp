@@ -1,5 +1,4 @@
 #include "titlebar-window-cpp.h"
-
 #include <QIcon>
 #include <QLineEdit>
 #include <QLabel>

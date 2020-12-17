@@ -1,23 +1,25 @@
-//
-// Created by lxh on 2020/12/15.
-//
-
+/*
+ * @file   draw-item-view-helper.h
+ * @brief  绘制ItemView
+ * @author liuxinhao <liuxinhao@kylinos.com.cn>
+ * @copyright (c) 2020 KylinSec. All rights reserved.
+ */
+ 
 #ifndef KIRANWIDGETS_QT5_DRAW_ITEM_VIEW_HELPER_H
 #define KIRANWIDGETS_QT5_DRAW_ITEM_VIEW_HELPER_H
 
 #include <QRect>
 
 class QStyleOption;
-
 class QSize;
-
 class QWidget;
-
 class QPainter;
 namespace Kiran {
     class Style;
-
     class StyleDetailFetcher;
+    /**
+     * @brief 绘制ItemView的相关方法
+     */
     namespace DrawItemViewHelper {
         //eg: ListView::updateGeometries->ListViewPrivate::itemSize->Delegate::sizeHint->delegate::sizeHint->Style::sizeFromContents
         QSize kiranSidebarItemSizeFromContent(const Style *style, const QStyleOption *opt,

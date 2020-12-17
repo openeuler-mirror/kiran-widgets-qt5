@@ -1,7 +1,10 @@
-//
-// Created by lxh on 2020/11/27.
-//
-
+/*
+ * @file   draw-menu-helper.h
+ * @brief  绘制Menu
+ * @author liuxinhao <liuxinhao@kylinos.com.cn>
+ * @copyright (c) 2020 KylinSec. All rights reserved.
+ */
+ 
 #ifndef KIRANSTYLE_DRAW_MENU_HELPER_H
 #define KIRANSTYLE_DRAW_MENU_HELPER_H
 
@@ -13,6 +16,9 @@ class QPainter;
 namespace Kiran{
     class Style;
     class StyleDetailFetcher;
+    /**
+     * @brief 绘制Menu相关方法
+     */
     namespace DrawMenuHelper{
         /// Menu
         /// 绘制QComboBox下拉框、绘制QMenu框架

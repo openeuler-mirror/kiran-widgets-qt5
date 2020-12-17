@@ -1,6 +1,9 @@
-//
-// Created by lxh on 2020/11/16.
-//
+/*
+ * @file   style.h
+ * @brief  Style的相关实现
+ * @author liuxinhao <liuxinhao@kylinos.com.cn>
+ * @copyright (c) 2020 KylinSec. All rights reserved.
+ */
 
 #ifndef KIRANSTYLE_STYLE_H
 #define KIRANSTYLE_STYLE_H

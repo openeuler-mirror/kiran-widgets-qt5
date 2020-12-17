@@ -1,7 +1,10 @@
-//
-// Created by lxh on 2020/11/27.
-//
-
+/*
+ * @file   draw-frame-helper.h
+ * @brief  绘制QFrame和其派生类的相关方法
+ * @author liuxinhao <liuxinhao@kylinos.com.cn>
+ * @copyright (c) 2020 KylinSec. All rights reserved.
+ */
+ 
 #ifndef KIRANSTYLE_DRAW_FRAME_HELPER_H
 #define KIRANSTYLE_DRAW_FRAME_HELPER_H
 

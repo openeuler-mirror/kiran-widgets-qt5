@@ -1,6 +1,9 @@
-//
-// Created by lxh on 2020/12/4.
-//
+/*
+ * @file   draw-scroll-bar-helper.h
+ * @brief  绘制滚动条
+ * @author liuxinhao <liuxinhao@kylinos.com.cn>
+ * @copyright (c) 2020 KylinSec. All rights reserved.
+ */
 
 #ifndef KIRANSTYLE_DRAW_SCROLL_BAR_HELPER_H
 #define KIRANSTYLE_DRAW_SCROLL_BAR_HELPER_H
@@ -8,30 +11,15 @@
 #include <QStyle>
 #include <QRect>
 
-///drawComplexControl
-//  CC_ScrollBar
-//
-///drawControl
-//	CE_ScrollBarAddLine
-//	CE_ScrollBarSubLine
-//	CE_ScrollBarAddPage empty
-//	CE_ScrollBarSubPage empy
-//	CE_ScrollBarSlider
-//
-//subControlRect
-//	SC_ScrollBarSubLine empty
-//	SC_ScrollBarAddLine empty
-//	SC_ScrollBarGroove
-//	SC_ScrollBarSlider
-//	SC_ScrollBarSubPage
-//	SC_ScrollBarAddPage
-
 class QStyleOptionComplex;
 class QPainter;
 class QWidget;
 namespace Kiran{
     class Style;
     class StyleDetailFetcher;
+    /**
+     * @brief 绘制滚动条的相关方法
+     */
     namespace DrawScrollBarHelper{
 
         ///drawComplexControl - CC_ScrollBar

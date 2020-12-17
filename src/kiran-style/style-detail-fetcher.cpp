@@ -383,18 +383,18 @@ void Kiran::StyleDetailFetcher::polish(QPalette *palette)
 }
 
 template<class ValueType>
-ValueType Kiran::StyleDetailFetcher::getValue(const QWidget* widget,const QStyleOption* styleOption,
-                   StyleDetailPropertyName selector,StyleDetailValueType valueType,quint64 specialqseudo){
+ValueType Kiran::StyleDetailFetcher::getValue(const QWidget* widget, const QStyleOption* styleOption,
+                                              StyleDetailPropertyName selector, StyleDetailValueType valueTypeEnum, quint64 specialqseudo){
     QVariant var;
-    var = fetchStyleDetail(widget,styleOption,selector,valueType,specialqseudo);
+    var = fetchStyleDetail(widget, styleOption, selector, valueTypeEnum, specialqseudo);
     return var.value<ValueType>();
 }
 
 template<class ValueType>
 ValueType Kiran::StyleDetailFetcher::getValue(StyleDetailPropertyName selector,quint64 qseudoClass
-        ,StyleDetailValueType valueType){
+        ,StyleDetailValueType valueTypeEnum){
     QVariant var;
-    var = fetchStyleDetail(selector,qseudoClass,valueType);
+    var = fetchStyleDetail(selector, qseudoClass, valueTypeEnum);
     return var.value<ValueType>();
 }
 

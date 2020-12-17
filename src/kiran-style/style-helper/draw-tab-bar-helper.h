@@ -1,6 +1,9 @@
-//
-// Created by lxh on 2020/12/7.
-//
+/*
+ * @file   draw-tab-bar-helper.h
+ * @brief  绘制TabBar的相关方法
+ * @author liuxinhao <liuxinhao@kylinos.com.cn>
+ * @copyright (c) 2020 KylinSec. All rights reserved.
+ */
 
 #ifndef KIRANWIDGETS_QT5_DRAW_TAB_BAR_HELPER_H
 #define KIRANWIDGETS_QT5_DRAW_TAB_BAR_HELPER_H
@@ -9,10 +12,12 @@
 
 class QWidget;
 class QPainter;
-
 namespace Kiran{
     class Style;
     class StyleDetailFetcher;
+    /**
+     * @brief 绘制TabBar的相关方法
+     */
     namespace DrawTabBarHelper{
         ///获取TabBar Tab大小
         QSize tabBarTabSizeFromContents(const Style *style, const QStyleOption *opt, const QSize &contentsSize,

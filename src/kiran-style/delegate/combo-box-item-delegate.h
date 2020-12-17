@@ -1,6 +1,10 @@
-//
-// Created by lxh on 2020/11/30.
-//
+/*
+ * @file   combo-box-item-delegate.h
+ * @brief  QComboBox的绘制代理
+ * 　　　　　KiranStyle::polish一个QComboBox时设置代理为该代理，以控制QComboBox的绘制过程
+ * @author liuxinhao <liuxinhao@kylinos.com.cn>
+ * @copyright (c) 2020 KylinSec. All rights reserved.
+ */
 
 #ifndef KIRANSTYLE_COMBO_BOX_ITEM_DELEGATE_H
 #define KIRANSTYLE_COMBO_BOX_ITEM_DELEGATE_H

@@ -1,7 +1,9 @@
-//
-// Created by lxh on 2020/11/3.
-//
-
+/*
+ * @file   main.cpp
+ * @brief　实例化使用KiranMessageBox例子
+ * @author liuxinhao <liuxinhao@kylinos.com.cn>
+ * @copyright (c) 2020 KylinSec. All rights reserved.
+ */
 #include <QApplication>
 #include <kiranwidgets-qt5/kiran-message-box.h>
 #include <QPushButton>
@@ -23,8 +25,10 @@ int main(int argc,char* argv[])
     btn_1->setText("cancel");
     btn_1->setFixedSize(box.buttonSize());
 
+    /* 添加按钮 */
     box.addButton(btn,QDialogButtonBox::AcceptRole);
     box.addButton(btn_1,QDialogButtonBox::RejectRole);
+
     box.exec();
     if( box.clickedButton() == btn ){
         qInfo() << "confrim";
