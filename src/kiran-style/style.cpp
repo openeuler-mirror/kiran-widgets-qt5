@@ -70,7 +70,7 @@ void Style::drawPrimitive(QStyle::PrimitiveElement pe, const QStyleOption *opt,
     switch (pe) {
         case PE_Frame:
             ///滑动区域不绘制边框
-            if( w && w->inherits("QAbstractScrollArea")){
+            if( w && w->inherits("QListView")){
                 isOk = true;
                 break;
             }
