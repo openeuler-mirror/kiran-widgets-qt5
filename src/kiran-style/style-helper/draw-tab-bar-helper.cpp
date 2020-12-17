@@ -213,7 +213,7 @@ bool DrawTabBarHelper::drawTabBarTabShapeControl(const Style *style, const QStyl
         p->fillPath(painterPath, bgColor);
     }
 
-    return false;
+    return true;
 }
 
 QRect DrawTabBarHelper::tabBarTabLeftButtonElementRect(const Style *style,
@@ -316,10 +316,9 @@ QRect DrawTabBarHelper::tabBarTabTabTextElementRect(const Style *style,
 }
 
 //获取TabBarTab该有的大小
-QSize DrawTabBarHelper::tabBarTabSizeFromContents(const Style *style,
-                                                  const QStyleOption *opt,
-                                                  const QSize &contentsSize,
-                                                  const QWidget *w)
+QSize
+DrawTabBarHelper::tabBarTabSizeFromContents(const Style *style, const QStyleOption *opt, const QSize &contentsSize,
+                                            const QWidget *w, StyleDetailFetcher *fetcher)
 {
     const QStyleOptionTab *tabOption(qstyleoption_cast<const QStyleOptionTab *>(opt));
     if (tabOption == nullptr) {

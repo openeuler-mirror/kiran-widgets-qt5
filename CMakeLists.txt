@@ -57,6 +57,7 @@ set(DEVEL_HEADER
         "src/widgets/kiran-application/kiran-application.h"
         "src/widgets/kiran-search-box/kiran-search-box.h"
         "src/widgets/kiran-single-application/kiran-single-application.h"
+        "src/widgets/kiran-siderbar-widget/kiran-siderbar-widget.h"
         "src/kiran-style/style-property-helper.h"
         "src/kiran-style/kiran-public-define.h" )
 

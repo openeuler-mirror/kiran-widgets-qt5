@@ -26,6 +26,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
         ../../src/kiran-style/
         ../../src/widgets/kiran-switch-button
         ../../src/widgets/kiran-search-box
+        ../../src/widgets/kiran-siderbar-widget
         ../../src/widgets/kiran-titlebar-window)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Widgets kiranwidgets-qt5)

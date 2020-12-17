@@ -40,6 +40,12 @@ Widget::Widget(QWidget *parent)
     initComboBoxTab();
     initSearchBox();
     initProgressBar();
+
+//    ui->listWidget->item(0)->setCheckState(Qt::Checked);
+    ui->listWidget->item(0)->setIcon(QIcon::fromTheme("system-file-manager"));
+    ui->listWidget->item(0)->setData(Kiran::ItemStatus_Role,"禁用");
+    ui->listWidget->item(0)->setData(Kiran::ItemStatusColor_Role,QColor("red"));
+    ui->listWidget->setIconSize(QSize(40,40));
 }
 
 Widget::~Widget()

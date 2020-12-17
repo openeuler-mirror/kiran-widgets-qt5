@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
 {
     KiranApplication a(argc, argv);
 
-//    qApp->setStyle(QStyleFactory::create(""))
+//    qApp->setStyle(QStyleFactory::create("adwaita-dark"));
 
     Widget w;
     w.show();

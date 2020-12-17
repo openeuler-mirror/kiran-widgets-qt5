@@ -511,7 +511,8 @@ bool DrawButtonHelper::drawToolButtonComplexControl(const Style *style, const QS
 }
 
 QSize DrawButtonHelper::checkBoxSizeFromContents(const Style *style, const QStyleOption *opt, const QSize &contentsSize,
-                                                 const QWidget *w)
+                                                 const QWidget *w,
+                                                 StyleDetailFetcher *detailFetcher)
 {
     // get contents size
     QSize size(contentsSize);

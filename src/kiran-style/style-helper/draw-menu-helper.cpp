@@ -40,8 +40,9 @@ bool DrawMenuHelper::drawMenuEmptryAreaControl(const Style *style, const QStyleO
     return true;
 }
 
-QSize DrawMenuHelper::menuItemSizeFromContents(const Style *style, const QStyleOption *option, const QSize &contentsSize,
-                                               const QWidget *widget)
+QSize
+DrawMenuHelper::menuItemSizeFromContents(const Style *style, const QStyleOption *option, const QSize &contentsSize,
+                                         const QWidget *widget, StyleDetailFetcher *fetcher)
 {
     const QStyleOptionMenuItem* menuItemOption = qstyleoption_cast<const QStyleOptionMenuItem*>(option);
     if( !menuItemOption ){

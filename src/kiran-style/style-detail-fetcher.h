@@ -122,7 +122,11 @@ namespace Kiran{
             IndicatorArrow_Icon,
 
             ProgressBar_GrooveColor,
-            ProgressBar_ContentColor
+            ProgressBar_ContentColor,
+
+            KiranSiderbarItem_Height,
+            KiranSiderbarItem_BackgroundColor,
+            KiranSiderbarItem_Radius
         };
         Q_ENUM(StyleDetailPropertyName)
 

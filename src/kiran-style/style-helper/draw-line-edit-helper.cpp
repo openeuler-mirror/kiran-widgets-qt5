@@ -14,8 +14,9 @@
 
 using namespace Kiran;
 
-QSize DrawLineEditHelper::lineEditSizeFromContents(const Style* style,const QStyleOption *option,
-                               const QSize &contentsSize, const QWidget *widget)
+QSize
+DrawLineEditHelper::lineEditSizeFromContents(const Style *style, const QStyleOption *option, const QSize &contentsSize,
+                                             const QWidget *widget, StyleDetailFetcher *detailFetcher)
 {
     // cast option and check
     const QStyleOptionFrame *frameOption(qstyleoption_cast<const QStyleOptionFrame *>(option));

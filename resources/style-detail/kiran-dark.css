@@ -346,8 +346,29 @@ SearchBox:disabled{
     Icon: url(:/kiran-style/style-detail/search_disabled.svg);
 }
 
-
 ProgressBar{
     GrooveColor: rgba(255,255,255,0.1);
     ContentColor: #21a6ff;
+}
+
+KiranSiderbarItem{
+    Height: 60;
+    BackgroundColor: rgba(255,255,255,0.05);
+    Radius: 10;
+}
+
+KiranSiderbarItem:hover{
+    BackgroundColor: rgba(255,255,255,0.1);
+}
+
+KiranSiderbarItem:selected{
+    BackgroundColor: #43a3f2;
+}
+
+KiranSiderbarItem:selected:hover{
+    BackgroundColor: #79c3ff;
+}
+
+KiranSiderbarItem:selected:disabled{
+    BackgroundColor: gray;
 }

@@ -68,8 +68,9 @@ namespace Kiran {
         bool drawIndicatorArrowRightPrimitive(const Style *style, const QStyleOption *opt, QPainter *painter,
                                               StyleDetailFetcher *detaulFetcher, const QWidget *widget);
 
-
-        void drawArrow(StyleDetailFetcher *fetcher, QPainter *painter, const QStyleOption *option, const QWidget *widget,ArrowOrientation orientation);
+        void drawArrow(StyleDetailFetcher *fetcher, QPainter *painter,
+                       const QStyleOption *option, const QWidget *widget,
+                       ArrowOrientation orientation);
 
         void drawDecorationButton(QPainter *painter, const QRect &rect,
                                   const QColor &color, TitleBarButtonType buttonType);

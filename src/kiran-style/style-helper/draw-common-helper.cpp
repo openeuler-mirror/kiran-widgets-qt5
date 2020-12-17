@@ -458,9 +458,7 @@ void DrawCommonHelper::renderProgressBarBusyContents(QPainter *painter, const QR
 void DrawCommonHelper::renderProgressBarGroove(QPainter* painter, const QRect& rect,
                                      const QColor& color , const QColor& outline)
 {
-
     // setup painter
-//    painter->setRenderHint( QPainter::Antialiasing, true );
     painter->setRenderHint( QPainter::SmoothPixmapTransform, true );
 
     QRectF baseRect( rect );

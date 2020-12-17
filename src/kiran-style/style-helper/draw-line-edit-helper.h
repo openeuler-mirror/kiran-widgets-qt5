@@ -16,8 +16,8 @@ namespace Kiran{
     class Style;
     class StyleDetailFetcher;
     namespace DrawLineEditHelper {
-        QSize lineEditSizeFromContents(const Style* style,const QStyleOption *option,
-                                       const QSize &contentsSize, const QWidget *widget);
+        QSize lineEditSizeFromContents(const Style *style, const QStyleOption *option, const QSize &contentsSize,
+                                       const QWidget *widget, StyleDetailFetcher *detailFetcher);
         QRect lineEditContentsRect(const Style* style,const QStyleOption* opt,const QWidget* widget);
         bool drawFrameLineEditPrimitive(const Style* style ,const QStyleOption* opt,QPainter* painter,
                                         StyleDetailFetcher* detaulFetcher,const QWidget* widget);

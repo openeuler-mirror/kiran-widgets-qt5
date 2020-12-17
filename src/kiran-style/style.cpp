@@ -16,6 +16,7 @@
 #include "style-helper/draw-tab-bar-helper.h"
 #include "style-helper/draw-search-box-helper.h"
 #include "style-helper/draw-progress-bar-helper.h"
+#include "style-helper/draw-item-view-helper.h"
 
 #include "delegate/combo-box-item-delegate.h"
 
@@ -62,92 +63,171 @@ Style::~Style(){
 void Style::drawPrimitive(QStyle::PrimitiveElement pe, const QStyleOption *opt,
                           QPainter *p, const QWidget *w) const
 {
-    typedef bool (*DrawPrimitiveFunc)(const Style *, const QStyleOption *, QPainter *, StyleDetailFetcher *,
-                                      const QWidget *);
-
-    static const QMap<QStyle::PrimitiveElement, DrawPrimitiveFunc> drawPrimitiveFuncMap = {
-            {PE_Frame,                 DrawFrameHelper::drawFramePrimitive},
-            {PE_FrameLineEdit,         DrawLineEditHelper::drawFrameLineEditPrimitive},
-
-            {PE_PanelButtonTool,       DrawButtonHelper::drawPanelButtonToolPrimitive},
-
-            {PE_IndicatorRadioButton,  DrawButtonHelper::drawIndicatorRadioButton},
-            {PE_IndicatorCheckBox,     DrawButtonHelper::drawIndicatorCheckBox},
-
-            {PE_PanelMenu,             DrawMenuHelper::drawPanelMenuPrimitive},
-
-            {PE_PanelScrollAreaCorner, DrawScrollBarHelper::drawScrollAreaCornerPrimitive},
-
-            {PE_IndicatorTabClose,     DrawTabBarHelper::drawIndicatorTabClosePrimitive},
-            {PE_IndicatorTabTearLeft,  DrawTabBarHelper::drawIndicatorTabTearLeft},
-            {PE_IndicatorTabTearRight, DrawTabBarHelper::drawIndicatorTabTearRight},
-
-            {PE_IndicatorArrowUp,      DrawCommonHelper::drawIndicatorArrowUpPrimitive},
-            {PE_IndicatorArrowDown,    DrawCommonHelper::drawIndicatorArrowDownPrimitive},
-            {PE_IndicatorArrowLeft,    DrawCommonHelper::drawIndicatorArrowLeftPrimitive},
-            {PE_IndicatorArrowRight,   DrawCommonHelper::drawIndicatorArrowRightPrimitive},
-
-            {PE_FrameFocusRect,        nullptr}
-    };
-
-    auto iter = drawPrimitiveFuncMap.find(pe);
+    bool isOk = false;
 
     p->save();
-    if (iter == drawPrimitiveFuncMap.end()) {
-        ParentStyleClass::drawPrimitive(pe, opt, p, w);
-    } else {
-        if (*iter) {
-            (*iter)(this, opt, p, m_detailFetcher, w);
-        }
+
+    switch (pe) {
+        case PE_Frame:
+            ///滑动区域不绘制边框
+            if( w && w->inherits("QAbstractScrollArea")){
+                isOk = true;
+                break;
+            }
+            isOk = DrawFrameHelper::drawFramePrimitive(this,opt,p,m_detailFetcher,w);
+            break;
+        case PE_FrameLineEdit:
+            isOk = DrawLineEditHelper::drawFrameLineEditPrimitive(this,opt,p,m_detailFetcher,w);
+            break;
+        case PE_PanelButtonTool:
+            isOk = DrawButtonHelper::drawPanelButtonToolPrimitive(this,opt,p,m_detailFetcher,w);
+            break;
+        case PE_IndicatorRadioButton:
+            isOk = DrawButtonHelper::drawIndicatorRadioButton(this,opt,p,m_detailFetcher,w);
+            break;
+        case PE_IndicatorCheckBox:
+            isOk = DrawButtonHelper::drawIndicatorCheckBox(this,opt,p,m_detailFetcher,w);
+            break;
+        case PE_PanelMenu:
+            isOk = DrawMenuHelper::drawPanelMenuPrimitive(this,opt,p,m_detailFetcher,w);
+            break;
+        case PE_PanelScrollAreaCorner:
+            isOk = DrawScrollBarHelper::drawScrollAreaCornerPrimitive(this,opt,p,m_detailFetcher,w);
+            break;
+        case PE_IndicatorTabClose:
+            isOk = DrawTabBarHelper::drawIndicatorTabClosePrimitive(this,opt,p,m_detailFetcher,w);
+            break;
+        case PE_IndicatorTabTearLeft:
+            isOk = DrawTabBarHelper::drawIndicatorTabTearLeft(this,opt,p,m_detailFetcher,w);
+            break;
+        case PE_IndicatorTabTearRight:
+            isOk = DrawTabBarHelper::drawIndicatorTabTearRight(this,opt,p,m_detailFetcher,w);
+            break;
+        case PE_IndicatorArrowUp:
+            isOk = DrawCommonHelper::drawIndicatorArrowUpPrimitive(this,opt,p,m_detailFetcher,w);
+            break;
+        case PE_IndicatorArrowDown:
+            isOk = DrawCommonHelper::drawIndicatorArrowDownPrimitive(this,opt,p,m_detailFetcher,w);
+            break;
+        case PE_IndicatorArrowLeft:
+            isOk = DrawCommonHelper::drawIndicatorArrowLeftPrimitive(this,opt,p,m_detailFetcher,w);
+            break;
+        case PE_IndicatorArrowRight:
+            isOk = DrawCommonHelper::drawIndicatorArrowRightPrimitive(this,opt,p,m_detailFetcher,w);
+            break;
+        case PE_PanelItemViewItem:
+            if(w && w->inherits("KiranSiderbarWidget")){
+                isOk = DrawItemViewHelper::drawPanelKianSidebarItem(this,opt,p,m_detailFetcher,w);
+            }
+            break;
+        case PE_IndicatorViewItemCheck:
+            if(w && w->inherits("KiranSiderbarWidget")){
+                isOk = DrawItemViewHelper::drawIndicatorKiranSidebarItemCheck(this,opt,p,m_detailFetcher,w);
+            }
+            break;
+        case PE_FrameFocusRect:
+            isOk = true;
+            break;
+        default:
+            break;
     }
+
+    if ( !isOk ) {
+        ParentStyleClass::drawPrimitive(pe, opt, p, w);
+    }
+
     p->restore();
 }
 
 void Style::drawControl(ControlElement element, const QStyleOption *opt,
                         QPainter *p, const QWidget *w) const
 {
-    typedef bool (*DrawControlFunc)(const Style *, const QStyleOption *, QPainter *, StyleDetailFetcher *,
-                                    const QWidget *);
-    static const QMap<QStyle::ControlElement, DrawControlFunc> drawControlFuncMap = {
+    bool isOk = false;
 
-            {CE_PushButtonBevel,  DrawButtonHelper::drawPushButtonBevelControl},
-            {CE_PushButtonLabel,  DrawButtonHelper::drawPushButtonLabelControl},
-            {CE_PushButton,       DrawButtonHelper::drawPushButtonControl},
-
-            {CE_ToolButtonLabel,  DrawButtonHelper::drawToolButtonLabelControl},
-
-            {CE_CheckBoxLabel,    DrawButtonHelper::drawCheckBoxLabelControl},
-            {CE_RadioButtonLabel, DrawButtonHelper::drawCheckBoxLabelControl},
-
-            {CE_MenuBarEmptyArea, DrawMenuHelper::drawMenuBarEmptryAreaControl},
-            {CE_MenuBarItem,      DrawMenuHelper::drawMenuBarItemControl},
-            {CE_MenuEmptyArea,    DrawMenuHelper::drawMenuEmptryAreaControl},
-            {CE_MenuItem,         DrawMenuHelper::drawMenuItemControl},
-
-            {CE_ScrollBarAddLine, DrawScrollBarHelper::drawScrollBarAddLineControl},
-            {CE_ScrollBarSubLine, DrawScrollBarHelper::drawScrollBarSubLineControl},
-            {CE_ScrollBarAddPage, DrawScrollBarHelper::drawScrollBarAddPageControl},
-            {CE_ScrollBarSubPage, DrawScrollBarHelper::drawScrollBarSubPageControl},
-            {CE_ScrollBarSlider,  DrawScrollBarHelper::drawScrollBarSliderControl},
-
-            {CE_TabBarTab,        DrawTabBarHelper::drawTabBarTabControl},
-            {CE_TabBarTabLabel,   DrawTabBarHelper::drawTabBarTabLabelControl},
-            {CE_TabBarTabShape,   DrawTabBarHelper::drawTabBarTabShapeControl},
-
-            {CE_ProgressBar,        DrawProgressBarHelper::drawProgressBarControl},
-            {CE_ProgressBarGroove,  DrawProgressBarHelper::drawProgressBarGrooveControl},
-            {CE_ProgressBarContents,DrawProgressBarHelper::drawProgressBarContentsControl},
-            {CE_ProgressBarLabel,   DrawProgressBarHelper::drawProgressBarLabelControl}
-    };
-
-    auto iter = drawControlFuncMap.find(element);
     p->save();
-    if (iter == drawControlFuncMap.end()) {
+
+    switch (element) {
+        case CE_PushButtonBevel:
+            isOk = DrawButtonHelper::drawPushButtonBevelControl(this, opt, p, m_detailFetcher, w);
+            break;
+        case CE_PushButtonLabel:
+            isOk = DrawButtonHelper::drawPushButtonLabelControl(this, opt, p, m_detailFetcher, w);
+            break;
+        case CE_PushButton:
+            isOk =DrawButtonHelper::drawPushButtonControl(this, opt, p, m_detailFetcher, w);
+            break;
+        case CE_ToolButtonLabel:
+            isOk = DrawButtonHelper::drawToolButtonLabelControl(this, opt, p, m_detailFetcher, w);
+            break;
+
+
+        case CE_CheckBoxLabel:
+        case CE_RadioButtonLabel:
+            isOk = DrawButtonHelper::drawCheckBoxLabelControl(this, opt, p, m_detailFetcher, w);
+            break;
+
+
+        case CE_MenuBarEmptyArea:
+            isOk = DrawMenuHelper::drawMenuBarEmptryAreaControl(this, opt, p, m_detailFetcher, w);
+            break;
+        case CE_MenuBarItem:
+            isOk = DrawMenuHelper::drawMenuBarItemControl(this, opt, p, m_detailFetcher, w);
+            break;
+        case CE_MenuEmptyArea:
+            isOk = DrawMenuHelper::drawMenuEmptryAreaControl(this, opt, p, m_detailFetcher, w);
+            break;
+        case CE_MenuItem:
+            isOk = DrawMenuHelper::drawMenuItemControl(this, opt, p, m_detailFetcher, w);
+            break;
+
+
+        case CE_ScrollBarAddLine:
+            isOk = DrawScrollBarHelper::drawScrollBarAddLineControl(this, opt, p, m_detailFetcher, w);
+            break;
+        case CE_ScrollBarSubLine:
+            isOk = DrawScrollBarHelper::drawScrollBarSubLineControl(this, opt, p, m_detailFetcher, w);
+            break;
+        case CE_ScrollBarAddPage:
+            isOk = DrawScrollBarHelper::drawScrollBarAddPageControl(this, opt, p, m_detailFetcher, w);
+            break;
+        case CE_ScrollBarSubPage:
+            isOk = DrawScrollBarHelper::drawScrollBarSubPageControl(this, opt, p, m_detailFetcher, w);
+            break;
+        case CE_ScrollBarSlider:
+            isOk = DrawScrollBarHelper::drawScrollBarSliderControl(this, opt, p, m_detailFetcher, w);
+            break;
+
+
+        case CE_TabBarTab:
+            isOk = DrawTabBarHelper::drawTabBarTabControl(this, opt, p, m_detailFetcher, w);
+            break;
+        case CE_TabBarTabLabel:
+            isOk = DrawTabBarHelper::drawTabBarTabLabelControl(this, opt, p, m_detailFetcher, w);
+            break;
+        case CE_TabBarTabShape:
+            isOk = DrawTabBarHelper::drawTabBarTabShapeControl(this, opt, p, m_detailFetcher, w);
+            break;
+
+
+        case CE_ProgressBar:
+            isOk = DrawProgressBarHelper::drawProgressBarControl(this, opt, p, m_detailFetcher, w);
+            break;
+        case CE_ProgressBarGroove:
+            isOk = DrawProgressBarHelper::drawProgressBarGrooveControl(this, opt, p, m_detailFetcher, w);
+            break;
+        case CE_ProgressBarContents:
+            isOk = DrawProgressBarHelper::drawProgressBarContentsControl(this, opt, p, m_detailFetcher, w);
+            break;
+        case CE_ProgressBarLabel:
+            isOk = DrawProgressBarHelper::drawProgressBarLabelControl(this, opt, p, m_detailFetcher, w);
+            break;
+
+        default:
+            break;
+    }
+
+    if ( !isOk ) {
         ParentStyleClass::drawControl(element, opt, p, w);
-    } else {
-        if (*iter) {
-            (*iter)(this, opt, p, m_detailFetcher, w);
-        }
     }
     p->restore();
 }
@@ -190,9 +270,26 @@ QRect Style::subElementRect(QStyle::SubElement se, const QStyleOption *opt,
         case SE_ProgressBarLabel:
             return DrawProgressBarHelper::progressBarLabelRect(this,opt,widget);
 
+        case SE_ItemViewItemCheckIndicator:
+            if( widget && widget->inherits("KiranSiderbarWidget") ){
+                return DrawItemViewHelper::kiranSidebarItemCheckIndicatorRect(this,opt,widget);
+            }
+            break;
+        case SE_ItemViewItemDecoration:
+            if( widget && widget->inherits("KiranSiderbarWidget") ){
+                return DrawItemViewHelper::kiranSiderbarItemDecorationRect(this,opt,widget);
+            }
+            break;
+        case SE_ItemViewItemText:
+            if( widget && widget->inherits("KiranSiderbarWidget") ){
+                return DrawItemViewHelper::kiranSiderbarItemTextRect(this,opt,widget);
+            }
+            break;
+
         default:
-            return ParentStyleClass::subElementRect(se, opt, widget);
+            break;
     }
+    return ParentStyleClass::subElementRect(se, opt, widget);
 }
 
 
@@ -255,18 +352,24 @@ QSize Style::sizeFromContents(QStyle::ContentsType element, const QStyleOption *
     switch (element) {
         case CT_CheckBox:
         case CT_RadioButton:
-            return DrawButtonHelper::checkBoxSizeFromContents(this, option, size, widget);
+            return DrawButtonHelper::checkBoxSizeFromContents(this, option, size, widget, m_detailFetcher);
         case CT_LineEdit:
-            return DrawLineEditHelper::lineEditSizeFromContents(this, option, size, widget);
+            return DrawLineEditHelper::lineEditSizeFromContents(this, option, size, widget, m_detailFetcher);
         case CT_MenuItem:
-            return DrawMenuHelper::menuItemSizeFromContents(this, option, size, widget);
+            return DrawMenuHelper::menuItemSizeFromContents(this, option, size, widget, m_detailFetcher);
         case CT_TabBarTab:
-            return DrawTabBarHelper::tabBarTabSizeFromContents(this, option, size, widget);
+            return DrawTabBarHelper::tabBarTabSizeFromContents(this, option, size, widget, m_detailFetcher);
         case CT_ProgressBar:
-            return DrawProgressBarHelper::progressBarSizeFromContents(this,option,size,widget);
+            return DrawProgressBarHelper::progressBarSizeFromContents(this, option, size, widget, m_detailFetcher);
+        case CT_ItemViewItem:
+            if( widget && widget->inherits("KiranSiderbarWidget") ){
+                return DrawItemViewHelper::kiranSidebarItemSizeFromContent(this, option, size, widget, m_detailFetcher);
+            }
+            break;
         default:
-            return ParentStyleClass::sizeFromContents(element, option, size, widget);
+            break;
     }
+    return ParentStyleClass::sizeFromContents(element, option, size, widget);
 }
 
 QSize Style::sizeFromContents(KiranContentsType ct, const QStyleOption *opt, const QSize &contentsSize,
@@ -533,7 +636,6 @@ QIcon Style::standardIcon(QStyle::StandardPixmap standardIcon,
 
     QIcon icon;
     switch (standardIcon) {
-
         case SP_TitleBarNormalButton:
         case SP_TitleBarMinButton:
         case SP_TitleBarMaxButton:
@@ -541,7 +643,6 @@ QIcon Style::standardIcon(QStyle::StandardPixmap standardIcon,
         case SP_DockWidgetCloseButton:
             icon = titleBarButtonIcon(m_detailFetcher, standardIcon, opt, widget);
             break;
-
 //        case SP_ToolBarHorizontalExtensionButton:
 //        case SP_ToolBarVerticalExtensionButton:
 //            icon = toolBarExtensionIcon(standardIcon, opt, widget);
@@ -660,11 +761,16 @@ void Style::polish(QWidget *widget)
         qobject_cast<QRadioButton *>(widget) ||
         qobject_cast<QMenu *>(widget) ||
         widget->inherits("QComboBoxPrivateContainer") ||
-        qobject_cast<QTabBar *>(widget)) {
+        qobject_cast<QTabBar *>(widget) ) {
         widget->setAttribute(Qt::WA_Hover);
     }
 
-    if (qobject_cast<QMenu *>(widget) ||
+    if( QAbstractItemView *itemView = qobject_cast<QAbstractItemView*>( widget ) ) {
+        // enable mouse over effects in itemviews' viewport
+        itemView->viewport()->setAttribute(Qt::WA_Hover);
+    }
+
+        if (qobject_cast<QMenu *>(widget) ||
         widget->inherits("QComboBoxPrivateContainer")) {
         widget->setAttribute(Qt::WA_TranslucentBackground);
     }

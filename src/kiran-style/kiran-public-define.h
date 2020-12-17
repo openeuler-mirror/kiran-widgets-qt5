@@ -5,6 +5,8 @@
 #ifndef KIRANWIDGETS_QT5_KIRAN_PUBLIC_DEFINE_H
 #define KIRANWIDGETS_QT5_KIRAN_PUBLIC_DEFINE_H
 
+#include <qnamespace.h>
+
 namespace Kiran{
 
     /// KiranStyle中内置的三种按钮样式
@@ -29,6 +31,10 @@ namespace Kiran{
         PROGRESS_TEXT_RIGHT     // 水平-右侧 垂直-下侧
     };
 
+    enum KiranSidebarDataRole{
+        ItemStatus_Role = Qt::UserRole+1,
+        ItemStatusColor_Role
+    };
 }
 
 #endif //KIRANWIDGETS_QT5_KIRAN_PUBLIC_DEFINE_H

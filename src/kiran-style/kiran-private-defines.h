@@ -181,8 +181,11 @@ namespace Kiran{
         Splitter_SplitterWidth = 1,
 
         // shadow dimensions
-        Shadow_Overlap = 0
+        Shadow_Overlap = 0,
 
+        KiranSidebarItem_LeftRightMargin = 16,
+        KiranSidebarItem_SelectedArrowSize = 16,
+        KiranSidebarItem_contentsSpacing = 10
     };
 
     enum CheckBoxIndicatorState{

@@ -30,8 +30,9 @@ namespace Kiran{
                                           QPainter* p, StyleDetailFetcher* fetcher, const QWidget* widget);
 
         ///checkbox,radiobutton
-        QSize checkBoxSizeFromContents(const Style*  style,const QStyleOption* opt,
-                                       const QSize& contentsSize, const QWidget*w);
+        QSize checkBoxSizeFromContents(const Style *style, const QStyleOption *opt,
+                                       const QSize &contentsSize,const QWidget *w,
+                                       StyleDetailFetcher *detailFetcher);
         QRect checkBoxContentsRect(const Style* style,const QStyleOption* opt,const QWidget* w);
         bool drawCheckBoxLabelControl(const Style* style,const QStyleOption* opt,
                                       QPainter* p, StyleDetailFetcher* fetcher,const QWidget* widget);

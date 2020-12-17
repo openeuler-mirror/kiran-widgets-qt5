@@ -6,7 +6,11 @@
 class QHBoxLayout;
 class KiranTitlebarWindowPrivate;
 
-///FIXME: @bug 移动窗口过后，窗体收不到鼠标悬浮事件,考虑窗口管理器引起
+/**
+ * @brief 自定义标题栏窗口
+ * <img src="../markdown-resources/kiran-switch-button.png" alt="kiran-switch-button" style="zoom:90%;" />
+ * @bug 移动窗口过后，窗体收不到鼠标悬浮事件,考虑窗口管理器引起
+ */
 class Q_DECL_EXPORT KiranTitlebarWindow : public QWidget {
     Q_OBJECT
     Q_DECLARE_PRIVATE(KiranTitlebarWindow)
@@ -29,7 +33,9 @@ public:
     Q_PROPERTY(int contentWrapperMarginBottom READ contentWrapperMarginBottom WRITE setContentWrapperMarginBottom)
     Q_PROPERTY(bool compositingRunning READ compositingRunning)
 public:
-    explicit KiranTitlebarWindow();
+    __attribute__((deprecated)) explicit KiranTitlebarWindow();
+    explicit KiranTitlebarWindow(QWidget* parent,Qt::WindowFlags flag = Qt::Window);
+
     ~KiranTitlebarWindow();
 
     /// 设置内容窗口

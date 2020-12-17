@@ -16,7 +16,8 @@
 using namespace Kiran;
 
 QSize DrawProgressBarHelper::progressBarSizeFromContents(const Style *style, const QStyleOption *opt,
-                                                         const QSize &contentsSize, const QWidget *w)
+                                                         const QSize &contentsSize, const QWidget *w,
+                                                         StyleDetailFetcher *fetcher)
 {
     // cast option
     const QStyleOptionProgressBar *progressBarOption(qstyleoption_cast<const QStyleOptionProgressBar *>(opt));

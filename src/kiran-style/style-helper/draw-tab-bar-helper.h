@@ -15,7 +15,8 @@ namespace Kiran{
     class StyleDetailFetcher;
     namespace DrawTabBarHelper{
         ///获取TabBar Tab大小
-        QSize tabBarTabSizeFromContents(const Style *style, const QStyleOption *opt, const QSize &contentsSize,const QWidget *w);
+        QSize tabBarTabSizeFromContents(const Style *style, const QStyleOption *opt, const QSize &contentsSize,
+                                        const QWidget *w, StyleDetailFetcher *fetcher);
 
         ///定位TabBar左侧控件绘制位置
         QRect tabBarTabLeftButtonElementRect(const Style *style, const QStyleOption *opt, const QWidget *w);

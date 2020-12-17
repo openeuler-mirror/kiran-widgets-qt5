@@ -25,7 +25,8 @@ namespace Kiran{
         bool drawMenuEmptryAreaControl(const Style* style,const QStyleOption* opt,QPainter* p, StyleDetailFetcher* fetcher,const QWidget* widget);
         ///drawControl-CE_MenuItem
         bool drawMenuItemControl(const Style* style,const QStyleOption* opt,QPainter* p, StyleDetailFetcher* fetcher,const QWidget* widget);
-        QSize menuItemSizeFromContents(const Style* style,const QStyleOption *option,const QSize &contentsSize, const QWidget *widget);
+        QSize menuItemSizeFromContents(const Style *style, const QStyleOption *option, const QSize &contentsSize,
+                                       const QWidget *widget, StyleDetailFetcher *fetcher);
 
         /// QComboBox
         bool drawComboboxItem(const Style* style,const QStyleOption* opt,QPainter* p,StyleDetailFetcher* fetcher,const QWidget* widget);

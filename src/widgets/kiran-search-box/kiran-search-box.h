@@ -1,7 +1,10 @@
-//
-// Created by lxh on 2020/12/9.
-//
-
+/*
+ * @file   kiran-search-box.h
+ * @brief 
+ * @author liuxinhao <liuxinhao@kylinos.com.cn>
+ * @copyright (c) 2020 KylinSec. All rights reserved.
+ */
+ 
 #ifndef KIRANWIDGETS_QT5_KIRAN_SEARCH_BOX_H
 #define KIRANWIDGETS_QT5_KIRAN_SEARCH_BOX_H
 

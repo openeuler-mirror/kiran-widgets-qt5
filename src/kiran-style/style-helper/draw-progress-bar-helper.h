@@ -16,7 +16,9 @@ namespace Kiran {
     class StyleDetailFetcher;
     namespace DrawProgressBarHelper {
         //sizeFromContents
-        QSize progressBarSizeFromContents(const Style *style,const QStyleOption *opt,const QSize &contentsSize,const QWidget *w);
+        QSize progressBarSizeFromContents(const Style *style, const QStyleOption *opt,
+                                          const QSize &contentsSize, const QWidget *w,
+                                          StyleDetailFetcher *fetcher);
 
         //subElementRect
         QRect progressBarGrooveRect(const Style *style, const QStyleOption *option, const QWidget *widget);
