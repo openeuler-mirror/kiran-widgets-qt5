@@ -87,8 +87,8 @@ DrawCommonHelper::drawSpinboxArrow(QPainter *painter, const QRect &rect, const Q
 
     ///以SpinboxFrame作为裁切路径
     QPainterPath backgroundPath;
-    spinboxRect.adjusted(1, 1, -1, -1);
-    backgroundPath = getRoundedRectanglePath(spinboxRect, spinboxRadius, spinboxRadius, spinboxRadius, spinboxRadius);
+    QRect arrowRect =  spinboxRect.adjusted(1, 1, 0, 0);
+    backgroundPath = getRoundedRectanglePath(arrowRect, spinboxRadius, spinboxRadius, spinboxRadius, spinboxRadius);
 
     painter->setClipPath(backgroundPath, Qt::ReplaceClip);
     painter->setPen(Qt::NoPen);

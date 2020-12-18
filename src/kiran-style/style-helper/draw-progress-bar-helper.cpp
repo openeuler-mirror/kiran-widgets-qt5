@@ -230,6 +230,9 @@ bool DrawProgressBarHelper::drawProgressBarContentsControl(const Style *style, c
         int progressStep = animation->progressStep(100);
         DrawCommonHelper::renderProgressBarBusyContents( p, rect, contentColor,QColor(), horizontal, reverse, progressStep );
     } else {
+        if( animation ){
+            animation->stop();
+        }
         QRegion oldClipRegion( p->clipRegion() );
         if( horizontal ) {
             if( rect.width() < Metrics::ProgressBar_Thickness )
