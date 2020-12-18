@@ -15,18 +15,23 @@ class KiranMessageBoxPrivate;
 class QAbstractButton;
 
 /**
- * @brief Kiran封装消息对话框
- * @since kiranwidgets-qt5-2.0.0
+ * @brief 基于QDialog封装的消息对话框
+ * @since 2.0.0
  */
 class Q_DECL_EXPORT KiranMessageBox : public QDialog {
     Q_OBJECT
     Q_DECLARE_PRIVATE(KiranMessageBox)
     Q_DISABLE_COPY(KiranMessageBox)
     Q_PROPERTY(QSize buttonSize READ buttonSize WRITE setButtonSize)
+
 public:
-    ///定义了一些标准类型的按钮，提供给使用public static方法来快捷创建消息框
-    ///没直接使用QDialogButtonBox中的StandarButton
-    ///因为QDialogButtonBox中的Button翻译问题需要解决，也需要解决按钮不同样式
+     /**
+      * @brief 标准类型的按钮枚举
+      * @see 　QDialogButtonBox::StandardButton
+      * @note 定义了一些按钮类型枚举,提供给使用静态方法来快捷创建消息框
+      *       没直接使用QDialogButtonBox中的StandarButton是因为QDialogButtonBox中的Button翻译问题需要解决
+      *       也需要通过枚举转字符串生成按钮ObjectName，来匹配样式表，以解决按钮不同样式的问题
+      */
     enum KiranStandardButton {
         NoButton = 0x00000000,
         Ok = 0x00000400,
@@ -53,51 +58,78 @@ public:
     Q_FLAG(KiranStandardButtons)
 
 public:
+    /**
+     * @brief KiranMessageBox构造方法
+     * @param parent parent为nullptr现在当前屏幕中央,如果存在parent，会显示在parent窗口中央
+     */
     explicit KiranMessageBox(QWidget *parent = nullptr);
+
+    /**
+     * @brief KiranMessageBox析构方法
+     */
     ~KiranMessageBox();
 
-    /// 创建消息对话框
-    /// \param parent   -   指定显示在哪个窗口中央，置null则为当前屏幕中央
-    /// \param title    -   标题
-    /// \param text     -   显示内容
-    /// \param buttons  -   显示的按钮
-    /// \return 用户点击的按钮
+    /**
+     * @brief 创建消息对话框
+     * @param parent    指定显示在哪个窗口中央，置null则为当前屏幕中央
+     * @param title     窗口标题
+     * @param text      显示内容
+     * @param buttons   显示内容
+     * @return 用户点击的按钮
+     */
     static KiranStandardButton message(QWidget *parent,
                                        const QString &title,
                                        const QString &text,
                                        KiranStandardButtons buttons);
 
-    /// 设置窗口标题
-    /// \param title - 标题
+    /**
+     * @brief 设置窗口标题
+     * @param title 标题
+     */
     void setTitle(const QString &title);
 
-    /// 设置窗口显示内容
-    /// \param text - 内容
+    /**
+     * @brief 设置显示内容
+     * @param text 内容
+     */
     void setText(const QString &text);
 
-    /// 添加按钮
-    /// \param button - 按钮
-    /// \param role   - 按钮作用
+    /**
+     * @brief 添加按钮到消息对话框中
+     * @param button 按钮
+     * @param role   按钮作用
+     * @see QDialogButtonBox::addButton(QAbstractButton*, ButtonRole)
+     */
     void addButton(QPushButton *button,QDialogButtonBox::ButtonRole role);
 
-    /// 移除按钮
-    /// \param button - 按钮
+    /**
+     * @brief 使用添加按钮的指针来移除消息对话框中的按钮
+     * @param button 按钮
+     * @see QDialogButtonBox::removeButton(QAbstractButton *)
+     */
     void removeButton(QPushButton *button);
 
-    /// 移除所有的按钮
-    /// \param button - 按钮
-    void cleanButton(QPushButton *button);
+    /**
+     * @brief 移除消息对话框中的所有按钮
+     */
+    void cleanButton();
 
-    /// 按钮的大小
-    /// \return 按钮大小
+    /**
+     * @brief 返回设置的按钮大小
+     * @return 按钮大小
+     */
     QSize buttonSize();
 
-    /// 设置按钮大小
-    /// \param size - 按钮大小
+    /**
+     * @brief 设置按钮的大小
+     * @param size 按钮尺寸
+     */
     void setButtonSize(const QSize &size);
 
-    /// 获取用户点击的按钮
-    /// \return 按钮
+    /**
+     * @brief 获取消息对话框中点击的按钮
+     * @return 消息对话框点击的按钮，若没点击按钮则为NULL
+     */
     QPushButton *clickedButton();
 
 protected:

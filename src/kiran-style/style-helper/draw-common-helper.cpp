@@ -404,32 +404,32 @@ DrawCommonHelper::drawDecorationButton(QPainter *painter,
 }
 
 bool DrawCommonHelper::drawIndicatorArrowUpPrimitive(const Style *style, const QStyleOption *opt, QPainter *painter,
-                                                     StyleDetailFetcher *detaulFetcher, const QWidget *widget)
+                                                     StyleDetailFetcher *detailFetcher, const QWidget *widget)
 {
-    DrawCommonHelper::drawArrow(detaulFetcher,painter,opt,widget,ArrowUp);
+    DrawCommonHelper::drawArrow(detailFetcher, painter, opt, widget, ArrowUp);
     return true;
 }
 
 bool DrawCommonHelper::drawIndicatorArrowDownPrimitive(const Style *style, const QStyleOption *opt, QPainter *painter,
-                                                       StyleDetailFetcher *detaulFetcher, const QWidget *widget)
+                                                       StyleDetailFetcher *detailFetcher, const QWidget *widget)
 {
-    DrawCommonHelper::drawArrow(detaulFetcher,painter,opt,widget,ArrowDown);
+    DrawCommonHelper::drawArrow(detailFetcher, painter, opt, widget, ArrowDown);
     return true;
 
 }
 
 bool DrawCommonHelper::drawIndicatorArrowLeftPrimitive(const Style *style, const QStyleOption *opt, QPainter *painter,
-                                                       StyleDetailFetcher *detaulFetcher, const QWidget *widget)
+                                                       StyleDetailFetcher *detailFetcher, const QWidget *widget)
 {
-    DrawCommonHelper::drawArrow(detaulFetcher,painter,opt,widget,ArrowLeft);
+    DrawCommonHelper::drawArrow(detailFetcher, painter, opt, widget, ArrowLeft);
     return true;
 
 }
 
 bool DrawCommonHelper::drawIndicatorArrowRightPrimitive(const Style *style, const QStyleOption *opt, QPainter *painter,
-                                                        StyleDetailFetcher *detaulFetcher, const QWidget *widget)
+                                                        StyleDetailFetcher *detailFetcher, const QWidget *widget)
 {
-    DrawCommonHelper::drawArrow(detaulFetcher,painter,opt,widget,ArrowRight);
+    DrawCommonHelper::drawArrow(detailFetcher, painter, opt, widget, ArrowRight);
     return true;
 
 }

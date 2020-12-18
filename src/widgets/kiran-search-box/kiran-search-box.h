@@ -15,14 +15,24 @@ class QLineEdit;
 class QStyleOption;
 
 /**
- * @brief 搜索框，只有才KiranStyle下才支持绘制搜索图标，其他Style下绘制出来只是个普通输入框
- * @since kiranwidgets-qt5-2.1.0
+ * @brief 搜索框，在KiranStyle下提供特殊的绘制,使用方法可见QLineEdit
+ * 只有才KiranStyle下才支持绘制，其他Style下绘制出来只是个普通输入框
+ * @since 2.1.0
+ * @see QLineEdit
  */
 class Q_DECL_EXPORT KiranSearchBox :public QLineEdit{
     Q_OBJECT
     Q_DECLARE_PRIVATE(KiranSearchBox)
 public:
+    /**
+     * @brief KiranSearchBox构造方法
+     * @param parent 父控件
+     */
     explicit KiranSearchBox(QWidget *parent = nullptr);
+
+    /**
+     * @brief KiranSearchBox析构方法
+     */
     ~KiranSearchBox();
 
 protected:

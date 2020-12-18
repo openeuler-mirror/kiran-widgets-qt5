@@ -53,11 +53,16 @@ Widget::~Widget()
     delete ui;
 }
 
+#include <child-window.h>
 void Widget::initPushButtonTab()
 {
     PropertyHelper::setButtonType(ui->btn_default,BUTTON_Default);
     PropertyHelper::setButtonType(ui->btn_normal,BUTTON_Normal);
     PropertyHelper::setButtonType(ui->btn_warning,BUTTON_Warning);
+    connect(ui->btn_normal,&QPushButton::clicked,this,[this](){
+        ChildWindow *cw = new ChildWindow(this);
+        cw->show();
+    });
 }
 
 void Widget::initSwitchButtonTab()

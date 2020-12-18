@@ -32,7 +32,7 @@ class KiranSingleApplicationPrivate;
  * @brief The SingleApplication class handles multiple instances of the same
  * Application
  * @see QCoreApplication
- * @since kiranwidgets-qt5-2.1.0
+ * @since 2.1.0
  */
 class KiranSingleApplication : public KiranApplication
 {

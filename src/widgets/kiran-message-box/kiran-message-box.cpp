@@ -88,6 +88,6 @@ void KiranMessageBox::removeButton(QPushButton *button) {
     d_ptr->removeButton(button);
 }
 
-void KiranMessageBox::cleanButton(QPushButton *button) {
+void KiranMessageBox::cleanButton() {
     d_ptr->cleanButton();
 }
