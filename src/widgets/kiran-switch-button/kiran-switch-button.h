@@ -1,7 +1,10 @@
-//
-// Created by lxh on 2020/11/28.
-//
-
+/*
+ * @file   kiran-switch-button.h
+ * @brief  Kiran开关按钮
+ * @author liuxinhao <liuxinhao@kylinos.com.cn>
+ * @copyright (c) 2020 KylinSec. All rights reserved.
+ */
+ 
 #ifndef KIRANSTYLE_SWITCH_BUTTON_H
 #define KIRANSTYLE_SWITCH_BUTTON_H
 
@@ -10,7 +13,10 @@
 class KiranSwitchButtonPrivate;
 class QStyleOptionButton;
 
-/// SwitchButton，仅在KiranStyle下生效，其他Style中仅绘制成Button
+/**
+ * @brief SwitchButton，仅在KiranStyle下生效，其他Style中仅绘制成Button
+ * @since kiranwidgets-qt5-2.1.0
+ */
 class Q_DECL_EXPORT KiranSwitchButton : public QAbstractButton{
     Q_OBJECT
     Q_DECLARE_PRIVATE(KiranSwitchButton);

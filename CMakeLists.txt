@@ -14,7 +14,7 @@ project(kiranwidgets-qt5)
 #主版本:   不同主版本不兼容，主版本升级应需同时升级SOVERSION
 #次版本:   增量升级，向后兼容
 #发行版本: 对次版本的升级，不影响兼容
-set(KIRANWIDGETS_VERSION     2.0.0)
+set(KIRANWIDGETS_VERSION     2.1.0)
 
 #SOVERSION API版本  影响安装做的软链接的名 eg:libxxx.so.${SOVERSION} -> libxxx.so.{VERSION}
 #就是主版本号,程序链接的就是该符号

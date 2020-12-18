@@ -1,3 +1,10 @@
+/*
+ * @file   kiran-message-box.h
+ * @brief  Kiran消息对话框
+ * @author liuxinhao <liuxinhao@kylinos.com.cn>
+ * @copyright (c) 2020 KylinSec. All rights reserved.
+ */
+ 
 #ifndef KIRANMESSAGEBOX_H
 #define KIRANMESSAGEBOX_H
 
@@ -6,6 +13,11 @@
 
 class KiranMessageBoxPrivate;
 class QAbstractButton;
+
+/**
+ * @brief Kiran封装消息对话框
+ * @since kiranwidgets-qt5-2.0.0
+ */
 class Q_DECL_EXPORT KiranMessageBox : public QDialog {
     Q_OBJECT
     Q_DECLARE_PRIVATE(KiranMessageBox)

@@ -10,6 +10,7 @@
 #include <QSharedPointer>
 
 class QGSettings;
+/* mate桌面字体监控 */
 class MateDesktopFontMonitor : public FontMonitor{
     Q_OBJECT
 public:

@@ -8,6 +8,8 @@
 #include "font-monitor-factory.h"
 
 class QGSettings;
+
+/* Marco标题栏字体监控 */
 class MarcoTitleFontMonitor : public FontMonitor{
     Q_OBJECT
 public:

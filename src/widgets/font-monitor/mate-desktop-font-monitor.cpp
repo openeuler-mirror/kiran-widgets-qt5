@@ -19,7 +19,7 @@ MateDesktopFontMonitor::MateDesktopFontMonitor()
 }
 
 MateDesktopFontMonitor::~MateDesktopFontMonitor() {
-    //NOTE:delete nullptr no effect
+    /* NOTE:delete nullptr no effect */
     delete mateInterfaceSettings;
 }
 

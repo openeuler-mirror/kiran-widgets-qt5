@@ -69,7 +69,7 @@ void Style::drawPrimitive(QStyle::PrimitiveElement pe, const QStyleOption *opt,
 
     switch (pe) {
         case PE_Frame:
-            ///滑动区域不绘制边框
+            /* QListView不绘制边框 */
             if( w && w->inherits("QListView")){
                 isOk = true;
                 break;
@@ -116,12 +116,12 @@ void Style::drawPrimitive(QStyle::PrimitiveElement pe, const QStyleOption *opt,
             isOk = DrawCommonHelper::drawIndicatorArrowRightPrimitive(this,opt,p,m_detailFetcher,w);
             break;
         case PE_PanelItemViewItem:
-            if(w && w->inherits("KiranSiderbarWidget")){
+            if(isKiranSiderbarWidget(w)){
                 isOk = DrawItemViewHelper::drawPanelKianSidebarItem(this,opt,p,m_detailFetcher,w);
             }
             break;
         case PE_IndicatorViewItemCheck:
-            if(w && w->inherits("KiranSiderbarWidget")){
+            if(isKiranSiderbarWidget(w)){
                 isOk = DrawItemViewHelper::drawIndicatorKiranSidebarItemCheck(this,opt,p,m_detailFetcher,w);
             }
             break;
@@ -271,17 +271,17 @@ QRect Style::subElementRect(QStyle::SubElement se, const QStyleOption *opt,
             return DrawProgressBarHelper::progressBarLabelRect(this,opt,widget);
 
         case SE_ItemViewItemCheckIndicator:
-            if( widget && widget->inherits("KiranSiderbarWidget") ){
+            if( isKiranSiderbarWidget(widget) ){
                 return DrawItemViewHelper::kiranSidebarItemCheckIndicatorRect(this,opt,widget);
             }
             break;
         case SE_ItemViewItemDecoration:
-            if( widget && widget->inherits("KiranSiderbarWidget") ){
+            if( isKiranSiderbarWidget(widget) ){
                 return DrawItemViewHelper::kiranSiderbarItemDecorationRect(this,opt,widget);
             }
             break;
         case SE_ItemViewItemText:
-            if( widget && widget->inherits("KiranSiderbarWidget") ){
+            if( isKiranSiderbarWidget(widget) ){
                 return DrawItemViewHelper::kiranSiderbarItemTextRect(this,opt,widget);
             }
             break;
@@ -362,7 +362,7 @@ QSize Style::sizeFromContents(QStyle::ContentsType element, const QStyleOption *
         case CT_ProgressBar:
             return DrawProgressBarHelper::progressBarSizeFromContents(this, option, size, widget, m_detailFetcher);
         case CT_ItemViewItem:
-            if( widget && widget->inherits("KiranSiderbarWidget") ){
+            if( isKiranSiderbarWidget(widget) ){
                 return DrawItemViewHelper::kiranSidebarItemSizeFromContent(this, option, size, widget, m_detailFetcher);
             }
             break;
@@ -882,4 +882,9 @@ void Style::stopAnimation(const QObject *target) const
         animation->stop();
         delete animation;
     }
+}
+
+bool Style::isKiranSiderbarWidget(const QWidget *widget) const
+{
+    return (widget && widget->inherits("KiranSiderbarWidget"));
 }

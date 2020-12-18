@@ -1,3 +1,10 @@
+/*
+ * @file   kiran-titlebar-window.h
+ * @brief  自定义标题栏窗口
+ * @author liuxinhao <liuxinhao@kylinos.com.cn>
+ * @copyright (c) 2020 KylinSec. All rights reserved.
+ */
+ 
 #ifndef KIRANTITLEBARWINDOW_H
 #define KIRANTITLEBARWINDOW_H
 
@@ -10,6 +17,7 @@ class KiranTitlebarWindowPrivate;
  * @brief 自定义标题栏窗口
  * <img src="../markdown-resources/kiran-switch-button.png" alt="kiran-switch-button" style="zoom:90%;" />
  * @bug 移动窗口过后，窗体收不到鼠标悬浮事件,考虑窗口管理器引起
+ * @since kiranwidgets-qt5-2.0.0
  */
 class Q_DECL_EXPORT KiranTitlebarWindow : public QWidget {
     Q_OBJECT
