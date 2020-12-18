@@ -65,8 +65,8 @@ void Widget::initSwitchButtonTab()
     QWidget* switchWidget = ui->tabWidget->widget(1);
 
     KiranSwitchButton* switchCheckedButton = new KiranSwitchButton();
-    switchCheckedButton->setText("checked");
-    switchCheckedButton->setChecked(true);
+        switchCheckedButton->setText("checked");
+        switchCheckedButton->setChecked(true);
     switchWidget->layout()->addWidget(switchCheckedButton);
 
     KiranSwitchButton* switchUncheckedButton = new KiranSwitchButton();

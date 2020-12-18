@@ -2,26 +2,26 @@
 // Created by lxh on 2020/12/15.
 //
 
-#include "kiran-siderbar-widget.h"
+#include "kiran-sidebar-widget.h"
 #include "kiran-siderbar-widget-private.h"
 
 #include <QEvent>
 #include <QMouseEvent>
 
-KiranSiderbarWidget::KiranSiderbarWidget(QWidget *parent)
+KiranSidebarWidget::KiranSidebarWidget(QWidget *parent)
     : QListWidget(parent),
-      d_ptr(new KiranSiderbarWidgetPrivate(this))
+      d_ptr(new KiranSidebarWidgetPrivate(this))
 {
     d_ptr->init(this);
 }
 
-KiranSiderbarWidget::~KiranSiderbarWidget()
+KiranSidebarWidget::~KiranSidebarWidget()
 {
 
 }
 
 QItemSelectionModel::SelectionFlags
-KiranSiderbarWidget::selectionCommand(const QModelIndex &index, const QEvent *event) const
+KiranSidebarWidget::selectionCommand(const QModelIndex &index, const QEvent *event) const
 {
 //    //NOTE:为了避免一些环境下会出现ItemFocus直接设置选中的情况
     if(event==nullptr){

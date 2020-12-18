@@ -615,10 +615,10 @@ lineedit-password-character: 9678;
         <number>0</number>
        </property>
        <item>
-        <widget class="KiranSiderbarWidget" name="listWidget">
+        <widget class="KiranSidebarWidget" name="listWidget">
          <item>
           <property name="text">
-           <string>新建项目新建项目新建项目新建项目新建项目新建项目</string>
+           <string>新建项目</string>
           </property>
          </item>
          <item>
@@ -806,9 +806,9 @@ lineedit-password-character: 9678;
  </widget>
  <customwidgets>
   <customwidget>
-   <class>KiranSiderbarWidget</class>
+   <class>KiranSidebarWidget</class>
    <extends>QListWidget</extends>
-   <header location="global">kiran-siderbar-widget.h</header>
+   <header location="global">kiran-sidebar-widget.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

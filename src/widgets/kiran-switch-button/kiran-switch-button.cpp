@@ -52,10 +52,11 @@ QSize KiranSwitchButton::sizeHint() const
     QString str = text();
     QFontMetrics metrics = fontMetrics();
     QSize size = metrics.size(Qt::TextHideMnemonic,str);
-
     if( Kiran::Style::isKiranStyle() ){
         Kiran::Style* kiranStyle = Kiran::Style::castToKiranStyle();
         size = kiranStyle->sizeFromContents(Kiran::CT_SwitchButton,&optionButton,size,this);
+    }else{
+        qWarning() << "isn't KiranStyle!" << "style objectname:" << style()->metaObject()->className() << style()->proxy()->metaObject()->className();
     }
 
     return size;

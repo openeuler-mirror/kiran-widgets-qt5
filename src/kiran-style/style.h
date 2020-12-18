@@ -256,7 +256,7 @@ namespace Kiran {
 
     protected:
         /* 判断控件类型是否属于KiranSidebarWidget */
-        bool isKiranSiderbarWidget(const QWidget* widget) const;
+        bool isKiranSidebarWidget(const QWidget* widget) const;
 
     private:
         StyleEnum m_styleType;

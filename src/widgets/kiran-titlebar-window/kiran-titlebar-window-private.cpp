@@ -65,14 +65,12 @@ void KiranTitlebarWindowPrivate::init()
     /// 内容栏
     auto contentWidget = new QWidget;
     setWindowContentWidget(contentWidget);
-
     /// 加载样式表
     QFile file(DEFAULT_THEME_PATH);
     if( file.open(QIODevice::ReadOnly) ){
         QString titlebarStyle = file.readAll();
         q_func()->setStyleSheet(q_func()->styleSheet()+titlebarStyle);
     }
-
     /// 处理窗口事件
     q_ptr->installEventFilter(this);
 }

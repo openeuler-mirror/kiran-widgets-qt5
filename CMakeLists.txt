@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.5)
 option(install-examples "install examples" ON)
 
 #构建测试代码选项
-option(build-tests "build tests" ON)
+option(build-tests "build tests" OFF)
 
 project(kiranwidgets-qt5)
 
@@ -57,7 +57,7 @@ set(DEVEL_HEADER
         "src/widgets/kiran-application/kiran-application.h"
         "src/widgets/kiran-search-box/kiran-search-box.h"
         "src/widgets/kiran-single-application/kiran-single-application.h"
-        "src/widgets/kiran-siderbar-widget/kiran-siderbar-widget.h"
+        "src/widgets/kiran-sidebar-widget/kiran-sidebar-widget.h"
         "src/kiran-style/style-property-helper.h"
         "src/kiran-style/kiran-public-define.h" )
 

@@ -4,18 +4,18 @@
 
 #include "kiran-siderbar-widget-private.h"
 
-KiranSiderbarWidgetPrivate::KiranSiderbarWidgetPrivate(QObject *parent)
+KiranSidebarWidgetPrivate::KiranSidebarWidgetPrivate(QObject *parent)
     : QObject(parent)
 {
 
 }
 
-KiranSiderbarWidgetPrivate::~KiranSiderbarWidgetPrivate()
+KiranSidebarWidgetPrivate::~KiranSidebarWidgetPrivate()
 {
 
 }
 
-void KiranSiderbarWidgetPrivate::init(KiranSiderbarWidget* ptr)
+void KiranSidebarWidgetPrivate::init(KiranSidebarWidget* ptr)
 {
     q_ptr = ptr;
 

@@ -43,6 +43,7 @@
 #include <QComboBox>
 #include <QListView>
 #include <private/qstyleanimation_p.h>
+#include <private/qstylesheetstyle_p.h>
 
 using namespace Kiran;
 
@@ -116,12 +117,12 @@ void Style::drawPrimitive(QStyle::PrimitiveElement pe, const QStyleOption *opt,
             isOk = DrawCommonHelper::drawIndicatorArrowRightPrimitive(this,opt,p,m_detailFetcher,w);
             break;
         case PE_PanelItemViewItem:
-            if(isKiranSiderbarWidget(w)){
+            if(isKiranSidebarWidget(w)){
                 isOk = DrawItemViewHelper::drawPanelKianSidebarItem(this,opt,p,m_detailFetcher,w);
             }
             break;
         case PE_IndicatorViewItemCheck:
-            if(isKiranSiderbarWidget(w)){
+            if(isKiranSidebarWidget(w)){
                 isOk = DrawItemViewHelper::drawIndicatorKiranSidebarItemCheck(this,opt,p,m_detailFetcher,w);
             }
             break;
@@ -271,17 +272,17 @@ QRect Style::subElementRect(QStyle::SubElement se, const QStyleOption *opt,
             return DrawProgressBarHelper::progressBarLabelRect(this,opt,widget);
 
         case SE_ItemViewItemCheckIndicator:
-            if( isKiranSiderbarWidget(widget) ){
+            if(isKiranSidebarWidget(widget) ){
                 return DrawItemViewHelper::kiranSidebarItemCheckIndicatorRect(this,opt,widget);
             }
             break;
         case SE_ItemViewItemDecoration:
-            if( isKiranSiderbarWidget(widget) ){
+            if(isKiranSidebarWidget(widget) ){
                 return DrawItemViewHelper::kiranSiderbarItemDecorationRect(this,opt,widget);
             }
             break;
         case SE_ItemViewItemText:
-            if( isKiranSiderbarWidget(widget) ){
+            if(isKiranSidebarWidget(widget) ){
                 return DrawItemViewHelper::kiranSiderbarItemTextRect(this,opt,widget);
             }
             break;
@@ -362,7 +363,7 @@ QSize Style::sizeFromContents(QStyle::ContentsType element, const QStyleOption *
         case CT_ProgressBar:
             return DrawProgressBarHelper::progressBarSizeFromContents(this, option, size, widget, m_detailFetcher);
         case CT_ItemViewItem:
-            if( isKiranSiderbarWidget(widget) ){
+            if(isKiranSidebarWidget(widget) ){
                 return DrawItemViewHelper::kiranSidebarItemSizeFromContent(this, option, size, widget, m_detailFetcher);
             }
             break;
@@ -801,12 +802,33 @@ void Style::unpolish(QApplication *application)
 
 bool Style::isKiranStyle()
 {
-    return qobject_cast<Style *>(qApp->style());
+    bool isKiranStyle = false;
+    if( qobject_cast<Style* >(qApp->style()) ){
+        isKiranStyle = true;
+    }else if( qApp->style()->inherits("QStyleSheetStyle") ){
+        QStyleSheetStyle* styleSheetStyle = static_cast<QStyleSheetStyle*>(QApplication::style());
+        QStyle* baseStyle = styleSheetStyle->base;
+        if( baseStyle && qobject_cast<Style*>(baseStyle) ){
+            isKiranStyle = true;
+        }
+    }
+    return  isKiranStyle;
 }
 
 Style *Style::castToKiranStyle()
 {
-    return qobject_cast<Style *>(qApp->style());
+    Style* style = nullptr;
+    QStyle* appStyle = qApp->style();
+
+    if( !(style = qobject_cast<Style* >(appStyle))  ){
+        if(appStyle->inherits("QStyleSheetStyle")){
+            QStyleSheetStyle* styleSheetStyle = nullptr;
+            styleSheetStyle = static_cast<QStyleSheetStyle *>(appStyle);
+            style = qobject_cast<Style*>(styleSheetStyle->base);
+        }
+    }
+
+    return style;
 }
 
 void Style::drawControl(KiranControlElement ce, const QStyleOption *opt, QPainter *p, const QWidget *w) const
@@ -884,7 +906,7 @@ void Style::stopAnimation(const QObject *target) const
     }
 }
 
-bool Style::isKiranSiderbarWidget(const QWidget *widget) const
+bool Style::isKiranSidebarWidget(const QWidget *widget) const
 {
-    return (widget && widget->inherits("KiranSiderbarWidget"));
+    return (widget && widget->inherits("KiranSidebarWidget"));
 }
