@@ -77,6 +77,7 @@ CONFIG+=link_pkgconfig PKGCONFIG+=kiranwidgets-qt5
 - cmake引入kiranwidgets-qt5依赖,CMakeLists.txt写法
 ```cmake
 #引入kiranwidgets-qt5的库依赖和头文件目录
+find_package(PkgConfig REQUIRED)
 pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
 #包含kiranwidgets-qt5头文件目录
 target_include_directories(${PROJECT_NAME} ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS})
@@ -84,4 +85,7 @@ target_include_directories(${PROJECT_NAME} ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS})
 target_link_libraries(${PROJECT_NAME} ${KIRAN_WIDGETS_QT5_LIBRARIES})
 ```
 
-在代码中包含需要的控件头文件:例如```#include <kiransearchbox.h>```即可使用
+在代码中包含需要的控件头文件　例:
+ ```
+ #include <kiransearchbox.h>
+```

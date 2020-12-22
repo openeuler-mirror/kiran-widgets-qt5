@@ -16,6 +16,11 @@ class KiranSidebarWidgetPrivate;
  * @brief Kiran控制中心组件侧边栏封装
  * 基于QListWidget重新实现,提供在KiranStyle下特殊的样式绘制
  * <img src="../snapshot/kiran-sidebar-widget.png" alt="kiran-sidebar-widget.png" style="zoom:90%;" />
+ *
+ * 使用说明
+ * - 可通过QtDesigner ui文件时,右键提升为该控件
+ * - 通过CPP代码新建控件加入布局之中
+ *
  * @since 2.1.0
  * @see QListWidget
  */

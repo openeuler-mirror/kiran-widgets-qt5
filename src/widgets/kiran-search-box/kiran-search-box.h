@@ -17,6 +17,11 @@ class QStyleOption;
  * @brief 搜索框，在KiranStyle下提供特殊的绘制,使用方法可见QLineEdit
  * 只有才KiranStyle下才支持绘制，其他Style下绘制出来只是个普通输入框
  * <img src="../snapshot/kiran-search-box.png" alt="kiran-search-box.png" style="zoom:90%;" />
+ *
+ * 使用说明
+ *
+ *　和QLineEdit一样的用法
+ *
  * @since 2.1.0
  * @see QLineEdit
  */

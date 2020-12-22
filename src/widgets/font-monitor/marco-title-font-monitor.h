@@ -9,7 +9,10 @@
 
 class QGSettings;
 
-/* Marco标题栏字体监控 */
+/**
+ * @brief Marco标题栏字体监控
+ * @fixme marco字体设置成regular情况下, org.mate.Marco.general titlebar-font值为＂Noto Sans CJK SC　10＂不存在Style("Blod","Reqular"等值),导致解析失败
+ */
 class MarcoTitleFontMonitor : public FontMonitor{
     Q_OBJECT
 public:

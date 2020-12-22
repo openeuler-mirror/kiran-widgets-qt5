@@ -20,10 +20,15 @@ class KiranApplicationPrivate;
 
 /**
  * @brief Kiran对于QApplication的一层封装
+ *
  *    实现了以下功能
  *  - 监控字体变化，字体变化时设置应用程序字体,如果有的控件不使用全局字体(需突出显示或者比较小)，
  *    需要通过installEventFilter过滤ApplicationFontChange事件或重写event方法根据全局字体设置相应的字体
  *  - 设置QStyle为KiranStyle,KiranStyle为大部分控件提供了定制,让界面统一
+ *
+ * 使用说明
+ *
+ * 　安装 **kiranwidgets-qt5-examples**,详情见/usr/share/kiranwidgets-qt5/examples/kiran-application/
  *
  *  @since 2.1.0
  *  @see QApplication

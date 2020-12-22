@@ -16,6 +16,12 @@ class QStyleOptionButton;
 /**
  * @brief SwitchButton开关按钮，仅在KiranStyle下生效，其他Style中仅绘制成Button
  * <img src="../snapshot/kiran-switch-button.png" alt="kiran-switch-button" style="zoom:90%;" />
+ *
+ * 使用说明
+ *
+ * 通过 `isChecked` 方法获取开关状态,通过 `setChecked`　方法来设置开关状态
+ * 通过连接到QAbstractButton::toggled(bool checked)来处理开关变化
+ *
  * @since 2.1.0
  * @see QAbstractButton
  */
@@ -42,6 +48,7 @@ public:
      * @see QWidget::minimumSizeHint()
      */
     virtual QSize minimumSizeHint() const override;
+
 private:
     void initStyleOption(QStyleOptionButton* option) const;
     bool event(QEvent *e) override;
