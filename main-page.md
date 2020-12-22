@@ -66,8 +66,22 @@
 
 ##用法
 提供了pkgconf构建依赖,包名为kiranwidgets-qt5
-- 查看kiranwidgets-qt5库依赖和头文件目录 `pkgconf --libs --cflags kiranwidgets-qt5`
-- qmake中加入kiranwidgets-qt5依赖,在pro文件中加入`CONFIG+=link_pkgconfig PKGCONFIG+=kiranwidgets-qt5`
-- cmake中通过`pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)`引入kiranwidgets-qt5的库依赖和头文件目录,
-后续过程中通过`${KIRAN_WIDGETS_QT5_INCLUDE_DIRS}`引用kiranwidgets-qt5头文件目录,`${KIRAN_WIDGETS_QT5_LIBRARIES}`引用kiranwidgets-qt5依赖库
+- 查看kiranwidgets-qt5库依赖和头文件目录  
+```commandline
+pkgconf --libs --cflags kiranwidgets-qt5
+```
+- qmake中加入kiranwidgets-qt5依赖,pro文件写法
+```
+CONFIG+=link_pkgconfig PKGCONFIG+=kiranwidgets-qt5
+```
+- cmake引入kiranwidgets-qt5依赖,CMakeLists.txt写法
+```cmake
+#引入kiranwidgets-qt5的库依赖和头文件目录
+pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
+#包含kiranwidgets-qt5头文件目录
+target_include_directories(${PROJECT_NAME} ${KIRAN_WIDGETS_QT5_INCLUDE_DIRS})
+#加入kiranwidgets-qt5依赖库
+target_link_libraries(${PROJECT_NAME} ${KIRAN_WIDGETS_QT5_LIBRARIES})
+```
+
 在代码中包含需要的控件头文件:例如```#include <kiransearchbox.h>```即可使用

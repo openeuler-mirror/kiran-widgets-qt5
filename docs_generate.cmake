@@ -8,20 +8,20 @@ function(docs_generate DOXYGEN_INPUT DOC_SNAPSHOTS_DIR OUTPUT_DIR)
         configure_file(${DOXYGEN_IN} ${DOXYGEN_CONF} @ONLY)
 
         # 添加自定义目标docs
-        add_custom_target(docs
-                COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_CONF}
+        add_custom_target(docs ALL
+                ${DOXYGEN_EXECUTABLE} ${DOXYGEN_CONF}
                 WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
                 COMMENT "Generating API documentation with Doxygen"
                 VERBATIM)
+        add_dependencies(docs ${PROJECT_NAME})
 
-        # 构建docs完成之后将图片拷贝进docs安装目录
+        # 将控件截图拷贝到文档生成目录
         add_custom_command(TARGET docs
                 POST_BUILD
-                COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_CURRENT_BINARY_DIR}/docs/snapshot/
-                COMMAND ${CMAKE_COMMAND} -E copy_if_different ${DOC_SNAPSHOTS_DIR}/* ${CMAKE_CURRENT_BINARY_DIR}/docs/snapshot/
+                COMMAND cp -r ${DOC_SNAPSHOTS_DIR} ${OUTPUT_DIR}
                 WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
                 COMMENT "Copy documentation snapshots"
-                USES_TERMINAL)
+                VERBATIM)
 
         #　添加安装选项
         install(DIRECTORY ${OUTPUT_DIR} DESTINATION ${SHARE_INSTALL_PREFIX}/docs/${PROJECT_NAME} )
