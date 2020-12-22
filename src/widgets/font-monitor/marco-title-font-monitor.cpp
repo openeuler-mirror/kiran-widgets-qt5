@@ -20,6 +20,7 @@ MarcoTitleFontMonitor::~MarcoTitleFontMonitor() {
     delete marcoSettings;
 }
 
+#include <QApplication>
 QFont MarcoTitleFontMonitor::currentFont() {
     if( marcoSettings == nullptr ){
         return QFont();
@@ -32,12 +33,20 @@ QFont MarcoTitleFontMonitor::currentFont() {
     }
 
     QString fontPtSize = splitRes.takeLast();
-    QString fontStyle = splitRes.takeLast();
-    QString fontFamily = splitRes.join(' ');
     int fontPtSizeInt = fontPtSize.toInt();
 
-    QFontDatabase database;
-    return database.font(fontFamily, fontStyle, fontPtSizeInt);
+    /*NOTE: marco 设置字体时如果是general，使用gsettings更新值时不会将General写入值中，导致解析失败*/
+    QFontDatabase fontDatabase;
+    QString fontStyle;
+    QString fontFamily = splitRes.join(' ');
+    if( fontDatabase.hasFamily(fontFamily) ){
+        fontStyle = "Regular";
+    }else{
+        fontStyle = splitRes.takeLast();
+        fontFamily = splitRes.join(' ');
+    }
+
+    return fontDatabase.font(fontFamily, fontStyle, fontPtSizeInt);
 }
 
 bool MarcoTitleFontMonitor::initMonitor() {
