@@ -19,13 +19,14 @@ KiranTitlebarWindow::KiranTitlebarWindow()
     d_func()->init();
     QWidget::ensurePolished();
     setTitle(qApp->applicationName());
+    setIcon(QIcon::fromTheme("window"));
 }
 
-KiranTitlebarWindow::KiranTitlebarWindow(QWidget *parent, Qt::WindowFlags windowflag)
+KiranTitlebarWindow::KiranTitlebarWindow(QWidget *parent, Qt::WindowFlags windowFlags)
     : QWidget(parent),
     d_ptr(new KiranTitlebarWindowPrivate(this))
 {
-    setWindowFlags(Qt::FramelessWindowHint|windowflag);
+    setWindowFlags(Qt::FramelessWindowHint | windowFlags);
     setAttribute(Qt::WA_TranslucentBackground);
     setAttribute(Qt::WA_Hover);
 

@@ -143,12 +143,14 @@ namespace Kiran {
         QSize sizeFromContents(ContentsType ct, const QStyleOption *opt,
                                const QSize &contentsSize,const QWidget *widget = nullptr) const override;
 
-        /// 通过内容大小和参数获取指定Kiran控件的大小,通常在控件的sizeHint方法中使用
-        /// \param ct               Kiran控件类型
-        /// \param opt              样式选项
-        /// \param contentsSize     内容大小
-        /// \param widget           窗口
-        /// \return 控件应有的大小
+        /**
+         * @brief 通过内容大小和参数获取指定Kiran控件的大小,通常在控件的sizeHint方法中使用
+         * @param ct            Kiran控件类型
+         * @param opt           样式选项
+         * @param contentsSize  内容大小
+         * @param widget 窗口
+         * @return  控件应有的大小
+         */
         QSize sizeFromContents(KiranContentsType ct,const QStyleOption *opt,
                                const QSize &contentsSize,const QWidget *widget = nullptr) const;
 

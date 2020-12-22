@@ -20,7 +20,7 @@
 
 namespace Kiran {
     /**
-     * @brief 提供从Css配置文件中取出相关绘制细节的接口
+     * @brief 内部使用 提供从Css配置文件中取出相关绘制细节的接口
      */
     class StyleDetailFetcher : public QObject {
     Q_OBJECT

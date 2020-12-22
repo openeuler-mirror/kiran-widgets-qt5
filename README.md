@@ -69,7 +69,7 @@ kiran桌面环境的相关**Qt控件**的封装
 
 ### kiran-titlebar-window
 
-<img src="markdown-resources/kiran-titlebar-window.png" alt="kiran-titlebar-window" style="zoom:33%;" />
+<img src="docs/snapshots/kiran-titlebar-window.png" alt="kiran-titlebar-window" style="zoom:33%;" />
 
 自定义标题栏窗口
 
@@ -107,7 +107,7 @@ kiran桌面环境的相关**Qt控件**的封装
 
 ### KiranMessageBox
 
-<img src="markdown-resources/kiran-message-box.png" alt="kiran-message-box" style="zoom:73%;" />
+<img src="docs/snapshots/kiran-message-box.png" alt="kiran-message-box" style="zoom:73%;" />
 
 自定义消息对话框
 
@@ -129,7 +129,7 @@ kiran桌面环境的相关**Qt控件**的封装
 
 ### KiranSearchBox
 
-<img src="markdown-resources/kiran-search-box.png" alt="kiran-search-box" style="zoom:75%;" />
+<img src="docs/snapshots/kiran-search-box.png" alt="kiran-search-box" style="zoom:75%;" />
 
 派生于**QLineEdit**,在**KiranStyle**中更改了其绘制
 
@@ -147,7 +147,7 @@ kiran桌面环境的相关**Qt控件**的封装
 
 
 
-<img src="markdown-resources/kiran-switch-button.png" alt="kiran-switch-button" style="zoom:90%;" />
+<img src="docs/snapshots/kiran-switch-button.png" alt="kiran-switch-button" style="zoom:90%;" />
 
 派生于QAbstractButton,在KiranStyle中加入了SwitchButton的绘制
 
@@ -171,7 +171,7 @@ kiran桌面环境的相关**Qt控件**的封装
 
 ### QPushButton
 
-<img src="markdown-resources/kiran-style-push-button.png" alt="kiran-style-push-button" style="zoom:90%;" />
+<img src="docs/snapshots/kiran-style-push-button.png" alt="kiran-style-push-button" style="zoom:90%;" />
 
 **KiranStyle**中内置了三种绘制样式的Button(Normal,Default,Warning),可通过**style-property-helper.h**中的**getButtonType**/**setButtonType**方法获取和设置按钮的绘制样式
 
@@ -187,15 +187,15 @@ QSpinBox、QTimeEdit、QDateEdit、QDateTimeEdit KiranStyle中提供类似于Spi
 
 - **ARROW_HORIZONTAL_STACK **   水平堆叠
 
-<img src="markdown-resources/kiran-spinbox-hor-stack.png" alt="kiran-spinbox-hor-stack" style="zoom:80%;" />
+<img src="docs/snapshots/kiran-spinbox-hor-stack.png" alt="kiran-spinbox-hor-stack" style="zoom:80%;" />
 
 - **ARROW_TWO_SIDERS**   左右两边                  
 
-  <img src="markdown-resources/spinbox-two-side.png" alt="spinbox-two-side" style="zoom:80%;" />
+  <img src="docs/snapshots/spinbox-two-side.png" alt="spinbox-two-side" style="zoom:80%;" />
 
 - **ARROW_VERTICAL_STACK** 垂直堆叠
 
-  <img src="markdown-resources/spinbox-ver-stack.png" alt="spinbox-ver-stack" style="zoom:80%;" />
+  <img src="docs/snapshots/spinbox-ver-stack.png" alt="spinbox-ver-stack" style="zoom:80%;" />
 
 - **ARROW_POSITION_AUTOMATIC** 自动布局
 
@@ -213,12 +213,12 @@ QSpinBox、QTimeEdit、QDateEdit、QDateTimeEdit KiranStyle中提供类似于Spi
 
 - **PROGRESS_TEXT_LEFT**        进度文本显示在左侧
 
-<img src="markdown-resources/progress-bar-left.png" alt="progress-bar-left" style="zoom:80%;" />
+<img src="docs/snapshots/progress-bar-left.png" alt="progress-bar-left" style="zoom:80%;" />
 
 - **PROGRESS_TEXT_CENTER**  进度文本显示在中间
 
-<img src="markdown-resources/progress-bar-center.png" alt="progress-bar-center" style="zoom:80%;" />
+<img src="docs/snapshots/progress-bar-center.png" alt="progress-bar-center" style="zoom:80%;" />
 
 - **PROGRESS_TEXT_RIGHT**     进度文本显示在右侧
 
-<img src="markdown-resources/progress-bar-center.png" alt="progress-bar-right" style="zoom:80%;" />
+<img src="docs/snapshots/progress-bar-center.png" alt="progress-bar-right" style="zoom:80%;" />

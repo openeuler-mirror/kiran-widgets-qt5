@@ -15,7 +15,7 @@ class KiranTitlebarWindowPrivate;
 
 /**
  * @brief 自定义标题栏窗口
- * <img src="../markdown-resources/kiran-switch-button.png" alt="kiran-switch-button" style="zoom:90%;" />
+ * <img src="../snapshot/kiran-switch-button.png" alt="kiran-switch-button" style="zoom:90%;" />
  * @bug 移动窗口过后，窗体收不到鼠标悬浮事件,考虑窗口管理器引起
  * @since 2.0.0
  */
@@ -53,11 +53,12 @@ public:
     /**
      * @brief KiranTitlebarWindow构造方法
      * 考虑之前版本的兼容问题，暂时父控件不为默认构造
-     * @param parent     父控件
-     * @param windowflag window标志
+     * @param parent      父控件
+     * @param windowFlags window标志
      * @since 2.1.0
+     * @see QWidget::QWidget(QWidget*, Qt::WindowFlags)
      */
-    explicit KiranTitlebarWindow(QWidget *parent, Qt::WindowFlags windowflag=Qt::Window);
+    explicit KiranTitlebarWindow(QWidget *parent, Qt::WindowFlags windowFlags=Qt::Window);
 
     /**
      * @brief KiranTitlebarWindow析构方法
@@ -77,7 +78,7 @@ public:
     QWidget *getWindowContentWidget();
 
     /**
-     * @brief  获取标题栏部分自定义布局，可自行添加控件
+     * @brief  获取标题栏部分自定义布局，可自行添加控件至标题栏
      * @return 窗口内容部件布局
      */
     QHBoxLayout *getTitlebarCustomLayout();

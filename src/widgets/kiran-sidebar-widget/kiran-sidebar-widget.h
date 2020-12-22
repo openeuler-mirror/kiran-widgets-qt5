@@ -15,6 +15,7 @@ class KiranSidebarWidgetPrivate;
 /**
  * @brief Kiran控制中心组件侧边栏封装
  * 基于QListWidget重新实现,提供在KiranStyle下特殊的样式绘制
+ * <img src="../snapshot/kiran-sidebar-widget.png" alt="kiran-sidebar-widget.png" style="zoom:90%;" />
  * @since 2.1.0
  * @see QListWidget
  */
@@ -34,12 +35,7 @@ public:
     ~KiranSidebarWidget();
 
 protected:
-    /**
-     * @brief 重新实现selectionCommand，以自定义选择行为
-     * @param index 索引
-     * @param event 事件类型
-     * @return 返回选择标志
-     */
+    /* 重新实现selectionCommand，以自定义选择行为 */
     virtual QItemSelectionModel::SelectionFlags
     selectionCommand(const QModelIndex &index, const QEvent *event = Q_NULLPTR) const override;
 

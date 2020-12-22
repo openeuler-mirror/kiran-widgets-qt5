@@ -16,6 +16,7 @@ class QAbstractButton;
 
 /**
  * @brief 基于QDialog封装的消息对话框
+ * <img src="../snapshot/kiran-message-box.png" alt="kiran-message-box.png" style="zoom:90%;" />
  * @since 2.0.0
  */
 class Q_DECL_EXPORT KiranMessageBox : public QDialog {
@@ -30,7 +31,7 @@ public:
       * @see 　QDialogButtonBox::StandardButton
       * @note 定义了一些按钮类型枚举,提供给使用静态方法来快捷创建消息框
       *       没直接使用QDialogButtonBox中的StandarButton是因为QDialogButtonBox中的Button翻译问题需要解决
-      *       也需要通过枚举转字符串生成按钮ObjectName，来匹配样式表，以解决按钮不同样式的问题
+      *       也需要使用Q_ENUM将枚举信息加入元对象，通过枚举转字符串生成按钮ObjectName，来匹配样式表，以解决按钮不同样式的问题
       */
     enum KiranStandardButton {
         NoButton = 0x00000000,

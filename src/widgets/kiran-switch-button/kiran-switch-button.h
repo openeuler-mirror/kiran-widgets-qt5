@@ -14,7 +14,8 @@ class KiranSwitchButtonPrivate;
 class QStyleOptionButton;
 
 /**
- * @brief SwitchButton，仅在KiranStyle下生效，其他Style中仅绘制成Button
+ * @brief SwitchButton开关按钮，仅在KiranStyle下生效，其他Style中仅绘制成Button
+ * <img src="../snapshot/kiran-switch-button.png" alt="kiran-switch-button" style="zoom:90%;" />
  * @since 2.1.0
  * @see QAbstractButton
  */
