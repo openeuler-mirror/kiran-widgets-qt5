@@ -5,8 +5,8 @@
  * @copyright (c) 2020 KylinSec. All rights reserved.
  */
  
-#ifndef KIRANWIDGETS_QT5_KIRAN_PUBLIC_DEFINE_H
-#define KIRANWIDGETS_QT5_KIRAN_PUBLIC_DEFINE_H
+#ifndef KIRANWIDGETS_QT5_KIRAN_STYLE_PUBLIC_DEFINE_H
+#define KIRANWIDGETS_QT5_KIRAN_STYLE_PUBLIC_DEFINE_H
 
 #include <qnamespace.h>
 
@@ -49,4 +49,4 @@ namespace Kiran{
     };
 }
 
-#endif //KIRANWIDGETS_QT5_KIRAN_PUBLIC_DEFINE_H
+#endif //KIRANWIDGETS_QT5_KIRAN_STYLE_PUBLIC_DEFINE_H

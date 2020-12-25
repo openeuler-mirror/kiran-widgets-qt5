@@ -8,7 +8,7 @@
 #ifndef KIRANSTYLE_PROPERTY_HELPER_H
 #define KIRANSTYLE_PROPERTY_HELPER_H
 
-#include <kiran-public-define.h>
+#include <kiran-style-public-define.h>
 
 class QToolButton;
 class QPushButton;

@@ -13,7 +13,7 @@
 #include <QSpinBox>
 #include <QStyle>
 
-#include "kiran-private-defines.h"
+#include "kiran-style-private-defines.h"
 
 namespace Kiran {
     class Style;

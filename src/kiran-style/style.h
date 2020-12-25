@@ -12,8 +12,8 @@
 #include <QProxyStyle>
 #include <QIcon>
 
-#include "kiran-private-defines.h"
-#include "kiran-public-define.h"
+#include "kiran-style-private-defines.h"
+#include "kiran-style-public-define.h"
 #include "style-detail-fetcher.h"
 
 
