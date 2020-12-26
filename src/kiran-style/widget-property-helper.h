@@ -1,6 +1,6 @@
 /*
- * @file   style-property-helper.h
- * @brief  KiranStyle自定义属性读写接口
+ * @file   widget-property-helper.h
+ * @brief  KiranStyle自定义控件属性读写接口
  * @author liuxinhao <liuxinhao@kylinos.com.cn>
  * @copyright (c) 2020 KylinSec. All rights reserved.
  */
@@ -20,7 +20,7 @@ namespace Kiran {
     /**
      * @brief KiranStyle自定义属性读写接口,可定制部分KiranStyle绘制细节,KiranStyle读出属性值进行特殊的绘制
      */
-    namespace PropertyHelper {
+    namespace WidgetPropertyHelper {
 
         /**
          * @brief 获取按钮类型

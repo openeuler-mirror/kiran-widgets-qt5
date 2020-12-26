@@ -10,7 +10,7 @@
 #include "style.h"
 #include "draw-common-helper.h"
 #include "draw-button-helper.h"
-#include "style-property-helper.h"
+#include "widget-property-helper.h"
 #include "style-detail-fetcher.h"
 
 using namespace Kiran;
@@ -100,7 +100,7 @@ bool DrawButtonHelper::drawPushButtonBevelControl(const Style *style, const QSty
         if (!btn) {
             return true;
         }
-        ButtonType buttonType = PropertyHelper::getButtonType(btn);
+        ButtonType buttonType = WidgetPropertyHelper::getButtonType(btn);
         switch (buttonType) {
             case BUTTON_Default:
                 bgColorProperty = StyleDetailFetcher::Button_DefaultBackground;

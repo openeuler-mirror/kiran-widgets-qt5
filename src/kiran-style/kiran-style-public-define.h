@@ -43,9 +43,18 @@ namespace Kiran{
     /**
      * @brief KiranSideWidget支持的Item特殊样式定制
      */
-    enum KiranSidebarDataRole{
-        ItemStatus_Role = Qt::UserRole+1, /** < Item状态显示,eg:账户管理工具的侧边栏显示启用和禁用状态 */
-        ItemStatusColor_Role              /** <　Item状态绘制颜色  */
+    enum SidebarWidgetDataRole{
+        ItemStatus_Role = Qt::UserRole+666, /** < Item状态显示,eg:账户管理工具的侧边栏显示启用和禁用状态 */
+        ItemStatusColor_Role                /** <　Item状态绘制颜色  */
+    };
+
+    /**
+     * @brief KiranIconLinEdit支持的图片位置枚举
+     */
+    enum IconLineEditIconPosition{
+        ICON_POSITION_NONE, /** < 不绘制Icon */
+        ICON_POSITION_LEFT, /** < 图标绘制在输入框内偏左 */
+        ICON_POSITION_RIGHT /** < 图标绘制在输入框内偏右 */
     };
 }
 

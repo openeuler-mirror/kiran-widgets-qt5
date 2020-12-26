@@ -58,7 +58,7 @@
         <th>功能简述</th>
     </tr>
     <tr>
-        <td>Kiran::PropertyHelper</td>
+        <td>Kiran::WidgetPropertyHelper</td>
         <td>style-property-helper.h</td>
         <td>在KiranStyle下可以通过该命名空间中的方法定制相关控件的绘制方式 </td>
     </tr>

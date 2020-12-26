@@ -623,6 +623,8 @@ int Style::styleHint(QStyle::StyleHint sh, const QStyleOption *opt,
             return true;
         case SH_DockWidget_ButtonsHaveFrame:
             return false;
+        case SH_LineEdit_PasswordCharacter:
+            return 9679;
         default:
             return ParentStyleClass::styleHint(sh, opt, w, shret);
     }

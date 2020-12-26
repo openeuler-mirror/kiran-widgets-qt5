@@ -5,7 +5,7 @@
 #include "draw-progress-bar-helper.h"
 #include "draw-common-helper.h"
 #include "style.h"
-#include "style-property-helper.h"
+#include "widget-property-helper.h"
 
 #include <QStyleOption>
 #include <QDebug>
@@ -52,7 +52,7 @@ QRect DrawProgressBarHelper::progressBarGrooveRect(const Style *style, const QSt
     bool textVisible(progressBarOption->textVisible);
     bool busy(progressBarOption->minimum == 0 && progressBarOption->maximum == 0);
     bool horizontal(progressBarOption->orientation == Qt::Horizontal);
-    ProgressBarTextPosition textPosition = PropertyHelper::getProgressBarTextPosition(
+    ProgressBarTextPosition textPosition = WidgetPropertyHelper::getProgressBarTextPosition(
             qobject_cast<const QProgressBar *>(widget));
 
     // copy rectangle and adjust
@@ -149,7 +149,7 @@ QRect DrawProgressBarHelper::progressBarLabelRect(const Style *style, const QSty
     QRect rect( DrawCommonHelper::insideMargin( option->rect, Metrics::Frame_FrameWidth, 0 ) );
     rect.setWidth(textWidth);
 
-    ProgressBarTextPosition textPosition = PropertyHelper::getProgressBarTextPosition(qobject_cast<const QProgressBar*>(widget));
+    ProgressBarTextPosition textPosition = WidgetPropertyHelper::getProgressBarTextPosition(qobject_cast<const QProgressBar*>(widget));
     switch (textPosition) {
         case PROGRESS_TEXT_LEFT:
             rect.moveLeft(option->rect.left()+1);

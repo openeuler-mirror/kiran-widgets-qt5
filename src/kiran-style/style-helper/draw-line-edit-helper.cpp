@@ -6,11 +6,14 @@
 #include "draw-common-helper.h"
 #include "style-detail-fetcher.h"
 #include "style.h"
+#include "kiran-style-private-defines.h"
+#include "widget-private-property-helper.h"
 
 #include <QRect>
 #include <private/qcssparser_p.h>
 #include <QWidget>
 #include <QDebug>
+#include <QLineEdit>
 
 using namespace Kiran;
 
@@ -25,6 +28,7 @@ DrawLineEditHelper::lineEditSizeFromContents(const Style *style, const QStyleOpt
     int frameWidth(style->pixelMetric(QStyle::PM_DefaultFrameWidth, option, widget));
 
     bool isKiranSearchBox(widget->inherits("KiranSearchBox"));
+    bool isKiranIconLineEdit(widget->inherits("KiranIconLineEdit"));
     bool flat(frameOption->lineWidth == 0);
     QSize size = contentsSize;
     if( !flat ){
@@ -33,6 +37,14 @@ DrawLineEditHelper::lineEditSizeFromContents(const Style *style, const QStyleOpt
     ///KiranSearchBox特殊处理，大小需加上高度，为画上搜索框图标
     if(isKiranSearchBox){
         size.rwidth()+=size.height();
+    }
+    if(isKiranIconLineEdit){
+        const QLineEdit* lineEdit = qobject_cast<const QLineEdit*>(widget);
+        QSize iconSize = WidgetPrivatePropertyHelper::getLineEditIconSize(lineEdit);
+        IconLineEditIconPosition position = WidgetPrivatePropertyHelper::getLineEditIconPosition(lineEdit);
+        if( iconSize.isValid() && position!=ICON_POSITION_NONE ){
+            size.rwidth()+=iconSize.width();
+        }
     }
     return size;
 }
@@ -74,11 +86,28 @@ QRect DrawLineEditHelper::lineEditContentsRect(const Style *style, const QStyleO
 
     int frameWidth(style->pixelMetric(QStyle::PM_DefaultFrameWidth, opt, widget));
     bool isKiranSearchBox(widget->inherits("KiranSearchBox"));
+    bool isKiranIconLineEdit(widget->inherits("KiranIconLineEdit"));
+
     QRect contentsRect = rect.adjusted(frameWidth,frameWidth,-frameWidth,-frameWidth);
 
-    //预留出搜索框绘制搜索图标
-    if(isKiranSearchBox){
+    if(isKiranSearchBox){/* 预留出搜索框绘制搜索图标 */
         contentsRect.adjust(rect.size().height(),0,0,0);
+    }else if(isKiranIconLineEdit){/* 带有图标的QLineEdit预留出图标位置 */
+        const QLineEdit* lineEdit = qobject_cast<const QLineEdit*>(widget);
+        QSize iconSize = WidgetPrivatePropertyHelper::getLineEditIconSize(lineEdit);
+        IconLineEditIconPosition position = WidgetPrivatePropertyHelper::getLineEditIconPosition(lineEdit);
+        if( !iconSize.isNull() ){
+            switch (position) {
+                case ICON_POSITION_NONE:
+                    break;
+                case ICON_POSITION_LEFT:
+                    contentsRect.adjust(iconSize.width(),0,0,0);
+                    break;
+                case ICON_POSITION_RIGHT:
+                    contentsRect.adjust(0,0,-iconSize.width(),0);
+                    break;
+            }
+        }
     }
 
     return contentsRect;

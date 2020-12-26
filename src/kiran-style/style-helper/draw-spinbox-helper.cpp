@@ -5,7 +5,7 @@
 #include "draw-common-helper.h"
 #include "draw-spinbox-helper.h"
 #include "style.h"
-#include "style-property-helper.h"
+#include "widget-property-helper.h"
 
 #include <QStyleOption>
 #include <QPainter>
@@ -101,7 +101,7 @@ DrawSpinboxHelper::spinBoxSubControlRect(const Style *style,const QStyleOptionCo
     bool hasFrame = spinBoxOption->frame;
     QRect rect(spinBoxOption->rect);
 
-    SpinboxArrowPosition position = PropertyHelper::getSpinboxButtonPosition(w);
+    SpinboxArrowPosition position = WidgetPropertyHelper::getSpinboxButtonPosition(w);
 
     if ( position == ARROW_POSITION_AUTOMATIC ){
         if (rect.width() < (rect.height() * 2 + 24)) {///左右堆叠两个正方形按钮,留空不够

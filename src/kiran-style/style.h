@@ -16,7 +16,6 @@
 #include "kiran-style-public-define.h"
 #include "style-detail-fetcher.h"
 
-
 typedef QHash<QStyle::StandardPixmap, QIcon> IconCache;
 class QStyleAnimation;
 

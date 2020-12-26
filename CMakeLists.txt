@@ -61,7 +61,9 @@ set(DEVEL_HEADER
         "src/widgets/kiran-search-box/kiran-search-box.h"
         "src/widgets/kiran-single-application/kiran-single-application.h"
         "src/widgets/kiran-sidebar-widget/kiran-sidebar-widget.h"
-        "src/kiran-style/style-property-helper.h"
+        "src/widgets/kiran-icon-line-edit/kiran-icon-line-edit.h"
+
+        "src/kiran-style/widget-property-helper.h"
         "src/kiran-style/kiran-style-public-define.h" )
 
 include_directories("${CMAKE_BINARY_DIR}")

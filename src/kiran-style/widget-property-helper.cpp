@@ -2,7 +2,7 @@
 // Created by lxh on 2020/11/19.
 //
 
-#include "style-property-helper.h"
+#include "widget-property-helper.h"
 
 #include <QToolButton>
 #include <QPushButton>
@@ -20,7 +20,7 @@
 
 using namespace Kiran;
 
-ButtonType PropertyHelper::getButtonType(const QPushButton *btn)
+ButtonType WidgetPropertyHelper::getButtonType(const QPushButton *btn)
 {
     ButtonType type = BUTTON_Normal;
     QVariant var = btn->property(PROPERTY_KIRAN_BUTTON_TYPE);
@@ -34,18 +34,18 @@ ButtonType PropertyHelper::getButtonType(const QPushButton *btn)
     return type;
 }
 
-void PropertyHelper::setButtonType(QPushButton *btn, ButtonType type)
+void WidgetPropertyHelper::setButtonType(QPushButton *btn, ButtonType type)
 {
     btn->setProperty(PROPERTY_KIRAN_BUTTON_TYPE,type);
 }
 
-void PropertyHelper::setSpinboxButtonPosition(QWidget *spinBox,
-                                                     SpinboxArrowPosition position)
+void WidgetPropertyHelper::setSpinboxButtonPosition(QWidget *spinBox,
+                                                    SpinboxArrowPosition position)
 {
     spinBox->setProperty(PROPERTY_KIRAN_SPINBOX_POSITION,position);
 }
 
-SpinboxArrowPosition PropertyHelper::getSpinboxButtonPosition(const QWidget *spinBox)
+SpinboxArrowPosition WidgetPropertyHelper::getSpinboxButtonPosition(const QWidget *spinBox)
 {
     SpinboxArrowPosition position = ARROW_POSITION_AUTOMATIC;
     QVariant var = spinBox->property(PROPERTY_KIRAN_SPINBOX_POSITION);
@@ -59,13 +59,13 @@ SpinboxArrowPosition PropertyHelper::getSpinboxButtonPosition(const QWidget *spi
     return position;
 }
 
-void PropertyHelper::setProgressBarTextProsition(QProgressBar *progressBar,
-                                                        ProgressBarTextPosition textPosition)
+void WidgetPropertyHelper::setProgressBarTextProsition(QProgressBar *progressBar,
+                                                       ProgressBarTextPosition textPosition)
 {
     progressBar->setProperty(PROPERTY_KIRAN_PROGRESSBAR_TEXT_POSITION,textPosition);
 }
 
-ProgressBarTextPosition PropertyHelper::getProgressBarTextPosition(const QProgressBar *progressBar)
+ProgressBarTextPosition WidgetPropertyHelper::getProgressBarTextPosition(const QProgressBar *progressBar)
 {
     ProgressBarTextPosition position = PROGRESS_TEXT_RIGHT;
     QVariant var = progressBar->property(PROPERTY_KIRAN_PROGRESSBAR_TEXT_POSITION);

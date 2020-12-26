@@ -24,6 +24,7 @@ public:
     void initComboBoxTab();
     void initSearchBox();
     void initProgressBar();
+    void initIconLineEdit();
 
 private:
     Ui::Widget *ui;

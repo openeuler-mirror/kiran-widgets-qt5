@@ -4,7 +4,7 @@
 #include "kiran-application.h"
 #include "kiran-switch-button.h"
 #include "kiran-search-box.h"
-#include "style-property-helper.h"
+#include "widget-property-helper.h"
 
 #include <QApplication>
 #include <QAction>
@@ -32,7 +32,7 @@ Widget::Widget(QWidget *parent)
         }
     });
 
-    PropertyHelper::setSpinboxButtonPosition(ui->timeEdit,Kiran::ARROW_TWO_SIDERS);
+    WidgetPropertyHelper::setSpinboxButtonPosition(ui->timeEdit, Kiran::ARROW_TWO_SIDERS);
 
     initTabBar();
     initPushButtonTab();
@@ -40,12 +40,7 @@ Widget::Widget(QWidget *parent)
     initComboBoxTab();
     initSearchBox();
     initProgressBar();
-
-//    ui->listWidget->item(0)->setCheckState(Qt::Checked);
-    ui->listWidget->item(0)->setIcon(QIcon::fromTheme("system-file-manager"));
-    ui->listWidget->item(0)->setData(Kiran::ItemStatus_Role,"禁用");
-    ui->listWidget->item(0)->setData(Kiran::ItemStatusColor_Role,QColor("red"));
-    ui->listWidget->setIconSize(QSize(40,40));
+    initIconLineEdit();
 }
 
 Widget::~Widget()
@@ -56,9 +51,9 @@ Widget::~Widget()
 #include <child-window.h>
 void Widget::initPushButtonTab()
 {
-    PropertyHelper::setButtonType(ui->btn_default,BUTTON_Default);
-    PropertyHelper::setButtonType(ui->btn_normal,BUTTON_Normal);
-    PropertyHelper::setButtonType(ui->btn_warning,BUTTON_Warning);
+    WidgetPropertyHelper::setButtonType(ui->btn_default, BUTTON_Default);
+    WidgetPropertyHelper::setButtonType(ui->btn_normal, BUTTON_Normal);
+    WidgetPropertyHelper::setButtonType(ui->btn_warning, BUTTON_Warning);
     connect(ui->btn_normal,&QPushButton::clicked,this,[this](){
         ChildWindow *cw = new ChildWindow(this);
         cw->show();
@@ -140,5 +135,12 @@ void Widget::initProgressBar()
     ui->progressBar->setMaximum(60);
     ui->progressBar->setValue(50);
     ui->progressBar->setOrientation(Qt::Horizontal);
-    PropertyHelper::setProgressBarTextProsition(ui->progressBar,Kiran::PROGRESS_TEXT_RIGHT);
+    WidgetPropertyHelper::setProgressBarTextProsition(ui->progressBar, Kiran::PROGRESS_TEXT_RIGHT);
+}
+
+void Widget::initIconLineEdit()
+{
+    ui->iconLineEdit->setIcon(QIcon::fromTheme("window"));
+    ui->iconLineEdit->setIconPosition(Kiran::ICON_POSITION_LEFT);
+    ui->iconLineEdit->setIconSize(QSize(16,16));
 }
