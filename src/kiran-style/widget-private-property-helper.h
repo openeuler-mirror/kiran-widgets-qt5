@@ -12,6 +12,9 @@
 
 class QLineEdit;
 namespace Kiran{
+    /**
+     * @brief 控件私有属性辅助接口,不提供给外部使用
+     */
     namespace WidgetPrivatePropertyHelper {
         /**
           *  通过设置QLineEdit的图标位置和图标大小,KiranStyle绘制时和计算控件会考虑到图片的位置(但是不绘制)

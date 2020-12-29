@@ -18,40 +18,6 @@ namespace Kiran{
         KIRAN_BLACK
     };
 
-    enum KiranPrimitiveElement{
-        PE_SwitchButtonIndicator = QStyle::PE_CustomBase+1,
-        PE_SearchBoxIndicator
-    };
-
-    enum KiranControlElement{
-        CE_SwitchButton = QStyle::CE_CustomBase+1
-    };
-
-    enum KiranContentsType{
-        CT_SwitchButton = QStyle::CT_CustomBase+1
-    };
-
-    enum KiranSubElement{
-        SE_SwitchButtonContents = QStyle::SE_CustomBase+1,
-        SE_SwitchButtonIndicator
-    };
-
-    enum KiranComplexControl{
-
-    };
-
-    enum KiranSubControl{
-
-    };
-
-    enum KiranPixelMetric{
-
-    };
-
-    enum KiranStyleHint{
-
-    };
-
     enum Metrics {
         // frames
         Frame_FrameWidth = 4,
@@ -73,12 +39,10 @@ namespace Kiran{
         MenuItem_CheckedIndicatorSize = 18,
         MenuButton_IndicatorWidth = 20,
 
-
         // combobox
         ComboBox_FrameWidth = 7,
         ComboBox_ItemSpacing = 16,
         ComboBox_ArrowSize = 16,
-
 
         // spinbox
         SpinBox_FrameWidth = LineEdit_FrameWidth,

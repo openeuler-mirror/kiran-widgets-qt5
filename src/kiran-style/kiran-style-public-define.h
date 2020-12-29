@@ -9,6 +9,7 @@
 #define KIRANWIDGETS_QT5_KIRAN_STYLE_PUBLIC_DEFINE_H
 
 #include <qnamespace.h>
+#include <QStyle>
 
 namespace Kiran{
 
@@ -55,6 +56,36 @@ namespace Kiran{
         ICON_POSITION_NONE, /** < 不绘制Icon */
         ICON_POSITION_LEFT, /** < 图标绘制在输入框内偏左 */
         ICON_POSITION_RIGHT /** < 图标绘制在输入框内偏右 */
+    };
+
+    /**
+     * @brief Kiran自定义控件原始元素枚举
+     */
+    enum KiranPrimitiveElement{
+        PE_SwitchButtonIndicator = QStyle::PE_CustomBase+1, /** < KiranSwitchButton开关指示器  */
+        PE_SearchBoxIndicator /** < KiranSearchBox搜索指示器(搜索图标) */
+    };
+
+    /**
+     * @brief Kiran自定义控件控制元素枚举
+     */
+    enum KiranControlElement{
+        CE_SwitchButton = QStyle::CE_CustomBase+1 /** < 绘制KiranSwitchButton */
+    };
+
+    /**
+     * @brief Kiran自定义控件内容类型,计算各种小部件内容的大小
+     */
+    enum KiranContentsType{
+        CT_SwitchButton = QStyle::CT_CustomBase+1 /** < KiranSwitchButton控件内容枚举 */
+    };
+
+    /**
+     * @brief Kiran自定义控件子区域枚举,Style实现这些区域来绘制小组件的不同部分
+     */
+    enum KiranSubElement{
+        SE_SwitchButtonContents = QStyle::SE_CustomBase+1, /** < KiranSwitchButton内容文本绘制区域 */
+        SE_SwitchButtonIndicator /** < KiranSwitchButton开关指示标志区域 */
     };
 }
 
