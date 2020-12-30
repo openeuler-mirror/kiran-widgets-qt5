@@ -12,6 +12,7 @@
 #include <QTabBar>
 #include <QCheckBox>
 #include <QDebug>
+#include <kiran-message-box.h>
 
 using namespace Kiran;
 
@@ -55,8 +56,7 @@ void Widget::initPushButtonTab()
     WidgetPropertyHelper::setButtonType(ui->btn_normal, BUTTON_Normal);
     WidgetPropertyHelper::setButtonType(ui->btn_warning, BUTTON_Warning);
     connect(ui->btn_normal,&QPushButton::clicked,this,[this](){
-        ChildWindow *cw = new ChildWindow(this);
-        cw->show();
+        KiranMessageBox::message(this,"标题","文本",KiranMessageBox::Yes|KiranMessageBox::No);
     });
 }
 
