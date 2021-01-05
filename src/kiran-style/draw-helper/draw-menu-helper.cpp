@@ -54,23 +54,22 @@ DrawMenuHelper::menuItemSizeFromContents(const Style *style, const QStyleOption 
     bool hasIcon = false,needSubMenuArrow = false,needDrawCheckIndicator = false;
 
     ///判断是否该Menu所有子条目 是否存在图标,是否存在子菜单，遍历QMenu的Actions并更新到属性中
-    for(const QAction*action : menu->actions()){
-        if (!hasIcon)
-            hasIcon = !action->icon().isNull();
-        if(!needSubMenuArrow)
-            needSubMenuArrow = action->menu();
-        if(hasIcon && needSubMenuArrow){
-            break;
+    if( menu!= nullptr ){
+        for(const QAction*action : menu->actions()){
+            if (!hasIcon)
+                hasIcon = !action->icon().isNull();
+            if(!needSubMenuArrow)
+                needSubMenuArrow = action->menu();
+            if(hasIcon && needSubMenuArrow){
+                break;
+            }
         }
-    }
-    needDrawCheckIndicator = menuItemOption->menuHasCheckableItems;
-
-    {
         QMenu *temp = const_cast<QMenu*>(menu);
         temp->setProperty(PRIVATE_PROPERTY_ITEMS_HAS_ICON,hasIcon);
         temp->setProperty(PRIVATE_PROPERTY_ITEMS_HAS_SUBMENU,needSubMenuArrow);
     }
 
+    needDrawCheckIndicator = menuItemOption->menuHasCheckableItems;
 
     switch (menuItemOption->menuItemType) {
         case QStyleOptionMenuItem::Normal:
