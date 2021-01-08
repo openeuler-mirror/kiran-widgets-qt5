@@ -19,7 +19,7 @@ static const QMap<KiranStandardButton,QPair<QString,ButtonRole>> standardButtonI
     {KiranMessageBox::Ok,{QObject::tr("OK"),ButtonRole::AcceptRole}},
     {KiranMessageBox::Save,{QObject::tr("Save"),ButtonRole::AcceptRole}},
     {KiranMessageBox::SaveAll,{QObject::tr("Save All"),ButtonRole::AcceptRole}},
-    {KiranMessageBox::Open,{QObject::tr("Oepn"),ButtonRole::AcceptRole}},
+    {KiranMessageBox::Open,{QObject::tr("Open"),ButtonRole::AcceptRole}},
     {KiranMessageBox::Yes,{QObject::tr("Yes"),ButtonRole::YesRole}},
     {KiranMessageBox::YesToAll,{QObject::tr("Yes to All"),ButtonRole::YesRole}},
     {KiranMessageBox::No,{QObject::tr("No"),ButtonRole::NoRole}},
