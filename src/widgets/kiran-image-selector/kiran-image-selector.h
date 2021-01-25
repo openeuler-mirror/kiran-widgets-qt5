@@ -17,12 +17,7 @@ class KiranImageSelector : public QWidget {
     Q_OBJECT
 public:
     KiranImageSelector(QWidget *parent = nullptr);
-
-public:
     ~KiranImageSelector();
-
-private:
-    void loadImageItems();
 
 protected:
     virtual void paintEvent(QPaintEvent *event) override;

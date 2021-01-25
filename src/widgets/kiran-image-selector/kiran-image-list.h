@@ -16,11 +16,11 @@ class QHBoxLayout;
 class QWidget;
 class KiranImageItem;
 class QSpacerItem;
+
 class KiranImageList : public QScrollArea {
-Q_OBJECT
+    Q_OBJECT
 public:
     KiranImageList(QWidget *parent = nullptr);
-
     ~KiranImageList();
 
     /* 往图片选择器中添加图片 */
