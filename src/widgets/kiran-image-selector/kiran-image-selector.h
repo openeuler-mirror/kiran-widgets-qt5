@@ -9,10 +9,11 @@
 
 #include <QWidget>
 #include <QRect>
+#include "kiran-image-selector-private.h"
 
-class KiranImageList;
-class KiranImageButton;
+class KiranImageSelectorPrivate;
 class KiranImageSelector : public QWidget {
+    Q_DECLARE_PRIVATE(KiranImageSelector)
     Q_OBJECT
 public:
     KiranImageSelector(QWidget *parent = nullptr);
@@ -21,19 +22,13 @@ public:
     ~KiranImageSelector();
 
 private:
-    void initUI();
-
     void loadImageItems();
 
 protected:
-    virtual void wheelEvent(QWheelEvent *event) override;
-
+    virtual void paintEvent(QPaintEvent *event) override;
 
 private:
-    KiranImageList *m_selectorList;
-    KiranImageButton *m_prevBtn;
-    KiranImageButton *m_nextBtn;
+    KiranImageSelectorPrivate *d_ptr;
 };
-
 
 #endif //KIRANWIDGETS_QT5_KIRAN_IMAGE_SELECTOR_H

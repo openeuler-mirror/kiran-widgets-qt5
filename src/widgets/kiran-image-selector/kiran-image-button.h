@@ -9,8 +9,12 @@
 
 #include <QPushButton>
 
+/**
+ * @brief KiranImageSelector的两侧悬浮按钮
+ *       在KiranStyle中的QPushButton绘制过程中单独通过Inherits进行特殊绘制
+ */
 class KiranImageButton : public QPushButton {
-Q_OBJECT
+    Q_OBJECT
 public:
     enum AnchorPosition {
         Anchor_Left,
@@ -19,6 +23,7 @@ public:
     explicit KiranImageButton(QWidget *parent, AnchorPosition position);
     virtual ~KiranImageButton();
     virtual bool eventFilter(QObject *watched, QEvent *event) override;
+
 private:
     AnchorPosition m_anchorPosition;
 };

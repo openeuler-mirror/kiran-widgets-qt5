@@ -13,6 +13,9 @@
 #include <QFutureWatcher>
 #include <QSvgRenderer>
 
+/**
+ * @brief KiranImageSelector图片选择器中的图片项
+ */
 class KiranImageItem : public QWidget {
 Q_OBJECT
     Q_PROPERTY(bool isSelected READ isSelected WRITE setIsSelected NOTIFY isSelectedChanged);

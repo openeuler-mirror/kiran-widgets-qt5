@@ -3,6 +3,7 @@
 //
 
 #include "kiran-image-button.h"
+#include "style.h"
 
 #include <QEvent>
 #include <QResizeEvent>
@@ -11,7 +12,6 @@ KiranImageButton::KiranImageButton(QWidget *parent, KiranImageButton::AnchorPosi
         : QPushButton(parent),
           m_anchorPosition(position) {
     parent->installEventFilter(this);
-    setStyleSheet("QPushButton{background:rgba(255,255,255,0.2)}");
 }
 
 KiranImageButton::~KiranImageButton() {

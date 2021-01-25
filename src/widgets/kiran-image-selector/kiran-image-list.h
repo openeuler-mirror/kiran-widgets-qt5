@@ -51,7 +51,6 @@ private:
 
 protected:
     virtual void resizeEvent(QResizeEvent *event) override;
-
     virtual void showEvent(QShowEvent *event) override;
 
 private:
