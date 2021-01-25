@@ -25,6 +25,7 @@ public:
     void initSearchBox();
     void initProgressBar();
     void initIconLineEdit();
+    void initKiranImageSelector();
 
 private:
     Ui::Widget *ui;

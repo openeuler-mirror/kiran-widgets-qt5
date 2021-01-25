@@ -68,7 +68,7 @@ set(DEVEL_HEADER
 
 include_directories("${CMAKE_BINARY_DIR}")
 
-find_package(Qt5 COMPONENTS Widgets Svg Network X11Extras LinguistTools)
+find_package(Qt5 COMPONENTS Widgets Svg Network X11Extras Concurrent LinguistTools)
 
 qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 
@@ -100,6 +100,7 @@ target_link_libraries(${PROJECT_NAME}
         Qt5::Svg
         Qt5::X11Extras
         Qt5::Network
+        Qt5::Concurrent
         X11
         xcb
         xcb-util

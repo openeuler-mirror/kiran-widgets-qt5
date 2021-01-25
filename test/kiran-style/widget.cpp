@@ -13,6 +13,7 @@
 #include <QCheckBox>
 #include <QDebug>
 #include <kiran-message-box.h>
+#include <kiran-image-selector.h>
 
 using namespace Kiran;
 
@@ -42,6 +43,7 @@ Widget::Widget(QWidget *parent)
     initSearchBox();
     initProgressBar();
     initIconLineEdit();
+    initKiranImageSelector();
 }
 
 Widget::~Widget()
@@ -143,4 +145,10 @@ void Widget::initIconLineEdit()
     ui->iconLineEdit->setIcon(QIcon::fromTheme("window"));
     ui->iconLineEdit->setIconPosition(Kiran::ICON_POSITION_LEFT);
     ui->iconLineEdit->setIconSize(QSize(16,16));
+}
+
+void Widget::initKiranImageSelector()
+{
+    KiranImageSelector* imageSelector = new KiranImageSelector();
+    ui->tab_imageSelector->layout()->addWidget(imageSelector);
 }
