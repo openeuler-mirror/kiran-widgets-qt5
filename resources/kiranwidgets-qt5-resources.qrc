@@ -10,6 +10,9 @@
         <file>images/titlebar-window/Windowing_hover.svg</file>
         <file>images/titlebar-window/Windowing_normal.svg</file>
         <file>images/titlebar-window/Windowing_press.svg</file>
+
+        <file>images/image-selector/loading.svg</file>
+        <file>images/image-selector/selected.svg</file>
     </qresource>
 
     <!-- 主题 -->

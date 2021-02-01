@@ -26,6 +26,7 @@ KiranImageSelectorPrivate::~KiranImageSelectorPrivate() {
 }
 
 void KiranImageSelectorPrivate::init(KiranImageSelector *ptr) {
+
     q_ptr = ptr;
     q_ptr->installEventFilter(this);
 
@@ -35,7 +36,6 @@ void KiranImageSelectorPrivate::init(KiranImageSelector *ptr) {
     m_selectorList = new KiranImageList(q_ptr);
     m_selectorList->setContentsMargins(15, 15, 15, 15);
 
-    loadImageItems();
     auto pFunction = [this]() {
         int max = m_selectorList->horizontalScrollBar()->maximum();
         int min = m_selectorList->horizontalScrollBar()->minimum();
@@ -56,7 +56,7 @@ void KiranImageSelectorPrivate::init(KiranImageSelector *ptr) {
 
     qhBoxLayout->addWidget(m_selectorList);
 
-    m_prevBtn = new KiranImageButton(q_ptr, KiranImageButton::Anchor_Left);
+    m_prevBtn = new KiranImageButton(q_ptr, true);
     m_prevBtn->setIcon(QIcon::fromTheme("window"));
     m_prevBtn->setFixedWidth(22);
     m_prevBtn->raise();
@@ -64,22 +64,13 @@ void KiranImageSelectorPrivate::init(KiranImageSelector *ptr) {
         m_selectorList->scrollToPrev(1);
     });
 
-    m_nextBtn = new KiranImageButton(q_ptr, KiranImageButton::Anchor_Right);
+    m_nextBtn = new KiranImageButton(q_ptr, false);
     m_nextBtn->setIcon(QIcon::fromTheme("window"));
     m_nextBtn->setFixedWidth(22);
     m_nextBtn->raise();
     connect(m_nextBtn, &KiranImageButton::clicked, [this]() {
         m_selectorList->scrollToNext(1);
     });
-}
-
-
-void KiranImageSelectorPrivate::loadImageItems() {
-    QDir dir(SEARCH_DIR);
-    QFileInfoList fileInfoList = dir.entryInfoList(QStringList() << "*.jpg" << "*.png", QDir::Files);
-    for (QFileInfo fileInfo:fileInfoList) {
-        auto item = m_selectorList->addImageItem(fileInfo.absoluteFilePath());
-    }
 }
 
 bool KiranImageSelectorPrivate::eventFilter(QObject *watched, QEvent *event) {

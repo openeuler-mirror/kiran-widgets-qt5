@@ -26,9 +26,6 @@ public:
     virtual bool eventFilter(QObject *watched, QEvent *event) override;
 
 private:
-    void loadImageItems();
-
-private:
     KiranImageSelector *q_ptr = nullptr;
     KiranImageList *m_selectorList = nullptr;
     KiranImageButton *m_prevBtn = nullptr;

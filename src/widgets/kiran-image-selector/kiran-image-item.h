@@ -37,6 +37,7 @@ private:
     virtual QSize sizeHint() const;
 
     void drawSelectedIndicator(QPainter &painter);
+    void drawHoverIndicator(QPainter &painter);
     void drawMask(QPainter &painter);
     void drawLoadingImage(QPainter &painter);
 
@@ -48,14 +49,16 @@ protected:
     virtual void mouseReleaseEvent(QMouseEvent *event) override;
     virtual void paintEvent(QPaintEvent *event) override;
 
-private:
-    void init();
+    virtual void leaveEvent(QEvent *event) override;
+
+    virtual void enterEvent(QEvent *event) override;
 
 private:
     QString m_imagePath;
     QPair<QSize, QPixmap> m_previewPixmap;
     bool m_isDown;
     bool m_isSelected = false;
+    bool m_isHover = false;
 };
 
 

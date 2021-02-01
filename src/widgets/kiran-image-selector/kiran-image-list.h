@@ -23,18 +23,31 @@ public:
     KiranImageList(QWidget *parent = nullptr);
     ~KiranImageList();
 
-    /* 往图片选择器中添加图片 */
+    QString selectedImage();
+    bool setSelectedImage(const QString& selectedImage);
+
+    /* 添加图片 */
     KiranImageItem *addImageItem(const QString &imagePath);
-    /* 添加图片项 */
     void addImageItem(KiranImageItem *item);
+
+    /* 删除图片项 */
+    void removeImageItem(const QString &imagePath);
+    void removeImageItem(KiranImageItem *item);
+
+    QStringList imageList();
 
     /* 根据List大小调整图标项大小 */
     void updateItemSize(const QSize &size);
 
+    /* 获取图片项之间的间距 */
+    quint64 itemSpacing();
     /* 设置图片项之间的间距 */
-    void setItemSpacing(int spacing);
+    void setItemSpacing(quint64 spacing);
+
+    /* 获取图片上下间距 */
+    quint64 itemUpAndDownSidesMargin();
     /* 设置图片上下间距 */
-    void setItemUpAndDownSidesMargin(int margin);
+    void setItemUpAndDownSidesMargin(quint64 margin);
 
     void scrollToNext(int step);
     void scrollToPrev(int step);
@@ -46,9 +59,12 @@ public slots:
 private slots:
     void handlerImageItemSelectedChanged();
 
+signals:
+    void selectedImageChanged(QString imagePath);
+
 private:
     void initUI();
-
+    void ensureSelectedItemVisible( KiranImageItem* selectedItem = nullptr );
 protected:
     virtual void resizeEvent(QResizeEvent *event) override;
     virtual void showEvent(QShowEvent *event) override;
@@ -58,6 +74,7 @@ private:
     QWidget *m_viewportWidget;
     QSpacerItem *m_spacerItem;
     QList<KiranImageItem *> m_itemList;
+    QString m_selectedImagePath;
     QTimer m_updateTimer;
     QPropertyAnimation m_scrollAnimation;
 };

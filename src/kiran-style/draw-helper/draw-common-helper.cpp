@@ -291,10 +291,14 @@ void DrawCommonHelper::drawArrow(StyleDetailFetcher* fetcher,
                                  QPainter *painter,
                                  const QStyleOption* option,
                                  const QWidget* widget,
-                                 ArrowOrientation orientation)
+                                 ArrowOrientation orientation,
+                                 int renderSize)
 {
     QRect rect(option->rect);
     int markSize = qMin(rect.width(),rect.height());
+    if( renderSize!=0 && (renderSize<=qMin(rect.width(),rect.height())) ){
+        markSize = renderSize;
+    }
     QRect markRect(0,0,markSize,markSize);
     markRect.moveCenter(rect.center());
 

@@ -15,17 +15,17 @@
  */
 class KiranImageButton : public QPushButton {
     Q_OBJECT
+    Q_PROPERTY(bool anchorParentLeftSide READ anchorParentLeftSide);
 public:
-    enum AnchorPosition {
-        Anchor_Left,
-        Anchor_Right
-    };
-    explicit KiranImageButton(QWidget *parent, AnchorPosition position);
+    explicit KiranImageButton(QWidget *parent,bool leftSide );
     virtual ~KiranImageButton();
     virtual bool eventFilter(QObject *watched, QEvent *event) override;
+    bool anchorParentLeftSide();
+protected:
+    virtual void paintEvent(QPaintEvent *event) override;
 
 private:
-    AnchorPosition m_anchorPosition;
+    bool m_anchorParentLeftSide = false;
 };
 
 

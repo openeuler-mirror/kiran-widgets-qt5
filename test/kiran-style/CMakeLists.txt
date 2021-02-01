@@ -21,6 +21,8 @@ add_executable(${PROJECT_NAME}
         ${HEADERS}
         ${FORMS})
 
+include_directories("${CMAKE_BINARY_DIR}")
+
 target_include_directories(${PROJECT_NAME} PRIVATE
         ../../src/widgets/kiran-application/
         ../../src/kiran-style/

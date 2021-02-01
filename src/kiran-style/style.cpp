@@ -17,6 +17,7 @@
 #include "draw-helper/draw-search-box-helper.h"
 #include "draw-helper/draw-progress-bar-helper.h"
 #include "draw-helper/draw-item-view-helper.h"
+#include "draw-helper/draw-image-selector-helper.h"
 
 #include "delegate/combo-box-item-delegate.h"
 
@@ -542,6 +543,14 @@ int Style::pixelMetric(QStyle::PixelMetric metric, const QStyleOption *option,
     }
 }
 
+int Style::pixelMetric(KiranPixelMetric metric, const QStyleOption *opt, const QWidget *wodget) const {
+    switch (metric) {
+        case PM_KiranImageSelectorRadius: return 8;
+        default: break;
+    }
+    return 0;
+}
+
 int Style::styleHint(QStyle::StyleHint sh, const QStyleOption *opt,
                      const QWidget *w, QStyleHintReturn *shret) const
 {
@@ -855,6 +864,18 @@ void Style::drawPrimitive(KiranPrimitiveElement pe, const QStyleOption *opt, QPa
             break;
         case PE_SearchBoxIndicator:
             DrawSearchBoxHelper::drawSearchBoxIndicatorPrimitive(this, opt, p, m_detailFetcher, w);
+            break;
+        case PE_KiranImageSelector:
+            DrawImageSelectorHelper::drawPEKiranImageSelector(this,opt,p,m_detailFetcher,w);
+            break;
+        case PE_KiranImageSelectorButtonFrame:
+            DrawImageSelectorHelper::drawPEKiranImageSelectorButtonFrame(this,opt,p,m_detailFetcher,w);
+            break;
+        case PE_KiranImageSelectorPrevButtonArrow:
+            DrawImageSelectorHelper::drawPEKiranImageSelectorPrevButtonArrow(this,opt,p,m_detailFetcher,w);
+            break;
+        case PE_KiranImageSelectorNextButtonArrow:
+            DrawImageSelectorHelper::drawPEKiranImageSelectorNextButtonArrow(this,opt,p,m_detailFetcher,w);
             break;
         default:
             break;

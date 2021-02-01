@@ -372,3 +372,16 @@ KiranSiderbarItem:selected:hover{
 KiranSiderbarItem:selected:disabled{
     BackgroundColor: gray;
 }
+
+KiranImageSelector{
+    BorderColor: #4e4e4e;
+    ButtonColor: rgba(255,255,255,0.2);
+}
+
+KiranImageSelector:hover{
+    ButtonColor: rgba(255,255,255,0.3);
+}
+
+KiranImageSelector:pressed{
+    ButtonColor: rgba(255,255,255,0.1);
+}

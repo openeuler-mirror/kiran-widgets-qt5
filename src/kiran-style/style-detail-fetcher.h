@@ -141,7 +141,11 @@ namespace Kiran {
             /* KiranSidebarWidget的Item */
             KiranSiderbarItem_Height,
             KiranSiderbarItem_BackgroundColor,
-            KiranSiderbarItem_Radius
+            KiranSiderbarItem_Radius,
+
+            /* 图片选择器KiranImageSelector */
+            KiranImageSelector_BorderColor,
+            KiranImageSelector_ButtonColor
         };
 
         Q_ENUM(StyleDetailPropertyName)

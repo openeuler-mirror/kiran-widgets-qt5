@@ -13,11 +13,16 @@
 #include <utility>
 #include <QMouseEvent>
 
+#include "style.h"
+#include <QStyleOption>
+#include <QPainter>
 
 KiranImageItem::KiranImageItem(QWidget *parent, const QString &path)
         : QWidget(parent),
           m_imagePath(path) {
+    setAttribute(Qt::WA_Hover,true);
     setObjectName(QString("imgageItem_%1").arg(path));
+    setToolTip(path);
     connect(KiranImageLoadManager::instance(), &KiranImageLoadManager::imageLoaded,
             this, &KiranImageItem::loadPixmapFinished, Qt::QueuedConnection);
 }
@@ -29,8 +34,9 @@ KiranImageItem::~KiranImageItem() {
 void KiranImageItem::paintEvent(QPaintEvent *event) {
     QPainter p(this);
     p.setRenderHint(QPainter::Antialiasing);
-
     bool imageIsLoaded = false;
+
+    //NOTE:ImageItem绘制过程由自己绘制不在Style中绘制的原因是由于不想再次图片在内存中再次拷贝传递给Style
 
     if (m_previewPixmap.first == size() && !m_previewPixmap.second.isNull()) {
         QSize scaledPixmapSize = m_previewPixmap.second.size();
@@ -53,11 +59,13 @@ void KiranImageItem::paintEvent(QPaintEvent *event) {
         if (imageIsLoaded) {
             drawMask(p);
         }
+        if ( m_isHover ){
+            drawHoverIndicator(p);
+        }
     }
 }
 
 void KiranImageItem::mousePressEvent(QMouseEvent *event) {
-    qInfo() << m_imagePath << "pressed";
     m_isDown = true;
     event->accept();
 }
@@ -71,7 +79,6 @@ void KiranImageItem::loadPixmapFinished(QString imagePath, QSize imageSize, QPix
         m_previewPixmap.first = imageSize;
         m_previewPixmap.second = std::move(pixmap);
         update();
-        qInfo() << "update" << imagePath << imageSize;
     }
 }
 
@@ -83,7 +90,7 @@ void KiranImageItem::updatePixmap() {
 }
 
 void KiranImageItem::drawSelectedIndicator(QPainter &painter) {
-    static QSvgRenderer selectedRender(QString(":/images/selected.svg"));
+    static QSvgRenderer selectedRender(QString(":/kiranwidgets-qt5/images/image-selector/selected.svg"));
 
     painter.save();
 
@@ -105,6 +112,15 @@ void KiranImageItem::drawSelectedIndicator(QPainter &painter) {
     painter.restore();
 }
 
+void KiranImageItem::drawHoverIndicator(QPainter &painter) {
+    painter.save();
+    QPen pen(QColor(229,235,246,0.5*255));
+    pen.setWidth(2);
+    painter.setPen(pen);
+    painter.drawRect(rect().adjusted(1,1,-1,-1));
+    painter.restore();
+}
+
 void KiranImageItem::drawMask(QPainter &painter) {
     painter.save();
     QBrush brush(QColor(0, 0, 0, 0.5 * 255));
@@ -121,7 +137,6 @@ void KiranImageItem::mouseReleaseEvent(QMouseEvent *event) {
         event->ignore();
         return;
     }
-    qInfo() << m_imagePath << "release";
     if (m_isDown) {
         setIsSelected(true);
     }
@@ -145,13 +160,22 @@ void KiranImageItem::setIsSelected(bool selected) {
 }
 
 void KiranImageItem::drawLoadingImage(QPainter &painter) {
-    static QSvgRenderer loadingRender(QString(":/images/loading.svg"));
+    static QSvgRenderer loadingRender(QString(":/kiranwidgets-qt5/images/image-selector/loading.svg"));
     QRect widgetRect = rect();
     qreal widgetScaledFactor = widgetRect.width() / IMAGE_ITEM_DEFAULT_WIDTH;
     QSize loadingSize(loadingRender.defaultSize().width() * widgetScaledFactor,
                       loadingRender.defaultSize().height() * widgetScaledFactor);
-    QRect loadingRect(
-            QPoint((widgetRect.width() - loadingSize.width()) / 2, (widgetRect.height() - loadingSize.height()) / 2),
+    QRect loadingRect(QPoint((widgetRect.width() - loadingSize.width()) / 2, (widgetRect.height() - loadingSize.height()) / 2),
             loadingSize);
     loadingRender.render(&painter, loadingRect);
+}
+
+void KiranImageItem::enterEvent(QEvent *event) {
+    m_isHover = true;
+    QWidget::enterEvent(event);
+}
+
+void KiranImageItem::leaveEvent(QEvent *event) {
+    m_isHover = false;
+    QWidget::leaveEvent(event);
 }

@@ -34,12 +34,16 @@ void KiranImageList::initUI() {
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
+    viewport()->setAutoFillBackground(false);
+
     //设置ViewPort窗口,layout
     m_viewportWidget = new QWidget(this);
     m_viewportWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    m_viewportWidget->setObjectName("KiranImageListViewport");
-    m_viewportWidget->setStyleSheet("QWidget#KiranImageListViewport{background:#191919;}");
+    m_viewportWidget->setObjectName("_kiran_image_list_view_port");
+    m_viewportWidget->setStyleSheet("QWidget{border:1px solid blue;background: blue;}");
+
     setWidget(m_viewportWidget);
+    m_viewportWidget->setAttribute(Qt::WA_NoSystemBackground,true);
     setWidgetResizable(true);
 
     m_viewportLayout = new QHBoxLayout(m_viewportWidget);
@@ -55,21 +59,90 @@ void KiranImageList::initUI() {
 }
 
 KiranImageItem *KiranImageList::addImageItem(const QString &imagePath) {
+    QStringList stringList = imageList();
+
+    if( stringList.indexOf(imagePath) != -1 ){
+        return nullptr;
+    }
+
     KiranImageItem *item = new KiranImageItem(this, imagePath);
     item->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+
     addImageItem(item);
     return item;
 }
 
 void KiranImageList::addImageItem(KiranImageItem *item) {
     m_itemList.append(item);
+    updateItemSize(contentsRect().size());
+
     m_viewportLayout->insertWidget(m_viewportLayout->count() - 1, item, 0, Qt::AlignVCenter | Qt::AlignLeft);
     m_viewportWidget->adjustSize();
+    m_updateTimer.start();
+
     connect(item, &KiranImageItem::itemIsSelected,
             this, &KiranImageList::handlerImageItemSelectedChanged);
 }
 
+void KiranImageList::removeImageItem(const QString &imagePath) {
+    auto deletePos = m_itemList.end();
+
+    for( QList<KiranImageItem*>::iterator iter=m_itemList.begin();
+         iter!=m_itemList.end();
+         iter++ ){
+        if((*iter)->imagePath()==imagePath){
+            deletePos = iter;
+            break;
+        }
+    }
+
+    if( deletePos != m_itemList.end() ){
+        (*deletePos)->deleteLater();
+        m_itemList.erase(deletePos);
+        ///删除已选中的图片,更新选中的图片项
+        if( m_selectedImagePath==(*deletePos)->imagePath() ){
+            m_selectedImagePath = "";
+            emit selectedImageChanged(m_selectedImagePath);
+        }
+        m_updateTimer.start();
+    }
+
+}
+
+void KiranImageList::removeImageItem(KiranImageItem *item) {
+    auto deletePos = m_itemList.end();
+    for( QList<KiranImageItem*>::iterator iter=m_itemList.begin();
+         iter!=m_itemList.end();
+         iter++){
+        if( *iter == item ){
+            deletePos = iter;
+            break;
+        }
+    }
+
+    if( deletePos != m_itemList.end() ){
+        (*deletePos)->deleteLater();
+        m_itemList.erase(deletePos);
+        ///删除已选中的图片,更新选中的图片项
+        if( m_selectedImagePath==(*deletePos)->imagePath() ){
+            m_selectedImagePath = "";
+            emit selectedImageChanged(m_selectedImagePath);
+        }
+    }
+
+    m_updateTimer.start();
+}
+
+QStringList KiranImageList::imageList() {
+    QStringList stringList;
+    for(KiranImageItem *item:m_itemList){
+        stringList << item->imagePath();
+    }
+    return stringList;
+}
+
 void KiranImageList::showEvent(QShowEvent *event) {
+    ensureSelectedItemVisible();
     QScrollArea::showEvent(event);
 }
 
@@ -94,11 +167,23 @@ void KiranImageList::updateImageItem() {
     }
 }
 
-void KiranImageList::setItemSpacing(int spacing) {
+quint64 KiranImageList::itemSpacing() {
+    return m_viewportLayout->spacing();
+}
+
+void KiranImageList::setItemSpacing(quint64 spacing) {
     m_viewportLayout->setSpacing(spacing);
 }
 
-void KiranImageList::setItemUpAndDownSidesMargin(int margin) {
+quint64 KiranImageList::itemUpAndDownSidesMargin() {
+    QMargins contentsMargins = m_viewportLayout->contentsMargins();
+    if( contentsMargins.top() != contentsMargins.bottom() ){
+        qWarning() << "KiranImageList Inconsistent top and bottom margins";
+    }
+    return m_viewportLayout->contentsMargins().left();
+}
+
+void KiranImageList::setItemUpAndDownSidesMargin(quint64 margin) {
     QMargins margins = m_viewportLayout->contentsMargins();
     margins.setTop(margin);
     margins.setBottom(margin);
@@ -116,6 +201,10 @@ void KiranImageList::updateItemSize(const QSize &size) {
     if (size.width() < fitSize.width()) {
         int itemWidth = size.width();
         fitSize = QSize(itemWidth, qFloor(itemWidth / IMAGE_ITEM_ASPECT_RATIO));
+    }
+
+    if( !fitSize.isValid() ){
+        return;
     }
 
     for (auto iter:m_itemList) {
@@ -162,9 +251,53 @@ void KiranImageList::scrollToPrev(int step) {
 
 void KiranImageList::handlerImageItemSelectedChanged() {
     KiranImageItem *senderItem = qobject_cast<KiranImageItem *>(sender());
+
+    m_selectedImagePath = senderItem->imagePath();
+    emit selectedImageChanged(m_selectedImagePath);
+
     for (KiranImageItem *item:m_itemList) {
         if (item != senderItem) {
             item->setIsSelected(false);
         }
     }
+}
+
+QString KiranImageList::selectedImage() {
+    return m_selectedImagePath;
+}
+
+bool KiranImageList::setSelectedImage(const QString &selectedImage) {
+    KiranImageItem* findItem = nullptr;
+    for(KiranImageItem* item:m_itemList){
+        if( item->imagePath() == selectedImage ){
+            findItem = item;
+            break;
+        }
+    }
+
+    if( findItem == nullptr ){
+        return false;
+    }
+
+    findItem->setIsSelected(true);
+    return true;
+}
+
+void KiranImageList::ensureSelectedItemVisible( KiranImageItem* selectedItem  ) {
+    KiranImageItem* showItem = selectedItem;
+
+    if( showItem == nullptr ){
+        for(KiranImageItem* item:m_itemList){
+            if(item->imagePath() == m_selectedImagePath){
+                showItem = item;
+                break;
+            }
+        }
+    }
+
+    if(showItem == nullptr){
+        return;
+    }
+
+    ensureWidgetVisible(showItem);
 }

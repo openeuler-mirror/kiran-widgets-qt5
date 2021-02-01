@@ -150,5 +150,39 @@ void Widget::initIconLineEdit()
 void Widget::initKiranImageSelector()
 {
     KiranImageSelector* imageSelector = new KiranImageSelector();
+    imageSelector->setFixedHeight(148);
     ui->tab_imageSelector->layout()->addWidget(imageSelector);
+
+    QLineEdit* edit_addImage = new QLineEdit;
+    ui->tab_imageSelector->layout()->addWidget(edit_addImage);
+
+    QPushButton* btn_addImage = new QPushButton("添加图片");
+    btn_addImage->setFixedSize(120,40);
+    connect(btn_addImage,&QPushButton::clicked,[&](){
+        QString imagePath = edit_addImage->text();
+        if( imagePath.isEmpty() ){
+            return ;
+        }
+        imageSelector->addImage(imagePath);
+    });
+
+    ui->tab_imageSelector->layout()->addWidget(btn_addImage);
+
+    QLineEdit* edit_removeImage = new QLineEdit;
+    ui->tab_imageSelector->layout()->addWidget(edit_removeImage);
+
+    QPushButton* btn_removeImage = new QPushButton("删除图片");
+    btn_removeImage->setFixedSize(120,40);
+    ui->tab_imageSelector->layout()->addWidget(btn_removeImage);
+    connect(btn_removeImage,&QPushButton::clicked,[&](){
+        QString imagePath = edit_removeImage->text();
+        if( imagePath.isEmpty() ){
+            return ;
+        }
+        imageSelector->removeImage(imagePath);
+    });
+
+
+    auto spacerItem = new QSpacerItem(20,20,QSizePolicy::Preferred,QSizePolicy::Expanding);
+    ui->tab_imageSelector->layout()->addItem(spacerItem);
 }
