@@ -38,7 +38,7 @@ private:
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override;
     void initOtherWidget();
-    void enableShadow(bool fullScreen = false);
+    void initShadow(bool fullScreen = false);
     void updateShadowStyle(bool active);
     Kiran::CursorPositionEnums getCursorPosition(QPoint pos);
 

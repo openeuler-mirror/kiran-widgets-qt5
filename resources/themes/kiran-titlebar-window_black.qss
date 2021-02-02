@@ -10,6 +10,12 @@ KiranTitlebarWindow[compositingRunning="true"] QFrame#KiranTitlebarFrame{
     border: 1px solid rgba(255,255,255,0.2);
 }
 
+KiranTitlebarWindow[compositingRunning="true"][maximized="true"] QFrame#KiranTitlebarFrame{
+    background-color:#222222;
+    border-radius:0px;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
 KiranTitlebarWindow[compositingRunning="false"] QFrame#KiranTitlebarFrame{
     background-color:#222222;
     border: 1px solid rgba(255,255,255,0.2);

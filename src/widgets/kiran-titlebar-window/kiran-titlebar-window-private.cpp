@@ -11,6 +11,7 @@
 #include <QStyle>
 #include <QWindow>
 #include <QFile>
+#include <QTimer>
 
 using namespace Kiran;
 
@@ -340,7 +341,7 @@ void KiranTitlebarWindowPrivate::initOtherWidget()
     windowContentWidgetWrapperLayout->setMargin(0);
 }
 
-void KiranTitlebarWindowPrivate::enableShadow(bool fullScreen)
+void KiranTitlebarWindowPrivate::initShadow(bool fullScreen)
 {
     bool showShadow = m_isCompositingManagerRunning && (!fullScreen);
     if( Q_LIKELY(m_shadowEffect) ){
@@ -349,6 +350,13 @@ void KiranTitlebarWindowPrivate::enableShadow(bool fullScreen)
     if( Q_LIKELY(m_layout) ){
         m_layout->setMargin(showShadow?SHADOW_BORDER_WIDTH:0);
     }
+    int gtkFrameExtent = showShadow?SHADOW_BORDER_WIDTH:0;
+    XLibHelper::SetShadowWidth(QX11Info::display(),
+                               q_ptr->winId(),
+                               gtkFrameExtent,
+                               gtkFrameExtent,
+                               gtkFrameExtent,
+                               gtkFrameExtent);
 }
 
 void KiranTitlebarWindowPrivate::updateShadowStyle(bool active)
@@ -419,22 +427,18 @@ bool KiranTitlebarWindowPrivate::eventFilter(QObject *obj, QEvent *event) {
             case QEvent::MouseMove:
                 handlerMouseMoveEvent(dynamic_cast<QMouseEvent*>(event));
                 break;
-            case QEvent::ShowToParent:
-            {
-                enableShadow(false);
-                XLibHelper::SetShadowWidth(QX11Info::display(),
-                                           q_ptr->winId(),
-                                           SHADOW_BORDER_WIDTH,
-                                           SHADOW_BORDER_WIDTH,
-                                           SHADOW_BORDER_WIDTH,
-                                           SHADOW_BORDER_WIDTH);
+            case QEvent::ShowToParent:{
+                initShadow(false);
                 break;
             }
             case QEvent::MouseButtonDblClick:
                 handlerMouseDoubleClickEvent(dynamic_cast<QMouseEvent*>(event));
                 break;
             case QEvent::WindowStateChange:
-                enableShadow(q_ptr->windowState()& Qt::WindowMaximized);
+                //窗口状态变更时，加载不同的样式
+                QTimer::singleShot(0,[this](){
+                    q_ptr->style()->polish(m_frame);
+                });
                 break;
             case QEvent::ActivationChange:
                 updateShadowStyle(q_ptr->isActiveWindow());
