@@ -55,6 +55,8 @@ void KiranTitlebarWindow::setTitle(const QString &text)
 {
     setWindowTitle(text);
     d_func()->setTitle(text);
+    /* NOTE:由于标题栏标题文本需要收缩以获取更大的大小分配，所以保存完整的标题文本，用作每次省略压缩显示的参考 */
+    d_func()->m_titleBarLayout->setTitleBarCompleteTitle(text);
 }
 
 void KiranTitlebarWindow::setButtonHints(TitlebarButtonHintFlags hints)
@@ -133,4 +135,15 @@ QHBoxLayout *KiranTitlebarWindow::getTitlebarCustomLayout()
 bool KiranTitlebarWindow::event(QEvent *event)
 {
     return QWidget::event(event);
+}
+
+bool KiranTitlebarWindow::titlebarCustomLayoutAlignHCenter() {
+    return d_func()->m_CustomAlignHCenter;
+}
+
+void KiranTitlebarWindow::setTitlebarCustomLayoutAlignHCenter(bool center) {
+    if( center!=  d_func()->m_CustomAlignHCenter ){
+        d_func()->m_CustomAlignHCenter = center;
+        d_func()->m_titleBarLayout->invalidate();
+    }
 }

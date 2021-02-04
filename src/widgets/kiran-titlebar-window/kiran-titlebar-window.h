@@ -37,7 +37,7 @@ public:
     Q_ENUM(TitlebarButtonHint)
     Q_DECLARE_FLAGS(TitlebarButtonHintFlags, TitlebarButtonHint)
     Q_FLAG(TitlebarButtonHintFlags)
-    
+
     /* 样式表中提供设置窗口内容Margin */
     Q_PROPERTY(int contentWrapperMarginLeft READ contentWrapperMarginLeft WRITE setContentWrapperMarginLeft)
     Q_PROPERTY(int contentWrapperMarginRight READ contentWrapperMarginRight WRITE setContentWrapperMarginRight)
@@ -82,6 +82,18 @@ public:
      * @return 窗口内容部件布局
      */
     QHBoxLayout *getTitlebarCustomLayout();
+
+    /**
+     * @brief 获取标题栏部分自定义控件区域是否居中
+     * @return 标题栏自定义控件区域是否居中
+     */
+    bool titlebarCustomLayoutAlignHCenter();
+
+    /**
+     * @brief 设置标题栏自定义控件区域是否居中
+     * @param center 自定义控件区域是否居中
+     */
+    void setTitlebarCustomLayoutAlignHCenter(bool center);
 
     /**
      * @brief 设置窗口图标
