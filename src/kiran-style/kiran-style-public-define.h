@@ -63,7 +63,14 @@ namespace Kiran{
      */
     enum KiranPrimitiveElement{
         PE_SwitchButtonIndicator = QStyle::PE_CustomBase+1, /** < KiranSwitchButton开关指示器  */
-        PE_SearchBoxIndicator /** < KiranSearchBox搜索指示器(搜索图标) */
+
+        PE_SearchBoxIndicator,/** < KiranSearchBox搜索指示器(搜索图标) */
+
+        PE_KiranImageSelector,/** < KiranImageSelector 图片选择器主体 **/
+
+        PE_KiranImageSelectorButtonFrame,/** < KiranImageSelector 按钮背景边框 **/
+        PE_KiranImageSelectorPrevButtonArrow,/** < KiranImageSelector 向上跳转箭头 **/
+        PE_KiranImageSelectorNextButtonArrow,/** < KiranImageSelector 向下跳转箭头 * **/
     };
 
     /**
@@ -87,6 +94,13 @@ namespace Kiran{
         SE_SwitchButtonContents = QStyle::SE_CustomBase+1, /** < KiranSwitchButton内容文本绘制区域 */
         SE_SwitchButtonIndicator /** < KiranSwitchButton开关指示标志区域 */
     };
+
+    /**
+     * @brief KiranPixelMetric 像素度量属性枚举
+     */
+     enum KiranPixelMetric{
+         PM_KiranImageSelectorRadius = QStyle::PM_CustomBase+1
+     };
 }
 
 #endif //KIRANWIDGETS_QT5_KIRAN_STYLE_PUBLIC_DEFINE_H

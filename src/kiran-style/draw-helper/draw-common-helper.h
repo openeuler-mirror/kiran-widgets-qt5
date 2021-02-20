@@ -83,7 +83,7 @@ namespace Kiran {
         /* KiranSidebarWidget选中标志箭头,ComboBox下拉箭头标示 */
         void drawArrow(StyleDetailFetcher *fetcher, QPainter *painter,
                        const QStyleOption *option, const QWidget *widget,
-                       ArrowOrientation orientation);
+                       ArrowOrientation orientation,int renderSize = 0);
 
         /* 绘制标题栏按钮图标 */
         void drawDecorationButton(QPainter *painter, const QRect &rect,const QColor &color, TitleBarButtonType buttonType);

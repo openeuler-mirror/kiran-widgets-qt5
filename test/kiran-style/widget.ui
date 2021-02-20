@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>605</width>
-    <height>614</height>
+    <width>316</width>
+    <height>459</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -55,7 +55,7 @@
       <enum>QTabWidget::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>8</number>
+      <number>0</number>
      </property>
      <property name="tabsClosable">
       <bool>true</bool>
@@ -188,40 +188,23 @@
            <height>50</height>
           </size>
          </property>
-         <property name="text">
-          <string>flat</string>
-         </property>
-         <property name="flat">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btn_icon">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>100</width>
-           <height>50</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>100</width>
-           <height>50</height>
-          </size>
+         <property name="autoFillBackground">
+          <bool>false</bool>
          </property>
          <property name="text">
           <string/>
          </property>
          <property name="icon">
-          <iconset>
-           <normaloff>../../../../../../../../../../../../usr/share/kiran-account-manager/account-icons/2.png</normaloff>../../../../../../../../../../../../usr/share/kiran-account-manager/account-icons/2.png</iconset>
+          <iconset theme="window"/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>43</width>
+           <height>43</height>
+          </size>
+         </property>
+         <property name="flat">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -451,7 +434,7 @@ lineedit-password-character: 9678;
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>585</width>
+            <width>296</width>
             <height>834</height>
            </rect>
           </property>
@@ -484,7 +467,7 @@ lineedit-password-character: 9678;
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>567</width>
+                <width>278</width>
                 <height>598</height>
                </rect>
               </property>
@@ -497,8 +480,8 @@ lineedit-password-character: 9678;
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>100</width>
-                <height>30</height>
+                <width>98</width>
+                <height>28</height>
                </rect>
               </property>
               <attribute name="label">
@@ -546,7 +529,7 @@ lineedit-password-character: 9678;
                <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>565</width>
+                <width>276</width>
                 <height>68</height>
                </rect>
               </property>
@@ -808,6 +791,12 @@ lineedit-password-character: 9678;
         <widget class="KiranIconLineEdit" name="iconLineEdit"/>
        </item>
       </layout>
+     </widget>
+     <widget class="QWidget" name="tab_imageSelector">
+      <attribute name="title">
+       <string>KiranImageSelector</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_11"/>
      </widget>
     </widget>
    </item>

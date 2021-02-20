@@ -82,7 +82,7 @@ public:
                                        const QString &title,
                                        const QString &text,
                                        KiranStandardButtons buttons);
-
+    QSize sizeHint() const override;
     /**
      * @brief 设置窗口标题
      * @param title 标题

@@ -21,6 +21,8 @@ add_executable(${PROJECT_NAME}
         ${HEADERS}
         ${FORMS})
 
+include_directories("${CMAKE_BINARY_DIR}")
+
 target_include_directories(${PROJECT_NAME} PRIVATE
         ../../src/widgets/kiran-application/
         ../../src/kiran-style/
@@ -28,6 +30,8 @@ target_include_directories(${PROJECT_NAME} PRIVATE
         ../../src/widgets/kiran-search-box
         ../../src/widgets/kiran-sidebar-widget
         ../../src/widgets/kiran-titlebar-window
-        ../../src/widgets/kiran-icon-line-edit)
+        ../../src/widgets/kiran-icon-line-edit
+        ../../src/widgets/kiran-message-box
+        ../../src/widgets/kiran-image-selector)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Widgets kiranwidgets-qt5)

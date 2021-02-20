@@ -91,3 +91,17 @@ void KiranMessageBox::removeButton(QPushButton *button) {
 void KiranMessageBox::cleanButton() {
     d_ptr->cleanButton();
 }
+
+QSize KiranMessageBox::sizeHint() const
+{
+    QSize size = QDialog::sizeHint();
+    QSize buttonBoxSizeHint = d_ptr->m_dialogButtonBox->sizeHint();
+    bool showShadow = QX11Info::isCompositingManagerRunning();
+    QMargins margins = d_ptr->m_frameLayout->contentsMargins();
+
+    int minimumWidth = buttonBoxSizeHint.width()+margins.left()+margins.right()+(showShadow?(2*SHADOW_BORDER_WIDTH):0);
+    if( size.width() < minimumWidth ){
+        size.rwidth() = minimumWidth;
+    }
+    return size;
+}

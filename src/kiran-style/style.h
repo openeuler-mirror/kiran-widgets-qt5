@@ -163,6 +163,9 @@ namespace Kiran {
         int pixelMetric(PixelMetric metric, const QStyleOption *opt = nullptr,
                         const QWidget *widget = nullptr) const override;
 
+        int pixelMetric(KiranPixelMetric metric, const QStyleOption *opt = nullptr,
+                        const QWidget *wodget = nullptr) const;
+
         /**
          * @brief 返回一个整数，该整数表示由提供的样式选项描述的给定窗口小部件的指定样式提示
          * @param sh      样式提示枚举
