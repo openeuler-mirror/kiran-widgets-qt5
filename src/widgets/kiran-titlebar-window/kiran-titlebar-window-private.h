@@ -5,6 +5,7 @@
 #include <QLayout>
 #include <QLabel>
 #include <QPushButton>
+#include <QAbstractNativeEventFilter>
 
 #include "global_define.h"
 #include "kiran-titlebar-window.h"
@@ -13,7 +14,7 @@
 
 class QGraphicsDropShadowEffect;
 
-class KiranTitlebarWindowPrivate : public QObject {
+class KiranTitlebarWindowPrivate : public QObject,QAbstractNativeEventFilter{
     Q_OBJECT
     Q_DECLARE_PUBLIC(KiranTitlebarWindow);
 public:
@@ -28,6 +29,9 @@ private:
     void setButtonHints(KiranTitlebarWindow::TitlebarButtonHintFlags hints);
     void setWindowContentWidget(QWidget *widget);
 
+    virtual bool nativeEventFilter(const QByteArray &eventType, void *message, long *result) override;
+    void adaptToVirtualScreenSize();
+
 private:
     void handlerHoverMoveEvent(QHoverEvent *ev);
     void handlerLeaveEvent();
@@ -39,12 +43,15 @@ private:
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override;
     void initOtherWidget();
-    void initShadow(bool fullScreen = false);
+    void initShadow();
     void updateShadowStyle(bool active);
     Kiran::CursorPositionEnums getCursorPosition(QPoint pos);
 
 private slots:
     void updateTitleFont(QFont font);
+
+    void handlerPrimaryScreenChanged(QScreen* screen);
+    void handlerPrimaryScreenVirtualGeometryChanged(const QRect &rect);
 
 private:
     KiranTitlebarWindow *q_ptr;
@@ -79,6 +86,8 @@ private:
     bool m_isCompositingManagerRunning;
 
     FontMonitor *m_titleFontMonitor;
+
+    bool m_firstMap=true;
 };
 
 #endif // KIRANTITLEBARWINDOWPRIVATE_H

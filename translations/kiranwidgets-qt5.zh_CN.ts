@@ -124,99 +124,82 @@
     <name>Widget</name>
     <message>
         <location filename="../test/kiran-style/widget.ui" line="14"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="462"/>
         <source>Widget</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../test/kiran-style/widget.ui" line="35"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="463"/>
         <source>enable</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../test/kiran-style/widget.ui" line="42"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="464"/>
         <source>RadioButton</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../test/kiran-style/widget.ui" line="74"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="471"/>
         <source>PushButton</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../test/kiran-style/widget.ui" line="86"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="465"/>
         <source>QPushButton</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../test/kiran-style/widget.ui" line="111"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="466"/>
         <source>normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../test/kiran-style/widget.ui" line="136"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="467"/>
         <source>default</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../test/kiran-style/widget.ui" line="161"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="468"/>
         <source>warning</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../test/kiran-style/widget.ui" line="232"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="470"/>
         <source>toggle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../test/kiran-style/widget.ui" line="262"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="472"/>
         <source>SwitchButton</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../test/kiran-style/widget.ui" line="274"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="478"/>
         <source>ComboBox</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../test/kiran-style/widget.ui" line="281"/>
         <location filename="../test/kiran-style/widget.ui" line="286"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="473"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="474"/>
         <source>测试测试测试测试测试测试测试1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../test/kiran-style/widget.ui" line="291"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="475"/>
         <source>测试测试测试测试测试测试测试3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../test/kiran-style/widget.ui" line="311"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="477"/>
         <source>button with menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../test/kiran-style/widget.ui" line="335"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="491"/>
         <source>edit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../test/kiran-style/widget.ui" line="341"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="479"/>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
@@ -226,85 +209,69 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <location filename="../test/kiran-style/widget.ui" line="348"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="484"/>
         <source>QTextEdit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../test/kiran-style/widget.ui" line="355"/>
         <location filename="../test/kiran-style/widget.ui" line="358"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="485"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="486"/>
         <source>QLineEdit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../test/kiran-style/widget.ui" line="370"/>
         <location filename="../test/kiran-style/widget.ui" line="376"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="487"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="488"/>
         <source>QLineEdit Passwd</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../test/kiran-style/widget.ui" line="383"/>
         <location filename="../test/kiran-style/widget.ui" line="386"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="489"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="490"/>
         <source>QPlainTextEdit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../test/kiran-style/widget.ui" line="409"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="497"/>
         <source>ScrollBar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../test/kiran-style/widget.ui" line="475"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="492"/>
         <source>Page 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../test/kiran-style/widget.ui" line="488"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="493"/>
         <source>Page 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../test/kiran-style/widget.ui" line="517"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="494"/>
         <source>GroupBox</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../test/kiran-style/widget.ui" line="543"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="495"/>
         <source>Tab 1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../test/kiran-style/widget.ui" line="548"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="496"/>
         <source>Tab 2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../test/kiran-style/widget.ui" line="561"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="498"/>
         <source>SearchBox</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../test/kiran-style/widget.ui" line="567"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="499"/>
         <source>ProgressBar</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../test/kiran-style/widget.ui" line="581"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="577"/>
         <source>QListView</source>
         <translation type="unfinished"></translation>
     </message>
@@ -345,54 +312,16 @@ p, li { white-space: pre-wrap; }
         <location filename="../test/kiran-style/widget.ui" line="768"/>
         <location filename="../test/kiran-style/widget.ui" line="773"/>
         <location filename="../test/kiran-style/widget.ui" line="778"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="504"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="506"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="508"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="510"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="512"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="514"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="516"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="518"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="520"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="522"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="524"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="526"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="528"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="530"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="532"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="534"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="536"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="538"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="540"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="542"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="544"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="546"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="548"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="550"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="552"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="554"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="556"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="558"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="560"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="562"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="564"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="566"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="568"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="570"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="572"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="574"/>
         <source>新建项目</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../test/kiran-style/widget.ui" line="787"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="578"/>
         <source>KiranIconLineEdit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../test/kiran-style/widget.ui" line="797"/>
-        <location filename="../cmake-build-debug/test/kiran-style/kiran-style-test_autogen/include/ui_widget.h" line="579"/>
         <source>KiranImageSelector</source>
         <translation type="unfinished"></translation>
     </message>

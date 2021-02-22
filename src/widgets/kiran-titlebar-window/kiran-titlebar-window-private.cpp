@@ -7,12 +7,13 @@
 #include <QCursor>
 #include <QEvent>
 #include <QMouseEvent>
-#include <QHoverEvent>
 #include <QGraphicsDropShadowEffect>
 #include <QStyle>
 #include <QWindow>
 #include <QFile>
 #include <QTimer>
+#include <QApplication>
+#include <QScreen>
 
 using namespace Kiran;
 
@@ -21,6 +22,8 @@ static const int    inactivatedBlurRadius = 10;
 
 static const QColor activatedColor("#000000");
 static const int    activatedBlurRadius = 18;
+
+#define  XCB_GENERIC_EVENT_TYPE "xcb_generic_event_t"
 
 KiranTitlebarWindowPrivate::KiranTitlebarWindowPrivate(KiranTitlebarWindow *ptr)
     : q_ptr(ptr),
@@ -46,6 +49,17 @@ KiranTitlebarWindowPrivate::KiranTitlebarWindowPrivate(KiranTitlebarWindow *ptr)
     m_shadowEffect = new QGraphicsDropShadowEffect(q_ptr);
     m_shadowEffect->setOffset(0, 0);
     q_func()->setGraphicsEffect(m_shadowEffect);
+
+    //安装本地事件过滤，监听xcb event
+    qApp->installNativeEventFilter(this);
+    //处理主屏切换的问题
+    connect(qApp,&QApplication::primaryScreenChanged,
+            this,&KiranTitlebarWindowPrivate::handlerPrimaryScreenChanged);
+    //处理屏幕移除更新窗口大小
+    connect(qApp,&QApplication::screenRemoved,[this](){
+        adaptToVirtualScreenSize();
+    });
+    handlerPrimaryScreenChanged(qApp->primaryScreen());
 }
 
 KiranTitlebarWindowPrivate::~KiranTitlebarWindowPrivate()
@@ -329,9 +343,9 @@ void KiranTitlebarWindowPrivate::initOtherWidget()
     windowContentWidgetWrapperLayout->setMargin(0);
 }
 
-void KiranTitlebarWindowPrivate::initShadow(bool fullScreen)
+void KiranTitlebarWindowPrivate::initShadow()
 {
-    bool showShadow = m_isCompositingManagerRunning && (!fullScreen);
+    bool showShadow = m_isCompositingManagerRunning;
     if( Q_LIKELY(m_shadowEffect) ){
         m_shadowEffect->setEnabled( showShadow );
     }
@@ -398,7 +412,7 @@ bool KiranTitlebarWindowPrivate::eventFilter(QObject *obj, QEvent *event) {
         return true;
     }
     // 对窗口事件进行处理
-    if( obj==q_ptr ){
+    if( obj==q_ptr ) {
         switch (event->type()) {
             case QEvent::HoverMove:
                 handlerHoverMoveEvent(dynamic_cast<QHoverEvent*>(event));
@@ -416,7 +430,7 @@ bool KiranTitlebarWindowPrivate::eventFilter(QObject *obj, QEvent *event) {
                 handlerMouseMoveEvent(dynamic_cast<QMouseEvent*>(event));
                 break;
             case QEvent::ShowToParent:{
-                initShadow(false);
+                initShadow();
                 break;
             }
             case QEvent::MouseButtonDblClick:
@@ -436,4 +450,125 @@ bool KiranTitlebarWindowPrivate::eventFilter(QObject *obj, QEvent *event) {
         }
     }
     return QObject::eventFilter(obj, event);
+}
+
+bool KiranTitlebarWindowPrivate::nativeEventFilter(const QByteArray &eventType, void *message, long *result) {
+    if( (q_ptr == nullptr) || (q_ptr->windowHandle() == nullptr) || (eventType!=XCB_GENERIC_EVENT_TYPE) ){
+        return false;
+    }
+
+    xcb_generic_event_t* ev = static_cast<xcb_generic_event_t *>(message);
+    switch (ev->response_type & ~0x80) {
+        case XCB_MAP_NOTIFY:
+        {
+            //since:2.1.2
+            //NOTE:若是在窗口ShowEvent中进行处理可能会偶发显示异常，设置的窗口大小和移动窗口位置不能生效,需要加入延时调用.
+            //初次显示的时候,检查窗口显示大小是否超出了屏幕显示大小，若超出了进行限制，但后续还可以进行拉升
+            xcb_map_notify_event_t *mapNotify = (xcb_map_notify_event_t *)ev;
+            if( mapNotify->window != q_ptr->windowHandle()->winId() ){
+                break;
+            }
+            if(m_firstMap){
+                QTimer::singleShot(0,this,&KiranTitlebarWindowPrivate::adaptToVirtualScreenSize);
+                m_firstMap=false;
+            }
+            break;
+        }
+        default:
+            break;
+    }
+    return false;
+}
+
+/**
+ * @brief 检查窗口显示大小是否超出了屏幕显示大小，若超出了则进行限制。但保证后续还可以进行拉升
+ * @since 2.1.2
+ */
+void KiranTitlebarWindowPrivate::adaptToVirtualScreenSize() {
+    QWindow* window;
+    QSize maxSize,minSize,virtualScreenSize;
+
+    window = q_ptr->windowHandle();
+    maxSize = q_ptr->maximumSize();
+    minSize = q_ptr->minimumSize();
+
+    //获取屏幕虚拟大小，该大小包括所有的屏幕
+    virtualScreenSize = window->screen()->availableVirtualSize();
+
+    if( m_isCompositingManagerRunning ){
+        QSize windowDisplayAreaSize;
+        //混成开启，绘制阴影，标题栏窗口占用部分透明区域绘制阴影，该部分需要排除
+        windowDisplayAreaSize = QSize(window->size().width() - (2 * SHADOW_BORDER_WIDTH),
+                                      window->size().height()-(2*SHADOW_BORDER_WIDTH));
+
+        //窗口显示区域未超过屏幕显示区域
+        if(windowDisplayAreaSize.width() <= virtualScreenSize.width()
+           && windowDisplayAreaSize.height() <= virtualScreenSize.height()){
+            return;
+        }
+
+        //通过设置固定大小强制将窗口大小调整屏幕显示范围内
+        if(windowDisplayAreaSize.width() > virtualScreenSize.width() ){
+            windowDisplayAreaSize.setWidth(virtualScreenSize.width());
+        }
+        if(windowDisplayAreaSize.height() > virtualScreenSize.height() ){
+            windowDisplayAreaSize.setHeight(virtualScreenSize.height());
+        }
+
+        //混成开启,设置的大小需要再加上绘制阴影区域
+        QSize adaptWindowSize = QSize(windowDisplayAreaSize.width()+(2*SHADOW_BORDER_WIDTH),
+                                      windowDisplayAreaSize.height()+(2*SHADOW_BORDER_WIDTH));
+        q_ptr->setFixedSize(adaptWindowSize);
+        q_ptr->setGeometry(QRect(QPoint(-SHADOW_BORDER_WIDTH,-SHADOW_BORDER_WIDTH),adaptWindowSize));
+
+        if( (minSize.width()-(2*SHADOW_BORDER_WIDTH)) > virtualScreenSize.width() ){
+            minSize.setWidth(virtualScreenSize.width()+(2*SHADOW_BORDER_WIDTH));
+        }
+        if( (minSize.height()-(2*SHADOW_BORDER_WIDTH)) > virtualScreenSize.height() ){
+            minSize.setHeight(virtualScreenSize.height()+(2*SHADOW_BORDER_WIDTH));
+        }
+    } else {
+        QSize windowSize;
+        windowSize = window->size();
+
+        //窗口显示区域未超过屏幕显示区域
+        if(windowSize.width() <= virtualScreenSize.width()
+           && windowSize.height() <= virtualScreenSize.height()){
+            return;
+        }
+
+        //通过设置固定大小强制将窗口大小调整屏幕显示范围内
+        if(windowSize.width() > virtualScreenSize.width() ){
+            windowSize.setWidth(virtualScreenSize.width());
+        }
+        if(windowSize.height() > virtualScreenSize.height() ){
+            windowSize.setHeight(virtualScreenSize.height());
+        }
+
+        q_ptr->setFixedSize(windowSize);
+        q_ptr->setGeometry(QRect(QPoint(0,0), windowSize));
+
+        if( minSize.width() > virtualScreenSize.width() ){
+            minSize.setWidth(virtualScreenSize.width());
+        }
+        if( minSize.height() > virtualScreenSize.height() ){
+            minSize.setHeight(virtualScreenSize.height());
+        }
+    }
+
+    //取消固定大小限制
+    q_ptr->setFixedSize(QWIDGETSIZE_MAX,QWIDGETSIZE_MAX);
+    //重新设置最大大小限制
+    q_ptr->setMaximumSize(maxSize);
+    //计算更新最小大小限制
+    q_ptr->setMinimumSize(minSize);
+}
+
+void KiranTitlebarWindowPrivate::handlerPrimaryScreenChanged(QScreen *screen) {
+    //连接到主屏幕虚拟大小更改的情况
+    connect(screen,&QScreen::virtualGeometryChanged,this,&KiranTitlebarWindowPrivate::handlerPrimaryScreenVirtualGeometryChanged);
+}
+
+void KiranTitlebarWindowPrivate::handlerPrimaryScreenVirtualGeometryChanged(const QRect &rect) {
+    adaptToVirtualScreenSize();
 }
