@@ -13,28 +13,10 @@
 #include <QScreen>
 #include <QApplication>
 #include <QDesktopWidget>
+#include <QTranslator>
 
 ///默认按钮信息Map QMap<默认按钮枚举值,<按钮文本,按钮角色>>
-static const QMap<KiranStandardButton,QPair<QString,ButtonRole>> standardButtonInfoMap = {
-    {KiranMessageBox::Ok,{QObject::tr("OK"),ButtonRole::AcceptRole}},
-    {KiranMessageBox::Save,{QObject::tr("Save"),ButtonRole::AcceptRole}},
-    {KiranMessageBox::SaveAll,{QObject::tr("Save All"),ButtonRole::AcceptRole}},
-    {KiranMessageBox::Open,{QObject::tr("Open"),ButtonRole::AcceptRole}},
-    {KiranMessageBox::Yes,{QObject::tr("Yes"),ButtonRole::YesRole}},
-    {KiranMessageBox::YesToAll,{QObject::tr("Yes to All"),ButtonRole::YesRole}},
-    {KiranMessageBox::No,{QObject::tr("No"),ButtonRole::NoRole}},
-    {KiranMessageBox::NoToAll,{QObject::tr("No to All"),ButtonRole::NoRole}},
-    {KiranMessageBox::Abort,{QObject::tr("Abort"),ButtonRole::RejectRole}},
-    {KiranMessageBox::Retry,{QObject::tr("Retry"),ButtonRole::AcceptRole}},
-    {KiranMessageBox::Ignore,{QObject::tr("Ignore"),ButtonRole::AcceptRole}},
-    {KiranMessageBox::Close,{QObject::tr("Close"),ButtonRole::RejectRole}},
-    {KiranMessageBox::Cancel,{QObject::tr("Cancel"),ButtonRole::RejectRole}},
-    {KiranMessageBox::Discard,{QObject::tr("Discard"),ButtonRole::DestructiveRole}},
-    {KiranMessageBox::Help,{QObject::tr("Help"),ButtonRole::HelpRole}},
-    {KiranMessageBox::Apply,{QObject::tr("Apply"),ButtonRole::ApplyRole}},
-    {KiranMessageBox::Reset,{QObject::tr("Reset"),ButtonRole::ResetRole}},
-    {KiranMessageBox::RestoreDefaults,{QObject::tr("Restore Defaults"),ButtonRole::ResetRole}}
-};
+static QMap<KiranStandardButton,QPair<QString,ButtonRole>> standardButtonInfoMap;
 
 static const QColor inactivatedColor("#222222");
 static const int    inactivatedBlurRadius = 10;
@@ -67,6 +49,37 @@ KiranMessageBoxPrivate::KiranMessageBoxPrivate(KiranMessageBox *ptr)
 void KiranMessageBoxPrivate::init(const QString &title,
                                   const QString &text)
 {
+    if( standardButtonInfoMap.isEmpty() ){
+        QTranslator tsor;
+        tsor.load(QLocale(),
+                          "kiranwidgets-qt5",
+                          ".",
+                          "/usr/share/kiranwidgets-qt5/translations/",
+                          ".qm");
+        QApplication::installTranslator(&tsor);
+        standardButtonInfoMap = {
+                {KiranMessageBox::Ok,{QObject::tr("OK"),ButtonRole::AcceptRole}},
+                {KiranMessageBox::Save,{QObject::tr("Save"),ButtonRole::AcceptRole}},
+                {KiranMessageBox::SaveAll,{QObject::tr("Save All"),ButtonRole::AcceptRole}},
+                {KiranMessageBox::Open,{QObject::tr("Open"),ButtonRole::AcceptRole}},
+                {KiranMessageBox::Yes,{QObject::tr("Yes"),ButtonRole::YesRole}},
+                {KiranMessageBox::YesToAll,{QObject::tr("Yes to All"),ButtonRole::YesRole}},
+                {KiranMessageBox::No,{QObject::tr("No"),ButtonRole::NoRole}},
+                {KiranMessageBox::NoToAll,{QObject::tr("No to All"),ButtonRole::NoRole}},
+                {KiranMessageBox::Abort,{QObject::tr("Abort"),ButtonRole::RejectRole}},
+                {KiranMessageBox::Retry,{QObject::tr("Retry"),ButtonRole::AcceptRole}},
+                {KiranMessageBox::Ignore,{QObject::tr("Ignore"),ButtonRole::AcceptRole}},
+                {KiranMessageBox::Close,{QObject::tr("Close"),ButtonRole::RejectRole}},
+                {KiranMessageBox::Cancel,{QObject::tr("Cancel"),ButtonRole::RejectRole}},
+                {KiranMessageBox::Discard,{QObject::tr("Discard"),ButtonRole::DestructiveRole}},
+                {KiranMessageBox::Help,{QObject::tr("Help"),ButtonRole::HelpRole}},
+                {KiranMessageBox::Apply,{QObject::tr("Apply"),ButtonRole::ApplyRole}},
+                {KiranMessageBox::Reset,{QObject::tr("Reset"),ButtonRole::ResetRole}},
+                {KiranMessageBox::RestoreDefaults,{QObject::tr("Restore Defaults"),ButtonRole::ResetRole}}
+        };
+        QApplication::removeTranslator(&tsor);
+    }
+
     ///加载样式表
     QFile file(":/kiranwidgets-qt5/themes/kiran-messagebox_black.qss");
     if( file.open(QIODevice::ReadOnly) ){
