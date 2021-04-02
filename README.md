@@ -11,7 +11,7 @@ kiran桌面环境的相关**Qt控件**的封装
 1.  安装编译依赖  
     `sudo yum install cmake gcc-c++ qt5-qtbase-devel qt5-qtx11extras-devel libX11-devel`
 2.  **源码根目录**下创建**build**目录`mkdir build`
-3.  进行**build**目录,执行`cmake -DCMAKE_INSTALL_PREFIX=/usr -DSHARE_INSTALL_PREFIX=/usr/share -DINCLUDE_INSTALL_DIR=/usr/include -DLIB_INSTALL_DIR=/usr/lib ..`生成**Makefile**
+3.  进行**build**目录,执行`cmake -DCMAKE_INSTALL_PREFIX=/usr`生成**Makefile**
 4.  执行`make`进行编译
 
 ## 安装
