@@ -81,6 +81,15 @@ void Style::drawPrimitive(QStyle::PrimitiveElement pe, const QStyleOption *opt,
         case PE_FrameLineEdit:
             isOk = DrawLineEditHelper::drawFrameLineEditPrimitive(this,opt,p,m_detailFetcher,w);
             break;
+        case PE_PanelLineEdit:
+            if( w && w->parentWidget() ){
+                /*作为QComoBox和QAbstractSpinBox的子控件时不进行绘制*/
+                if( qobject_cast<const QComboBox*>(w->parentWidget()) ||
+                        qobject_cast<const QAbstractSpinBox*>(w->parentWidget()) ){
+                    isOk = true;
+                }
+            }
+            break;
         case PE_PanelButtonTool:
             isOk = DrawButtonHelper::drawPanelButtonToolPrimitive(this,opt,p,m_detailFetcher,w);
             break;
