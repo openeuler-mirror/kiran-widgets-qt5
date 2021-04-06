@@ -18,6 +18,7 @@
 #include "draw-helper/draw-progress-bar-helper.h"
 #include "draw-helper/draw-item-view-helper.h"
 #include "draw-helper/draw-image-selector-helper.h"
+#include "draw-helper/draw-slider-helper.h"
 
 #include "delegate/combo-box-item-delegate.h"
 
@@ -313,7 +314,8 @@ void Style::drawComplexControl(QStyle::ComplexControl cc,
             {CC_SpinBox,    DrawSpinboxHelper::drawSpinBoxCompleControl},
             {CC_ToolButton, DrawButtonHelper::drawToolButtonComplexControl},
             {CC_ComboBox,   DrawComboBoxHelper::drawComboBoxComplexControl},
-            {CC_ScrollBar,  DrawScrollBarHelper::drawScrollBarComplexControl}
+            {CC_ScrollBar,  DrawScrollBarHelper::drawScrollBarComplexControl},
+//            {CC_Slider,     DrawSliderHelper::drawSliderComplexControl}
     };
 
     auto iter = drawComplexControlFuncMap.find(cc);
@@ -797,7 +799,7 @@ void Style::polish(QWidget *widget)
     }
 
     if (QComboBox *comboBox = qobject_cast<QComboBox *>(widget)) {
-        comboBox->setItemDelegate(new ComboBoxItemDelegate(comboBox, comboBox->view()));
+        comboBox->view()->setItemDelegate(new ComboBoxItemDelegate(comboBox,comboBox));
     }
 
     if (auto toolBtn = qobject_cast<QToolButton *>(widget)) {
@@ -921,6 +923,8 @@ void Style::removeAnimation()
         animations.remove(animation->parent());
 }
 
+//NOTE:由于5.9.7中未把QStyleAnimation加入符号表，5.9.7中暂时取消该部分功能
+#if (QT_VERSION > QT_VERSION_CHECK(5,9,7))
 void Style::startAnimation(QStyleAnimation *animation) const
 {
     stopAnimation(animation->target());
@@ -937,6 +941,7 @@ void Style::stopAnimation(const QObject *target) const
         delete animation;
     }
 }
+#endif
 
 bool Style::isKiranSidebarWidget(const QWidget *widget) const
 {
