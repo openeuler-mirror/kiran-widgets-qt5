@@ -242,6 +242,8 @@ namespace Kiran {
          */
         QStyleAnimation* animation(const QObject *target) const;
 
+        //NOTE:由于5.9.7中未把QStyleAnimation加入符号表，5.9.7中暂时取消该部分功能
+#if (QT_VERSION > QT_VERSION_CHECK(5,9,7))
         /**
          * @brief 开始动画，加入到Style中的动画Hash表，连接信号槽，当被销毁移除出Hash表
          * @param animation 动画指针
@@ -253,6 +255,7 @@ namespace Kiran {
          * @param target 目标控件
          */
         void stopAnimation(const QObject *target) const;
+#endif
 
     public Q_SLOTS:
         /* 动画销毁的槽函数，删除该动画在Hash中的项 */
