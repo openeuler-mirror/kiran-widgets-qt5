@@ -793,10 +793,14 @@ void Style::polish(QWidget *widget)
         itemView->viewport()->setAttribute(Qt::WA_Hover);
     }
 
-        if (qobject_cast<QMenu *>(widget) ||
+    ///NOTE:由于Qt5.9.7中不存在QComboBoxPrivateContainer::paintEvent,只有默认的QWidget背景绘制,所以不能设置背景透明
+    ///Qt5.11.1中由于QComboBoxPrivateContainer重写了paintEvent,在其中调用style绘制了QStyle::PE_PanelMenu，所以可设置透明
+#if (QT_VERSION > QT_VERSION_CHECK(5,9,7))
+    if (qobject_cast<QMenu *>(widget) ||
         widget->inherits("QComboBoxPrivateContainer")) {
         widget->setAttribute(Qt::WA_TranslucentBackground);
     }
+#endif
 
     if (QComboBox *comboBox = qobject_cast<QComboBox *>(widget)) {
         comboBox->view()->setItemDelegate(new ComboBoxItemDelegate(comboBox,comboBox));
