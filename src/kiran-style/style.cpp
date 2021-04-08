@@ -18,7 +18,7 @@
 #include "draw-helper/draw-progress-bar-helper.h"
 #include "draw-helper/draw-item-view-helper.h"
 #include "draw-helper/draw-image-selector-helper.h"
-#include "draw-helper/draw-slider-helper.h"
+
 
 #include "delegate/combo-box-item-delegate.h"
 
