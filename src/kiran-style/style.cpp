@@ -138,7 +138,12 @@ void Style::drawPrimitive(QStyle::PrimitiveElement pe, const QStyleOption *opt,
             }
             break;
         case PE_FrameFocusRect:
-            isOk = DrawFrameHelper::drawFrameFocusRectPrimitive(this,opt,p,m_detailFetcher,w);
+            ///KiranSiderbarWidget不绘制聚焦框
+            if(isKiranSidebarWidget(w)){
+                isOk = true;
+            }else{
+                isOk = DrawFrameHelper::drawFrameFocusRectPrimitive(this,opt,p,m_detailFetcher,w);
+            }
             break;
         default:
             break;
