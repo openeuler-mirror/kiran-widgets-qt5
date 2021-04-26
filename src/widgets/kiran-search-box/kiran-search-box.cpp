@@ -12,7 +12,6 @@
 #include <QLineEdit>
 #include <QEvent>
 #include <QDebug>
-#include <sqltypes.h>
 
 /*FIXME:
  * 搜索框该部分为了偷懒使用了QLineEdit控件
