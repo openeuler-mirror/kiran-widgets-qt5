@@ -179,7 +179,6 @@ bool Kiran::DrawSliderHelper::drawSliderComplexControl(const Kiran::Style *     
         QColor borderColor     = fetcher->getColor(widget, opt, StyleDetailFetcher::Slider_HandleBorderColor);
 
         QRect handleRect = style->subControlRect(QStyle::CC_Slider, opt, QStyle::SC_SliderHandle, widget);
-
         QPainterPath fillPath, borderPath;
         fillPath.addEllipse(handleRect);
         borderPath.addEllipse(handleRect.adjusted(1, 1, -1, -1));
@@ -245,11 +244,11 @@ QRect Kiran::DrawSliderHelper::sliderSubControlRect(const Kiran::Style *       s
     const QStyleOptionSlider *sliderOption(qstyleoption_cast<const QStyleOptionSlider *>(opt));
     if (!sliderOption) return QRect();
 
+    bool isHor(sliderOption->orientation == Qt::Horizontal);
     switch (subControl)
     {
     case QStyle::SC_SliderGroove:
     {
-        bool  isHor(sliderOption->orientation == Qt::Horizontal);
         QRect grooveRect = style->baseStyle()->subControlRect(QStyle::CC_Slider, opt, subControl, w);
 
         ///内容窗口边距距离PM_DefaultFrameWidth
@@ -269,6 +268,35 @@ QRect Kiran::DrawSliderHelper::sliderSubControlRect(const Kiran::Style *       s
         }
 
         return grooveRect;
+    }
+    case QStyle::SC_SliderHandle:
+    {
+        QRect handleRect = style->baseStyle()->subControlRect(QStyle::CC_Slider,opt,QStyle::SC_SliderHandle,w);
+        int   tickSize = style->pixelMetric(QStyle::PM_SliderTickmarkOffset, opt, w);
+
+        if (sliderOption->orientation == Qt::Horizontal)
+        {
+            handleRect.setHeight(style->pixelMetric(QStyle::PM_SliderControlThickness));
+            handleRect.setWidth(style->pixelMetric(QStyle::PM_SliderLength));
+            int centerY = sliderOption->rect.center().y() - handleRect.height() / 2;
+            if (sliderOption->tickPosition & QSlider::TicksAbove)
+                centerY += tickSize;
+            if (sliderOption->tickPosition & QSlider::TicksBelow)
+                centerY -= tickSize;
+            handleRect.moveTop(centerY);
+        }
+        else
+        {
+            handleRect.setWidth(style->pixelMetric(QStyle::PM_SliderThickness));
+            handleRect.setHeight(style->pixelMetric(QStyle::PM_SliderLength));
+            int centerX = sliderOption->rect.center().x() - handleRect.width() / 2;
+            if (sliderOption->tickPosition & QSlider::TicksAbove)
+                centerX += tickSize;
+            if (sliderOption->tickPosition & QSlider::TicksBelow)
+                centerX -= tickSize;
+            handleRect.moveLeft(centerX);
+        }
+        return handleRect;
     }
     default:
         return style->baseStyle()->subControlRect(QStyle::CC_Slider, opt, subControl, w);

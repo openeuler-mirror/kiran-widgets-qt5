@@ -529,7 +529,7 @@ int Style::pixelMetric(QStyle::PixelMetric metric, const QStyleOption *option,
             return 2 * Metrics::TitleBar_MarginWidth + pixelMetric(PM_SmallIconSize, option, widget);
         ///sliders
         case PM_SliderThickness:
-            return Metrics::Slider_ControlThickness;
+            return Metrics::Slider_ControlThickness+2;
         case PM_SliderControlThickness:
             return Metrics::Slider_ControlThickness;
         case PM_SliderLength:

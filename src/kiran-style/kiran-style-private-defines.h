@@ -104,7 +104,7 @@ namespace Kiran{
         TitleBar_MarginWidth = 4,
 
         // sliders
-        Slider_DrawTickMark = 1,//是否绘制itckmark
+        Slider_DrawTickMark = 1,//是否绘制TickMark
         Slider_TickLength = 4,
         Slider_TickMarginWidth = 8,
         Slider_GrooveThickness = 2,//滑块槽厚度
