@@ -104,10 +104,11 @@ namespace Kiran{
         TitleBar_MarginWidth = 4,
 
         // sliders
+        Slider_DrawTickMark = 1,//是否绘制itckmark
         Slider_TickLength = 4,
-        Slider_TickMarginWidth = 6,
-        Slider_GrooveThickness = 3,
-        Slider_ControlThickness = 24,
+        Slider_TickMarginWidth = 8,
+        Slider_GrooveThickness = 2,//滑块槽厚度
+        Slider_ControlThickness = 14,
 
         // tabbar
         TabBar_TabMarginHeight = 8,
@@ -177,6 +178,16 @@ namespace Kiran{
         ButtonMaximize,
         ButtonMinimize,
         ButtonRestore
+    };
+
+    enum Side
+    {
+        SideNone = 0x0,
+        SideLeft = 0x1,
+        SideTop = 0x2,
+        SideRight = 0x4,
+        SideBottom = 0x8,
+        AllSides = SideLeft|SideTop|SideRight|SideBottom
     };
 }
 

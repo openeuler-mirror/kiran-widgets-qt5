@@ -18,7 +18,7 @@
 #include "draw-helper/draw-progress-bar-helper.h"
 #include "draw-helper/draw-item-view-helper.h"
 #include "draw-helper/draw-image-selector-helper.h"
-
+#include "draw-helper/draw-slider-helper.h"
 
 #include "delegate/combo-box-item-delegate.h"
 
@@ -138,7 +138,7 @@ void Style::drawPrimitive(QStyle::PrimitiveElement pe, const QStyleOption *opt,
             }
             break;
         case PE_FrameFocusRect:
-            isOk = true;
+            isOk = DrawFrameHelper::drawFrameFocusRectPrimitive(this,opt,p,m_detailFetcher,w);
             break;
         default:
             break;
@@ -315,7 +315,7 @@ void Style::drawComplexControl(QStyle::ComplexControl cc,
             {CC_ToolButton, DrawButtonHelper::drawToolButtonComplexControl},
             {CC_ComboBox,   DrawComboBoxHelper::drawComboBoxComplexControl},
             {CC_ScrollBar,  DrawScrollBarHelper::drawScrollBarComplexControl},
-//            {CC_Slider,     DrawSliderHelper::drawSliderComplexControl}
+            {CC_Slider,     DrawSliderHelper::drawSliderComplexControl}
     };
 
     auto iter = drawComplexControlFuncMap.find(cc);
@@ -354,9 +354,17 @@ QRect Style::subControlRect(QStyle::ComplexControl cc,
             return DrawComboBoxHelper::comboBoxSubControlRect(this, opt, sc, w);
         case QStyle::CC_ScrollBar:
             return DrawScrollBarHelper::scrollBarSubControlRect(this, opt, sc, w);
-        default:
-            return ParentStyleClass::subControlRect(cc, opt, sc, w);
+        case QStyle::CC_Slider:
+        {
+            QRect subControlRect = DrawSliderHelper::sliderSubControlRect(this,opt,sc,w);
+            if(subControlRect.isValid())
+            {
+                return subControlRect;
+            }
+        }
     }
+
+    return ParentStyleClass::subControlRect(cc, opt, sc, w);
 }
 
 QSize Style::sizeFromContents(QStyle::ContentsType element, const QStyleOption *option,
@@ -379,6 +387,8 @@ QSize Style::sizeFromContents(QStyle::ContentsType element, const QStyleOption *
                 return DrawItemViewHelper::kiranSidebarItemSizeFromContent(this, option, size, widget, m_detailFetcher);
             }
             break;
+        case CT_Slider:
+            return DrawSliderHelper::sliderSizeFromContent(this,option,size,widget,m_detailFetcher);
         default:
             break;
     }
