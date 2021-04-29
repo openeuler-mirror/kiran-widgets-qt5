@@ -8,4 +8,3 @@ Version: @KIRANWIDGETS_VERSION@
 Requires:   Qt5Widgets Qt5Network Qt5X11Extras x11 xcb xcb-util gsettings-qt
 Libs: -L${LibDir}  -l@PROJECT_NAME@
 Cflags: -I${IncludeDir}
-s
