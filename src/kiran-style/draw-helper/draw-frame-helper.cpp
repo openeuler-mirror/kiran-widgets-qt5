@@ -41,3 +41,30 @@ bool DrawFrameHelper::drawFramePrimitive(const Style *style, const QStyleOption 
 
     return true;
 }
+bool DrawFrameHelper::drawFrameFocusRectPrimitive(const Style *style,
+                                                  const QStyleOption *opt,
+                                                  QPainter *painter,
+                                                  StyleDetailFetcher *detaulFetcher,
+                                                  const QWidget *widget)
+{
+    const QStyle::State& state( opt->state );
+    QRectF rect( QRectF(opt->rect).adjusted( 0, 0, -1, -1 ) );
+    const QPalette& palette( opt->palette );
+
+    if( rect.width() < 10 ) return true;
+
+    QColor outlineColor = detaulFetcher->getColor(widget,opt,StyleDetailFetcher::FocusRect_BorderColor);
+
+    QPen pen(outlineColor, 1);
+//    pen.setStyle( Qt::CustomDashLine );
+//    pen.setDashPattern(QVector<qreal>() << 2 << 1);
+    pen.setStyle(Qt::DashLine);
+
+    painter->setRenderHint( QPainter::Antialiasing, false );
+
+    painter->setPen( pen );
+    painter->drawRoundedRect( rect, 2, 2 );
+
+    return true;
+
+}

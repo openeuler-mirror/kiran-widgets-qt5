@@ -221,18 +221,25 @@ bool DrawProgressBarHelper::drawProgressBarContentsControl(const Style *style, c
 
     QColor contentColor = fetcher->getColor(widget,option,StyleDetailFetcher::ProgressBar_ContentColor);
 
+    //NOTE:为了适配5.9.7的QStyleAnimation为加入符号表的问题,暂时取消掉该部分功能
+#if (QT_VERSION > QT_VERSION_CHECK(5,9,7))
     auto animation = qobject_cast<QProgressStyleAnimation*>(style->animation(option->styleObject));
-    if( busy ){
+    if( busy ) {
         if( !animation ){
             animation = new QProgressStyleAnimation(KIRAN_DEFAULT_ANIMATION_FPS,option->styleObject);
             style->startAnimation(animation);
         }
         int progressStep = animation->progressStep(100);
         DrawCommonHelper::renderProgressBarBusyContents( p, rect, contentColor,QColor(), horizontal, reverse, progressStep );
-    } else {
+    }
+    else
+#endif
+    {
+#if (QT_VERSION > QT_VERSION_CHECK(5,9,7))
         if( animation ){
             animation->stop();
         }
+#endif
         QRegion oldClipRegion( p->clipRegion() );
         if( horizontal ) {
             if( rect.width() < Metrics::ProgressBar_Thickness )

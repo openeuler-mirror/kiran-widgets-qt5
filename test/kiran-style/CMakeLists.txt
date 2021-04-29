@@ -25,6 +25,7 @@ include_directories("${CMAKE_BINARY_DIR}")
 
 target_include_directories(${PROJECT_NAME} PRIVATE
         ../../src/widgets/kiran-application/
+        ../../src/widgets/kiran-single-application/
         ../../src/kiran-style/
         ../../src/widgets/kiran-switch-button
         ../../src/widgets/kiran-search-box

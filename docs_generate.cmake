@@ -24,7 +24,7 @@ function(docs_generate DOXYGEN_INPUT DOC_SNAPSHOTS_DIR OUTPUT_DIR)
                 VERBATIM)
 
         #　添加安装选项
-        install(DIRECTORY ${OUTPUT_DIR} DESTINATION ${SHARE_INSTALL_PREFIX}/docs/${PROJECT_NAME} )
+        install(DIRECTORY ${OUTPUT_DIR} DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}/docs/${PROJECT_NAME} )
     else (DOXYGEN_FOUND)
         message("Doxygen need to be installed to generate the doxygen documentation")
     endif (DOXYGEN_FOUND)

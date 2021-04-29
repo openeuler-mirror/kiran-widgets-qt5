@@ -351,6 +351,26 @@ ProgressBar{
     ContentColor: #21a6ff;
 }
 
+Slider{
+    TickMarkColor:#4e4e4e;
+    GrooveHighlightColor:#2eb3ff;
+    GrooveNormalColor:#4e4e4e;
+    HandleBackgroundColor:#2eb3ff;
+    HandleBorderColor:#ffffff;
+}
+
+Slider:pressed{
+    HandleBackgroundColor:white;
+}
+
+Slider:disabled{
+    TickMarkColor:rgba(33,166,255,0.1);
+    GrooveHighlightColor:rgba(33,166,255,0.1);
+    GrooveNormalColor:rgba(33,166,255,0.1);
+    HandleBackgroundColor:#4b4b4b;
+    HandleBorderColor:#4b4b4b;
+}
+
 KiranSiderbarItem{
     Height: 60;
     BackgroundColor: rgba(255,255,255,0.05);
@@ -384,4 +404,8 @@ KiranImageSelector:hover{
 
 KiranImageSelector:pressed{
     ButtonColor: rgba(255,255,255,0.1);
+}
+
+FocusRect{
+    BorderColor:#656565;
 }

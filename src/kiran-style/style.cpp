@@ -18,6 +18,7 @@
 #include "draw-helper/draw-progress-bar-helper.h"
 #include "draw-helper/draw-item-view-helper.h"
 #include "draw-helper/draw-image-selector-helper.h"
+#include "draw-helper/draw-slider-helper.h"
 
 #include "delegate/combo-box-item-delegate.h"
 
@@ -137,7 +138,12 @@ void Style::drawPrimitive(QStyle::PrimitiveElement pe, const QStyleOption *opt,
             }
             break;
         case PE_FrameFocusRect:
-            isOk = true;
+            ///KiranSiderbarWidget不绘制聚焦框
+            if(isKiranSidebarWidget(w)){
+                isOk = true;
+            }else{
+                isOk = DrawFrameHelper::drawFrameFocusRectPrimitive(this,opt,p,m_detailFetcher,w);
+            }
             break;
         default:
             break;
@@ -313,7 +319,8 @@ void Style::drawComplexControl(QStyle::ComplexControl cc,
             {CC_SpinBox,    DrawSpinboxHelper::drawSpinBoxCompleControl},
             {CC_ToolButton, DrawButtonHelper::drawToolButtonComplexControl},
             {CC_ComboBox,   DrawComboBoxHelper::drawComboBoxComplexControl},
-            {CC_ScrollBar,  DrawScrollBarHelper::drawScrollBarComplexControl}
+            {CC_ScrollBar,  DrawScrollBarHelper::drawScrollBarComplexControl},
+            {CC_Slider,     DrawSliderHelper::drawSliderComplexControl}
     };
 
     auto iter = drawComplexControlFuncMap.find(cc);
@@ -352,9 +359,17 @@ QRect Style::subControlRect(QStyle::ComplexControl cc,
             return DrawComboBoxHelper::comboBoxSubControlRect(this, opt, sc, w);
         case QStyle::CC_ScrollBar:
             return DrawScrollBarHelper::scrollBarSubControlRect(this, opt, sc, w);
-        default:
-            return ParentStyleClass::subControlRect(cc, opt, sc, w);
+        case QStyle::CC_Slider:
+        {
+            QRect subControlRect = DrawSliderHelper::sliderSubControlRect(this,opt,sc,w);
+            if(subControlRect.isValid())
+            {
+                return subControlRect;
+            }
+        }
     }
+
+    return ParentStyleClass::subControlRect(cc, opt, sc, w);
 }
 
 QSize Style::sizeFromContents(QStyle::ContentsType element, const QStyleOption *option,
@@ -377,6 +392,8 @@ QSize Style::sizeFromContents(QStyle::ContentsType element, const QStyleOption *
                 return DrawItemViewHelper::kiranSidebarItemSizeFromContent(this, option, size, widget, m_detailFetcher);
             }
             break;
+        case CT_Slider:
+            return DrawSliderHelper::sliderSizeFromContent(this,option,size,widget,m_detailFetcher);
         default:
             break;
     }
@@ -512,7 +529,7 @@ int Style::pixelMetric(QStyle::PixelMetric metric, const QStyleOption *option,
             return 2 * Metrics::TitleBar_MarginWidth + pixelMetric(PM_SmallIconSize, option, widget);
         ///sliders
         case PM_SliderThickness:
-            return Metrics::Slider_ControlThickness;
+            return Metrics::Slider_ControlThickness+2;
         case PM_SliderControlThickness:
             return Metrics::Slider_ControlThickness;
         case PM_SliderLength:
@@ -791,13 +808,17 @@ void Style::polish(QWidget *widget)
         itemView->viewport()->setAttribute(Qt::WA_Hover);
     }
 
-        if (qobject_cast<QMenu *>(widget) ||
+    ///NOTE:由于Qt5.9.7中不存在QComboBoxPrivateContainer::paintEvent,只有默认的QWidget背景绘制,所以不能设置背景透明
+    ///Qt5.11.1中由于QComboBoxPrivateContainer重写了paintEvent,在其中调用style绘制了QStyle::PE_PanelMenu，所以可设置透明
+#if (QT_VERSION > QT_VERSION_CHECK(5,9,7))
+    if (qobject_cast<QMenu *>(widget) ||
         widget->inherits("QComboBoxPrivateContainer")) {
         widget->setAttribute(Qt::WA_TranslucentBackground);
     }
+#endif
 
     if (QComboBox *comboBox = qobject_cast<QComboBox *>(widget)) {
-        comboBox->setItemDelegate(new ComboBoxItemDelegate(comboBox, comboBox->view()));
+        comboBox->view()->setItemDelegate(new ComboBoxItemDelegate(comboBox,comboBox));
     }
 
     if (auto toolBtn = qobject_cast<QToolButton *>(widget)) {
@@ -921,6 +942,8 @@ void Style::removeAnimation()
         animations.remove(animation->parent());
 }
 
+//NOTE:由于5.9.7中未把QStyleAnimation加入符号表，5.9.7中暂时取消该部分功能
+#if (QT_VERSION > QT_VERSION_CHECK(5,9,7))
 void Style::startAnimation(QStyleAnimation *animation) const
 {
     stopAnimation(animation->target());
@@ -937,6 +960,7 @@ void Style::stopAnimation(const QObject *target) const
         delete animation;
     }
 }
+#endif
 
 bool Style::isKiranSidebarWidget(const QWidget *widget) const
 {

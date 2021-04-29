@@ -3,6 +3,7 @@
 #include "global_define.h"
 #include "title-bar-layout.h"
 
+#include <xcb/xcb.h>
 #include <QDebug>
 #include <QCursor>
 #include <QEvent>

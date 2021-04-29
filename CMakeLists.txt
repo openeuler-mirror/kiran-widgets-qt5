@@ -11,6 +11,8 @@ option(build-docs "build docs" ON)
 
 project(kiranwidgets-qt5)
 
+include(GNUInstallDirs)
+
 #VERSION　 so版本
 #影响生成的二进制共享库文件名 eg:libxxxx.so.${VERSION}
 #格式:     主版本号-次版本号-发行版本号
@@ -108,22 +110,27 @@ target_link_libraries(${PROJECT_NAME}
         ${GSETTINGS_QT_LIBRARIES})
 
 #安装SO
-install(TARGETS ${PROJECT_NAME} DESTINATION ${LIB_INSTALL_DIR}/)
+set(KIRANWIDGETS_LIB_DIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR})
+install(TARGETS ${PROJECT_NAME} DESTINATION ${KIRANWIDGETS_LIB_DIR})
 
 #开发头文件
-install(FILES ${DEVEL_HEADER} DESTINATION ${INCLUDE_INSTALL_DIR}/${PROJECT_NAME}/)
+set(KIRANWIDGETS_INCLUDE_DIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME})
+install(FILES ${DEVEL_HEADER}
+        DESTINATION ${KIRANWIDGETS_INCLUDE_DIR})
 
 #pkgconfig
 configure_file( kiranwidgets-qt5.pc.in kiranwidgets-qt5.pc @ONLY)
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kiranwidgets-qt5.pc
-        DESTINATION ${LIB_INSTALL_DIR}/pkgconfig/)
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/pkgconfig/)
 
 #翻译
-install(FILES ${QM_FILES} DESTINATION ${SHARE_INSTALL_PREFIX}/${PROJECT_NAME}/translations/)
+install(FILES ${QM_FILES}
+        DESTINATION ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME}/translations )
 
 #demo
 if( install-examples )
-    install(DIRECTORY examples DESTINATION ${SHARE_INSTALL_PREFIX}/${PROJECT_NAME}/ )
+    install(DIRECTORY examples
+            DESTINATION  ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}/${PROJECT_NAME} )
 endif()
 
 if( build-tests )

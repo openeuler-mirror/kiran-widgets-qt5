@@ -17,6 +17,7 @@ namespace Kiran{
     class Style;
     namespace DrawFrameHelper {
         bool drawFramePrimitive(const Style* style ,const QStyleOption* opt,QPainter* painter,StyleDetailFetcher* detaulFetcher,const QWidget* widget);
+        bool drawFrameFocusRectPrimitive(const Style* style ,const QStyleOption* opt,QPainter* painter,StyleDetailFetcher* detaulFetcher,const QWidget* widget);
     };
 }
 

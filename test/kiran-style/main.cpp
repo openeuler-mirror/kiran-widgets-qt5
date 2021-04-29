@@ -1,12 +1,14 @@
 #include "widget.h"
 
 #include "kiran-application.h"
+#include "kiran-single-application.h"
+
 #include <QDebug>
 #include <QStyleFactory>
 
 int main(int argc, char *argv[])
 {
-    KiranApplication a(argc, argv);
+    KiranSingleApplication a(argc, argv);
 
 //    qApp->setStyle(QStyleFactory::create("adwaita-dark"));
 

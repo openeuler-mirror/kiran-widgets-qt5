@@ -82,6 +82,16 @@ namespace Kiran {
             CheckBox_IndicatorBackground,
             CheckBox_IndicatorSign,
 
+            /* QSlider */
+            Slider_TickMarkColor,
+            Slider_GrooveHighlightColor,
+            Slider_GrooveNormalColor,
+            Slider_HandleBackgroundColor,
+            Slider_HandleBorderColor,
+
+            /* FocusRect */
+            FocusRect_BorderColor,
+
             /* menu */
             Menu_BorderRadius,
             Menu_BorderColor,
