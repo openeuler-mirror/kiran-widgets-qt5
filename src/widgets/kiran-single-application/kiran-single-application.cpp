@@ -27,6 +27,8 @@
 #include "kiran-single-application.h"
 #include "kiran-single-application_p.h"
 
+QStringList KiranSingleApplication::m_userDataLists = {};
+
 /**
  * @brief Constructor. Checks and fires up LocalServer or closes the program
  * if another instance already exists
@@ -36,20 +38,27 @@
  * @param options Optional flags to toggle specific behaviour
  * @param timeout Maximum time blocking functions are allowed during app load
  */
-KiranSingleApplication::KiranSingleApplication(int &argc, char *argv[], bool allowSecondary, Options options, int timeout )
-    : app_t( argc, argv ), d_ptr( new KiranSingleApplicationPrivate(this ) )
+KiranSingleApplication::KiranSingleApplication( int &argc, char *argv[], bool allowSecondary, Options options, int timeout )
+    : app_t( argc, argv ), d_ptr( new KiranSingleApplicationPrivate( this ) )
 {
     Q_D(KiranSingleApplication );
 
 #if defined(Q_OS_ANDROID) || defined(Q_OS_IOS)
     // On Android and iOS since the library is not supported fallback to
     // standard QApplication behaviour by simply returning at this point.
-    qWarning() << "SingleApplication is not supported on Android and iOS systems.";
+    qWarning() << "KiranSingleApplication is not supported on Android and iOS systems.";
     return;
 #endif
 
     // Store the current mode of the program
     d->options = options;
+
+    // Add any unique user data
+    if ( ! m_userDataLists.isEmpty() ) {
+        foreach(const QString& userdata,m_userDataLists){
+            d->addAppData(userdata);
+        }
+    }
 
     // Generating an application ID used for identifying the shared memory
     // block and QLocalServer
@@ -73,24 +82,24 @@ KiranSingleApplication::KiranSingleApplication(int &argc, char *argv[], bool all
     if( d->memory->create( sizeof( InstancesInfo ) )){
         // Initialize the shared memory block
         if( ! d->memory->lock() ){
-          qCritical() << "SingleApplication: Unable to lock memory block after create.";
-          abortSafely();
+            qCritical() << "KiranSingleApplication: Unable to lock memory block after create.";
+            abortSafely();
         }
         d->initializeMemoryBlock();
     } else {
         if( d->memory->error() == QSharedMemory::AlreadyExists ){
-          // Attempt to attach to the memory segment
-          if( ! d->memory->attach() ){
-              qCritical() << "SingleApplication: Unable to attach to shared memory block.";
-              abortSafely();
-          }
-          if( ! d->memory->lock() ){
-            qCritical() << "SingleApplication: Unable to lock memory block after attach.";
-            abortSafely();
-          }
+            // Attempt to attach to the memory segment
+            if( ! d->memory->attach() ){
+                qCritical() << "KiranSingleApplication: Unable to attach to shared memory block.";
+                abortSafely();
+            }
+            if( ! d->memory->lock() ){
+                qCritical() << "KiranSingleApplication: Unable to lock memory block after attach.";
+                abortSafely();
+            }
         } else {
-          qCritical() << "SingleApplication: Unable to create block.";
-          abortSafely();
+            qCritical() << "KiranSingleApplication: Unable to create block.";
+            abortSafely();
         }
     }
 
@@ -100,35 +109,35 @@ KiranSingleApplication::KiranSingleApplication(int &argc, char *argv[], bool all
 
     // Make sure the shared memory block is initialised and in consistent state
     while( true ){
-      // If the shared memory block's checksum is valid continue
-      if( d->blockChecksum() == inst->checksum ) break;
+        // If the shared memory block's checksum is valid continue
+        if( d->blockChecksum() == inst->checksum ) break;
 
-      // If more than 5s have elapsed, assume the primary instance crashed and
-      // assume it's position
-      if( time.elapsed() > 5000 ){
-          qWarning() << "SingleApplication: Shared memory block has been in an inconsistent state from more than 5s. Assuming primary instance failure.";
-          d->initializeMemoryBlock();
-      }
+        // If more than 5s have elapsed, assume the primary instance crashed and
+        // assume it's position
+        if( time.elapsed() > 5000 ){
+            qWarning() << "KiranSingleApplication: Shared memory block has been in an inconsistent state from more than 5s. Assuming primary instance failure.";
+            d->initializeMemoryBlock();
+        }
 
-      // Otherwise wait for a random period and try again. The random sleep here
-      // limits the probability of a collision between two racing apps and
-      // allows the app to initialise faster
-      if( ! d->memory->unlock() ){
-        qDebug() << "SingleApplication: Unable to unlock memory for random wait.";
-        qDebug() << d->memory->errorString();
-      }
-      KiranSingleApplicationPrivate::randomSleep();
-      if( ! d->memory->lock() ){
-        qCritical() << "SingleApplication: Unable to lock memory after random wait.";
-        abortSafely();
-      }
+        // Otherwise wait for a random period and try again. The random sleep here
+        // limits the probability of a collision between two racing apps and
+        // allows the app to initialise faster
+        if( ! d->memory->unlock() ){
+            qDebug() << "KiranSingleApplication: Unable to unlock memory for random wait.";
+            qDebug() << d->memory->errorString();
+        }
+        KiranSingleApplicationPrivate::randomSleep();
+        if( ! d->memory->lock() ){
+            qCritical() << "KiranSingleApplication: Unable to lock memory after random wait.";
+            abortSafely();
+        }
     }
 
     if( inst->primary == false ){
         d->startPrimary();
         if( ! d->memory->unlock() ){
-          qDebug() << "SingleApplication: Unable to unlock memory after primary start.";
-          qDebug() << d->memory->errorString();
+            qDebug() << "KiranSingleApplication: Unable to unlock memory after primary start.";
+            qDebug() << d->memory->errorString();
         }
         return;
     }
@@ -137,21 +146,21 @@ KiranSingleApplication::KiranSingleApplication(int &argc, char *argv[], bool all
     if( allowSecondary ){
         d->startSecondary();
         if( d->options & Mode::SecondaryNotification ){
-            d->connectToPrimary(timeout, KiranSingleApplicationPrivate::SecondaryInstance );
+            d->connectToPrimary( timeout, KiranSingleApplicationPrivate::SecondaryInstance );
         }
         if( ! d->memory->unlock() ){
-          qDebug() << "SingleApplication: Unable to unlock memory after secondary start.";
-          qDebug() << d->memory->errorString();
+            qDebug() << "KiranSingleApplication: Unable to unlock memory after secondary start.";
+            qDebug() << d->memory->errorString();
         }
         return;
     }
 
     if( ! d->memory->unlock() ){
-      qDebug() << "SingleApplication: Unable to unlock memory at end of execution.";
-      qDebug() << d->memory->errorString();
+        qDebug() << "KiranSingleApplication: Unable to unlock memory at end of execution.";
+        qDebug() << d->memory->errorString();
     }
 
-    d->connectToPrimary(timeout, KiranSingleApplicationPrivate::NewInstance );
+    d->connectToPrimary( timeout, KiranSingleApplicationPrivate::NewInstance );
 
     delete d;
 
@@ -160,7 +169,7 @@ KiranSingleApplication::KiranSingleApplication(int &argc, char *argv[], bool all
 
 KiranSingleApplication::~KiranSingleApplication()
 {
-    Q_D(KiranSingleApplication );
+    Q_D(KiranSingleApplication);
     delete d;
 }
 
@@ -168,9 +177,9 @@ KiranSingleApplication::~KiranSingleApplication()
  * Checks if the current application instance is primary.
  * @return Returns true if the instance is primary, false otherwise.
  */
-bool KiranSingleApplication::isPrimary()
+bool KiranSingleApplication::isPrimary() const
 {
-    Q_D(KiranSingleApplication );
+    Q_D( const KiranSingleApplication);
     return d->server != nullptr;
 }
 
@@ -178,9 +187,9 @@ bool KiranSingleApplication::isPrimary()
  * Checks if the current application instance is secondary.
  * @return Returns true if the instance is secondary, false otherwise.
  */
-bool KiranSingleApplication::isSecondary()
+bool KiranSingleApplication::isSecondary() const
 {
-    Q_D(KiranSingleApplication );
+    Q_D( const KiranSingleApplication);
     return d->server == nullptr;
 }
 
@@ -190,21 +199,21 @@ bool KiranSingleApplication::isSecondary()
  * only incremented afterwards.
  * @return Returns a unique instance id.
  */
-quint32 KiranSingleApplication::instanceId()
+quint32 KiranSingleApplication::instanceId() const
 {
-    Q_D(KiranSingleApplication );
+    Q_D( const KiranSingleApplication);
     return d->instanceNumber;
 }
 
 /**
  * Returns the OS PID (Process Identifier) of the process running the primary
- * instance. Especially useful when SingleApplication is coupled with OS.
+ * instance. Especially useful when KiranSingleApplication is coupled with OS.
  * specific APIs.
  * @return Returns the primary instance PID.
  */
-qint64 KiranSingleApplication::primaryPid()
+qint64 KiranSingleApplication::primaryPid() const
 {
-    Q_D(KiranSingleApplication );
+    Q_D( const KiranSingleApplication);
     return d->primaryPid();
 }
 
@@ -212,9 +221,9 @@ qint64 KiranSingleApplication::primaryPid()
  * Returns the username the primary instance is running as.
  * @return Returns the username the primary instance is running as.
  */
-QString KiranSingleApplication::primaryUser()
+QString KiranSingleApplication::primaryUser() const
 {
-    Q_D(KiranSingleApplication );
+    Q_D( const KiranSingleApplication);
     return d->primaryUser();
 }
 
@@ -222,7 +231,7 @@ QString KiranSingleApplication::primaryUser()
  * Returns the username the current instance is running as.
  * @return Returns the username the current instance is running as.
  */
-QString KiranSingleApplication::currentUser()
+QString KiranSingleApplication::currentUser() const
 {
     return KiranSingleApplicationPrivate::getUsername();
 }
@@ -233,16 +242,16 @@ QString KiranSingleApplication::currentUser()
  * @param timeout the maximum timeout in milliseconds for blocking functions.
  * @return true if the message was sent successfuly, false otherwise.
  */
-bool KiranSingleApplication::sendMessage(const QByteArray &message, int timeout )
+bool KiranSingleApplication::sendMessage( const QByteArray &message, int timeout )
 {
-    Q_D(KiranSingleApplication );
+    Q_D(KiranSingleApplication);
 
     // Nobody to connect to
     if( isPrimary() ) return false;
 
     // Make sure the socket is connected
-    if( ! d->connectToPrimary(timeout, KiranSingleApplicationPrivate::Reconnect ) )
-      return false;
+    if( ! d->connectToPrimary( timeout, KiranSingleApplicationPrivate::Reconnect ) )
+        return false;
 
     d->socket->write( message );
     bool dataWritten = d->socket->waitForBytesWritten( timeout );
@@ -256,9 +265,20 @@ bool KiranSingleApplication::sendMessage(const QByteArray &message, int timeout 
  */
 void KiranSingleApplication::abortSafely()
 {
-    Q_D(KiranSingleApplication );
+    Q_D(KiranSingleApplication);
 
-    qCritical() << "SingleApplication: " << d->memory->error() << d->memory->errorString();
+    qCritical() << "KiranSingleApplication: " << d->memory->error() << d->memory->errorString();
     delete d;
     ::exit( EXIT_FAILURE );
+}
+
+QStringList KiranSingleApplication::userData() const
+{
+    Q_D( const KiranSingleApplication);
+    return d->appData();
+}
+
+void KiranSingleApplication::addApplicationIDUserData(const QString &userData)
+{
+    m_userDataLists.append(userData);
 }

@@ -40,7 +40,9 @@ public:
     QMargins titleBarRightMargin();
     void setTitleBarRightWidgetMargin(QMargins margins);
 
-    void customWidgetCenter(bool center);
+    void setCustomWidgetCenter(bool center);
+    bool customWidgetCenter();
+
 protected:
     /**
      * @brief 将布局项添加到布局中

@@ -3,6 +3,7 @@
 //
 
 #include "title-bar-layout.h"
+#include <QDebug>
 
 TitlebarLayout::TitlebarLayout(QWidget *parent)
         : QLayout(parent) {
@@ -68,8 +69,7 @@ void TitlebarLayout::setGeometry(const QRect &rect) {
     ///如果标题栏自定义控件区域需要居中
     ///１.算出左侧未省略文本和图标的一般宽度，算出右侧按钮的宽度，两者取最大值，都设置为最大值
     ///2.如果在两边宽度相同的情况下，看是否能放下合适大小的自定义控件区域,如果不能则需要省略左侧文本，同时再计算左右宽度最大值同步
-
-    if (rect == geometry()) {
+    if(rect==geometry()){
         return;
     }
 
@@ -79,7 +79,11 @@ void TitlebarLayout::setGeometry(const QRect &rect) {
     contentRect.adjust(leftMargin, topMargin, -rightMargin, -bottomMargin);
 
     QSize iconLabelSize = m_iconLabelItem->sizeHint();
-    QSize titleLabelSize = m_titleLabelItem->sizeHint();
+
+    //获取文本显示完全应该占用的大小
+    QFontMetrics fontMetrics = m_titleLabelItem->widget()->fontMetrics();
+    QSize titleLabelSize = fontMetrics.boundingRect(m_completeTitle).size();
+
     QSize customWidgetSize = m_customWidgetItem->sizeHint();
     QSize customWidgetMinSize = m_customWidgetItem->minimumSize();
     QSize rightWidgetSize = m_rightWidgetItem->sizeHint();
@@ -99,11 +103,12 @@ void TitlebarLayout::setGeometry(const QRect &rect) {
             int fitSideWidth = (contentRect.width() - (m_customWidgetMargins.left() + customWidgetSize.width() +
                                                        m_customWidgetMargins.right())) / 2;
             if ( fitSideWidth < rightSideWidth ) {
-                qFatal("侧边宽度不能压缩小于右侧宽度");
+                qWarning("侧边宽度不能压缩小于右侧宽度");
+                return;
             }
             //通过侧边宽度计算出左侧标题label的宽度
-            int reducedTitleWidth = fitSideWidth - m_iconMargins.left() - iconLabelSize.width()
-                    - m_iconMargins.right() - m_titleMargins.left() - m_titleMargins.right();
+            int reducedTitleWidth = fitSideWidth - m_iconMargins.left() - iconLabelSize.width() - m_iconMargins.right()
+                                    - m_titleMargins.left() - m_titleMargins.right();
             titleLabelSize.setWidth(reducedTitleWidth);
             //设置右侧的宽度
             int rightWidgetWidth = fitSideWidth - m_rightWidgetMargins.left() - m_rightWidgetMargins.right();
@@ -111,9 +116,8 @@ void TitlebarLayout::setGeometry(const QRect &rect) {
         } else {
             int fitSideWidth = qMax(leftSideWidth, rightSideWidth);
             int fitRightWidgetWidth = fitSideWidth - m_rightWidgetMargins.left() - m_rightWidgetMargins.right();
-            int fitTitleLabelWidth =
-                    fitSideWidth - m_iconMargins.left() - m_iconMargins.right() - m_titleMargins.left() -
-                    m_titleMargins.right();
+            int fitTitleLabelWidth = fitSideWidth - m_iconMargins.left() - iconLabelSize.width() - m_iconMargins.right()
+                                     - m_titleMargins.left() - m_titleMargins.right();
             titleLabelSize.setWidth(fitTitleLabelWidth);
             rightWidgetSize.setWidth(fitRightWidgetWidth);
         }
@@ -122,6 +126,7 @@ void TitlebarLayout::setGeometry(const QRect &rect) {
                             m_titleMargins.left() + titleLabelSize.width() + m_titleMargins.right();
         int rightSideWidth = m_rightWidgetMargins.left() + rightWidgetSize.width() + m_rightWidgetMargins.right();
         int customWidgetWidth = m_customWidgetMargins.left()+customWidgetSize.width()+m_customWidgetMargins.right();
+        //如果该大小放置不下 CustomWidget则调整标题栏文本长度
         if ((contentRect.width() - leftSideWidth - rightSideWidth) <
             (m_customWidgetMargins.left() + customWidgetSize.width() + m_customWidgetMargins.right()) ) {
             /*正常情况放置不下,需要压缩左侧标题Label宽度*/
@@ -164,7 +169,6 @@ void TitlebarLayout::setGeometry(const QRect &rect) {
                            contentRect.width()-m_customWidgetMargins.right(),
                            customWidgetSize.height());
     m_customWidgetItem->setGeometry(customWidgetRect);
-
     QLayout::setGeometry(rect);
 }
 
@@ -255,7 +259,7 @@ void TitlebarLayout::setTitleBarRightWidgetMargin(QMargins margins) {
     }
 }
 
-void TitlebarLayout::customWidgetCenter(bool center) {
+void TitlebarLayout::setCustomWidgetCenter(bool center) {
     if (m_customWidgetCenter != center) {
         m_customWidgetCenter = center;
         invalidate();
@@ -267,4 +271,9 @@ void TitlebarLayout::setTitleBarCompleteTitle(const QString &title) {
         m_completeTitle = title;
         invalidate();
     }
+}
+
+bool TitlebarLayout::customWidgetCenter()
+{
+    return m_customWidgetCenter;
 }

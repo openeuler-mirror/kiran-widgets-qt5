@@ -29,10 +29,9 @@
 
 class KiranSingleApplicationPrivate;
 /**
- * @brief The SingleApplication class handles multiple instances of the same
+ * @brief The KiranSingleApplication class handles multiple instances of the same
  * Application
  * @see QCoreApplication
- * @since 2.1.0
  */
 class KiranSingleApplication : public KiranApplication
 {
@@ -42,7 +41,7 @@ class KiranSingleApplication : public KiranApplication
 
 public:
     /**
-     * @brief Mode of operation of SingleApplication.
+     * @brief Mode of operation of KiranSingleApplication.
      * Whether the block should be user-wide or system-wide and whether the
      * primary instance should be notified when a secondary instance had been
      * started.
@@ -61,13 +60,13 @@ public:
     Q_DECLARE_FLAGS(Options, Mode)
 
     /**
-     * @brief Intitializes a SingleApplication instance with argc command line
+     * @brief Intitializes a KiranSingleApplication instance with argc command line
      * arguments in argv
      * @arg {int &} argc - Number of arguments in argv
      * @arg {const char *[]} argv - Supplied command line arguments
      * @arg {bool} allowSecondary - Whether to start the instance as secondary
      * if there is already a primary instance.
-     * @arg {Mode} mode - Whether for the SingleApplication block to be applied
+     * @arg {Mode} mode - Whether for the KiranSingleApplication block to be applied
      * User wide or System wide.
      * @arg {int} timeout - Timeout to wait in milliseconds.
      * @note argc and argv may be changed as Qt removes arguments that it
@@ -75,49 +74,49 @@ public:
      * @note Mode::SecondaryNotification only works if set on both the primary
      * instance and the secondary instance.
      * @note The timeout is just a hint for the maximum time of blocking
-     * operations. It does not guarantee that the SingleApplication
+     * operations. It does not guarantee that the KiranSingleApplication
      * initialisation will be completed in given time, though is a good hint.
      * Usually 4*timeout would be the worst case (fail) scenario.
      * @see See the corresponding QAPPLICATION_CLASS constructor for reference
      */
-    explicit KiranSingleApplication(int &argc, char *argv[], bool allowSecondary = false, Options options = Mode::User, int timeout = 1000 );
+    explicit KiranSingleApplication( int &argc, char *argv[], bool allowSecondary = false, Options options = Mode::User, int timeout = 1000 );
     ~KiranSingleApplication() override;
 
     /**
      * @brief Returns if the instance is the primary instance
      * @returns {bool}
      */
-    bool isPrimary();
+    bool isPrimary() const;
 
     /**
      * @brief Returns if the instance is a secondary instance
      * @returns {bool}
      */
-    bool isSecondary();
+    bool isSecondary() const;
 
     /**
      * @brief Returns a unique identifier for the current instance
      * @returns {qint32}
      */
-    quint32 instanceId();
+    quint32 instanceId() const;
 
     /**
      * @brief Returns the process ID (PID) of the primary instance
      * @returns {qint64}
      */
-    qint64 primaryPid();
+    qint64 primaryPid() const;
 
     /**
      * @brief Returns the username of the user running the primary instance
      * @returns {QString}
      */
-    QString primaryUser();
+    QString primaryUser() const;
 
     /**
      * @brief Returns the username of the current user
      * @returns {QString}
      */
-    QString currentUser();
+    QString currentUser() const;
 
     /**
      * @brief Sends a message to the primary instance. Returns true on success.
@@ -128,6 +127,18 @@ public:
      */
     bool sendMessage( const QByteArray &message, int timeout = 100 );
 
+    /**
+     * @brief Get the set user data.
+     * @returns {QStringList}
+     */
+    QStringList userData() const;
+
+    /**
+     * @brief 添加在构造函数中生成应用程序ID的用户数据
+     * 应用程序ID是判断进程是否单例的关键,该方法需要在调用KiranSingleApplication构造之前使用
+     */
+    static void addApplicationIDUserData(const QString& userData);
+
 Q_SIGNALS:
     void instanceStarted();
     void receivedMessage( quint32 instanceId, QByteArray message );
@@ -136,6 +147,7 @@ private:
     KiranSingleApplicationPrivate *d_ptr;
     Q_DECLARE_PRIVATE(KiranSingleApplication)
     void abortSafely();
+    static QStringList m_userDataLists;
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(KiranSingleApplication::Options)
