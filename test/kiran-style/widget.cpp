@@ -37,10 +37,6 @@ Widget::Widget(QWidget *parent)
 
     WidgetPropertyHelper::setSpinboxButtonPosition(ui->timeEdit, Kiran::ARROW_TWO_SIDERS);
 
-    QLineEdit* lineEdit = new QLineEdit(this);
-    lineEdit->setFixedWidth(350);
-    getTitlebarCustomLayout()->addWidget(lineEdit);
-    setTitlebarCustomLayoutAlignHCenter(true);
 
     initTabBar();
     initPushButtonTab();

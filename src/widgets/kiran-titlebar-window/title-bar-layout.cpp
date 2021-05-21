@@ -82,7 +82,9 @@ void TitlebarLayout::setGeometry(const QRect &rect) {
 
     //获取文本显示完全应该占用的大小
     QFontMetrics fontMetrics = m_titleLabelItem->widget()->fontMetrics();
-    QSize titleLabelSize = fontMetrics.boundingRect(m_completeTitle).size();
+    QSize titleLabelSize;
+    titleLabelSize.setHeight(fontMetrics.height());
+    titleLabelSize.setWidth(fontMetrics.width(m_completeTitle));
 
     QSize customWidgetSize = m_customWidgetItem->sizeHint();
     QSize customWidgetMinSize = m_customWidgetItem->minimumSize();
