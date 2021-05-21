@@ -259,7 +259,7 @@ void TitlebarLayout::setTitleBarRightWidgetMargin(QMargins margins) {
     }
 }
 
-void TitlebarLayout::customWidgetCenter(bool center) {
+void TitlebarLayout::setCustomWidgetCenter(bool center) {
     if (m_customWidgetCenter != center) {
         m_customWidgetCenter = center;
         invalidate();
@@ -271,4 +271,9 @@ void TitlebarLayout::setTitleBarCompleteTitle(const QString &title) {
         m_completeTitle = title;
         invalidate();
     }
+}
+
+bool TitlebarLayout::customWidgetCenter()
+{
+    return m_customWidgetCenter;
 }

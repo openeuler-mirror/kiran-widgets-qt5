@@ -138,12 +138,9 @@ bool KiranTitlebarWindow::event(QEvent *event)
 }
 
 bool KiranTitlebarWindow::titlebarCustomLayoutAlignHCenter() {
-    return d_func()->m_CustomAlignHCenter;
+    return d_ptr->m_titleBarLayout->customWidgetCenter();
 }
 
 void KiranTitlebarWindow::setTitlebarCustomLayoutAlignHCenter(bool center) {
-    if( center!=  d_func()->m_CustomAlignHCenter ){
-        d_func()->m_CustomAlignHCenter = center;
-        d_func()->m_titleBarLayout->invalidate();
-    }
+    d_ptr->m_titleBarLayout->setCustomWidgetCenter(center);
 }

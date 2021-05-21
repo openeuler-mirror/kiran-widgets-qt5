@@ -68,7 +68,6 @@ private:
 
     QWidget *m_titlebarCenterWidget; /** < 标题栏中间组件 **/
     QHBoxLayout *m_customLayout;     /** < 标题栏中间组件给使用者的可自定义的控件 **/
-    bool m_CustomAlignHCenter = true;
 
     QWidget *m_titlebarRirghtWidget; /** < 标题栏右侧组件 **/
     KiranTitlebarWindow::TitlebarButtonHintFlags m_buttonHints; /** < 右侧显示按钮枚举 **/
