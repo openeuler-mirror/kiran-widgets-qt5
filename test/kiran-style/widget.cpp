@@ -14,6 +14,7 @@
 #include <QDebug>
 #include <kiran-message-box.h>
 #include <kiran-image-selector.h>
+#include <QCompleter>
 
 using namespace Kiran;
 
@@ -131,6 +132,10 @@ void Widget::initTabBar()
 void Widget::initSearchBox()
 {
     KiranSearchBox* searchBox = new KiranSearchBox(this);
+    QCompleter* completer = new QCompleter(QStringList() << "test" << "test001" << "test002",searchBox);
+    completer->setFilterMode(Qt::MatchContains);
+    completer->setCaseSensitivity(Qt::CaseSensitive);
+    searchBox->setCompleter(completer);
     searchBox->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
     QBoxLayout* layout = qobject_cast<QBoxLayout*>(ui->tabWidget->widget(5)->layout());
     layout->addWidget(searchBox,0,Qt::AlignVCenter);

@@ -24,7 +24,7 @@
 //  W A R N I N G !!!
 //  -----------------
 //
-// This file is not part of the SingleApplication API. It is used purely as an
+// This file is not part of the KiranSingleApplication API. It is used purely as an
 // implementation detail. This header file may change from version to
 // version without notice, or may even be removed.
 //
@@ -69,7 +69,6 @@ public:
 
     KiranSingleApplicationPrivate(KiranSingleApplication *q_ptr );
     ~KiranSingleApplicationPrivate() override;
-
     static QString getUsername();
     void genBlockServerName();
     void initializeMemoryBlock() const;
@@ -82,6 +81,8 @@ public:
     void readInitMessageHeader(QLocalSocket *socket);
     void readInitMessageBody(QLocalSocket *socket);
     static void randomSleep();
+    void addAppData(const QString &data);
+    QStringList appData() const;
 
     KiranSingleApplication *q_ptr;
     QSharedMemory *memory;
@@ -91,6 +92,7 @@ public:
     QString blockServerName;
     KiranSingleApplication::Options options;
     QMap<QLocalSocket*, ConnectionInfo> connectionMap;
+    QStringList appDataList;
 
 public Q_SLOTS:
     void slotConnectionEstablished();
