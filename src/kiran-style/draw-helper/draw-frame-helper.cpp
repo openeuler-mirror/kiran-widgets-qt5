@@ -22,22 +22,21 @@ bool DrawFrameHelper::drawFramePrimitive(const Style *style, const QStyleOption 
     bool enabled(state & QStyle::State_Enabled);
     bool hasFocus(state & QStyle::State_HasFocus);
 
-    if (!(state & (QStyle::State_Sunken | QStyle::State_Raised))) {
-        return true;
-    }
-
     ///NOTE:由于Frame聚焦会有Sunken状态会导致匹配Pressed样式，需指定特殊伪选择器
     quint64 specialPseudo = hasFocus ? QCss::PseudoClass_Focus : 0;
 
-    QColor background = detaulFetcher->getColor(widget, opt, StyleDetailFetcher::Frame_Background, specialPseudo);
-    QColor border = detaulFetcher->getColor(widget, opt, StyleDetailFetcher::Frame_BorderColor, specialPseudo);
-    int borderWidth = detaulFetcher->getInt(widget, opt, StyleDetailFetcher::Frame_BorderWidth, specialPseudo);
-    int radius = detaulFetcher->getInt(widget, opt, StyleDetailFetcher::Frame_Radius, specialPseudo);
+    QColor backgroundColor,borderColor;
+    int borderWidth,radius;
+
+    backgroundColor = detaulFetcher->getColor(widget, opt, StyleDetailFetcher::Frame_Background, specialPseudo);
+    borderColor = detaulFetcher->getColor(widget, opt, StyleDetailFetcher::Frame_BorderColor, specialPseudo);
+    borderWidth = detaulFetcher->getInt(widget, opt, StyleDetailFetcher::Frame_BorderWidth, specialPseudo);
+    radius = detaulFetcher->getInt(widget, opt, StyleDetailFetcher::Frame_Radius, specialPseudo);
 
     DrawCommonHelper::drawFrame(painter, rect,
                                 radius,
                                 borderWidth,
-                                background, border);
+                                backgroundColor, borderColor);
 
     return true;
 }

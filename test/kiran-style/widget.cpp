@@ -89,8 +89,8 @@ void Widget::initComboBoxTab()
 {
     ui->comboBox->setEditable(false);
     ui->comboBox->addItem(QIcon::fromTheme("system-file-manager"),"system-file-manager");
-
-    for(int i=0;i<5;i++){
+    ui->comboBox->setStyleSheet("QComboBox{combobox-popup:0;}");
+    for(int i=0;i<50;i++){
         ui->comboBox->addItem(QString("%1").arg(i));
     }
 
