@@ -402,7 +402,7 @@ CursorPositionEnums KiranTitlebarWindowPrivate::getCursorPosition(QPoint pos)
 
 void KiranTitlebarWindowPrivate::updateTitleFont(QFont font) {
     if(m_titleFontMonitor!= nullptr){
-        qInfo() << "update title font" << m_titleFontMonitor->currentFont();
+        qDebug() << "update title font" << m_titleFontMonitor->currentFont();
         m_title->setFont(m_titleFontMonitor->currentFont());
     }
 }

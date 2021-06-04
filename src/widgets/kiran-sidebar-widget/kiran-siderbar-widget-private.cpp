@@ -19,7 +19,7 @@ KiranSidebarWidgetPrivate::~KiranSidebarWidgetPrivate()
 void KiranSidebarWidgetPrivate::init(KiranSidebarWidget* ptr)
 {
     q_ptr = ptr;
-    qInfo() << __FUNCTION__  << "setSpacing";
+    qDebug() << __FUNCTION__  << "setSpacing";
     q_ptr->setSpacing(12);
     q_ptr->setSelectionBehavior(QListView::SelectRows);
     q_ptr->setSelectionMode(QListView::SingleSelection);
