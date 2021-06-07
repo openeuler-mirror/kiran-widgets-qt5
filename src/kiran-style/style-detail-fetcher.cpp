@@ -92,7 +92,7 @@ void Kiran::StyleDetailFetcher::load()
         return;
     }
 
-    qInfo() << "load style detail:" << detailFileIter.value() << "success!";
+    qDebug() << "load style detail:" << detailFileIter.value() << "success!";
 }
 
 QVariant Kiran::StyleDetailFetcher::fetchStyleDetail(const QWidget *widget, const QStyleOption *styleOption,

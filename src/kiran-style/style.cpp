@@ -77,6 +77,14 @@ void Style::drawPrimitive(QStyle::PrimitiveElement pe, const QStyleOption *opt,
                 isOk = true;
                 break;
             }
+            //NOTE:QComboBox判断SH_ComboBox_Popup不能从QComboBoxPrivateContainer取style，
+            //而是应该通过QComboBoxPrivateContainer->parent()->style()从QComboBoxPrivateContainer的parent（QComboBox）取style!
+            if( w && w->inherits("QComboBoxPrivateContainer")
+                && w->parentWidget() && w->parentWidget()->inherits("QComboBox")
+                && w->parentWidget()->style()->styleHint(SH_ComboBox_Popup) ) {
+                isOk = DrawMenuHelper::drawPanelMenuPrimitive(this,opt,p,m_detailFetcher,w);
+                break;
+            }
             isOk = DrawFrameHelper::drawFramePrimitive(this,opt,p,m_detailFetcher,w);
             break;
         case PE_FrameLineEdit:
@@ -813,6 +821,7 @@ void Style::polish(QWidget *widget)
 #if (QT_VERSION > QT_VERSION_CHECK(5,9,7))
     if (qobject_cast<QMenu *>(widget) ||
         widget->inherits("QComboBoxPrivateContainer")) {
+        //因为QMenu和QComboBox等弹出popup需圆角，所以设置背景透明
         widget->setAttribute(Qt::WA_TranslucentBackground);
     }
 #endif

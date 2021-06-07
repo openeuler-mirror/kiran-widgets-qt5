@@ -60,7 +60,7 @@ bool MateDesktopFontMonitor::initMonitor() {
 
 void MateDesktopFontMonitor::handlerChanged(const QString &key) {
     if( key == MATE_INTERFACE_KEY_FONT ){
-        qInfo() << "MateDesktopFont changed:" << currentFont();
+        qDebug() << "MateDesktopFont changed:" << currentFont();
         emit fontChanged(currentFont());
     }
 };

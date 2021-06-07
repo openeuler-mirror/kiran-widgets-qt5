@@ -144,3 +144,14 @@ bool KiranTitlebarWindow::titlebarCustomLayoutAlignHCenter() {
 void KiranTitlebarWindow::setTitlebarCustomLayoutAlignHCenter(bool center) {
     d_ptr->m_titleBarLayout->setCustomWidgetCenter(center);
 }
+
+QSize KiranTitlebarWindow::sizeHint() const
+{
+    QSize sizeHint = QWidget::sizeHint();
+    if(d_ptr->m_isCompositingManagerRunning)
+    {
+        sizeHint.setWidth(2*SHADOW_BORDER_WIDTH+sizeHint.width());
+        sizeHint.setHeight(2*SHADOW_BORDER_WIDTH+sizeHint.height());
+    }
+    return sizeHint;
+}
