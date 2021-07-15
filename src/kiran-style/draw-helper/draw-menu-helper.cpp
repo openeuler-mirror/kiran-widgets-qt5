@@ -305,11 +305,9 @@ bool DrawMenuHelper::drawMenuItemControl(const Style *style, const QStyleOption 
                           contentsRect.top()+(contentsRect.height()-textSize.height())/2,
                           textSize.width(),
                           textSize.height());
-
         textRect = style->visualRect(opt->direction,opt->rect,textRect);
         textRect = opt->fontMetrics.boundingRect( textRect, textflags, text );
-
-        style->drawItemText(p,textRect,textflags,opt->palette,enabled,text);
+        style->drawItemText(p,textRect,textflags|MnemonicTextFlag,opt->palette,enabled,text,QPalette::WindowText);
     }
 
     return true;

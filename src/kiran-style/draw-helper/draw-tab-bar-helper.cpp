@@ -5,6 +5,7 @@
 #include "draw-tab-bar-helper.h"
 #include "style.h"
 #include "draw-common-helper.h"
+#include "kiran-style-private-defines.h"
 
 #include <QPainter>
 #include <QDebug>
@@ -166,7 +167,8 @@ bool DrawTabBarHelper::drawTabBarTabLabelControl(const Style *style, const QStyl
         p->drawPixmap(iconRect.x(), iconRect.y(), tabIcon);
     }
 
-    style->drawItemText(p, textRect, textFlags, opt->palette, enabled, tabOption->text, QPalette::WindowText);
+    //NOTE:需加上Qt::TextShowMnemonic或Qt::TextHideMnemonic才会转换’&‘成下划线标记快捷键
+    style->drawItemText(p, textRect, textFlags|MnemonicTextFlag, opt->palette, enabled, tabOption->text, QPalette::WindowText);
 
     if (isVertiacal) {
         p->restore();

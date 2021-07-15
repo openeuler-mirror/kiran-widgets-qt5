@@ -69,7 +69,6 @@ void Style::drawPrimitive(QStyle::PrimitiveElement pe, const QStyleOption *opt,
     bool isOk = false;
 
     p->save();
-
     switch (pe) {
         case PE_Frame:
             /* QListView不绘制边框 */

@@ -43,6 +43,7 @@ public:
     Q_PROPERTY(int contentWrapperMarginRight READ contentWrapperMarginRight WRITE setContentWrapperMarginRight)
     Q_PROPERTY(int contentWrapperMarginBottom READ contentWrapperMarginBottom WRITE setContentWrapperMarginBottom)
     Q_PROPERTY(bool compositingRunning READ compositingRunning)
+
 public:
     /**
      * @brief KiranTitlebarWindow构造方法

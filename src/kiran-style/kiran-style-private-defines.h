@@ -18,6 +18,8 @@ namespace Kiran{
         KIRAN_BLACK
     };
 
+    static const int MnemonicTextFlag = Qt::TextShowMnemonic;
+
     enum Metrics {
         // frames
         Frame_FrameWidth = 4,

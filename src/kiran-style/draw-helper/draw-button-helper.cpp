@@ -217,8 +217,8 @@ bool DrawButtonHelper::drawPushButtonLabelControl(const Style *style, const QSty
 
         if (buttonOption->features & QStyleOptionButton::HasMenu)
             textRect = textRect.adjusted(0, 0,-menuButtonIndicatorSize, 0);
-
-        p->drawText(textRect, textFlags, buttonOption->text);
+        //NOTE:需加上Qt::TextShowMnemonic或Qt::TextHideMnemonic才会转换’&‘成下划线标记快捷键
+        p->drawText(textRect, textFlags|MnemonicTextFlag, buttonOption->text);
     }
 
     return true;
@@ -358,7 +358,8 @@ bool DrawButtonHelper::drawToolButtonLabelControl(const Style *style, const QSty
                                          -style->proxy()->pixelMetric(QStyle::PM_MenuButtonIndicator, buttonOption,
                                                                       widget), 0);
 
-        p->drawText(textRect, textFlags, buttonOption->text);
+        //NOTE:需加上Qt::TextShowMnemonic或Qt::TextHideMnemonic才会转换’&‘成下划线标记快捷键
+        p->drawText(textRect, textFlags|MnemonicTextFlag, buttonOption->text);
     }
 
     return true;
@@ -397,7 +398,8 @@ bool DrawButtonHelper::drawCheckBoxLabelControl(const Style *style, const QStyle
     //文本
     if (!buttonOption->text.isEmpty()) {
         textRect = opt->fontMetrics.boundingRect(textRect, alignmentFlag, buttonOption->text);
-        style->drawItemText(p, textRect, alignmentFlag, opt->palette, enabled, buttonOption->text,
+        //NOTE:需加上Qt::TextShowMnemonic或Qt::TextHideMnemonic才会转换’&‘成下划线标记快捷键
+        style->drawItemText(p, textRect, alignmentFlag|MnemonicTextFlag, opt->palette, enabled, buttonOption->text,
                             QPalette::WindowText);
         bool hasFocus(enabled && (state & QStyle::State_HasFocus));
     }
