@@ -790,6 +790,8 @@ void Style::polish(QApplication *app)
     ParentStyleClass::polish(app);
 }
 
+#include <QWindow>
+#include <qpa/qplatformwindow.h>
 void Style::polish(QWidget *widget)
 {
     ParentStyleClass::polish(widget);
@@ -820,6 +822,18 @@ void Style::polish(QWidget *widget)
 #if (QT_VERSION > QT_VERSION_CHECK(5,9,7))
     if (qobject_cast<QMenu *>(widget) ||
         widget->inherits("QComboBoxPrivateContainer")) {
+
+        if(qobject_cast<QMenu*>(widget) && widget->windowHandle())
+        {
+            if (const QPlatformWindow *handle = widget->windowHandle()->handle()) {
+                if (!widget->testAttribute(Qt::WA_TranslucentBackground) && !handle->isExposed()) {
+                    // 销毁现有的native窗口，否则设置Qt::WA_TranslucentBackground不会生效
+                    class DQWidget : public QWidget {public: using QWidget::destroy;};
+                    reinterpret_cast<DQWidget*>(widget)->destroy(true, false);
+                }
+            }
+        }
+
         //因为QMenu和QComboBox等弹出popup需圆角，所以设置背景透明
         widget->setAttribute(Qt::WA_TranslucentBackground);
     }
