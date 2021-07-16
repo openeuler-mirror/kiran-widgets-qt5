@@ -1,10 +1,26 @@
-//
-// Created by lxh on 2020/12/7.
-//
-
+ /**
+  * @Copyright (C) 2020 ~ 2021 KylinSec Co., Ltd.
+  *
+  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
+  *
+  * This program is free software; you can redistribute it and/or modify
+  * it under the terms of the GNU General Public License as published by
+  * the Free Software Foundation; either version 3 of the License, or
+  * (at your option) any later version.
+  *
+  * This program is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  * GNU General Public License for more details.
+  *
+  * You should have received a copy of the GNU General Public License
+  * along with this program; If not, see <http: //www.gnu.org/licenses/>. 
+  */
+ 
 #include "draw-tab-bar-helper.h"
 #include "style.h"
 #include "draw-common-helper.h"
+#include "kiran-style-private-defines.h"
 
 #include <QPainter>
 #include <QDebug>
@@ -166,7 +182,8 @@ bool DrawTabBarHelper::drawTabBarTabLabelControl(const Style *style, const QStyl
         p->drawPixmap(iconRect.x(), iconRect.y(), tabIcon);
     }
 
-    style->drawItemText(p, textRect, textFlags, opt->palette, enabled, tabOption->text, QPalette::WindowText);
+    //NOTE:需加上Qt::TextShowMnemonic或Qt::TextHideMnemonic才会转换’&‘成下划线标记快捷键
+    style->drawItemText(p, textRect, textFlags|MnemonicTextFlag, opt->palette, enabled, tabOption->text, QPalette::WindowText);
 
     if (isVertiacal) {
         p->restore();

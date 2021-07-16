@@ -1,7 +1,22 @@
-//
-// Created by lxh on 2020/11/27.
-//
-
+ /**
+  * @Copyright (C) 2020 ~ 2021 KylinSec Co., Ltd.
+  *
+  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
+  *
+  * This program is free software; you can redistribute it and/or modify
+  * it under the terms of the GNU General Public License as published by
+  * the Free Software Foundation; either version 3 of the License, or
+  * (at your option) any later version.
+  *
+  * This program is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  * GNU General Public License for more details.
+  *
+  * You should have received a copy of the GNU General Public License
+  * along with this program; If not, see <http: //www.gnu.org/licenses/>. 
+  */
+ 
 #include <QStyleOption>
 #include <QAbstractButton>
 #include <QPushButton>
@@ -217,8 +232,8 @@ bool DrawButtonHelper::drawPushButtonLabelControl(const Style *style, const QSty
 
         if (buttonOption->features & QStyleOptionButton::HasMenu)
             textRect = textRect.adjusted(0, 0,-menuButtonIndicatorSize, 0);
-
-        p->drawText(textRect, textFlags, buttonOption->text);
+        //NOTE:需加上Qt::TextShowMnemonic或Qt::TextHideMnemonic才会转换’&‘成下划线标记快捷键
+        p->drawText(textRect, textFlags|MnemonicTextFlag, buttonOption->text);
     }
 
     return true;
@@ -358,7 +373,8 @@ bool DrawButtonHelper::drawToolButtonLabelControl(const Style *style, const QSty
                                          -style->proxy()->pixelMetric(QStyle::PM_MenuButtonIndicator, buttonOption,
                                                                       widget), 0);
 
-        p->drawText(textRect, textFlags, buttonOption->text);
+        //NOTE:需加上Qt::TextShowMnemonic或Qt::TextHideMnemonic才会转换’&‘成下划线标记快捷键
+        p->drawText(textRect, textFlags|MnemonicTextFlag, buttonOption->text);
     }
 
     return true;
@@ -397,7 +413,8 @@ bool DrawButtonHelper::drawCheckBoxLabelControl(const Style *style, const QStyle
     //文本
     if (!buttonOption->text.isEmpty()) {
         textRect = opt->fontMetrics.boundingRect(textRect, alignmentFlag, buttonOption->text);
-        style->drawItemText(p, textRect, alignmentFlag, opt->palette, enabled, buttonOption->text,
+        //NOTE:需加上Qt::TextShowMnemonic或Qt::TextHideMnemonic才会转换’&‘成下划线标记快捷键
+        style->drawItemText(p, textRect, alignmentFlag|MnemonicTextFlag, opt->palette, enabled, buttonOption->text,
                             QPalette::WindowText);
         bool hasFocus(enabled && (state & QStyle::State_HasFocus));
     }

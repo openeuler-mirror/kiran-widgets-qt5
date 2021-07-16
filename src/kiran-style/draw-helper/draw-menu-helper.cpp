@@ -1,7 +1,22 @@
-//
-// Created by lxh on 2020/11/27.
-//
-
+ /**
+  * @Copyright (C) 2020 ~ 2021 KylinSec Co., Ltd. 
+  *
+  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
+  *
+  * This program is free software; you can redistribute it and/or modify
+  * it under the terms of the GNU General Public License as published by
+  * the Free Software Foundation; either version 3 of the License, or
+  * (at your option) any later version.
+  *
+  * This program is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  * GNU General Public License for more details.
+  *
+  * You should have received a copy of the GNU General Public License
+  * along with this program; If not, see <http: //www.gnu.org/licenses/>. 
+  */
+ 
 #include "draw-menu-helper.h"
 #include "style.h"
 #include "style-detail-fetcher.h"
@@ -305,11 +320,9 @@ bool DrawMenuHelper::drawMenuItemControl(const Style *style, const QStyleOption 
                           contentsRect.top()+(contentsRect.height()-textSize.height())/2,
                           textSize.width(),
                           textSize.height());
-
         textRect = style->visualRect(opt->direction,opt->rect,textRect);
         textRect = opt->fontMetrics.boundingRect( textRect, textflags, text );
-
-        style->drawItemText(p,textRect,textflags,opt->palette,enabled,text);
+        style->drawItemText(p,textRect,textflags|MnemonicTextFlag,opt->palette,enabled,text,QPalette::WindowText);
     }
 
     return true;
@@ -327,7 +340,6 @@ bool DrawMenuHelper::drawPanelMenuPrimitive(const Style *style, const QStyleOpti
     borderRadius = fetcher->getInt(widget, opt, StyleDetailFetcher::Menu_BorderRadius);
     borderColor  = fetcher->getColor(widget, opt, StyleDetailFetcher::Menu_BorderColor);
     bgColor      = fetcher->getColor(widget, opt, StyleDetailFetcher::Menu_Background);
-
     if( widget->inherits("QComboBoxPrivateContainer") ){
         borderColor = fetcher->getColor(widget,opt,StyleDetailFetcher::ComboBoxContainer_BorderColor);
     }
