@@ -6,9 +6,6 @@ option(install-examples "install examples" ON)
 #构建测试代码选项
 option(build-tests "build tests" ON)
 
-#构建文档选项
-option(build-docs "build docs" ON)
-
 project(kiranwidgets-qt5)
 
 include(GNUInstallDirs)
@@ -135,18 +132,4 @@ endif()
 
 if( build-tests )
     add_subdirectory(test)
-endif()
-
-## FIXME:单独编译kiranwidgets会尝试编译docs，编译报错，尝试使用类似KiranCCDameon中的GEN_DBUS_STUB
-if( build-docs )
-    include(docs_generate.cmake)
-    #　doxygen输入
-    set(DOXYGEN_INPUT "")
-    foreach(HEADER_ITEM ${DEVEL_HEADER})
-        string(APPEND DOXYGEN_INPUT " ${CMAKE_SOURCE_DIR}/${HEADER_ITEM}")
-    endforeach()
-    string(APPEND DOXYGEN_INPUT " ${CMAKE_SOURCE_DIR}/main-page.md")
-    # doxygen输出目录
-    set(DOCS_OUTPUT_DIR "${CMAKE_CURRENT_BINARY_DIR}/docs/")
-    docs_generate(${DOXYGEN_INPUT} "${CMAKE_SOURCE_DIR}/docs/snapshots" ${DOCS_OUTPUT_DIR})
 endif()
