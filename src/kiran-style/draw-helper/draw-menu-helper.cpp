@@ -325,7 +325,6 @@ bool DrawMenuHelper::drawPanelMenuPrimitive(const Style *style, const QStyleOpti
     borderRadius = fetcher->getInt(widget, opt, StyleDetailFetcher::Menu_BorderRadius);
     borderColor  = fetcher->getColor(widget, opt, StyleDetailFetcher::Menu_BorderColor);
     bgColor      = fetcher->getColor(widget, opt, StyleDetailFetcher::Menu_Background);
-
     if( widget->inherits("QComboBoxPrivateContainer") ){
         borderColor = fetcher->getColor(widget,opt,StyleDetailFetcher::ComboBoxContainer_BorderColor);
     }

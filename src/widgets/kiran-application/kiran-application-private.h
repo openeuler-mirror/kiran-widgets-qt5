@@ -22,6 +22,7 @@ public:
     void init();
 
 private:
+    void setupTranslations();
     void updateAppFont();
 
     //NOTE:暂时不向外提供设置是否自适应字体的接口

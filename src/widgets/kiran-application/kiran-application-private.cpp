@@ -7,6 +7,8 @@
 #include "style.h"
 
 #include <QDebug>
+#include <QTranslator>
+#include <QLibraryInfo>
 
 KiranApplicationPrivate::KiranApplicationPrivate(KiranApplication *ptr) {
 
@@ -17,7 +19,7 @@ KiranApplicationPrivate::~KiranApplicationPrivate() {
 }
 
 void KiranApplicationPrivate::init() {
-
+    setupTranslations();
 }
 
 void KiranApplicationPrivate::updateAppFont() {
@@ -58,4 +60,17 @@ void KiranApplicationPrivate::handlerFontChanged(QFont font) {
 void KiranApplicationPrivate::initKiranStyle()
 {
     qApp->setStyle(new Kiran::Style(Kiran::KIRAN_BLACK));
+}
+
+void KiranApplicationPrivate::setupTranslations()
+{
+    QTranslator* translator = new QTranslator(this);
+    if(translator->load("qt_"+QLocale::system().name(),QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
+    {
+        QCoreApplication::installTranslator(translator);
+    }
+    else
+    {
+        delete translator;
+    }
 }
