@@ -169,3 +169,13 @@ QSize KiranTitlebarWindow::sizeHint() const
     }
     return sizeHint;
 }
+
+void KiranTitlebarWindow::setTitleBarHeight(int height)
+{
+    d_ptr->m_titlebarWidget->setFixedHeight(height);
+}
+
+int KiranTitlebarWindow::titleBarHeight()
+{
+    return d_ptr->m_titlebarWidget->height();
+}
