@@ -51,7 +51,7 @@ Widget::Widget(QWidget *parent)
 
     WidgetPropertyHelper::setSpinboxButtonPosition(ui->timeEdit, Kiran::ARROW_TWO_SIDERS);
 
-
+    setTitleBarHeight(30);
     initTabBar();
     initPushButtonTab();
     initSwitchButtonTab();

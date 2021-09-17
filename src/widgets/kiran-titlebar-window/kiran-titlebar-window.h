@@ -151,6 +151,9 @@ public:
     bool compositingRunning() const;
 
     QSize sizeHint() const override;
+
+    void setTitleBarHeight(int height);
+    int  titleBarHeight();
 public slots:
     /**
      * @brief 设置内容窗口距底部边距
