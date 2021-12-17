@@ -15,6 +15,8 @@ file(GLOB_RECURSE HEADERS "*.h")
 file(GLOB_RECURSE FORMS "*.ui")
 
 find_package(Qt5 COMPONENTS Widgets)
+find_package(PkgConfig REQUIRED)
+pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
 
 add_executable(${PROJECT_NAME}
         ${SOURCES}

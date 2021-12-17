@@ -20,7 +20,6 @@
 #include <QObject>
 #include <QFont>
 
-class FontMonitor;
 class KiranApplicationPrivate : public QObject{
     Q_OBJECT
     Q_DECLARE_PUBLIC(KiranApplication);
@@ -33,20 +32,12 @@ public:
 
 private:
     void setupTranslations();
-    void updateAppFont();
-
-    //NOTE:暂时不向外提供设置是否自适应字体的接口
-    void setAdaptiveAppFont(bool enable);
     void initKiranStyle();
     bool adaptiveAppFont();
-
-private slots:
-    void handlerFontChanged(QFont font);
 
 private:
     KiranApplication *q_ptr;
     bool m_adaptiveAppFontEnable = false;
-    FontMonitor *m_appFontMonitor = nullptr;
 };
 
 #endif //KIRAN_APPLICATION_PRIVATE_H

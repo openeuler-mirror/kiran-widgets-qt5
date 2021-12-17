@@ -23,7 +23,6 @@
 
 #include "global_define.h"
 #include "kiran-titlebar-window.h"
-#include "font-monitor/font-monitor-factory.h"
 #include "title-bar-layout.h"
 
 class QGraphicsDropShadowEffect;
@@ -99,9 +98,6 @@ private:
     // 理论上窗口内容m_frame绘制的圆角窗口具有背景，所以不会在m_frame子控件里添加阴影
     QGraphicsDropShadowEffect *m_shadowEffect;
     bool m_isCompositingManagerRunning;
-
-    FontMonitor *m_titleFontMonitor;
-
     bool m_firstMap=true;
 };
 

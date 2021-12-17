@@ -29,6 +29,7 @@
 #include <QStyle>
 #include <QTimer>
 #include <QWindow>
+#include <QFontDatabase>
 
 using namespace Kiran;
 
@@ -79,20 +80,11 @@ KiranTitlebarWindowPrivate::KiranTitlebarWindowPrivate(KiranTitlebarWindow *ptr)
 
 KiranTitlebarWindowPrivate::~KiranTitlebarWindowPrivate()
 {
-    delete m_titleFontMonitor;
 }
 
 void KiranTitlebarWindowPrivate::init()
 {
     initOtherWidget();
-
-    /// 标题栏字体监控
-    m_titleFontMonitor = FontMonitorFactory::createAppTitleFontMonitor();
-    if (m_titleFontMonitor != nullptr)
-    {
-        updateTitleFont(QFont());
-        connect(m_titleFontMonitor, &FontMonitor::fontChanged, this, &KiranTitlebarWindowPrivate::updateTitleFont);
-    }
     /// 内容栏
     auto contentWidget = new QWidget;
     setWindowContentWidget(contentWidget);
@@ -290,10 +282,11 @@ void KiranTitlebarWindowPrivate::initOtherWidget()
     m_titleIcon->setObjectName("KiranTitlebarIcon");
     m_titleIcon->setFixedSize(24, 24);
     m_titleBarLayout->setTitleBarIconLabel(m_titleIcon);
-    m_titleBarLayout->setTitleBarIconMargin(QMargins(20, 0, 12, 0));
+    m_titleBarLayout->setTitleBarIconMargin(QMargins(12, 0, 0, 0));
 
     //标题
     m_title = new QLabel(m_titlebarWidget);
+    m_title->setFont(QFontDatabase::systemFont(QFontDatabase::TitleFont));
     m_title->setObjectName("KiranTitlebarTitle");
     m_title->setAlignment(Qt::AlignVCenter | Qt::AlignLeft);
     m_title->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
@@ -444,11 +437,7 @@ CursorPositionEnums KiranTitlebarWindowPrivate::getCursorPosition(QPoint pos)
 
 void KiranTitlebarWindowPrivate::updateTitleFont(QFont font)
 {
-    if (m_titleFontMonitor != nullptr)
-    {
-        qDebug() << "update title font" << m_titleFontMonitor->currentFont();
-        m_title->setFont(m_titleFontMonitor->currentFont());
-    }
+
 }
 
 bool KiranTitlebarWindowPrivate::eventFilter(QObject *obj, QEvent *event)
