@@ -537,6 +537,9 @@ void KiranTitlebarWindowPrivate::adaptToVirtualScreenSize()
     maxSize = q_ptr->maximumSize();
     minSize = q_ptr->minimumSize();
 
+    if( !window || !window->screen() )
+        return;
+
     //获取屏幕虚拟大小，该大小包括所有的屏幕
     virtualScreenSize = window->screen()->availableVirtualSize();
 
