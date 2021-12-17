@@ -153,7 +153,13 @@ public:
     QSize sizeHint() const override;
 
     void setTitleBarHeight(int height);
+
     int  titleBarHeight();
+
+    /**
+     * 获取窗口透明边框的宽度
+     */
+    int transparentWidth();
 public slots:
     /**
      * @brief 设置内容窗口距底部边距

@@ -174,3 +174,8 @@ int KiranTitlebarWindow::titleBarHeight()
 {
     return d_ptr->m_titlebarWidget->height();
 }
+
+int KiranTitlebarWindow::transparentWidth()
+{
+    return d_ptr->m_layout->margin();
+}
