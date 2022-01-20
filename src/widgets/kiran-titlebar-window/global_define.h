@@ -21,7 +21,7 @@
 #define DEFAULT_THEME_PATH ":/kiranwidgets-qt5/themes/kiran-titlebar-window_black.qss"
 
 namespace Kiran {
-
+    Q_NAMESPACE
     enum CursorPositionEnum{
         CursorPosition_None        = 0x00000000,
         CursorPosition_Top         = 0x00000001,
