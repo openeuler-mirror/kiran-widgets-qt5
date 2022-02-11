@@ -18,6 +18,7 @@
 #include "kiran-style-private-defines.h"
 
 #include <QPainter>
+#include <QPainterPath>
 #include <QDebug>
 #include <QtWidgets/QStyleOption>
 

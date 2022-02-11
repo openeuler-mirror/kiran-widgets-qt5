@@ -17,6 +17,7 @@
 #include "draw-common-helper.h"
 #include "style.h"
 
+#include <QPainterPath>
 #include <QComboBox>
 #include <QDebug>
 #include <QAbstractItemView>

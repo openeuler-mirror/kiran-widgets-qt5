@@ -21,6 +21,7 @@
 #include <QX11Info>
 #include <QStyle>
 #include <QSvgRenderer>
+#include <QPainterPath>
 
 using namespace Kiran;
 

@@ -21,6 +21,7 @@
 #include <QPainter>
 #include <QStyleOption>
 #include <QWidget>
+#include <QPainterPath>
 
 bool Kiran::DrawSliderHelper::drawSliderComplexControl(const Kiran::Style *       style,
                                                        const QStyleOptionComplex *opt,
