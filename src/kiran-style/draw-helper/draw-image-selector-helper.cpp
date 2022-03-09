@@ -21,7 +21,7 @@
 #include <QPainter>
 #include <QWidget>
 #include <QDebug>
-
+#include <QPainterPath>
 void Kiran::DrawImageSelectorHelper::drawPEKiranImageSelector(const Kiran::Style *style, const QStyleOption *opt,
                                                               QPainter *p, Kiran::StyleDetailFetcher *fetcher,
                                                               const QWidget *widget) {

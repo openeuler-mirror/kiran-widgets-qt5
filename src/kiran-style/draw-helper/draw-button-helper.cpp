@@ -15,6 +15,7 @@
 #include <QAbstractButton>
 #include <QPushButton>
 #include <QDebug>
+#include <QPainterPath>
 
 #include "style.h"
 #include "draw-common-helper.h"
