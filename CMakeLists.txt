@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.5)
 option(install-examples "install examples" ON)
 
 #构建测试代码选项
-option(build-tests "build tests" ON)
+option(build-tests "build tests" OFF)
 
 project(kiranwidgets-qt5)
 
