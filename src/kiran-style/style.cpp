@@ -849,7 +849,10 @@ void Style::polish(QWidget *widget)
 #endif
 
     if (QComboBox *comboBox = qobject_cast<QComboBox *>(widget)) {
-        comboBox->view()->setItemDelegate(new ComboBoxItemDelegate(comboBox,comboBox));
+        QAbstractItemView *itemView(comboBox->view());
+        if (itemView && itemView->itemDelegate() && itemView->itemDelegate()->inherits("QComboBoxDelegate")) {
+            comboBox->setItemDelegate(new ComboBoxItemDelegate(comboBox,comboBox));
+        }
     }
 
     if (auto toolBtn = qobject_cast<QToolButton *>(widget)) {
