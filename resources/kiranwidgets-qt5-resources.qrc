@@ -1,0 +1,40 @@
+<RCC>
+    <!-- 图片 -->
+    <qresource prefix="/kiranwidgets-qt5">
+        <file>images/titlebar-window/close_hover.svg</file>
+        <file>images/titlebar-window/close_normal.svg</file>
+        <file>images/titlebar-window/close_press.svg</file>
+        <file>images/titlebar-window/minimize_hover.svg</file>
+        <file>images/titlebar-window/minimize_normal.svg</file>
+        <file>images/titlebar-window/minimize_press.svg</file>
+        <file>images/titlebar-window/Windowing_hover.svg</file>
+        <file>images/titlebar-window/Windowing_normal.svg</file>
+        <file>images/titlebar-window/Windowing_press.svg</file>
+
+        <file>images/image-selector/loading.svg</file>
+        <file>images/image-selector/selected.svg</file>
+    </qresource>
+
+    <!-- 主题 -->
+    <qresource prefix="/kiranwidgets-qt5">
+        <file>themes/kiran-messagebox_black.qss</file>
+        <file>themes/kiran-titlebar-window_black.qss</file>
+    </qresource>
+
+
+    <!--主题样式细节-->
+    <qresource prefix="/kiran-style">
+        <file>style-detail/kiran-dark.css</file>
+    </qresource>
+
+    <!--主题图标-->
+    <qresource prefix="/kiran-style">
+        <file>style-detail/search.svg</file>
+        <file>style-detail/search_disabled.svg</file>
+
+        <file>style-detail/arrow.svg</file>
+        <file>style-detail/arrow_hover.svg</file>
+        <file>style-detail/arrow_pressed.svg</file>
+        <file>style-detail/arrow_disabled.svg</file>
+    </qresource>
+</RCC>
