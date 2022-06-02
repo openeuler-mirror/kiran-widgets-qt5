@@ -11,12 +11,10 @@
  * 
  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
  */
- 
-
-#ifndef KIRANWIDGETS_QT5_KIRAN_SIDERBAR_WIDGET_PRIVATE_H
-#define KIRANWIDGETS_QT5_KIRAN_SIDERBAR_WIDGET_PRIVATE_H
+#pragma once
 
 #include "kiran-sidebar-widget.h"
+#include "kiran-siderbar-delegate.h"
 
 class KiranSidebarWidgetPrivate : QObject{
     Q_OBJECT
@@ -29,6 +27,5 @@ public:
 
 private:
     KiranSidebarWidget* q_ptr;
+    KiranSiderbarDelegate* m_delegate;
 };
-
-#endif //KIRANWIDGETS_QT5_KIRAN_SIDERBAR_WIDGET_PRIVATE_H

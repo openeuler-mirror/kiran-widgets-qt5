@@ -23,6 +23,7 @@ KiranSidebarWidget::KiranSidebarWidget(QWidget *parent)
       d_ptr(new KiranSidebarWidgetPrivate(this))
 {
     d_ptr->init(this);
+    setIconSize(QSize(16,16));
 }
 
 KiranSidebarWidget::~KiranSidebarWidget()
@@ -48,4 +49,9 @@ KiranSidebarWidget::selectionCommand(const QModelIndex &index, const QEvent *eve
         }
     }
     return QListWidget::selectionCommand(index,event);
+}
+
+void KiranSidebarWidget::setInvertIconPixelsEnable(bool enable)
+{
+    d_ptr->m_delegate->setInvertIconPixelsEnable(enable);
 }

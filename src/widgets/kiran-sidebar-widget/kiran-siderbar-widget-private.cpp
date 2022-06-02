@@ -11,26 +11,29 @@
  * 
  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
  */
- 
+
 #include "kiran-siderbar-widget-private.h"
+#include "kiran-siderbar-delegate.h"
 #include <QDebug>
 
-KiranSidebarWidgetPrivate::KiranSidebarWidgetPrivate(QObject *parent)
+KiranSidebarWidgetPrivate::KiranSidebarWidgetPrivate(QObject* parent)
     : QObject(parent)
 {
-
 }
 
 KiranSidebarWidgetPrivate::~KiranSidebarWidgetPrivate()
 {
-
 }
 
 void KiranSidebarWidgetPrivate::init(KiranSidebarWidget* ptr)
 {
     q_ptr = ptr;
-    qDebug() << __FUNCTION__  << "setSpacing";
-    q_ptr->setSpacing(12);
+    q_ptr->setSpacing(8);
+    q_ptr->setViewportMargins(8,8,8,8);
     q_ptr->setSelectionBehavior(QListView::SelectRows);
     q_ptr->setSelectionMode(QListView::SingleSelection);
+    q_ptr->setAlternatingRowColors(false);
+
+    m_delegate = new KiranSiderbarDelegate(q_ptr);
+    q_ptr->setItemDelegate(m_delegate);
 }

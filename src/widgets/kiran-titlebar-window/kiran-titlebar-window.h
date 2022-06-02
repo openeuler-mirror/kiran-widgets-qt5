@@ -55,7 +55,7 @@ public:
      * @brief KiranTitlebarWindow构造方法
      * @deprecated 3.0.0之后该接口将被废弃
      */
-    __attribute__((deprecated)) explicit KiranTitlebarWindow();
+    Q_DECL_DEPRECATED explicit KiranTitlebarWindow();
 
     /**
      * @brief KiranTitlebarWindow构造方法

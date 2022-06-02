@@ -1,10 +1,12 @@
 cmake_minimum_required(VERSION 3.5)
 
+enable_testing()
+
 #是否安装examples选项
 option(install-examples "install examples" ON)
 
 #构建测试代码选项
-option(build-tests "build tests" OFF)
+option(build-tests "build tests" ON)
 
 project(kiranwidgets-qt5)
 
@@ -24,6 +26,7 @@ set(KIRANWIDGETS_API_VERSION 2)
 
 find_package(PkgConfig REQUIRED)
 pkg_search_module(GSETTINGS_QT REQUIRED gsettings-qt)
+pkg_search_module(KIRAN_STYLE_HELPER REQUIRED kiran-style-helper)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -62,6 +65,7 @@ set(DEVEL_HEADER
         "src/widgets/kiran-sidebar-widget/kiran-sidebar-widget.h"
         "src/widgets/kiran-icon-line-edit/kiran-icon-line-edit.h"
         "src/widgets/kiran-image-selector/kiran-image-selector.h"
+        "src/widgets/kiran-push-button/kiran-push-button.h"
 
         "src/kiran-style/widget-property-helper.h"
         "src/kiran-style/kiran-style-public-define.h" )
@@ -87,13 +91,19 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
         SOVERSION ${KIRANWIDGETS_API_VERSION})
 
 target_include_directories(${PROJECT_NAME} PRIVATE
+        src/
         src/widgets/
+        src/widgets/common/
         src/public/
         src/widgets/kiran-application/
         src/kiran-style/
         ${GSETTINGS_QT_INCLUDE_DIRS}
         ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
-        ${Qt5Widgets_PRIVATE_INCLUDE_DIRS})
+        ${Qt5Widgets_PRIVATE_INCLUDE_DIRS}
+        ${KIRAN_STYLE_HELPER_INCLUDE_DIRS})
+
+target_include_directories(${PROJECT_NAME} PUBLIC
+        src/widgets)
 
 target_link_libraries(${PROJECT_NAME}
         Qt5::Widgets
@@ -104,7 +114,8 @@ target_link_libraries(${PROJECT_NAME}
         X11
         xcb
         xcb-util
-        ${GSETTINGS_QT_LIBRARIES})
+        ${GSETTINGS_QT_LIBRARIES}
+        ${KIRAN_STYLE_HELPER_LIBRARIES})
 
 #安装SO
 set(KIRANWIDGETS_LIB_DIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR})

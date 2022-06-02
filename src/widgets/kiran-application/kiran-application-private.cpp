@@ -15,29 +15,26 @@
 #include "style.h"
 
 #include <QDebug>
-#include <QTranslator>
 #include <QLibraryInfo>
+#include <QTranslator>
 
-KiranApplicationPrivate::KiranApplicationPrivate(KiranApplication *ptr) {
-
-}
-
-KiranApplicationPrivate::~KiranApplicationPrivate() {
-}
-
-void KiranApplicationPrivate::init() {
-    setupTranslations();
-}
-
-void KiranApplicationPrivate::initKiranStyle()
+KiranApplicationPrivate::KiranApplicationPrivate(KiranApplication* ptr)
 {
-    qApp->setStyle(new Kiran::Style(Kiran::KIRAN_BLACK));
+}
+
+KiranApplicationPrivate::~KiranApplicationPrivate()
+{
+}
+
+void KiranApplicationPrivate::init()
+{
+    setupTranslations();
 }
 
 void KiranApplicationPrivate::setupTranslations()
 {
     QTranslator* translator = new QTranslator(this);
-    if(translator->load("qt_"+QLocale::system().name(),QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
+    if (translator->load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
     {
         QCoreApplication::installTranslator(translator);
     }

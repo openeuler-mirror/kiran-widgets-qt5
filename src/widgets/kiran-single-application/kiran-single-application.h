@@ -20,8 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-#ifndef SINGLE_APPLICATION_H
-#define SINGLE_APPLICATION_H
+#pragma once
 
 #include <QtCore/QtGlobal>
 #include <QtNetwork/QLocalSocket>
@@ -151,5 +150,3 @@ private:
 };
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(KiranSingleApplication::Options)
-
-#endif // SINGLE_APPLICATION_H

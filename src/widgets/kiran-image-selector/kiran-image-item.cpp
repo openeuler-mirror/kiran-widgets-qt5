@@ -48,7 +48,6 @@ void KiranImageItem::paintEvent(QPaintEvent *event) {
     bool imageIsLoaded = false;
 
     //NOTE:ImageItem绘制过程由自己绘制不在Style中绘制的原因是由于不想再次图片在内存中再次拷贝传递给Style
-
     if (m_previewPixmap.first == size() && !m_previewPixmap.second.isNull()) {
         QSize scaledPixmapSize = m_previewPixmap.second.size();
         QSize size = geometry().size();

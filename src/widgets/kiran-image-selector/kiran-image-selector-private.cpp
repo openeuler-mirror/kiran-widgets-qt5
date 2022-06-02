@@ -41,9 +41,9 @@ void KiranImageSelectorPrivate::init(KiranImageSelector *ptr) {
     q_ptr->installEventFilter(this);
 
     QHBoxLayout *qhBoxLayout = new QHBoxLayout(q_ptr);
-    qhBoxLayout->setMargin(0);
 
     m_selectorList = new KiranImageList(q_ptr);
+    m_selectorList->setFrameShape(QFrame::NoFrame);
     m_selectorList->setContentsMargins(15, 15, 15, 15);
 
     auto pFunction = [this]() {
@@ -67,6 +67,7 @@ void KiranImageSelectorPrivate::init(KiranImageSelector *ptr) {
     qhBoxLayout->addWidget(m_selectorList);
 
     m_prevBtn = new KiranImageButton(q_ptr, true);
+    m_prevBtn->setObjectName("image_selector_prev");
     m_prevBtn->setIcon(QIcon::fromTheme("window"));
     m_prevBtn->setFixedWidth(22);
     m_prevBtn->raise();
@@ -75,6 +76,7 @@ void KiranImageSelectorPrivate::init(KiranImageSelector *ptr) {
     });
 
     m_nextBtn = new KiranImageButton(q_ptr, false);
+    m_nextBtn->setObjectName("image_selector_next");
     m_nextBtn->setIcon(QIcon::fromTheme("window"));
     m_nextBtn->setFixedWidth(22);
     m_nextBtn->raise();

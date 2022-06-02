@@ -11,16 +11,17 @@
  * 
  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
  */
- 
+
 #include "kiran-application.h"
 #include "kiran-application-private.h"
 
 KiranApplication::KiranApplication(int &argc, char **argv, int appFlags)
-    : QApplication(argc,argv,appFlags),d_ptr(new KiranApplicationPrivate(this)){
+    : QApplication(argc, argv, appFlags), d_ptr(new KiranApplicationPrivate(this))
+{
     d_ptr->init();
-    d_ptr->initKiranStyle();
 };
 
-KiranApplication::~KiranApplication(){
+KiranApplication::~KiranApplication()
+{
     delete d_ptr;
 }

@@ -87,7 +87,7 @@ Kiran::StyleDetailFetcher::~StyleDetailFetcher()
 void Kiran::StyleDetailFetcher::load()
 {
     static QMap<StyleEnum, QString> styleDetailFileMap = {
-            {KIRAN_BLACK, ":/kiran-style/style-detail/kiran-dark.css"},
+            {KIRAN_BLACK, ":/kiranwidgets-test/style-detail/kiran-dark.css"},
     };
 
     auto detailFileIter = styleDetailFileMap.find(m_styleEnum);

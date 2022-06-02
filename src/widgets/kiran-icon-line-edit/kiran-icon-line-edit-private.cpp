@@ -11,18 +11,16 @@
  * 
  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
  */
- 
+
 #include "kiran-icon-line-edit-private.h"
 
-KiranIconLineEditPrivate::KiranIconLineEditPrivate(QObject *parent)
+KiranIconLineEditPrivate::KiranIconLineEditPrivate(QObject* parent)
     : QObject(parent)
 {
-
 }
 
 KiranIconLineEditPrivate::~KiranIconLineEditPrivate()
 {
-
 }
 
 void KiranIconLineEditPrivate::init(KiranIconLineEdit* ptr)

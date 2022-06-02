@@ -38,6 +38,7 @@ Widget::Widget(QWidget *parent)
 {
     ui->setupUi(getWindowContentWidget());
     ui->checkBox_2->setCheckState(Qt::Checked);
+
     connect(ui->checkBox_2,&QCheckBox::stateChanged,[this](int state){
         auto setAllWidgetEnable = [this](bool enable){
             ui->tabWidget->setEnabled(enable);
@@ -52,6 +53,7 @@ Widget::Widget(QWidget *parent)
     WidgetPropertyHelper::setSpinboxButtonPosition(ui->timeEdit, Kiran::ARROW_TWO_SIDERS);
 
     setTitleBarHeight(30);
+
     initTabBar();
     initPushButtonTab();
     initSwitchButtonTab();
@@ -67,15 +69,11 @@ Widget::~Widget()
     delete ui;
 }
 
-#include <child-window.h>
 void Widget::initPushButtonTab()
 {
     WidgetPropertyHelper::setButtonType(ui->btn_default, BUTTON_Default);
     WidgetPropertyHelper::setButtonType(ui->btn_normal, BUTTON_Normal);
     WidgetPropertyHelper::setButtonType(ui->btn_warning, BUTTON_Warning);
-    connect(ui->btn_normal,&QPushButton::clicked,this,[this](){
-        KiranMessageBox::message(this,"标题","文本",KiranMessageBox::Yes|KiranMessageBox::No);
-    });
 }
 
 void Widget::initSwitchButtonTab()
@@ -167,6 +165,8 @@ void Widget::initIconLineEdit()
     ui->iconLineEdit->setIconSize(QSize(16,16));
 }
 
+#include <QDir>
+#include <QFile>
 void Widget::initKiranImageSelector()
 {
     KiranImageSelector* imageSelector = new KiranImageSelector();
@@ -205,4 +205,15 @@ void Widget::initKiranImageSelector()
 
     auto spacerItem = new QSpacerItem(20,20,QSizePolicy::Preferred,QSizePolicy::Expanding);
     ui->tab_imageSelector->layout()->addItem(spacerItem);
+
+    QDir dir("/usr/share/backgrounds/kiran/");
+    QStringList filenames = dir.entryList(QDir::NoSymLinks|QDir::Files);
+    QStringList files;
+    foreach(const QString& fileName,filenames)
+    {
+        QString filePath = "/usr/share/backgrounds/kiran/" + fileName;
+        files << filePath;
+    }
+    qInfo() << files;
+    imageSelector->addImages(files);
 }

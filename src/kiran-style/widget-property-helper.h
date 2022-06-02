@@ -22,7 +22,12 @@ class QPushButton;
 class QSpinBox;
 class QProgressBar;
 class QWidget;
-
+/**
+ * WARNING:
+ * 该文件提供接口自2.3已被废弃,现保持兼容性
+ * 3.0将会被删除，后续不再提供相关接口
+ * 2.3版本之后使用请调用kiranstyle提供的相关接口
+ */
 namespace Kiran {
     /**
      * @brief KiranStyle自定义属性读写接口,可定制部分KiranStyle绘制细节,KiranStyle读出属性值进行特殊的绘制
@@ -35,7 +40,7 @@ namespace Kiran {
          * @return 该按钮的Style绘制类型,采取什么风格进行绘制
          * @see Kiran::ButtonType
          */
-        ButtonType getButtonType(const QPushButton *btn);
+        Q_DECL_DEPRECATED ButtonType getButtonType(const QPushButton *btn);
 
         /**
          * @brief 设置按钮类型
@@ -43,7 +48,7 @@ namespace Kiran {
          * @param type 按钮的Style绘制类型,采取什么风格进行绘制
          * @see Kiran::ButtonType
          */
-        void setButtonType(QPushButton *btn, ButtonType type);
+        Q_DECL_DEPRECATED void setButtonType(QPushButton *btn, ButtonType type);
 
         /**
          * @brief 设置Spinbox类型的控件按钮显示位置(QSpinBox,QTimeEdit,QDateEdit,QDateTimeEdit)
@@ -51,7 +56,7 @@ namespace Kiran {
          * @param position 文本绘制位置
          * @see Kiran::SpinboxArrowPosition
          */
-        void setSpinboxButtonPosition(QWidget *spinBox, SpinboxArrowPosition position);
+        Q_DECL_DEPRECATED void setSpinboxButtonPosition(QWidget *spinBox, SpinboxArrowPosition position);
 
         /**
          * @brief 获取Spinbox类型的控件按钮显示位置(QSpinBox,QTimeEdit,QDateEdit,QDateTimeEdit)
@@ -59,7 +64,7 @@ namespace Kiran {
          * @return SpinBox按钮绘制位置枚举
          * @see Kiran::SpinboxArrowPosition
          */
-        SpinboxArrowPosition getSpinboxButtonPosition(const QWidget *spinBox);
+        Q_DECL_DEPRECATED SpinboxArrowPosition getSpinboxButtonPosition(const QWidget *spinBox);
 
         /**
          * @brief 设置QProgressBar进度文本显示位置
@@ -67,7 +72,7 @@ namespace Kiran {
          * @param textPosition  文本绘制位置
          * @see Kiran::ProgressBarTextPosition
          */
-        void setProgressBarTextProsition(QProgressBar *progressBar,ProgressBarTextPosition textPosition);
+        Q_DECL_DEPRECATED void setProgressBarTextProsition(QProgressBar *progressBar,ProgressBarTextPosition textPosition);
 
         /**
          * @brief 获取QProgressBar文本绘制位置
@@ -75,7 +80,7 @@ namespace Kiran {
          * @return 文本绘制位置
          * @see Kiran::ProgressBarTextPosition
          */
-        ProgressBarTextPosition getProgressBarTextPosition(const QProgressBar *progressBar);
+        Q_DECL_DEPRECATED ProgressBarTextPosition getProgressBarTextPosition(const QProgressBar *progressBar);
     }
 }
 #endif //KIRANSTYLE_PROPERTY_HELPER_H

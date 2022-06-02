@@ -11,24 +11,25 @@
  * 
  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
  */
- 
+
 #ifndef KIRANWIDGETS_QT5_KIRAN_ICON_LINE_EDIT_PRIVATE_H
 #define KIRANWIDGETS_QT5_KIRAN_ICON_LINE_EDIT_PRIVATE_H
 
 #include <QObject>
 #include "kiran-icon-line-edit.h"
 
-class KiranIconLineEditPrivate : public QObject{
+class KiranIconLineEditPrivate : public QObject
+{
     Q_OBJECT
     Q_DECLARE_PUBLIC(KiranIconLineEdit)
 public:
-    KiranIconLineEditPrivate(QObject *parent=nullptr);
+    KiranIconLineEditPrivate(QObject *parent = nullptr);
     ~KiranIconLineEditPrivate();
 
-    void init(KiranIconLineEdit* ptr);
+    void init(KiranIconLineEdit *ptr);
 
 private:
     KiranIconLineEdit *q_ptr;
 };
 
-#endif //KIRANWIDGETS_QT5_KIRAN_ICON_LINE_EDIT_PRIVATE_H
+#endif  //KIRANWIDGETS_QT5_KIRAN_ICON_LINE_EDIT_PRIVATE_H

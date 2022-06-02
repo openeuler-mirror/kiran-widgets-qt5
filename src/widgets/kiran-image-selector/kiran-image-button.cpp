@@ -11,57 +11,77 @@
  * 
  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
  */
- 
 
 #include "kiran-image-button.h"
-#include "style.h"
+#include "widget-draw-helper.h"
 
+#include <kiran-palette.h>
 #include <QEvent>
-#include <QResizeEvent>
 #include <QPainter>
+#include <QResizeEvent>
 #include <QStyleOption>
 
 KiranImageButton::KiranImageButton(QWidget *parent, bool leftSide)
-        : QPushButton(parent),
-          m_anchorParentLeftSide(leftSide) {
+    : QPushButton(parent),
+      m_anchorParentLeftSide(leftSide)
+{
     parent->installEventFilter(this);
 }
 
-KiranImageButton::~KiranImageButton() {
-
+KiranImageButton::~KiranImageButton()
+{
 }
 
-bool KiranImageButton::eventFilter(QObject *watched, QEvent *event) {
-    switch (event->type()) {
-        case QEvent::Resize: {
-            QSize size = dynamic_cast<QResizeEvent *>(event)->size();
-            this->setFixedHeight(size.height());
-            this->move(m_anchorParentLeftSide ? QPoint(0, 0) : QPoint(size.width() - rect().width(), 0));
-            break;
-        }
-        default:
-            break;
+bool KiranImageButton::eventFilter(QObject *watched, QEvent *event)
+{
+    switch (event->type())
+    {
+    case QEvent::Resize:
+    {
+        QSize size = dynamic_cast<QResizeEvent *>(event)->size();
+        this->setFixedHeight(size.height());
+        this->move(m_anchorParentLeftSide ? QPoint(0, 0) : QPoint(size.width() - rect().width(), 0));
+        break;
+    }
+    default:
+        break;
     }
     return QObject::eventFilter(watched, event);
 }
 
-void KiranImageButton::paintEvent(QPaintEvent *event) {
+void KiranImageButton::paintEvent(QPaintEvent *event)
+{
     QPainter painter(this);
-    QStyleOptionButton option;
-    option.init(this);
-    if( QPushButton::isDown() ){
-        option.state |= QStyle::State_Sunken;
+    painter.setRenderHint(QPainter::Antialiasing);
+
+    QStyleOption option;
+    option.initFrom(this);
+
+    option.state &= ~QStyle::State_Active;
+    if (isDown())
+    {
+        option.state |= QStyle::State_Active;
     }
-    if( Kiran::Style::isKiranStyle() ){
-        auto style = Kiran::Style::castToKiranStyle();
-        style->drawPrimitive(Kiran::PE_KiranImageSelectorButtonFrame,&option,&painter,this);
-        style->drawPrimitive(m_anchorParentLeftSide?Kiran::PE_KiranImageSelectorPrevButtonArrow:Kiran::PE_KiranImageSelectorNextButtonArrow,
-                             &option,
-                             &painter,
-                             this);
+    else if (underMouse())
+    {
+        option.state |= QStyle::State_MouseOver;
     }
+
+    bool isAnchorLeft = mapToParent(QPoint(0, 0)).x() == 0;
+    QPainterPath painterPath = WidgetDrawHelper::getRoundedRectanglePath(option.rect.adjusted(0.5,0.5,-0.5,-0.5),
+                                                                         isAnchorLeft ? 4 : 0,
+                                                                         isAnchorLeft ? 0 : 4,
+                                                                         isAnchorLeft ? 4 : 0,
+                                                                         isAnchorLeft ? 0 : 4);
+    auto kiranPalette = KiranPalette::instance();
+    auto background = kiranPalette->color(this, &option, KiranPalette::Bare, KiranPalette::Background);
+    background.setAlphaF(0.48);
+    painter.fillPath(painterPath, background);
+
+    style()->drawPrimitive(isAnchorLeft?QStyle::PE_IndicatorArrowLeft:QStyle::PE_IndicatorArrowRight,&option,&painter,this);
 }
 
-bool KiranImageButton::anchorParentLeftSide() {
+bool KiranImageButton::anchorParentLeftSide()
+{
     return m_anchorParentLeftSide;
 }

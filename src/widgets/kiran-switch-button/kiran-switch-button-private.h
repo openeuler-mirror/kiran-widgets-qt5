@@ -27,6 +27,15 @@ public:
     }
     ~KiranSwitchButtonPrivate()=default;
 
+    /**
+     * 计算布局，返回尺寸大小
+     * \param indicatorRect             按钮指示器矩形
+     * \param indicatorCircularRect     按钮指示器之中的圆形区域矩形
+     * \param textRect                  文本矩形
+     * \return 总计大小
+     */
+    void doLayout(QRect& indicatorRect,QRect& indicatorCircularRect,QRect& textRect);
+
 private:
     KiranSwitchButton* q_ptr;
 };

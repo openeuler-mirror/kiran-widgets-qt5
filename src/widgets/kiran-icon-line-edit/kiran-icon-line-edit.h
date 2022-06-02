@@ -11,16 +11,20 @@
  * 
  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
  */
- 
+
 #ifndef KIRANWIDGETS_QT5_KIRAN_ICON_LINE_EDIT_H
 #define KIRANWIDGETS_QT5_KIRAN_ICON_LINE_EDIT_H
 
-#include <QLineEdit>
 #include <QIcon>
-
+#include <QLineEdit>
 #include <kiran-style-public-define.h>
 
 class KiranIconLineEditPrivate;
+
+/**
+ * WARNING:
+ * 该类应该不再继续使用，使用KiranLineEdit替代
+ */
 
 /**
  * @brief 带有图标的行输入框，在KiranStyle下提供特殊的绘制,使用方法可见QLineEdit
@@ -32,7 +36,8 @@ class KiranIconLineEditPrivate;
  * @since 2.1.0
  * @see QLineEdit
  */
-class KiranIconLineEdit : public QLineEdit{
+class Q_DECL_DEPRECATED KiranIconLineEdit : public QLineEdit
+{
     Q_OBJECT
     Q_DECLARE_PRIVATE(KiranIconLineEdit)
 public:
@@ -44,7 +49,7 @@ public:
      * @brief 设置图标
      * @param icon 图标
      */
-    void setIcon(const QIcon& icon);
+    void setIcon(const QIcon &icon);
 
     /**
      * @brief 获取设置的图标
@@ -81,8 +86,8 @@ private:
     void paintEvent(QPaintEvent *) override;
 
 private:
-    QIcon m_icon;
+    QIcon                     m_icon;
     KiranIconLineEditPrivate *d_ptr;
 };
 
-#endif //KIRANWIDGETS_QT5_KIRAN_ICON_LINE_EDIT_H
+#endif  //KIRANWIDGETS_QT5_KIRAN_ICON_LINE_EDIT_H

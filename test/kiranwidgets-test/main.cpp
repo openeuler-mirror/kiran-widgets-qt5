@@ -17,15 +17,14 @@
 #include "kiran-application.h"
 #include "kiran-single-application.h"
 
-#include <QDebug>
-#include <QStyleFactory>
-
 int main(int argc, char *argv[])
 {
     KiranSingleApplication a(argc, argv);
-
-//    qApp->setStyle(QStyleFactory::create("adwaita-dark"));
-
+    /**
+     *         AA_UseDesktopOpenGL = 15,
+        AA_UseOpenGLES = 16,
+        AA_UseSoftwareOpenGL = 17,
+     */
     Widget w;
     w.show();
 

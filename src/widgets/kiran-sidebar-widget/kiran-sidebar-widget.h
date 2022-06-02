@@ -11,9 +11,7 @@
  * 
  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
  */
- 
-#ifndef KIRANWIDGETS_QT5_KIRAN_SIDEBAR_WIDGET_H
-#define KIRANWIDGETS_QT5_KIRAN_SIDEBAR_WIDGET_H
+#pragma once
 
 #include <QListWidget>
 
@@ -31,7 +29,8 @@ class KiranSidebarWidgetPrivate;
  * @since 2.1.0
  * @see QListWidget
  */
-class KiranSidebarWidget : public QListWidget {
+class KiranSidebarWidget : public QListWidget
+{
     Q_OBJECT
     Q_DECLARE_PRIVATE(KiranSidebarWidget)
 public:
@@ -46,6 +45,13 @@ public:
      */
     ~KiranSidebarWidget();
 
+    /**
+     * @brief 设置图标颜色反转
+     * 当开启时，切换浅色主题时，将会翻转侧边栏图标颜色
+     * 禁用时，不会进行颜色切换
+     */
+    void setInvertIconPixelsEnable(bool enable);
+
 protected:
     /* 重新实现selectionCommand，以自定义选择行为 */
     virtual QItemSelectionModel::SelectionFlags
@@ -55,5 +61,3 @@ private:
     /* KiranSidebarWidget私有类指针 */
     KiranSidebarWidgetPrivate *d_ptr;
 };
-
-#endif //KIRANWIDGETS_QT5_KIRAN_SIDEBAR_WIDGET_H

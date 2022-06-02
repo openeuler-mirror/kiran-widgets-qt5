@@ -32,8 +32,6 @@ public:
 
 private:
     void setupTranslations();
-    void initKiranStyle();
-    bool adaptiveAppFont();
 
 private:
     KiranApplication *q_ptr;

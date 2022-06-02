@@ -11,99 +11,125 @@
  * 
  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
  */
- 
+
 #include "kiran-image-selector.h"
-#include "kiran-image-list.h"
 #include "kiran-image-button.h"
+#include "kiran-image-list.h"
 #include "kiran-image-selector-private.h"
 
-#include "style.h"
-
+#include <QApplication>
 #include <QBoxLayout>
-#include <QPainter>
-#include <QPaintEvent>
+#include <QDateTime>
 #include <QDebug>
 #include <QListWidget>
-#include <QApplication>
-#include <QScrollBar>
-#include <QDateTime>
+#include <QPaintEvent>
 #include <QPainter>
-#include <QStyleOption>
+#include <QScrollBar>
+#include <kiran-palette.h>
 
 KiranImageSelector::KiranImageSelector(QWidget *parent)
-    :QWidget(parent),
-    d_ptr(new KiranImageSelectorPrivate(this)){
+    : QWidget(parent),
+      d_ptr(new KiranImageSelectorPrivate(this))
+{
     d_ptr->init(this);
-    connect(d_ptr->m_selectorList,&KiranImageList::selectedImageChanged,[this](QString imagePath){
+    connect(d_ptr->m_selectorList, &KiranImageList::selectedImageChanged, [this](QString imagePath) {
         emit selectedImageChanged(imagePath);
     });
 }
 
-KiranImageSelector::~KiranImageSelector() {
-
+KiranImageSelector::~KiranImageSelector()
+{
 }
 
-QStringList KiranImageSelector::imageList() {
+QStringList KiranImageSelector::imageList()
+{
     return d_func()->m_selectorList->imageList();
 }
 
-bool KiranImageSelector::addImage(const QString &image) {
+bool KiranImageSelector::addImage(const QString &image)
+{
     auto item = d_func()->m_selectorList->addImageItem(image);
-    return item!=nullptr;
+    return item != nullptr;
 }
 
-void KiranImageSelector::addImages(const QStringList &imageList) {
-    for( QString image:imageList ){
+void KiranImageSelector::addImages(const QStringList &imageList)
+{
+    for (QString image : imageList)
+    {
         addImage(image);
     }
 }
 
-void KiranImageSelector::removeImage(const QString &image) {
+void KiranImageSelector::removeImage(const QString &image)
+{
     d_func()->m_selectorList->removeImageItem(image);
 }
 
-void KiranImageSelector::removeImages(const QStringList &imageList) {
-    for(QString image:imageList){
+void KiranImageSelector::removeImages(const QStringList &imageList)
+{
+    for (QString image : imageList)
+    {
         removeImage(image);
     }
 }
 
-QString KiranImageSelector::selectedImage() {
+QString KiranImageSelector::selectedImage()
+{
     return d_func()->m_selectorList->selectedImage();
 }
 
-bool KiranImageSelector::setSelectedImage(const QString &imagePath) {
+bool KiranImageSelector::setSelectedImage(const QString &imagePath)
+{
     return d_func()->m_selectorList->setSelectedImage(imagePath);
 }
 
-void KiranImageSelector::paintEvent(QPaintEvent *event) {
-    QPainter painter(this);
-    QStyleOption option;
+void KiranImageSelector::paintEvent(QPaintEvent *event)
+{
+    QPainter     painter(this);
+    painter.setRenderHint(QPainter::Antialiasing);
 
+    KiranPalette* kiranPalette = KiranPalette::instance();
+
+    QStyleOption option;
     option.initFrom(this);
 
-    if( Kiran::Style::isKiranStyle() ){
-        auto style = Kiran::Style::castToKiranStyle();
-        style->drawPrimitive(Kiran::PE_KiranImageSelector,&option,&painter,this);
-    }
+    auto background = kiranPalette->color(this,&option,KiranPalette::Window,KiranPalette::Background);
+    auto border = kiranPalette->color(this,&option,KiranPalette::Window,KiranPalette::Border);
+
+    QRectF rectf = option.rect;
+    rectf.adjust(0.5,0.5,-0.5,-0.5);
+
+    QPen pen = painter.pen();
+    pen.setJoinStyle(Qt::MiterJoin);
+    pen.setCapStyle(Qt::RoundCap);
+    pen.setColor(border);
+
+    painter.setPen(pen);
+    painter.setBrush(background);
+    painter.drawRoundRect(rectf,4);
 }
 
-bool KiranImageSelector::event(QEvent *event) {
+bool KiranImageSelector::event(QEvent *event)
+{
     return QWidget::event(event);
 }
 
-quint64 KiranImageSelector::itemSpacing() {
+quint64 KiranImageSelector::itemSpacing()
+{
     return d_func()->m_selectorList->itemSpacing();
 }
 
-void KiranImageSelector::setItemSpacing(quint64 spacing){
+void KiranImageSelector::setItemSpacing(quint64 spacing)
+{
     d_func()->m_selectorList->setItemSpacing(spacing);
 }
 
-quint64 KiranImageSelector::itemUpAndDownSidesMargin() {
+quint64 KiranImageSelector::itemUpAndDownSidesMargin()
+{
     return d_func()->m_selectorList->itemUpAndDownSidesMargin();
 }
 
-void KiranImageSelector::setItemUpAndDownSidesMargin(quint64 margin) {
+void KiranImageSelector::setItemUpAndDownSidesMargin(quint64 margin)
+{
     d_func()->m_selectorList->setItemUpAndDownSidesMargin(margin);
 }

@@ -50,8 +50,9 @@ namespace Kiran{
 
     /**
      * @brief KiranSideWidget支持的Item特殊样式定制
+     * @deprecated 此枚举值自2.2之后将被废弃，后续使用KiranSidebarItem::setStatusDesc来设置状态文本显示内容
      */
-    enum SidebarWidgetDataRole{
+    enum Q_DECL_DEPRECATED SidebarWidgetDataRole{
         ItemStatus_Role = Qt::UserRole+666, /** < Item状态显示,eg:账户管理工具的侧边栏显示启用和禁用状态 */
         ItemStatusColor_Role                /** <　Item状态绘制颜色  */
     };

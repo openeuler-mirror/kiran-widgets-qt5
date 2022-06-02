@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(kiran-style-test)
+project(kiran-widget-test)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -16,7 +16,6 @@ file(GLOB_RECURSE FORMS "*.ui")
 
 find_package(Qt5 COMPONENTS Widgets)
 find_package(PkgConfig REQUIRED)
-pkg_search_module(KIRAN_WIDGETS_QT5 REQUIRED kiranwidgets-qt5)
 
 add_executable(${PROJECT_NAME}
         ${SOURCES}
@@ -26,6 +25,7 @@ add_executable(${PROJECT_NAME}
 include_directories("${CMAKE_BINARY_DIR}")
 
 target_include_directories(${PROJECT_NAME} PRIVATE
+        ../../src/
         ../../src/widgets/kiran-application/
         ../../src/widgets/kiran-single-application/
         ../../src/kiran-style/

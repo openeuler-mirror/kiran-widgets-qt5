@@ -32,7 +32,12 @@ class QStyleOption;
  * @since 2.1.0
  * @see QLineEdit
  */
-class Q_DECL_EXPORT KiranSearchBox :public QLineEdit{
+
+/***
+ * WARNING:
+ * 后续废弃，使用KiranLineEdit
+ */
+class Q_DECL_DEPRECATED Q_DECL_EXPORT KiranSearchBox :public QLineEdit{
     Q_OBJECT
     Q_DECLARE_PRIVATE(KiranSearchBox)
 public:
