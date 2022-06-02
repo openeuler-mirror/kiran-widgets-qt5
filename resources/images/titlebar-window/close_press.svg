@@ -1,0 +1,16 @@
+<svg id="close_pre" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #c22140;
+      }
+
+      .cls-2 {
+        fill: #890c24;
+        fill-rule: evenodd;
+      }
+    </style>
+  </defs>
+  <circle id="close_pre-2" data-name="close_pre" class="cls-1" cx="8" cy="8" r="8"/>
+  <path id="矩形_1393_拷贝_7" data-name="矩形 1393 拷贝 7" class="cls-2" d="M3420.24,208.828l-1.41,1.415-2.83-2.829-2.83,2.829-1.41-1.415,2.83-2.828-2.83-2.828,1.41-1.415,2.83,2.829,2.83-2.829,1.41,1.415L3417.41,206Z" transform="translate(-3408 -198)"/>
+</svg>
