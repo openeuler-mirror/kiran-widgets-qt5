@@ -1,0 +1,16 @@
+<svg id="Windowing_pre" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #189a60;
+      }
+
+      .cls-2 {
+        fill: #0d6e43;
+        fill-rule: evenodd;
+      }
+    </style>
+  </defs>
+  <circle id="Windowing_pre-2" data-name="Windowing_pre" class="cls-1" cx="8" cy="8" r="8"/>
+  <path id="矩形_1393_拷贝_5" data-name="矩形 1393 拷贝 5" class="cls-2" d="M3389,207h-4v4h-2v-4h-4v-2h4v-4h2v4h4v2Z" transform="translate(-3376 -198)"/>
+</svg>
