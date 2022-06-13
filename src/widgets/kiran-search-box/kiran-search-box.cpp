@@ -54,12 +54,4 @@ bool KiranSearchBox::eventFilter(QObject *watched, QEvent *event)
 void KiranSearchBox::paintEvent(QPaintEvent *ev)
 {
     QLineEdit::paintEvent(ev);
-
-    QPainter painter(this);
-    QStyleOption styleOption;
-    styleOption.init(this);
-    if(Kiran::Style::isKiranStyle()){
-        Kiran::Style* kiranStyle = Kiran::Style::castToKiranStyle();
-        kiranStyle->drawPrimitive(Kiran::PE_SearchBoxIndicator,&styleOption,&painter,this);
-    }
 }

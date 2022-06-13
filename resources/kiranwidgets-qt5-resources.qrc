@@ -13,6 +13,8 @@
 
         <file>images/image-selector/loading.svg</file>
         <file>images/image-selector/selected.svg</file>
+
+        <file>images/search-box/search.svg</file>
     </qresource>
 
     <!-- 主题 -->

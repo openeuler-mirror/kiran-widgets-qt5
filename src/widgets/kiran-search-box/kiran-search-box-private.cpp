@@ -16,6 +16,7 @@
 
 #include <QLineEdit>
 #include <QHBoxLayout>
+#include <QLabel>
 
 KiranSearchBoxPrivate::KiranSearchBoxPrivate(QObject* parent)
     :QObject(parent)
@@ -30,5 +31,12 @@ KiranSearchBoxPrivate::~KiranSearchBoxPrivate()
 
 void KiranSearchBoxPrivate::init(KiranSearchBox* ptr)
 {
+    q_ptr = ptr;
 
+    auto layout = new QHBoxLayout(q_ptr);
+    auto searchlabel = new QLabel(q_ptr);
+    searchlabel->setPixmap(QPixmap(":/kiranwidgets-qt5/images/search-box/search.svg"));
+    layout->addWidget(searchlabel,0,Qt::AlignLeft|Qt::AlignVCenter);
+
+    q_ptr->setTextMargins(24,0,0,0);
 }
