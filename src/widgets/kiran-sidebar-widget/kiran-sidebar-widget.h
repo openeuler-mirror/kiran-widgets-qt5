@@ -49,6 +49,7 @@ public:
      * @brief 设置图标颜色反转
      * 当开启时，切换浅色主题时，将会翻转侧边栏图标颜色
      * 禁用时，不会进行颜色切换
+     * 默认为禁用该功能
      */
     void setInvertIconPixelsEnable(bool enable);
 

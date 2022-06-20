@@ -73,7 +73,6 @@ void KiranSiderbarDelegate::paint(QPainter *painter, const QStyleOptionViewItem 
             image.invertPixels(QImage::InvertRgb);
             pixmap = QPixmap::fromImage(image);
         }
-
         painter->drawPixmap(pixmapRect.topLeft(), pixmap);
     }
 

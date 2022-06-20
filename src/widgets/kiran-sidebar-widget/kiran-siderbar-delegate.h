@@ -43,5 +43,5 @@ private:
                    QRect &statusDescRect, QRect &indicatorRect) const;
 
 private:
-    bool m_invertIconPixelsEnable = true;
+    bool m_invertIconPixelsEnable = false;
 };

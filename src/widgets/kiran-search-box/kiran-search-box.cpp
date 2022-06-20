@@ -23,12 +23,6 @@
 #include <QEvent>
 #include <QDebug>
 
-/*FIXME:
- * 搜索框该部分为了偷懒使用了QLineEdit控件
- * 该情况需使用布局，设置左边距,在调用KiranStyle来绘制搜索框边框和搜索图标。
- * 这种方案不能在KiranStyle里修改图标和输入框的间隙和在KiranStyle里定制更多细节。
- * */
-
 KiranSearchBox::KiranSearchBox(QWidget *parent)
         : QLineEdit(parent),
           d_ptr(new KiranSearchBoxPrivate(this))
