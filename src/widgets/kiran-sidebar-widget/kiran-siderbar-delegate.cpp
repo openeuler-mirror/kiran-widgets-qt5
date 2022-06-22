@@ -14,7 +14,9 @@
 #include <QSet>
 #include <QStyle>
 
-#include <kiran-palette.h>
+#include <style-palette.h>
+
+using namespace Kiran;
 
 KiranSiderbarDelegate::KiranSiderbarDelegate(QObject *parent) : QItemDelegate(parent)
 {
@@ -49,12 +51,12 @@ void KiranSiderbarDelegate::paint(QPainter *painter, const QStyleOptionViewItem 
     QRect pixmapRect, textRect, statusDescRect, indicatorRect;
     doLayout(opt, index, pixmapRect, textRect, statusDescRect, indicatorRect);
 
-    const auto kiranPalette = KiranPalette::instance();
+    const auto kiranPalette = StylePalette::instance();
 
     //background
-    QColor bgColor = kiranPalette->color(widget, &opt, KiranPalette::Widget, KiranPalette::Background);
+    QColor bgColor = kiranPalette->color(widget, &opt, StylePalette::Widget, StylePalette::Background);
     QPainterPath fillBackgroundPath;
-    fillBackgroundPath.addRoundRect(opt.rect, 10);
+    fillBackgroundPath.addRoundedRect(opt.rect, 10,10);
     fillBackgroundPath = WidgetDrawHelper::getRoundedRectanglePath(opt.rect, 5, 5, 5, 5);
     painter->fillPath(fillBackgroundPath, QBrush(bgColor));
 
@@ -66,8 +68,8 @@ void KiranSiderbarDelegate::paint(QPainter *painter, const QStyleOptionViewItem 
     {
         //默认侧边栏为白色图标，但是深浅色主题需要切换颜色，若为浅色主题，则反转颜色
         //浅色主题，选中状态不反转，仍为白色
-        auto kiranPalette = KiranPalette::instance();
-        if(  m_invertIconPixelsEnable && kiranPalette->paletteType() == KiranStyle::PALETTE_LIGHT && !(opt.state & QStyle::State_Selected)  )
+        auto kiranPalette = StylePalette::instance();
+        if(  m_invertIconPixelsEnable && kiranPalette->paletteType() == PALETTE_LIGHT && !(opt.state & QStyle::State_Selected)  )
         {
             auto image = pixmap.toImage();
             image.invertPixels(QImage::InvertRgb);
@@ -231,7 +233,7 @@ QRect KiranSiderbarDelegate::textLayoutBounds(const QStyleOptionViewItem &option
 }
 
 // NOTE:不考虑option之中decorationPosition、decorationAlignment、direction,以及不考虑不绘制勾选框
-QSize KiranSiderbarDelegate::doLayout(const QStyleOptionViewItem &option, const QModelIndex &index,
+void KiranSiderbarDelegate::doLayout(const QStyleOptionViewItem &option, const QModelIndex &index,
                                       QRect &pixmapRect, QRect &textRect,
                                       QRect &statusDescRect, QRect &indicatorRect) const
 {

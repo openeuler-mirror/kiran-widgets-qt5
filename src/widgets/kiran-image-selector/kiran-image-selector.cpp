@@ -25,7 +25,9 @@
 #include <QPaintEvent>
 #include <QPainter>
 #include <QScrollBar>
-#include <kiran-palette.h>
+#include <style-palette.h>
+
+using namespace Kiran;
 
 KiranImageSelector::KiranImageSelector(QWidget *parent)
     : QWidget(parent),
@@ -88,13 +90,13 @@ void KiranImageSelector::paintEvent(QPaintEvent *event)
     QPainter     painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
-    KiranPalette* kiranPalette = KiranPalette::instance();
+    StylePalette* kiranPalette = StylePalette::instance();
 
     QStyleOption option;
     option.initFrom(this);
 
-    auto background = kiranPalette->color(this,&option,KiranPalette::Window,KiranPalette::Background);
-    auto border = kiranPalette->color(this,&option,KiranPalette::Window,KiranPalette::Border);
+    auto background = kiranPalette->color(this,&option,StylePalette::Window,StylePalette::Background);
+    auto border = kiranPalette->color(this,&option,StylePalette::Window,StylePalette::Border);
 
     QRectF rectf = option.rect;
     rectf.adjust(0.5,0.5,-0.5,-0.5);

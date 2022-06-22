@@ -50,6 +50,9 @@ Widget::Widget(QWidget *parent)
         }
     });
 
+    connect(ui->btn_normal,&QPushButton::clicked,[this](){
+        KiranMessageBox::message(this,"Test","测试文本",KiranMessageBox::Yes|KiranMessageBox::No);
+    });
     WidgetPropertyHelper::setSpinboxButtonPosition(ui->timeEdit, Kiran::ARROW_TWO_SIDERS);
 
     setTitleBarHeight(30);

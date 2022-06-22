@@ -15,11 +15,13 @@
 #include "kiran-image-button.h"
 #include "widget-draw-helper.h"
 
-#include <kiran-palette.h>
+#include <style-palette.h>
 #include <QEvent>
 #include <QPainter>
 #include <QResizeEvent>
 #include <QStyleOption>
+
+using namespace Kiran;
 
 KiranImageButton::KiranImageButton(QWidget *parent, bool leftSide)
     : QPushButton(parent),
@@ -73,8 +75,8 @@ void KiranImageButton::paintEvent(QPaintEvent *event)
                                                                          isAnchorLeft ? 0 : 4,
                                                                          isAnchorLeft ? 4 : 0,
                                                                          isAnchorLeft ? 0 : 4);
-    auto kiranPalette = KiranPalette::instance();
-    auto background = kiranPalette->color(this, &option, KiranPalette::Bare, KiranPalette::Background);
+    auto kiranPalette = StylePalette::instance();
+    auto background = kiranPalette->color(this, &option, StylePalette::Bare, StylePalette::Background);
     background.setAlphaF(0.48);
     painter.fillPath(painterPath, background);
 

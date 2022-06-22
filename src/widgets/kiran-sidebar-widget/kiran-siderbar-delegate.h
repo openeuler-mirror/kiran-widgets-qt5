@@ -16,8 +16,8 @@ public:
 
 private:
     QSize sizeFromContents(const QStyleOptionViewItem &opt, const QModelIndex &idx,
-                          QSize &pixmapSize, QSize &textSize,
-                          QSize &statusDescSize, QSize &indicatorSize) const;
+                           QSize &pixmapSize, QSize &textSize,
+                           QSize &statusDescSize, QSize &indicatorSize) const;
 
     QPixmap getDecorationPixmap(const QStyleOptionViewItem &option, const QModelIndex &index, QSize &pixmapSize) const;
     inline QIcon::State iconState(QStyle::State styleState) const
@@ -38,9 +38,9 @@ private:
 private:
     QString textForRole(Qt::ItemDataRole role, const QVariant &value, const QLocale &locale) const;
     QRect textLayoutBounds(const QStyleOptionViewItem &option) const;
-    QSize doLayout(const QStyleOptionViewItem &option, const QModelIndex &index,
-                   QRect &pixmapRect, QRect &textRect,
-                   QRect &statusDescRect, QRect &indicatorRect) const;
+    void doLayout(const QStyleOptionViewItem &option, const QModelIndex &index,
+                  QRect &pixmapRect, QRect &textRect,
+                  QRect &statusDescRect, QRect &indicatorRect) const;
 
 private:
     bool m_invertIconPixelsEnable = false;
