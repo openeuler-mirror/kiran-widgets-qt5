@@ -14,12 +14,12 @@
 
 #include "kiran-icon-line-edit.h"
 #include "kiran-icon-line-edit-private.h"
-#include "widget-private-property-helper.h"
 
 #include <QPainter>
 #include <QStyle>
 
-using namespace Kiran;
+#define PROPERTY_KIRAN_LINE_EDIT_ICON_POSITION "_kiran_line_edit_icon_position"
+#define PROPERTY_KIRAN_LINE_EDIT_ICON_SIZE     "_kiran_line_edit_icon_size"
 
 KiranIconLineEdit::KiranIconLineEdit(QWidget *parent)
     : QLineEdit(parent),
@@ -52,22 +52,41 @@ QIcon KiranIconLineEdit::icon()
 
 void KiranIconLineEdit::setIconSize(QSize iconSize)
 {
-    WidgetPrivatePropertyHelper::setLineEditIconSize(this, iconSize);
+    setProperty(PROPERTY_KIRAN_LINE_EDIT_ICON_SIZE,iconSize);
+    update();
 }
 
 QSize KiranIconLineEdit::iconSize()
 {
-    return WidgetPrivatePropertyHelper::getLineEditIconSize(this);
+    QSize size;
+    auto var = property(PROPERTY_KIRAN_LINE_EDIT_ICON_SIZE);
+    if( var.isValid() )
+    {
+        size = qvariant_cast<QSize>(var);
+    }
+    return iconSize();
 }
 
-void KiranIconLineEdit::setIconPosition(IconLineEditIconPosition position)
+void KiranIconLineEdit::setIconPosition(IconPosition position)
 {
-    return WidgetPrivatePropertyHelper::setLineEditIconPosition(this, position);
+    setProperty(PROPERTY_KIRAN_LINE_EDIT_ICON_POSITION,position);
+    update();
 }
 
-Kiran::IconLineEditIconPosition KiranIconLineEdit::iconPosition()
+KiranIconLineEdit::IconPosition KiranIconLineEdit::iconPosition()
 {
-    return WidgetPrivatePropertyHelper::getLineEditIconPosition(this);
+    IconPosition position = ICON_POSITION_NONE;
+    QVariant var = property(PROPERTY_KIRAN_LINE_EDIT_ICON_POSITION);
+    if( var.isValid() )
+    {
+        bool toInt = false;
+        auto temp = static_cast<IconPosition>(var.toInt(&toInt));
+        if(toInt)
+        {
+            position = temp;
+        }
+    }
+    return position;
 }
 
 void KiranIconLineEdit::paintEvent(QPaintEvent *ev)
@@ -76,7 +95,7 @@ void KiranIconLineEdit::paintEvent(QPaintEvent *ev)
 
     auto size     = iconSize();
     auto position = iconPosition();
-    if (m_icon.isNull() || size.isNull() || position == Kiran::ICON_POSITION_NONE)
+    if (m_icon.isNull() || size.isNull() || position == ICON_POSITION_NONE)
     {
         return;
     }
