@@ -134,7 +134,7 @@ void KiranSwitchButtonPrivate::doLayout(QRect &indicatorRect, QRect &indicatorCi
     indicatorRect = QRect(indicatorTopLeft, indicatorSize);
 
     //指示器之中圆形开关
-    QSize indicatorCircularSize(indicatorSize.height() - 4, indicatorSize.height() - 4);
+    QSize indicatorCircularSize(indicatorSize.height() - 8, indicatorSize.height() - 8);
     QPoint indicatorCircularTopLeft(indicatorRect.left() + 2, indicatorRect.top() + (indicatorRect.height() - indicatorCircularSize.height()) / 2);
     indicatorCircularRect = QRect(indicatorCircularTopLeft, indicatorCircularSize);
     if (option.state & QStyle::State_On)
