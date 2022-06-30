@@ -26,6 +26,7 @@ Q_OBJECT
 private:
     KiranImageLoadManager(QObject *parent = nullptr);
     void init();
+    static void appExitCleanup();
 
 public:
     static KiranImageLoadManager *instance();
