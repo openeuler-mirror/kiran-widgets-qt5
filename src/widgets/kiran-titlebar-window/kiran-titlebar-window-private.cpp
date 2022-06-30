@@ -38,6 +38,7 @@
 using namespace Kiran;
 
 #define XCB_GENERIC_EVENT_TYPE "xcb_generic_event_t"
+
 KiranTitlebarWindowPrivate::KiranTitlebarWindowPrivate(KiranTitlebarWindow *ptr)
     : q_ptr(ptr),
       m_layout(nullptr),
@@ -75,9 +76,7 @@ KiranTitlebarWindowPrivate::KiranTitlebarWindowPrivate(KiranTitlebarWindow *ptr)
             { adaptToVirtualScreenSize(); });
 
     //app调色盘改变可以认为主题风格产生变化，需重新拿取图标更新
-    //FIXME:
-    connect(qApp, &QApplication::paletteChanged, [this]()
-            { updateTitlebarButtonIcon(); });
+    connect(qApp, &QApplication::paletteChanged, this,&KiranTitlebarWindowPrivate::updateTitlebarButtonIcon);
 
     handlerPrimaryScreenChanged(qApp->primaryScreen());
 }

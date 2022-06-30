@@ -59,10 +59,10 @@ protected:
     void initShadow();
     void updateShadowStyle(bool active);
     Kiran::CursorPositionEnums getCursorPosition(QPoint pos);
-    void updateTitlebarButtonIcon();
 
 private slots:
     void updateTitleFont(QFont font);
+    void updateTitlebarButtonIcon();
 
     void handlerPrimaryScreenChanged(QScreen* screen);
     void handlerPrimaryScreenVirtualGeometryChanged(const QRect &rect);
