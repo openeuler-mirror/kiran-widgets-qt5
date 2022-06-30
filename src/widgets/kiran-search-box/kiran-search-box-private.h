@@ -20,6 +20,7 @@
 #include <QObject>
 #include <QBoxLayout>
 
+class QLabel;
 class KiranSearchBoxPrivate : public QObject{
     Q_OBJECT
     Q_DECLARE_PUBLIC(KiranSearchBox)
@@ -30,8 +31,12 @@ public:
 private:
     void init(KiranSearchBox* ptr);
 
+private slots:
+    void updateSearchPixmap();
+
 private:
     KiranSearchBox* q_ptr = nullptr;
+    QLabel* m_searchLabel = nullptr;
 };
 
 #endif //KIRANWIDGETS_QT5_KIRAN_SEARCH_BOX_PRIVATE_H
