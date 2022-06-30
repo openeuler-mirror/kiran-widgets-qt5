@@ -84,17 +84,16 @@ QSize KiranSwitchButton::sizeHint() const
     QStyleOptionButton optionButton;
     initStyleOption(&optionButton);
 
-    //获取文字宽高
+    QSize size(IndicatorWidth,IndicatorHeight);
+
     QString str = text();
-    QFontMetrics metrics = fontMetrics();
-    QSize size = metrics.size(Qt::TextHideMnemonic, str);
-
-    size.setHeight(qMax(size.height(), IndicatorHeight));
-
-    size += 2 * QSize(3, 3);
-
-    size.rwidth() += ItemSpacing;
-    size.rwidth() += IndicatorWidth;
+    if( !str.isEmpty() )
+    {
+        QFontMetrics metrics = fontMetrics();
+        size.setHeight(qMax(metrics.size(Qt::TextHideMnemonic, str).height(), IndicatorHeight));
+        size += 2 * QSize(3, 3);
+        size.rwidth() += ItemSpacing;
+    }
 
     return size;
 }
