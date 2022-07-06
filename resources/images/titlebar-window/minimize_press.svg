@@ -1,0 +1,15 @@
+<svg id="Windowing_pre" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #aa7e25;
+      }
+
+      .cls-2 {
+        fill: #775512;
+      }
+    </style>
+  </defs>
+  <circle id="minimize_pre" class="cls-1" cx="8" cy="8" r="8"/>
+  <rect id="矩形_1393_拷贝_4" data-name="矩形 1393 拷贝 4" class="cls-2" x="3" y="7" width="10" height="2"/>
+</svg>

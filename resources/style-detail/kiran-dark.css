@@ -1,0 +1,411 @@
+Palette{
+    Base:   transparent;
+    Text:   white;
+    Window: #222222;
+    WindowText: white;
+    ButtonText: white;
+
+    Highlight: #61b5f8;
+    HighlightedText: white;
+    Button: #222222;
+
+}
+
+Palette:disabled{
+    Text: rgba(255,255,255,0.4);
+    WindowText: rgba(255,255,255,0.4);
+    ButtonText: rgba(255,255,255,0.4);
+    Highlight: #8ccfff;
+    HighlightedText: rgba(255,255,255,0.4);
+}
+
+Frame{
+    Background:transparent;
+    Radius:6;
+    BorderColor:rgba(255,255,255,0.2);
+    BorderWidth:1;
+}
+
+Frame:focus{
+    BorderColor:rgb(33,166,255);
+}
+
+Frame:disabled{
+    BorderWidth:0;
+    Radius:6;
+    Background:rgba(255,255,255,0.05);
+}
+
+Spinbox{
+    ArrowBackground:#2eb3ff;
+    ArrowSignColor:#fefefe;
+}
+
+Spinbox:disabled{
+    ArrowBackground: rgba(46,179,255,0.2);
+    ArrowSignColor: rgba(254,254,254,0.2);
+}
+
+Spinbox:hover{
+    ArrowBackground:#79c3ff;
+}
+
+Spinbox:pressed{
+    ArrowBackground:#1568ad;
+}
+
+Button{
+    Radius: 10;
+    TextColor: white;
+
+    FlatTextColor:white;
+    FlatBackground: transparent;
+    FlatBorderWidth: 0;
+    FlatBorderColor: transparent;
+
+    NormalBackground: rgba(255,255,255,0.05);
+    NormalBorderWidth: 2;
+    NormalBorderColor: rgba(255,255,255,0.1);
+
+    DefaultBackground: #43a3f2;
+    DefaultBorderWidth: 0;
+    DefaultBorderColor: transparent;
+
+    WarningBackground: #fa4949;
+    WarningBorderWidth: 0;
+    WarningBorderColor: transparent;
+}
+
+Button:disabled{
+    TextColor: rgba(255,255,255,0.4);
+
+    FlatTextColor: rgba(255,255,255,0.4);
+
+    NormalBackground: rgba(255,255,255,0.05);
+    NormalBorderWidth: 2;
+    NormalBorderColor: transparent;
+
+    DefaultBackground: rgba(255,255,255,0.05);
+    DefaultBorderWidth: 0;
+    DefaultBorderColor: none;
+
+    WarningBackground: rgba(255,255,255,0.05);
+    WarningBorderWidth: 0;
+    WarningBorderColor: none;
+}
+
+Button:hover{
+    FlatTextColor: #79c3ff;
+
+    NormalBackground: rgba(255,255,255,0.1);
+    NormalBorderWidth: 2;
+    NormalBorderColor: rgb(67,163,242);
+
+    DefaultBackground: #79c3ff;
+
+    WarningBackground: #ff7878;
+}
+
+Button:pressed{
+    FlatTextColor: #1568ad;
+
+    NormalBackground: rgba(0,0,0,0.1);
+    NormalBorderWidth: 2;
+    NormalBorderColor: rgba(67,163,242,0.3);
+
+    DefaultBackground: #1568ad;
+
+    WarningBackground: #9d2c2c;
+}
+
+ToolButton{
+    Background: none;
+}
+
+ToolButton:hover{
+    Background: #79c3ff;
+}
+
+ToolButton:pressed{
+    Background: #1568ad;
+}
+
+RadioButton:unchecked{
+    IndicatorColor: rgba(255,255,255,0.4);
+}
+
+RadioButton:checked{
+    IndicatorColor: #2094fc;
+}
+
+RadioButton:hover{
+    IndicatorColor: #43a3f2;
+}
+
+RadioButton:pressed{
+    IndicatorColor: #1568ad;
+}
+
+RadioButton:disabled{
+    IndicatorColor: rgba(255,255,255,0.1);
+}
+
+CheckBox:unchecked{
+    BorderColor:rgba(255,255,255,0.4);
+    IndicatorBackground: none;
+    IndicatorSign: none;
+}
+
+CheckBox:unchecked:hover{
+    BorderColor:#43a3f2;
+}
+
+CheckBox:unchecked:pressed{
+    BorderColor:#1568ad;
+}
+
+CheckBox:unchecked:disabled{
+    BorderColor:rgba(255,255,255,0.1);
+}
+
+CheckBox:checked{
+    BorderColor: #2094fc;
+    IndicatorBackground: #2094fc;
+    IndicatorSign:white;
+}
+
+CheckBox:checked:hover{
+    BorderColor: #43a3f2;
+    IndicatorBackground: #43a3f2;
+}
+
+CheckBox:checked:pressed{
+    BorderColor: #1568ad;
+    IndicatorBackground: #1568ad;
+}
+
+CheckBox:checked:disabled{
+    IndicatorBackground: rgba(255,255,255,0.1);
+}
+
+CheckBox:indeterminate{
+    BorderColor: #2094fc;
+    IndicatorBackground: #2094fc;
+    IndicatorSign:white;
+}
+
+CheckBox:indeterminate:hover{
+    BorderColor: #43a3f2;
+    IndicatorBackground: #43a3f2;
+}
+
+CheckBox:indeterminate:pressed{
+    BorderColor: #1568ad;
+    IndicatorBackground: #1568ad;
+}
+CheckBox:indeterminate:disabled{
+    IndicatorBackground: rgba(255,255,255,0.1);
+}
+
+SwitchButton{
+    IndicatorCircularBackground: white;
+}
+
+SwitchButton:checked{
+    BorderWidth: 0;
+    BorderColor: none;
+    Background: #43a3f2;
+}
+
+SwitchButton:checked:hover{
+    Background: #79c3ff;
+}
+
+SwitchButton:checked:pressed{
+    Background: #1568ad;
+}
+
+SwitchButton:unchecked{
+    BorderWidth: 2;
+    BorderColor: rgba(235,237,242,0.3);
+    Background: none;
+}
+
+SwitchButton:unchecked:hover{
+    BorderColor:#43a3f2;
+}
+
+SwitchButton:unchecked:pressed{
+    BorderColor: rgba(67, 163, 242, 0.3);
+}
+
+SwitchButton:disabled{
+    Background: rgba(255,255,255,0.1);
+    IndicatorCircularBackground: rgba(255,255,255,0.4);
+}
+
+Menu {
+    BorderRadius: 8;
+    BorderColor: rgb(53, 53, 53);
+    BorderWidth: 1;
+    Background: #272727;
+    SeparatorColor: rgba(255, 255, 255, 0.1);
+    SeparatorWidth: 1;
+    SubMenuArrowColor: white;
+    CheckedIndicatorSignColor: white;
+    CheckedIndicatorBackground: none;
+    ItemBackground:none;
+    ItemSiderColor:none;
+}
+
+Menu:hover{
+    ItemBackground: rgba(255,255,255,0.1);
+    ItemSiderColor: #21a6ff;
+}
+
+ComboBox{
+    BorderColor: rgba(255,255,255,0.2);
+    EditBorderColor: rgb(33,166,255);
+    BorderWidth: 1;
+    BorderRadius: 6;
+    ArrowIndicatorColor: white;
+    Background: transparent;
+}
+
+ComboBox:disabled{
+    BorderWidth: 0;
+    ArrowIndicatorColor: white;
+    Background: rgba(255,255,255,0.05);
+}
+
+ComboBoxContainer{
+    BorderColor: rgb(33,166,255);
+    SeparatorColor: rgba(255,255,255,0.1);
+}
+
+ComboBoxItem{
+    Background:none;
+}
+
+ComboBoxItem:hover{
+    Background: rgba(255,255,255,0.1);
+}
+
+ScrollBarSlider{
+    Background:rgba(255,255,255,0.1);
+}
+
+ScrollBarSlider:hover{
+    Background:rgba(255,255,255,0.3);
+}
+
+ScrollBarSlider:disabled{
+    Background:none;
+}
+
+TabBarTab{
+    Background:rgba(255,255,255,0.05);
+}
+
+TabBarTab:hover{
+    Background:rgba(255,255,255,0.1);
+}
+
+TabBarTab:selected{
+    Background:#2eb3ff;
+}
+
+TitleBarButtonIcon{
+    SignPressedColor: rgba(255,255,255,0.4);
+    SignHoverColor: rgba(255,255,255,0.6);
+    SignNormalColor: white;
+    SignDisabledColor: gray;
+}
+
+IndicatorArrow{
+    Icon:url(:/kiran-style/style-detail/arrow.svg)
+}
+
+IndicatorArrow:disabled{
+    Icon:url(:/kiran-style/style-detail/arrow_disabled.svg)
+}
+
+IndicatorArrow:hover{
+    Icon:url(:/kiran-style/style-detail/arrow_hover.svg)
+}
+
+IndicatorArrow:pressed{
+    Icon:url(:/kiran-style/style-detail/arrow_pressed.svg)
+}
+
+SearchBox{
+    Icon: url(:/kiran-style/style-detail/search.svg);
+}
+
+SearchBox:disabled{
+    Icon: url(:/kiran-style/style-detail/search_disabled.svg);
+}
+
+ProgressBar{
+    GrooveColor: rgba(255,255,255,0.1);
+    ContentColor: #21a6ff;
+}
+
+Slider{
+    TickMarkColor:#4e4e4e;
+    GrooveHighlightColor:#2eb3ff;
+    GrooveNormalColor:#4e4e4e;
+    HandleBackgroundColor:#2eb3ff;
+    HandleBorderColor:#ffffff;
+}
+
+Slider:pressed{
+    HandleBackgroundColor:white;
+}
+
+Slider:disabled{
+    TickMarkColor:rgba(33,166,255,0.1);
+    GrooveHighlightColor:rgba(33,166,255,0.1);
+    GrooveNormalColor:rgba(33,166,255,0.1);
+    HandleBackgroundColor:#4b4b4b;
+    HandleBorderColor:#4b4b4b;
+}
+
+KiranSiderbarItem{
+    Height: 60;
+    BackgroundColor: rgba(255,255,255,0.05);
+    Radius: 10;
+}
+
+KiranSiderbarItem:hover{
+    BackgroundColor: rgba(255,255,255,0.1);
+}
+
+KiranSiderbarItem:selected{
+    BackgroundColor: #43a3f2;
+}
+
+KiranSiderbarItem:selected:hover{
+    BackgroundColor: #79c3ff;
+}
+
+KiranSiderbarItem:selected:disabled{
+    BackgroundColor: gray;
+}
+
+KiranImageSelector{
+    BorderColor: #4e4e4e;
+    ButtonColor: rgba(255,255,255,0.2);
+}
+
+KiranImageSelector:hover{
+    ButtonColor: rgba(255,255,255,0.3);
+}
+
+KiranImageSelector:pressed{
+    ButtonColor: rgba(255,255,255,0.1);
+}
+
+FocusRect{
+    BorderColor:#656565;
+}

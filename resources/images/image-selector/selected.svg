@@ -1,0 +1,18 @@
+<svg id="勾选" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #2094fc;
+        stroke: #fff;
+        stroke-width: 1px;
+      }
+
+      .cls-2 {
+        fill: #fff;
+        fill-rule: evenodd;
+      }
+    </style>
+  </defs>
+  <circle id="椭圆_1" data-name="椭圆 1" class="cls-1" cx="12.5" cy="12.5" r="12"/>
+  <path id="形状_537_拷贝_4" data-name="形状 537 拷贝 4" class="cls-2" d="M1200.88,1375h-1.03a0.48,0.48,0,0,0-.37.17l-6.07,7.29-2.91-3.49a0.48,0.48,0,0,0-.37-0.17h-1.03a0.107,0.107,0,0,0-.09.18l4.03,4.84a0.483,0.483,0,0,0,.74,0l7.19-8.64a0.11,0.11,0,0,0-.09-0.18h0Zm0,0" transform="translate(-1182.5 -1366.5)"/>
+</svg>
