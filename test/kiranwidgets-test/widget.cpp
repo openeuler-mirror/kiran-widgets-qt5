@@ -50,6 +50,9 @@ Widget::Widget(QWidget *parent)
         }
     });
 
+    connect(ui->btn_normal,&QPushButton::clicked,[this](){
+        KiranMessageBox::message(this,"Test","测试文本",KiranMessageBox::Yes|KiranMessageBox::No);
+    });
     WidgetPropertyHelper::setSpinboxButtonPosition(ui->timeEdit, Kiran::ARROW_TWO_SIDERS);
 
     setTitleBarHeight(30);
@@ -161,7 +164,7 @@ void Widget::initProgressBar()
 void Widget::initIconLineEdit()
 {
     ui->iconLineEdit->setIcon(QIcon::fromTheme("window"));
-    ui->iconLineEdit->setIconPosition(Kiran::ICON_POSITION_LEFT);
+    ui->iconLineEdit->setIconPosition(KiranIconLineEdit::ICON_POSITION_LEFT);
     ui->iconLineEdit->setIconSize(QSize(16,16));
 }
 

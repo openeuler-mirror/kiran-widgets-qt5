@@ -1,6 +1,8 @@
 #include "kiran-line-edit.h"
 #include "kiran-line-edit-private.h"
-#include <kiran-palette.h>
+#include <style-palette.h>
+
+using namespace Kiran;
 
 KiranLineEdit::KiranLineEdit(QWidget *parent)
     : QWidget(parent)
@@ -56,7 +58,7 @@ KiranLineEdit::TipsPosition KiranLineEdit::getTipsPosition() const
 
 void KiranLineEdit::paintEvent(QPaintEvent *event)
 {
-    KiranPalette::instance();
+    StylePalette::instance();
     QWidget::paintEvent(event);
 }
 

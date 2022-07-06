@@ -20,6 +20,7 @@
 #include <QMap>
 #include <QDialogButtonBox>
 #include <QGraphicsDropShadowEffect>
+#include <QHBoxLayout>
 
 class QLabel;
 class QPushButton;
@@ -67,7 +68,9 @@ private:
     QLayout *m_layout;
 
     QFrame *m_frame;
-    QLayout *m_frameLayout;
+    QVBoxLayout *m_frameLayout;
+
+    QHBoxLayout *m_customLayout;
 
     ///标题
     QWidget *m_titleWidget;

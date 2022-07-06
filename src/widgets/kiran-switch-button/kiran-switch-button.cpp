@@ -15,7 +15,7 @@
 #include "kiran-switch-button.h"
 #include "kiran-switch-button-private.h"
 
-#include <kiran-palette.h>
+#include <style-palette.h>
 #include <QDebug>
 #include <QFontMetrics>
 #include <QPainter>
@@ -25,6 +25,8 @@
 #define IndicatorHeight 24
 #define ItemSpacing 8
 #define IndicatorWidth 54
+
+using namespace Kiran;
 
 KiranSwitchButton::KiranSwitchButton(QWidget *parent)
     : QAbstractButton(parent),
@@ -51,7 +53,7 @@ void KiranSwitchButton::paintEvent(QPaintEvent *e)
 
     bool enable = option.state & QStyle::State_Enabled;
 
-    KiranPalette *kiranPalette = KiranPalette::instance();
+    StylePalette *kiranPalette = StylePalette::instance();
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
@@ -60,9 +62,9 @@ void KiranSwitchButton::paintEvent(QPaintEvent *e)
 
     QColor indicatorBackgroundColor, indicatorCircularColor, textColor;
 
-    indicatorBackgroundColor = kiranPalette->color(this, &option, KiranPalette::Bare, KiranPalette::Background);
-    indicatorCircularColor = enable ? "white" : kiranPalette->color(KiranPalette::Disabled, KiranPalette::Bare, KiranPalette::Foreground);
-    textColor = kiranPalette->color(enable ? KiranPalette::Normal : KiranPalette::Disabled, KiranPalette::Bare, KiranPalette::Foreground);
+    indicatorBackgroundColor = kiranPalette->color(this, &option, StylePalette::Bare, StylePalette::Background);
+    indicatorCircularColor = enable ? "white" : kiranPalette->color(StylePalette::Disabled, StylePalette::Bare, StylePalette::Foreground);
+    textColor = kiranPalette->color(enable ? StylePalette::Normal : StylePalette::Disabled, StylePalette::Bare, StylePalette::Foreground);
 
     QPainterPath indicatorPath;
     indicatorPath.addRoundedRect(indicatorRect, indicatorRect.height() / 2, indicatorRect.height() / 2);
@@ -82,17 +84,16 @@ QSize KiranSwitchButton::sizeHint() const
     QStyleOptionButton optionButton;
     initStyleOption(&optionButton);
 
-    //获取文字宽高
+    QSize size(IndicatorWidth,IndicatorHeight);
+
     QString str = text();
-    QFontMetrics metrics = fontMetrics();
-    QSize size = metrics.size(Qt::TextHideMnemonic, str);
-
-    size.setHeight(qMax(size.height(), IndicatorHeight));
-
-    size += 2 * QSize(3, 3);
-
-    size.rwidth() += ItemSpacing;
-    size.rwidth() += IndicatorWidth;
+    if( !str.isEmpty() )
+    {
+        QFontMetrics metrics = fontMetrics();
+        size.setHeight(qMax(metrics.size(Qt::TextHideMnemonic, str).height(), IndicatorHeight));
+        size += 2 * QSize(3, 3);
+        size.rwidth() += ItemSpacing;
+    }
 
     return size;
 }
@@ -132,7 +133,7 @@ void KiranSwitchButtonPrivate::doLayout(QRect &indicatorRect, QRect &indicatorCi
     indicatorRect = QRect(indicatorTopLeft, indicatorSize);
 
     //指示器之中圆形开关
-    QSize indicatorCircularSize(indicatorSize.height() - 4, indicatorSize.height() - 4);
+    QSize indicatorCircularSize(indicatorSize.height() - 8, indicatorSize.height() - 8);
     QPoint indicatorCircularTopLeft(indicatorRect.left() + 2, indicatorRect.top() + (indicatorRect.height() - indicatorCircularSize.height()) / 2);
     indicatorCircularRect = QRect(indicatorCircularTopLeft, indicatorCircularSize);
     if (option.state & QStyle::State_On)

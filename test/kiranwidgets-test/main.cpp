@@ -16,7 +16,7 @@
 
 #include "kiran-application.h"
 #include "kiran-single-application.h"
-
+#include "message-demo.h"
 int main(int argc, char *argv[])
 {
     KiranSingleApplication a(argc, argv);
@@ -28,5 +28,7 @@ int main(int argc, char *argv[])
     Widget w;
     w.show();
 
+    MessageDemo demo;
+    demo.exec();
     return KiranApplication::exec();
 }

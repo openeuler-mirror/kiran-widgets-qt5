@@ -133,3 +133,9 @@ QSize KiranMessageBox::sizeHint() const
     }
     return size;
 }
+
+void KiranMessageBox::addWidgetToDialog(QWidget* widget,Qt::AlignmentFlag alignment)
+{
+    d_ptr->m_customLayout->setContentsMargins(0,10,0,0);
+    d_ptr->m_customLayout->addWidget(widget,0,alignment);
+}

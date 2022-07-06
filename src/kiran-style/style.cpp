@@ -68,7 +68,8 @@ Style::Style(StyleEnum type)
     setObjectName("kiran-style");
 }
 
-Style::~Style(){
+Style::~Style()
+{
     for(auto iter=animations.begin();iter!=animations.end();iter++){
         delete iter.value();
     }

@@ -30,7 +30,9 @@
 #include <QTranslator>
 #include <QVBoxLayout>
 
-#include <kiran-style-property.h>
+#include <style-property.h>
+
+using namespace Kiran;
 
 ///默认按钮信息Map QMap<默认按钮枚举值,<按钮文本,按钮角色>>
 static QMap<KiranStandardButton, QPair<QString, ButtonRole>> standardButtonInfoMap;
@@ -142,6 +144,15 @@ void KiranMessageBoxPrivate::init(const QString &title,
     m_textLabel->setMaximumHeight(qApp->desktop()->height() / 4);
     m_frameLayout->addWidget(m_textLabel);
 
+
+    // 自定义布局，提供给外部调用添加控件
+    QWidget* customWidget = new QWidget(m_frame);
+    customWidget->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
+    m_customLayout = new QHBoxLayout(customWidget);
+    m_customLayout->setMargin(0);
+    m_customLayout->setSpacing(0);
+    m_frameLayout->addWidget(customWidget);
+
     QSpacerItem *spacerItem_1 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
     m_frameLayout->addItem(spacerItem_1);
 
@@ -198,7 +209,7 @@ QPushButton *KiranMessageBoxPrivate::addButton(KiranStandardButton standardButto
     if (buttonInfoIter.value().second == QDialogButtonBox::AcceptRole ||
         buttonInfoIter.value().second == QDialogButtonBox::YesRole)
     {
-        Kiran::Style::PropertyHelper::setButtonType(button, Kiran::Style::BUTTON_Default);
+        StylePropertyHelper::setButtonType(button, BUTTON_Default);
     }
 
     ///生成ObjectName，eg:KiranStandardButton::Ok->btn_Ok
@@ -223,7 +234,7 @@ QPushButton *KiranMessageBoxPrivate::addButton(const QString &text,
     if (role == QDialogButtonBox::AcceptRole ||
         role == QDialogButtonBox::YesRole)
     {
-        Kiran::Style::PropertyHelper::setButtonType(button, Kiran::Style::BUTTON_Default);
+        StylePropertyHelper::setButtonType(button, BUTTON_Default);
     }
     m_dialogButtonBox->addButton(button, role);
     return button;
@@ -368,7 +379,7 @@ void KiranMessageBoxPrivate::addButton(QPushButton *button, QDialogButtonBox::Bu
     if (role == QDialogButtonBox::AcceptRole ||
         role == QDialogButtonBox::YesRole)
     {
-        Kiran::Style::PropertyHelper::setButtonType(button, Kiran::Style::BUTTON_Default);
+        StylePropertyHelper::setButtonType(button, BUTTON_Default);
     }
     m_dialogButtonBox->addButton(button, role);
 }

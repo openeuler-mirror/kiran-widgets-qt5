@@ -91,6 +91,7 @@ public:
                                        const QString &text,
                                        KiranStandardButtons buttons);
     QSize sizeHint() const override;
+
     /**
      * @brief 设置窗口标题
      * @param title 标题
@@ -140,6 +141,11 @@ public:
      * @return 消息对话框点击的按钮，若没点击按钮则为NULL
      */
     QPushButton *clickedButton();
+
+    /**
+     * @brief 添加控件进入消息对话框
+     */
+    void addWidgetToDialog(QWidget* widget,Qt::AlignmentFlag alignment);
 
 protected:
     bool event(QEvent *event) override;

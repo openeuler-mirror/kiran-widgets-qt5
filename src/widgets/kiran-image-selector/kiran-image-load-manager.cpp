@@ -21,6 +21,13 @@
 #include <QFile>
 #include <QtConcurrent>
 
+void KiranImageLoadManager::appExitCleanup()
+{
+    // 避免偶发的QCoreApplication析构时,先会将QCoreApplication::self置为null,然后才等待全局线程退出,导致图片加载线程判断Application不存在，而崩溃
+    // 修改为在QCoreApplication析构时未将QCoreApplication::self时执行清理，等待线程退出
+    KiranImageLoadManager::instance()->reset();
+}
+
 KiranImageLoadManager::KiranImageLoadManager(QObject *parent) : QObject(parent) {
     init();
 }
@@ -38,6 +45,7 @@ KiranImageLoadManager *KiranImageLoadManager::instance() {
         QMutexLocker locker(&mutex);
         if (pInst.isNull()) {
             pInst.reset(new KiranImageLoadManager);
+            qAddPostRoutine(&KiranImageLoadManager::appExitCleanup);
         }
     }
 
