@@ -197,7 +197,13 @@ void KiranTitlebarWindowPrivate::handlerMouseButtonPressEvent(QMouseEvent *ev)
         }
     }
 
-    if (m_titlebarWidget->frameGeometry().contains(ev->pos()))
+    qInfo() << "ev pos:    " << ev->pos();
+    qInfo() << "rect:      " << q_ptr->rect();
+    qInfo() << "frame rect:" << m_frame->geometry();
+    qInfo() << "titlebar widget geometry:" << m_titlebarWidget->geometry();
+    qInfo() << "titlebar widget frame geometry:" << m_titlebarWidget->frameGeometry();
+    qInfo() << "titlebar frame contains:" << m_titlebarWidget->frameGeometry().contains(ev->pos());
+    if (m_titlebarWidget->frameGeometry().contains(m_titlebarWidget->mapFrom(q_ptr,ev->pos())))
     {
         m_titlebarIsPressed = true;
     }
