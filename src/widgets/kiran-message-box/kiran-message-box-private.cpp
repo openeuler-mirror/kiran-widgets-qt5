@@ -32,6 +32,11 @@
 
 #include <style-property.h>
 
+const int KiranMessageBoxPrivate::shadowWidth = 15;
+const int KiranMessageBoxPrivate::shadowRadius = 15;
+const QColor KiranMessageBoxPrivate::shadowColor = QColor(0,0,0,75);
+const QColor KiranMessageBoxPrivate::shadowActiveColor = QColor(0,0,0,150);
+
 using namespace Kiran;
 
 ///默认按钮信息Map QMap<默认按钮枚举值,<按钮文本,按钮角色>>
@@ -56,6 +61,7 @@ KiranMessageBoxPrivate::KiranMessageBoxPrivate(KiranMessageBox *ptr)
     m_dropShadowEffect = new QGraphicsDropShadowEffect(q_ptr);
     m_dropShadowEffect->setOffset(0, 0);
     m_dropShadowEffect->setEnabled(false);
+    m_dropShadowEffect->setBlurRadius(15);
     q_func()->setGraphicsEffect(m_dropShadowEffect);
 }
 
@@ -322,16 +328,16 @@ void KiranMessageBoxPrivate::enableShadow(bool enable)
 {
     m_dropShadowEffect->setEnabled(enable);
 
-    m_topShadowSpacerItem->changeSize(20,enable?SHADOW_BORDER_WIDTH:0,QSizePolicy::Minimum,QSizePolicy::Fixed);
-    m_bottomShadowSpacerItem->changeSize(20,enable?SHADOW_BORDER_WIDTH:0,QSizePolicy::Minimum,QSizePolicy::Fixed);
+    m_topShadowSpacerItem->changeSize(20,enable?shadowWidth:0,QSizePolicy::Minimum,QSizePolicy::Fixed);
+    m_bottomShadowSpacerItem->changeSize(20,enable?shadowWidth:0,QSizePolicy::Minimum,QSizePolicy::Fixed);
 
-    m_leftShadowSpacerItem->changeSize(enable?SHADOW_BORDER_WIDTH:0,20,QSizePolicy::Fixed,QSizePolicy::Minimum);
-    m_rightShadowSpacerItem->changeSize(enable?SHADOW_BORDER_WIDTH:0,20,QSizePolicy::Fixed,QSizePolicy::Minimum);
+    m_leftShadowSpacerItem->changeSize(enable?shadowWidth:0,20,QSizePolicy::Fixed,QSizePolicy::Minimum);
+    m_rightShadowSpacerItem->changeSize(enable?shadowWidth:0,20,QSizePolicy::Fixed,QSizePolicy::Minimum);
     
     q_ptr->adjustSize();
 
     ///NOTE:获取缩放率x(阴影边框宽度+窗口边框)
-    int shadowBorderWidth = (SHADOW_BORDER_WIDTH + 1) * q_ptr->devicePixelRatio();
+    int shadowBorderWidth = (shadowWidth + 1) * q_ptr->devicePixelRatio();
     XLibHelper::SetShadowWidth(QX11Info::display(),
                                q_ptr->winId(),
                                enable ? shadowBorderWidth : 0,
@@ -386,8 +392,7 @@ void KiranMessageBoxPrivate::handlerActivationChangeEvent(bool active)
     bool showShadow = (QX11Info::isCompositingManagerRunning() && (!(q_func()->windowState() & Qt::WindowFullScreen)));
     if (Q_LIKELY(m_dropShadowEffect && showShadow))
     {
-        m_dropShadowEffect->setColor(active ? DROP_SHADOW_ACTIVATED_COLOR : DROP_SHADOW_INACTIVATE_COLOR);
-        m_dropShadowEffect->setBlurRadius(active ? DROP_SHADOW_ACTIVATED_BLUR_RADIUS : DROP_SHADOW_INACTIVATE_BLUR_RADIUS);
+        m_dropShadowEffect->setColor(active ? shadowActiveColor : shadowColor);
     }
 }
 

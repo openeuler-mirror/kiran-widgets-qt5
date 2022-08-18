@@ -67,6 +67,11 @@ private:
     void handlerActivationChangeEvent(bool active);
 
 private:
+    static const int shadowWidth;
+    static const int shadowRadius;
+    static const QColor shadowColor;
+    static const QColor shadowActiveColor;
+
     KiranMessageBox *q_ptr;
     QLayout *m_layout;
     QLayout *m_hlayout;

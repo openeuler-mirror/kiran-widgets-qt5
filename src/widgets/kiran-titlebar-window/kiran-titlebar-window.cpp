@@ -21,6 +21,7 @@
 #include <QMouseEvent>
 #include <QWindow>
 #include <QApplication>
+#include <QPainter>
 
 KiranTitlebarWindow::KiranTitlebarWindow()
     : QWidget(nullptr),
@@ -151,6 +152,23 @@ bool KiranTitlebarWindow::event(QEvent *event)
     return QWidget::event(event);
 }
 
+void KiranTitlebarWindow::paintEvent(QPaintEvent *event)
+{
+    if( d_ptr->m_isCompositingManagerRunning )
+    {
+        QPainter p(this);
+        d_ptr->ensureShadowPixmapUpdated();
+        p.drawPixmap(rect(),isActiveWindow()?d_ptr->m_shadowActivePix:d_ptr->m_shadowPix);
+        p.end();
+    }
+
+#if 0
+    qDebug() << "paint event:" << size() << "pixmap size:" << (isActiveWindow()?d_ptr->m_shadowActivePix.size():d_ptr->m_shadowPix.size());
+#endif
+
+    QWidget::paintEvent(event);
+}
+
 bool KiranTitlebarWindow::titlebarCustomLayoutAlignHCenter() {
     return d_ptr->m_titleBarLayout->customWidgetCenter();
 }
@@ -161,6 +179,7 @@ void KiranTitlebarWindow::setTitlebarCustomLayoutAlignHCenter(bool center) {
 
 QSize KiranTitlebarWindow::sizeHint() const
 {
+#if 0
     QSize sizeHint = QWidget::sizeHint();
     if(d_ptr->m_isCompositingManagerRunning)
     {
@@ -168,6 +187,8 @@ QSize KiranTitlebarWindow::sizeHint() const
         sizeHint.setHeight(2*SHADOW_BORDER_WIDTH+sizeHint.height());
     }
     return sizeHint;
+#endif
+    return QWidget::sizeHint();
 }
 
 void KiranTitlebarWindow::setTitleBarHeight(int height)
