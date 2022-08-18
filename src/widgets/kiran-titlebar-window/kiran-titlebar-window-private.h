@@ -26,7 +26,7 @@
 #include "title-bar-layout.h"
 
 class QGraphicsDropShadowEffect;
-
+class FramelessBackgroundFrame;
 class KiranTitlebarWindowPrivate : public QObject{
     Q_OBJECT
     Q_DECLARE_PUBLIC(KiranTitlebarWindow);
@@ -61,9 +61,9 @@ private slots:
 
 private:
     KiranTitlebarWindow *q_ptr;
-    QLayout *m_layout;               /** < 主布局 **/
+    QLayout *m_layout;                 /** < 主布局 **/
 
-    QFrame *m_frame;                 /** < 主背景 **/
+    FramelessBackgroundFrame *m_frame; /** < 主背景 **/
     QLayout *m_frameLayout;          /** < 主背景布局 **/
 
     QWidget *m_titlebarWidget;       /** < 标题栏窗口 **/

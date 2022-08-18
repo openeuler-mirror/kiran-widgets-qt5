@@ -262,6 +262,7 @@ void KiranTitlebarWindowPrivate::initOtherWidget()
 
     ///背景
     m_frame = new FramelessBackgroundFrame(q_ptr);
+    m_frame->setRadius(radius);
     m_frame->setAttribute(Qt::WA_Hover);
     m_layout->addWidget(m_frame);
     m_frame->setObjectName("KiranTitlebarFrame");
@@ -542,6 +543,16 @@ bool KiranTitlebarWindowPrivate::eventFilter(QObject *obj, QEvent *event)
             break;
         case QEvent::StyleChange:
             updateTitlebarButtonIcon();
+            break;
+        case QEvent::WindowStateChange: 
+            if( q_ptr->windowState() == Qt::WindowMaximized )
+            {
+                m_frame->setRadius(0);
+            }
+            else
+            {
+                m_frame->setRadius(radius);
+            }
             break;
         default:
             break;
