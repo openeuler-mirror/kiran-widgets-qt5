@@ -26,10 +26,10 @@ KiranSidebarItem::~KiranSidebarItem()
 {
 }
 
-void KiranSidebarItem::setStatusDesc(const QString &desc, QColor &color)
+void KiranSidebarItem::setStatusDesc(const QString &desc,const QColor &color)
 {
     setData(ItemStatus_Role,desc);
-    setData(ItemStatusColor_Role,desc);
+    setData(ItemStatusColor_Role,color);
 }
 
 void KiranSidebarItem::getStatusDesc(QString &desc, QColor &color)

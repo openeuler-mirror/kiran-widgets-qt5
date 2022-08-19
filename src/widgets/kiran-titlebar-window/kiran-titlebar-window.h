@@ -148,7 +148,7 @@ public:
       * 初始化时缓存QX11Info::isCompositingManagerRunning的值
       * 提供给样式表一个属性值，方便设置混成开关两种样式
       */
-    bool compositingRunning() const;
+    Q_DECL_DEPRECATED bool compositingRunning() const;
 
     QSize sizeHint() const override;
 
@@ -160,6 +160,7 @@ public:
      * 获取窗口透明边框的宽度
      */
     int transparentWidth();
+
 public slots:
     /**
      * @brief 设置内容窗口距底部边距
@@ -182,6 +183,7 @@ public slots:
 protected:
     /* 事件处理 */
     bool event(QEvent *event) override;
+    void paintEvent(QPaintEvent *event) override;
 
 private:
     /* KiranTitlebarWindow私有类指针 */

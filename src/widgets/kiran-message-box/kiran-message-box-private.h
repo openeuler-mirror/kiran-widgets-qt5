@@ -21,6 +21,7 @@
 #include <QDialogButtonBox>
 #include <QGraphicsDropShadowEffect>
 #include <QHBoxLayout>
+#include <QSpacerItem>
 
 class QLabel;
 class QPushButton;
@@ -39,6 +40,8 @@ private:
 
 private:
     void init(const QString &title="", const QString &text="");
+    QWidget* initChildWidgets(const QString& title,const QString& text);
+
     //NOTE:暂时不用
     void setIcon(const QString &iconPath);
     void setTitle(const QString &title);
@@ -64,8 +67,18 @@ private:
     void handlerActivationChangeEvent(bool active);
 
 private:
+    static const int shadowWidth;
+    static const int shadowRadius;
+    static const QColor shadowColor;
+    static const QColor shadowActiveColor;
+
     KiranMessageBox *q_ptr;
     QLayout *m_layout;
+    QLayout *m_hlayout;
+    QSpacerItem *m_topShadowSpacerItem;
+    QSpacerItem *m_bottomShadowSpacerItem;
+    QSpacerItem *m_leftShadowSpacerItem;
+    QSpacerItem *m_rightShadowSpacerItem;
 
     QFrame *m_frame;
     QVBoxLayout *m_frameLayout;

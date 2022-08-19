@@ -126,7 +126,7 @@ QSize KiranMessageBox::sizeHint() const
     bool showShadow = QX11Info::isCompositingManagerRunning();
     QMargins margins = d_ptr->m_frameLayout->contentsMargins();
 
-    int minimumWidth = buttonBoxSizeHint.width() + margins.left() + margins.right() + (showShadow ? (2 * SHADOW_BORDER_WIDTH) : 0);
+    int minimumWidth = buttonBoxSizeHint.width() + margins.left() + margins.right() + (showShadow ? (2 * d_ptr->shadowWidth) : 0);
     if (size.width() < minimumWidth)
     {
         size.rwidth() = minimumWidth;
