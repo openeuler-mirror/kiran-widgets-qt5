@@ -12,6 +12,6 @@ public:
     KiranSidebarItem(const QListWidgetItem &other);
     virtual ~KiranSidebarItem();
 
-    void setStatusDesc(const QString &desc, QColor &color);
+    void setStatusDesc(const QString &desc,const QColor &color);
     void getStatusDesc(QString &desc, QColor &color);
 };

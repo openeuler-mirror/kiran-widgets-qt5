@@ -69,6 +69,12 @@ void FramelessBackgroundFrame::resizeEvent(QResizeEvent *event)
 
 void FramelessBackgroundFrame::updateMask()
 {
+    if( m_radius )
+    {
+        clearMask();
+        return;
+    }
+    
     QBitmap maskBitMap(this->width(), this->height());
     QPainter bitMapPainter(&maskBitMap);
     QPainterPath painterPath;

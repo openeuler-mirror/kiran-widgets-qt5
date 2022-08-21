@@ -26,8 +26,8 @@
 #include "title-bar-layout.h"
 
 class QGraphicsDropShadowEffect;
-
-class KiranTitlebarWindowPrivate : public QObject,QAbstractNativeEventFilter{
+class FramelessBackgroundFrame;
+class KiranTitlebarWindowPrivate : public QObject{
     Q_OBJECT
     Q_DECLARE_PUBLIC(KiranTitlebarWindow);
 public:
@@ -36,14 +36,10 @@ public:
 
 private:
     void init();
-
     void setIcon(const QIcon &icon);
     void setTitle(const QString &title);
     void setButtonHints(KiranTitlebarWindow::TitlebarButtonHintFlags hints);
     void setWindowContentWidget(QWidget *widget);
-
-    virtual bool nativeEventFilter(const QByteArray &eventType, void *message, long *result) override;
-    void adaptToVirtualScreenSize();
 
 private:
     void handlerHoverMoveEvent(QHoverEvent *ev);
@@ -56,22 +52,18 @@ private:
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override;
     void initOtherWidget();
-    void initShadow();
-    void updateShadowStyle(bool active);
     Kiran::CursorPositionEnums getCursorPosition(QPoint pos);
+    void ensureShadowPixmapUpdated();
 
 private slots:
     void updateTitleFont(QFont font);
     void updateTitlebarButtonIcon();
 
-    void handlerPrimaryScreenChanged(QScreen* screen);
-    void handlerPrimaryScreenVirtualGeometryChanged(const QRect &rect);
-
 private:
     KiranTitlebarWindow *q_ptr;
-    QLayout *m_layout;               /** < 主布局 **/
+    QLayout *m_layout;                 /** < 主布局 **/
 
-    QFrame *m_frame;                 /** < 主背景 **/
+    FramelessBackgroundFrame *m_frame; /** < 主背景 **/
     QLayout *m_frameLayout;          /** < 主背景布局 **/
 
     QWidget *m_titlebarWidget;       /** < 标题栏窗口 **/
@@ -95,11 +87,21 @@ private:
 private:
     bool m_titlebarIsPressed;
     bool m_resizeable;
-    // NOTE: 使用DropShadowEffect会将设置的窗口绘制成图片，之后再背景透明的地方添加阴影,再进行渲染
-    // 理论上窗口内容m_frame绘制的圆角窗口具有背景，所以不会在m_frame子控件里添加阴影
-    QGraphicsDropShadowEffect *m_shadowEffect;
+
     bool m_isCompositingManagerRunning;
     bool m_firstMap=true;
+
+    static const int radius;
+
+    //一些常量用于生成阴影边框
+    static const int shadowRadius;
+    static const int shadowWidth;
+    static const QColor shadowActiveColor;
+    static const QColor shadowInactiveColor;
+
+    //下列关于阴影边框变量 修改应只在'ensureShadowPixmapUpdated'之中
+    QPixmap m_shadowPix;            //生成的阴影边框图片 窗口未激活时
+    QPixmap m_shadowActivePix;      //生成的阴影边框图片 窗口激活时
 };
 
 #endif // KIRANTITLEBARWINDOWPRIVATE_H

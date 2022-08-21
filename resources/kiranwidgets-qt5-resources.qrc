@@ -17,13 +17,6 @@
         <file>images/search-box/search.svg</file>
     </qresource>
 
-    <!-- 主题 -->
-    <qresource prefix="/kiranwidgets-qt5">
-        <file>themes/kiran-messagebox_black.qss</file>
-        <file>themes/kiran-titlebar-window_black.qss</file>
-    </qresource>
-
-
     <!--主题样式细节-->
     <qresource prefix="/kiran-style">
         <file>style-detail/kiran-dark.css</file>

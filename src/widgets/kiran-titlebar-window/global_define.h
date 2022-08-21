@@ -17,9 +17,6 @@
 
 #include <QObject>
 
-#define SHADOW_BORDER_WIDTH 10
-#define DEFAULT_THEME_PATH ":/kiranwidgets-qt5/themes/kiran-titlebar-window_black.qss"
-
 namespace Kiran {
     Q_NAMESPACE
     enum CursorPositionEnum{
