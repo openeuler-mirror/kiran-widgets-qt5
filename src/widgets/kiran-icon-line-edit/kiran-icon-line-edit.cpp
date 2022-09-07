@@ -26,6 +26,7 @@ KiranIconLineEdit::KiranIconLineEdit(QWidget *parent)
       d_ptr(new KiranIconLineEditPrivate(this))
 {
     d_ptr->init(this);
+    setAccessibleName("KiranIconLineEdit");
 }
 
 KiranIconLineEdit::KiranIconLineEdit(const QString &text, QWidget *parent)

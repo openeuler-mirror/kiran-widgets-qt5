@@ -33,6 +33,7 @@ KiranSwitchButton::KiranSwitchButton(QWidget *parent)
       d_ptr(new KiranSwitchButtonPrivate(this))
 {
     setCheckable(true);
+    setAccessibleName("KiranSwitchButton");
     setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 }
 
