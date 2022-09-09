@@ -92,5 +92,14 @@ private:
 
     QMargins m_rightWidgetMargins;
     QLayoutItem* m_rightWidgetItem = nullptr;
+
+    enum TitlebarLayoutItemEnum{
+        LAYOUT_ITEM_ICON_LABEL,
+        LAYOUT_ITEM_TITLE_LABEL,
+        LAYOUT_ITEM_CUSTOM_WIDGET,
+        LAYOUT_ITEM_RIGHT_WIDGET,
+        LAYOUT_ITEM_LAST
+    };
+    QVector<QLayoutItem*> m_layoutItemsVec;
 };
 #endif //KIRANWIDGETS_QT5_TITLE_BAR_LAYOUT_H
