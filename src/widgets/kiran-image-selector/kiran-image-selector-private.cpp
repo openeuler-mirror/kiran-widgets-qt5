@@ -68,6 +68,7 @@ void KiranImageSelectorPrivate::init(KiranImageSelector *ptr) {
 
     m_prevBtn = new KiranImageButton(q_ptr, true);
     m_prevBtn->setObjectName("image_selector_prev");
+    m_prevBtn->setAcceptDrops("ImageListPrivButton");
     m_prevBtn->setIcon(QIcon::fromTheme("window"));
     m_prevBtn->setFixedWidth(22);
     m_prevBtn->raise();
@@ -77,6 +78,7 @@ void KiranImageSelectorPrivate::init(KiranImageSelector *ptr) {
 
     m_nextBtn = new KiranImageButton(q_ptr, false);
     m_nextBtn->setObjectName("image_selector_next");
+    m_nextBtn->setAccessibleName("ImageListNextButton");
     m_nextBtn->setIcon(QIcon::fromTheme("window"));
     m_nextBtn->setFixedWidth(22);
     m_nextBtn->raise();

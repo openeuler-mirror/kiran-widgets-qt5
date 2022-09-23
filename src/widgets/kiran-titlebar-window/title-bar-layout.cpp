@@ -16,7 +16,7 @@
 #include <QDebug>
 
 TitlebarLayout::TitlebarLayout(QWidget *parent)
-        : QLayout(parent) {
+        : QLayout(parent),m_layoutItemsVec(LAYOUT_ITEM_LAST) {
     setSpacing(0);
     setMargin(0);
 }
@@ -35,6 +35,7 @@ QLayoutItem *TitlebarLayout::titleBarIcon() {
 void TitlebarLayout::setTitleBarIconLabel(QLabel *icon) {
     delete m_iconLabelItem;
     m_iconLabelItem = new QWidgetItem(icon);
+    m_layoutItemsVec[LAYOUT_ITEM_ICON_LABEL] = m_iconLabelItem;
 }
 
 QLayoutItem *TitlebarLayout::titleBarTitle() {
@@ -44,6 +45,7 @@ QLayoutItem *TitlebarLayout::titleBarTitle() {
 void TitlebarLayout::setTitleBarTitleLabel(QLabel *title) {
     delete m_titleLabelItem;
     m_titleLabelItem = new QWidgetItem(title);
+    m_layoutItemsVec[LAYOUT_ITEM_TITLE_LABEL] = m_titleLabelItem;
 }
 
 QLayoutItem *TitlebarLayout::titleBarCustomWidget() {
@@ -53,6 +55,7 @@ QLayoutItem *TitlebarLayout::titleBarCustomWidget() {
 void TitlebarLayout::setTitleBarCustomWidget(QWidget *customWidget) {
     delete m_customWidgetItem;
     m_customWidgetItem = new QWidgetItem(customWidget);
+    m_layoutItemsVec[LAYOUT_ITEM_CUSTOM_WIDGET] = m_customWidgetItem;
 }
 
 QLayoutItem *TitlebarLayout::titleBarRightWidget() {
@@ -62,6 +65,7 @@ QLayoutItem *TitlebarLayout::titleBarRightWidget() {
 void TitlebarLayout::setTitleBarRightWidget(QWidget *rightWidget) {
     delete m_rightWidgetItem;
     m_rightWidgetItem = new QWidgetItem(rightWidget);
+    m_layoutItemsVec[LAYOUT_ITEM_RIGHT_WIDGET] = m_rightWidgetItem;
 }
 
 void TitlebarLayout::addItem(QLayoutItem *item) {
@@ -72,6 +76,18 @@ QSize TitlebarLayout::sizeHint() const {
 }
 
 QLayoutItem *TitlebarLayout::itemAt(int index) const {
+    int i=0;
+    for(auto item:m_layoutItemsVec)
+    {
+        if( item==nullptr )
+            continue;
+        
+        if( i == index )
+        {
+            return item;
+        }
+        i++;
+    }
     return nullptr;
 }
 
@@ -84,7 +100,7 @@ void TitlebarLayout::setGeometry(const QRect &rect) {
     }
 
     QRect contentRect = rect;
-    int leftMargin, topMargin, rightMargin, bottomMargin;
+    int leftMargin, topMargin, rightMargin, bottomMargin;   
     getContentsMargins(&leftMargin, &topMargin, &rightMargin, &bottomMargin);
     contentRect.adjust(leftMargin, topMargin, -rightMargin, -bottomMargin);
 
@@ -226,14 +242,11 @@ QLayoutItem *TitlebarLayout::takeAt(int index) {
 
 int TitlebarLayout::count() const {
     int count = 0;
-    if (m_iconLabelItem != nullptr)
-        count++;
-    if (m_titleLabelItem != nullptr)
-        count++;
-    if (m_customWidgetItem != nullptr)
-        count++;
-    if (m_rightWidgetItem != nullptr)
-        count++;
+    for(auto item:m_layoutItemsVec)
+    {
+        if(item!=nullptr)
+            count++;
+    }
     return count;
 }
 

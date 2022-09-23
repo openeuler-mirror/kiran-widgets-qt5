@@ -30,6 +30,7 @@ KiranMessageBox::KiranMessageBox(QWidget *parent)
 {
     setWindowFlag(Qt::FramelessWindowHint);      //无边框
     setAttribute(Qt::WA_TranslucentBackground);  //背景透明
+    setAccessibleName("KiranMessageBox");
     d_ptr->init();
     connect(d_ptr->m_dialogButtonBox, &QDialogButtonBox::clicked, [this](QAbstractButton *button) {
         d_ptr->m_clickedStandardButton = d_ptr->standardButton(button);

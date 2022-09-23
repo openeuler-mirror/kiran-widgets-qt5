@@ -6,20 +6,15 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 find_package(Qt5Test REQUIRED)
 
-add_executable(kiran-application-test kiran-application-test.cpp)
-add_test(NAME kiran-application-test COMMAND kiran-application-test)
-target_link_libraries(kiran-application-test Qt5::Test kiranwidgets-qt5)
+macro(ADD_TEST_ENTRY ENTRY_NAME)
+    add_executable(${ENTRY_NAME} ${ENTRY_NAME}.cpp)
+    add_test(NAME ${ENTRY_NAME} COMMAND ${ENTRY_NAME})
+    target_link_libraries(${ENTRY_NAME} Qt5::Test kiranwidgets-qt5)
+endmacro()
 
-add_executable(kiran-image-selector-test kiran-image-selector-test.cpp)
-add_test(NAME kiran-image-selector-test COMMAND kiran-image-selector-test)
-target_link_libraries(kiran-image-selector-test Qt5::Test kiranwidgets-qt5)
-
-add_executable(kiran-message-box-test kiran-message-box-test.cpp)
-add_test(NAME kiran-message-box-test COMMAND kiran-message-box-test)
-target_link_libraries(kiran-message-box-test Qt5::Test kiranwidgets-qt5)
-
-add_executable(kiran-sidebar-widget-test kiran-sidebar-widget-test.cpp)
-add_test(NAME kiran-sidebar-widget-test COMMAND kiran-sidebar-widget-test)
-target_link_libraries(kiran-sidebar-widget-test Qt5::Test kiranwidgets-qt5)
-
-add_subdirectory(kiranwidgets-test)
+ADD_TEST_ENTRY(kiran-application-test)
+ADD_TEST_ENTRY(kiran-image-selector-test)
+ADD_TEST_ENTRY(kiran-message-box-test)
+ADD_TEST_ENTRY(kiran-sidebar-widget-test)
+ADD_TEST_ENTRY(kiran-hover-tips-test)
+ADD_TEST_ENTRY(kiran-tips-test)

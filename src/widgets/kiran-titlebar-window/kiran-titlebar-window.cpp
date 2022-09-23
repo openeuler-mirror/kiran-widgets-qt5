@@ -30,6 +30,7 @@ KiranTitlebarWindow::KiranTitlebarWindow()
     setWindowFlags(Qt::FramelessWindowHint|Qt::Window);
     setAttribute(Qt::WA_TranslucentBackground);
     setAttribute(Qt::WA_Hover);
+    setAccessibleName("KiranTitlebarWindow");
 
     d_func()->init();
     QWidget::ensurePolished();
