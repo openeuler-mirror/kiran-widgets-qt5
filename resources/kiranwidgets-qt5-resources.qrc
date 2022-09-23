@@ -15,6 +15,12 @@
         <file>images/image-selector/selected.svg</file>
 
         <file>images/search-box/search.svg</file>
+
+        <file>images/hover-tips/tips-err.svg</file>
+        <file>images/hover-tips/tips-info.svg</file>
+        <file>images/hover-tips/tips-suc.svg</file>
+        <file>images/hover-tips/tips-warning.svg</file>
+        
     </qresource>
 
     <!--主题样式细节-->

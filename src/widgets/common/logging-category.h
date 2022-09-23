@@ -11,24 +11,12 @@
  * 
  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
  */
- 
-#include "widget.h"
 
-#include "kiran-application.h"
-#include "kiran-single-application.h"
-#include "message-demo.h"
-int main(int argc, char *argv[])
-{
-    KiranSingleApplication a(argc, argv);
-    /**
-     *         AA_UseDesktopOpenGL = 15,
-        AA_UseOpenGLES = 16,
-        AA_UseSoftwareOpenGL = 17,
-     */
-    Widget w;
-    w.show();
+#ifndef KIRAN_QT5_INTEGRATION_PLATFORMTHEME_LOGGIN_CATEGORY_H_
+#define KIRAN_QT5_INTEGRATION_PLATFORMTHEME_LOGGIN_CATEGORY_H_
 
-    MessageDemo demo;
-    demo.exec();
-    return KiranApplication::exec();
-}
+#include <QLoggingCategory>
+
+Q_DECLARE_LOGGING_CATEGORY(kiranWidgets)
+
+#endif  //KIRAN_QT5_INTEGRATION_PLATFORMTHEME_LOGGIN_CATEGORY_H_
