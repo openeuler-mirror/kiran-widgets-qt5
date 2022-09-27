@@ -68,6 +68,7 @@ set(DEVEL_HEADER
         "src/widgets/kiran-image-selector/kiran-image-selector.h"
         "src/widgets/kiran-push-button/kiran-push-button.h"
         "src/widgets/kiran-hover-tips/kiran-hover-tips.h"
+        "src/widgets/kiran-color-block/kiran-color-block.h"
         "src/kiran-style/widget-property-helper.h"
         "src/kiran-style/kiran-style-public-define.h" )
 
