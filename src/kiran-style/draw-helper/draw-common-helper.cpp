@@ -15,12 +15,13 @@
 #include "draw-common-helper.h"
 #include "style.h"
 
-#include <QtMath>
-#include <QDebug>
 #include <QApplication>
-#include <QX11Info>
+#include <QDebug>
+#include <QPainterPath>
 #include <QStyle>
 #include <QSvgRenderer>
+#include <QX11Info>
+#include <QtMath>
 
 using namespace Kiran;
 

@@ -17,9 +17,10 @@
 #include "draw-common-helper.h"
 #include "style.h"
 
+#include <QAbstractItemView>
 #include <QComboBox>
 #include <QDebug>
-#include <QAbstractItemView>
+#include <QPainterPath>
 
 using namespace Kiran;
 

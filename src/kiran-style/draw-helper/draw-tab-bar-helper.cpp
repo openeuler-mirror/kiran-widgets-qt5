@@ -17,8 +17,9 @@
 #include "draw-common-helper.h"
 #include "kiran-style-private-defines.h"
 
-#include <QPainter>
 #include <QDebug>
+#include <QPainter>
+#include <QPainterPath>
 #include <QtWidgets/QStyleOption>
 
 using namespace Kiran;
