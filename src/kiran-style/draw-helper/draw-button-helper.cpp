@@ -1,27 +1,27 @@
 /**
- * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd. 
+ * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
  * kiranwidgets-qt5 is licensed under Mulan PSL v2.
- * You can use this software according to the terms and conditions of the Mulan PSL v2. 
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
- *          http://license.coscl.org.cn/MulanPSL2 
- * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, 
- * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, 
- * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.  
- * See the Mulan PSL v2 for more details.  
- * 
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
  */
-#include <QStyleOption>
 #include <QAbstractButton>
-#include <QPushButton>
 #include <QDebug>
 #include <QPainterPath>
+#include <QPushButton>
+#include <QStyleOption>
 
-#include "style.h"
-#include "draw-common-helper.h"
 #include "draw-button-helper.h"
-#include "widget-property-helper.h"
+#include "draw-common-helper.h"
 #include "style-detail-fetcher.h"
+#include "style.h"
+#include "widget-property-helper.h"
 
 using namespace Kiran;
 
@@ -112,21 +112,21 @@ bool DrawButtonHelper::drawPushButtonBevelControl(const Style *style, const QSty
         }
         ButtonType buttonType = WidgetPropertyHelper::getButtonType(btn);
         switch (buttonType) {
-            case BUTTON_Default:
-                bgColorProperty = StyleDetailFetcher::Button_DefaultBackground;
-                borderColorProperty = StyleDetailFetcher::Button_DefaultBorderColor;
-                borderWidthProperty = StyleDetailFetcher::Button_DefaultBorderWidth;
-                break;
-            case BUTTON_Warning:
-                bgColorProperty = StyleDetailFetcher::Button_WarningBackground;
-                borderColorProperty = StyleDetailFetcher::Button_WarningBorderColor;
-                borderWidthProperty = StyleDetailFetcher::Button_WarningBorderWidth;
-                break;
-            default:
-                bgColorProperty = StyleDetailFetcher::Button_NormalBackground;
-                borderColorProperty = StyleDetailFetcher::Button_NormalBorderColor;
-                borderWidthProperty = StyleDetailFetcher::Button_NormalBorderWidth;
-                break;
+        case BUTTON_Default:
+            bgColorProperty = StyleDetailFetcher::Button_DefaultBackground;
+            borderColorProperty = StyleDetailFetcher::Button_DefaultBorderColor;
+            borderWidthProperty = StyleDetailFetcher::Button_DefaultBorderWidth;
+            break;
+        case BUTTON_Warning:
+            bgColorProperty = StyleDetailFetcher::Button_WarningBackground;
+            borderColorProperty = StyleDetailFetcher::Button_WarningBorderColor;
+            borderWidthProperty = StyleDetailFetcher::Button_WarningBorderWidth;
+            break;
+        default:
+            bgColorProperty = StyleDetailFetcher::Button_NormalBackground;
+            borderColorProperty = StyleDetailFetcher::Button_NormalBorderColor;
+            borderWidthProperty = StyleDetailFetcher::Button_NormalBorderWidth;
+            break;
         }
     }
 
@@ -276,7 +276,7 @@ bool DrawButtonHelper::drawToolButtonLabelControl(const Style *style, const QSty
 
     const QSize iconSize = buttonOption->iconSize;
 
-    //FIXME:该标志是否写死，文字一直为居中显示
+    // FIXME:该标志是否写死，文字一直为居中显示
     int textFlags(Qt::AlignCenter);
     const QSize textSize(opt->fontMetrics.size(textFlags, buttonOption->text));
 
@@ -329,47 +329,54 @@ bool DrawButtonHelper::drawToolButtonLabelControl(const Style *style, const QSty
         QStyleOptionToolButton copy(*buttonOption);
         copy.rect = iconRect;
         switch (buttonOption->arrowType) {
-            case Qt::LeftArrow:
-                style->drawPrimitive(QStyle::PE_IndicatorArrowLeft, &copy, p, widget);
-                break;
-            case Qt::RightArrow:
-                style->drawPrimitive(QStyle::PE_IndicatorArrowRight, &copy, p, widget);
-                break;
-            case Qt::UpArrow:
-                style->drawPrimitive(QStyle::PE_IndicatorArrowUp, &copy, p, widget);
-                break;
-            case Qt::DownArrow:
-                style->drawPrimitive(QStyle::PE_IndicatorArrowDown, &copy, p, widget);
-                break;
-            default:
-                break;
+        case Qt::LeftArrow:
+            style->drawPrimitive(QStyle::PE_IndicatorArrowLeft, &copy, p, widget);
+            break;
+        case Qt::RightArrow:
+            style->drawPrimitive(QStyle::PE_IndicatorArrowRight, &copy, p, widget);
+            break;
+        case Qt::UpArrow:
+            style->drawPrimitive(QStyle::PE_IndicatorArrowUp, &copy, p, widget);
+            break;
+        case Qt::DownArrow:
+            style->drawPrimitive(QStyle::PE_IndicatorArrowDown, &copy, p, widget);
+            break;
+        default:
+            break;
         }
-    } else if (hasIcon && iconRect.isValid()) {
+    }
+    else if (hasIcon && iconRect.isValid())
+    {
         //图标状态
         const QIcon::State iconState(sunken ? QIcon::On : QIcon::Off);
         QIcon::Mode iconMode;
 
-        if (!enabled) iconMode = QIcon::Disabled;
-        else if (!flat && hasFocus) iconMode = QIcon::Selected;
-        else if (mouseOver && flat) iconMode = QIcon::Active;
-        else iconMode = QIcon::Normal;
+        if (!enabled)
+            iconMode = QIcon::Disabled;
+        else if (!flat && hasFocus)
+            iconMode = QIcon::Selected;
+        else if (mouseOver && flat)
+            iconMode = QIcon::Active;
+        else
+            iconMode = QIcon::Normal;
 
         buttonOption->icon.paint(p, iconRect, Qt::AlignCenter, iconMode, iconState);
     }
 
     // 绘制文字
-    if (hasText && textRect.isValid()) {
-        QColor textColor = fetcher->getColor(widget, opt, flat ? StyleDetailFetcher::Button_FlatTextColor
-                                                               : StyleDetailFetcher::Button_TextColor);
+    if (hasText && textRect.isValid())
+    {
+        QColor textColor = fetcher->getColor(widget, opt, flat ? StyleDetailFetcher::Button_FlatTextColor : StyleDetailFetcher::Button_TextColor);
         p->setPen(textColor);
 
         if (buttonOption->features & QStyleOptionButton::HasMenu)
             textRect = textRect.adjusted(0, 0,
                                          -style->proxy()->pixelMetric(QStyle::PM_MenuButtonIndicator, buttonOption,
-                                                                      widget), 0);
+                                                                      widget),
+                                         0);
 
-        //NOTE:需加上Qt::TextShowMnemonic或Qt::TextHideMnemonic才会转换’&‘成下划线标记快捷键
-        p->drawText(textRect, textFlags|MnemonicTextFlag, buttonOption->text);
+        // NOTE:需加上Qt::TextShowMnemonic或Qt::TextHideMnemonic才会转换’&‘成下划线标记快捷键
+        p->drawText(textRect, textFlags | MnemonicTextFlag, buttonOption->text);
     }
 
     return true;
@@ -395,7 +402,8 @@ bool DrawButtonHelper::drawCheckBoxLabelControl(const Style *style, const QStyle
     const QIcon &buttonIcon = buttonOption->icon;
 
     //图标
-    if (!buttonIcon.isNull()) {
+    if (!buttonIcon.isNull())
+    {
         const QIcon::Mode mode(enabled ? QIcon::Normal : QIcon::Disabled);
         QPixmap pixmap(buttonOption->icon.pixmap(buttonOption->iconSize, mode));
         style->drawItemPixmap(p, rect, alignmentFlag, pixmap);
@@ -406,10 +414,11 @@ bool DrawButtonHelper::drawCheckBoxLabelControl(const Style *style, const QStyle
     }
 
     //文本
-    if (!buttonOption->text.isEmpty()) {
+    if (!buttonOption->text.isEmpty())
+    {
         textRect = opt->fontMetrics.boundingRect(textRect, alignmentFlag, buttonOption->text);
-        //NOTE:需加上Qt::TextShowMnemonic或Qt::TextHideMnemonic才会转换’&‘成下划线标记快捷键
-        style->drawItemText(p, textRect, alignmentFlag|MnemonicTextFlag, opt->palette, enabled, buttonOption->text,
+        // NOTE:需加上Qt::TextShowMnemonic或Qt::TextHideMnemonic才会转换’&‘成下划线标记快捷键
+        style->drawItemText(p, textRect, alignmentFlag | MnemonicTextFlag, opt->palette, enabled, buttonOption->text,
                             QPalette::WindowText);
         bool hasFocus(enabled && (state & QStyle::State_HasFocus));
     }
@@ -444,44 +453,51 @@ bool DrawButtonHelper::drawToolButtonComplexControl(const Style *style, const QS
     // copy opt and alter palette
     QStyleOptionToolButton copy(*toolButtonOption);
 
-    if (isDockWidgetTitleButton) {
+    if (isDockWidgetTitleButton)
+    {
         // 转换类型为按钮，调整StyleOption状态显示正确的按钮
         const QAbstractButton *button(qobject_cast<const QAbstractButton *>(widget));
-        if (button->isChecked() || button->isDown()) {
+        if (button->isChecked() || button->isDown())
+        {
             copy.state |= QStyle::State_Enabled | QStyle::State_On | QStyle::State_Sunken;
         }
-        if (button->underMouse()) {
+        if (button->underMouse())
+        {
             copy.state |= QStyle::State_Enabled | QStyle::State_MouseOver | QStyle::State_Active;
         }
     }
 
     bool hasPopupMenu(toolButtonOption->features & QStyleOptionToolButton::MenuButtonPopup);
     const bool hasInlineIndicator(
-            toolButtonOption->features & QStyleOptionToolButton::HasMenu
-            && toolButtonOption->features & QStyleOptionToolButton::PopupDelay
-            && !hasPopupMenu);
+        toolButtonOption->features & QStyleOptionToolButton::HasMenu && toolButtonOption->features & QStyleOptionToolButton::PopupDelay && !hasPopupMenu);
 
     QRect buttonRect(style->subControlRect(QStyle::CC_ToolButton, opt, QStyle::SC_ToolButton, widget));
     QRect menuRect(style->subControlRect(QStyle::CC_ToolButton, opt, QStyle::SC_ToolButtonMenu, widget));
 
-    if (toolButtonOption->subControls & QStyle::SC_ToolButton || isDockWidgetTitleButton) {
+    if (toolButtonOption->subControls & QStyle::SC_ToolButton || isDockWidgetTitleButton)
+    {
         copy.rect = buttonRect;
-        ///FIXME: 若QTabBar父控件存在样式表或自身存在样式表，Style为QStyleSheetStyle
-        ///      在StyleSheetStyle::drawComplexControl(CC_ToolButton)中
-        ///      会直接调用到QWindowsStyle::drawComplexControl导致样式不统一
-        ///TODO: 需要把drawToolButtonCoplexComtrol和QCommonStyle中进行统一保证样式统一
-        if (inTabBar) {
+        /// FIXME: 若QTabBar父控件存在样式表或自身存在样式表，Style为QStyleSheetStyle
+        ///       在StyleSheetStyle::drawComplexControl(CC_ToolButton)中
+        ///       会直接调用到QWindowsStyle::drawComplexControl导致样式不统一
+        /// TODO: 需要把drawToolButtonCoplexComtrol和QCommonStyle中进行统一保证样式统一
+        if (inTabBar)
+        {
             QRect rect(opt->rect);
             QColor background("#222222");
             p->setPen(Qt::NoPen);
             p->setBrush(background);
-        } else if (sunken && hasPopupMenu && !(toolButtonOption->activeSubControls & QStyle::SC_ToolButton)) {
+        }
+        else if (sunken && hasPopupMenu && !(toolButtonOption->activeSubControls & QStyle::SC_ToolButton))
+        {
             QStyleOptionToolButton btn(copy);
             btn.state |= QStyle::State_Raised;
             btn.state &= ~QStyle::State_Sunken;
             btn.state &= ~QStyle::State_AutoRaise;
             style->drawPrimitive(QStyle::PE_PanelButtonTool, &btn, p, widget);
-        } else {
+        }
+        else
+        {
             style->drawPrimitive(QStyle::PE_PanelButtonTool, &copy, p, widget);
         }
     }
@@ -489,30 +505,37 @@ bool DrawButtonHelper::drawToolButtonComplexControl(const Style *style, const QS
     // define contents rect
     QRect contentsRect(buttonRect);
 
-    if (hasPopupMenu) {
+    if (hasPopupMenu)
+    {
         copy.rect = menuRect;
         if (!flat || mouseOver || sunken)
             style->drawPrimitive(QStyle::PE_IndicatorButtonDropDown, &copy, p, widget);
         style->drawPrimitive(QStyle::PE_IndicatorArrowDown, &copy, p, widget);
-    } else if (hasInlineIndicator) {
+    }
+    else if (hasInlineIndicator)
+    {
         copy.rect = menuRect;
         style->drawPrimitive(QStyle::PE_IndicatorArrowDown, &copy, p, widget);
     }
 
-    if (isDockWidgetTitleButton) {
+    if (isDockWidgetTitleButton)
+    {
         // cast to abstract button
         // adjust state to have correct icon rendered
         const QAbstractButton *button(qobject_cast<const QAbstractButton *>(widget));
-        if (button->isChecked() || button->isDown()) {
+        if (button->isChecked() || button->isDown())
+        {
             copy.state |= QStyle::State_Enabled | QStyle::State_On | QStyle::State_Sunken;
         }
-        if (button->underMouse()) {
+        if (button->underMouse())
+        {
             copy.state |= QStyle::State_Enabled | QStyle::State_MouseOver | QStyle::State_Active;
         }
-
-    } else if (!inTabBar && hasInlineIndicator) {
+    }
+    else if (!inTabBar && hasInlineIndicator)
+    {
         int marginWidth(
-                flat ? Metrics::ToolButton_MarginWidth : Metrics::Button_MarginWidth + Metrics::Frame_FrameWidth);
+            flat ? Metrics::ToolButton_MarginWidth : Metrics::Button_MarginWidth + Metrics::Frame_FrameWidth);
         contentsRect = DrawCommonHelper::insideMargin(contentsRect, marginWidth, 0);
         contentsRect.setRight(contentsRect.right() - Metrics::ToolButton_InlineIndicatorWidth);
         contentsRect = style->visualRect(opt->direction, opt->rect, contentsRect);
@@ -544,9 +567,8 @@ QSize DrawButtonHelper::checkBoxSizeFromContents(const Style *style, const QStyl
     return size;
 }
 
-QSize
-DrawButtonHelper::switchButtonSizeFromContents(const Style *style, const QStyleOption *opt, const QSize &contentSize,
-                                               const QWidget *w)
+QSize DrawButtonHelper::switchButtonSizeFromContents(const Style *style, const QStyleOption *opt, const QSize &contentSize,
+                                                     const QWidget *w)
 {
     QSize size(contentSize);
 
@@ -581,12 +603,13 @@ bool DrawButtonHelper::drawSwitchButtonIndicatorPrimitive(const Style *style, co
                                                       pseudoStatus);
 
     //背景
-    if (isChecked) {
+    if (isChecked)
+    {
         QPainterPath backgroundPath;
         backgroundPath.addRoundedRect(opt->rect, radius, radius);
         p->fillPath(backgroundPath, bgColor);
 
-        //indicator
+        // indicator
         QRect indicatorCircularRect(opt->rect.right() - indicatorCircularSpacing - indicatorCircularSize,
                                     opt->rect.y() + (opt->rect.height() - indicatorCircularSize) / 2,
                                     indicatorCircularSize,
@@ -595,8 +618,10 @@ bool DrawButtonHelper::drawSwitchButtonIndicatorPrimitive(const Style *style, co
         QPainterPath painterPath;
         painterPath.addEllipse(indicatorCircularRect);
         p->fillPath(painterPath, indicatorCircularColor);
-    } else {
-        //border
+    }
+    else
+    {
+        // border
         p->save();
         QPen pen;
         pen.setColor(borderColor);
@@ -605,7 +630,7 @@ bool DrawButtonHelper::drawSwitchButtonIndicatorPrimitive(const Style *style, co
         p->drawRoundedRect(opt->rect, radius, radius);
         p->restore();
 
-        //indicator
+        // indicator
         QRect indicatorCircularRect(opt->rect.x() + indicatorCircularSpacing,
                                     opt->rect.y() + (opt->rect.height() - indicatorCircularSize) / 2,
                                     indicatorCircularSize,
@@ -623,7 +648,8 @@ bool DrawButtonHelper::drawSwitchButtonControl(const Style *style, const QStyleO
                                                StyleDetailFetcher *fetcher, const QWidget *widget)
 {
     const QStyleOptionButton *optionButton = qstyleoption_cast<const QStyleOptionButton *>(opt);
-    if (!optionButton) {
+    if (!optionButton)
+    {
         return true;
     }
 
@@ -652,8 +678,8 @@ QRect DrawButtonHelper::switchButtonContetnsRect(const Style *style, const QStyl
     return style->visualRect(opt->direction,
                              opt->rect,
                              contentsRect.adjusted(
-                                     Metrics::SwitchButton_ItemSpacing + Metrics::SwitchButton_IndicatorWidth + 1,
-                                     0, 0, 0));
+                                 Metrics::SwitchButton_ItemSpacing + Metrics::SwitchButton_IndicatorWidth + 1,
+                                 0, 0, 0));
 }
 
 QRect DrawButtonHelper::switchButtonIndicatorRect(const Style *style, const QStyleOption *opt, const QWidget *w)
