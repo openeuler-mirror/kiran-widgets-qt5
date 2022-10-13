@@ -1,14 +1,14 @@
 /**
- * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd. 
+ * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
  * kiranwidgets-qt5 is licensed under Mulan PSL v2.
- * You can use this software according to the terms and conditions of the Mulan PSL v2. 
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
- *          http://license.coscl.org.cn/MulanPSL2 
- * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, 
- * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, 
- * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.  
- * See the Mulan PSL v2 for more details.  
- * 
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
  */
 
@@ -23,13 +23,13 @@
 #include <QDebug>
 #include <QEvent>
 #include <QFile>
+#include <QFontDatabase>
 #include <QGraphicsDropShadowEffect>
 #include <QMouseEvent>
 #include <QScreen>
 #include <QStyle>
 #include <QTimer>
 #include <QWindow>
-#include <QFontDatabase>
 
 using namespace Kiran;
 
@@ -65,17 +65,6 @@ KiranTitlebarWindowPrivate::KiranTitlebarWindowPrivate(KiranTitlebarWindow *ptr)
     m_shadowEffect = new QGraphicsDropShadowEffect(q_ptr);
     m_shadowEffect->setOffset(0, 0);
     q_func()->setGraphicsEffect(m_shadowEffect);
-
-    //安装本地事件过滤，监听xcb event
-    qApp->installNativeEventFilter(this);
-    //处理主屏切换的问题
-    connect(qApp, &QApplication::primaryScreenChanged,
-            this, &KiranTitlebarWindowPrivate::handlerPrimaryScreenChanged);
-    //处理屏幕移除更新窗口大小
-    connect(qApp, &QApplication::screenRemoved, [this]() {
-        adaptToVirtualScreenSize();
-    });
-    handlerPrimaryScreenChanged(qApp->primaryScreen());
 }
 
 KiranTitlebarWindowPrivate::~KiranTitlebarWindowPrivate()
@@ -221,7 +210,7 @@ void KiranTitlebarWindowPrivate::handlerMouseMoveEvent(QMouseEvent *ev)
                                     q_func()->winId(),
                                     pos.x(),
                                     pos.y());
-        ///NOTE:在此之后获取不到MouseRelease事件,需复位按钮按压
+        /// NOTE:在此之后获取不到MouseRelease事件,需复位按钮按压
         m_titlebarIsPressed = false;
         return;
     }
@@ -323,10 +312,10 @@ void KiranTitlebarWindowPrivate::initOtherWidget()
     m_btnMin->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     m_btnMin->setVisible(false);
     m_btnMin->setFocusPolicy(Qt::NoFocus);
-    connect(m_btnMin,&QPushButton::clicked,[this](bool checked){
+    connect(m_btnMin, &QPushButton::clicked, [this](bool checked)
+            {
         Q_UNUSED(checked);
-        q_ptr->showMinimized();
-    });
+        q_ptr->showMinimized(); });
     titlebarRightlayout->addWidget(m_btnMin, 0, Qt::AlignVCenter);
 
     //最大化
@@ -335,7 +324,8 @@ void KiranTitlebarWindowPrivate::initOtherWidget()
     m_btnMax->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     m_btnMax->setVisible(false);
     m_btnMax->setFocusPolicy(Qt::NoFocus);
-    connect(m_btnMax, &QPushButton::clicked, [this](bool checked) {
+    connect(m_btnMax, &QPushButton::clicked, [this](bool checked)
+            {
         Q_UNUSED(checked);
         if (q_ptr->isMaximized())
         {
@@ -344,8 +334,7 @@ void KiranTitlebarWindowPrivate::initOtherWidget()
         else
         {
             q_ptr->showMaximized();
-        }
-    });
+        } });
     titlebarRightlayout->addWidget(m_btnMax, 0, Qt::AlignVCenter);
 
     //关闭
@@ -353,11 +342,11 @@ void KiranTitlebarWindowPrivate::initOtherWidget()
     m_btnClose->setObjectName("KiranTitlebarCloseButton");
     m_btnClose->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     m_btnClose->setVisible(false);
-    m_btnClose->setFocusPolicy(Qt::NoFocus );
-    connect(m_btnClose, &QPushButton::clicked, [this](bool checked) {
+    m_btnClose->setFocusPolicy(Qt::NoFocus);
+    connect(m_btnClose, &QPushButton::clicked, [this](bool checked)
+            {
         Q_UNUSED(checked);
-        q_ptr->close();
-    });
+        q_ptr->close(); });
     titlebarRightlayout->addWidget(m_btnClose, 0, Qt::AlignVCenter);
 
     setButtonHints(m_buttonHints);
@@ -437,12 +426,11 @@ CursorPositionEnums KiranTitlebarWindowPrivate::getCursorPosition(QPoint pos)
 
 void KiranTitlebarWindowPrivate::updateTitleFont(QFont font)
 {
-
 }
 
 bool KiranTitlebarWindowPrivate::eventFilter(QObject *obj, QEvent *event)
 {
-    //NOTE:用户标题栏暂时需要使用窗口管理器单独设置的字体，不和程序字体通用
+    // NOTE:用户标题栏暂时需要使用窗口管理器单独设置的字体，不和程序字体通用
     if (obj == m_title && event->type() == QEvent::ApplicationFontChange)
     {
         return true;
@@ -477,9 +465,8 @@ bool KiranTitlebarWindowPrivate::eventFilter(QObject *obj, QEvent *event)
             break;
         case QEvent::WindowStateChange:
             //窗口状态变更时，加载不同的样式
-            QTimer::singleShot(0, [this]() {
-                q_ptr->style()->polish(m_frame);
-            });
+            QTimer::singleShot(0, [this]()
+                               { q_ptr->style()->polish(m_frame); });
             break;
         case QEvent::ActivationChange:
             updateShadowStyle(q_ptr->isActiveWindow());
@@ -489,147 +476,4 @@ bool KiranTitlebarWindowPrivate::eventFilter(QObject *obj, QEvent *event)
         }
     }
     return QObject::eventFilter(obj, event);
-}
-
-bool KiranTitlebarWindowPrivate::nativeEventFilter(const QByteArray &eventType, void *message, long *result)
-{
-    if ((q_ptr == nullptr) || (q_ptr->windowHandle() == nullptr) || (eventType != XCB_GENERIC_EVENT_TYPE))
-    {
-        return false;
-    }
-
-    xcb_generic_event_t *ev = static_cast<xcb_generic_event_t *>(message);
-    switch (ev->response_type & ~0x80)
-    {
-    case XCB_MAP_NOTIFY:
-    {
-        //since:2.1.2
-        //NOTE:若是在窗口ShowEvent中进行处理可能会偶发显示异常，设置的窗口大小和移动窗口位置不能生效,需要加入延时调用.
-        //初次显示的时候,检查窗口显示大小是否超出了屏幕显示大小，若超出了进行限制，但后续还可以进行拉升
-        xcb_map_notify_event_t *mapNotify = (xcb_map_notify_event_t *)ev;
-        if (mapNotify->window != q_ptr->windowHandle()->winId())
-        {
-            break;
-        }
-        if (m_firstMap)
-        {
-            QTimer::singleShot(0, this, &KiranTitlebarWindowPrivate::adaptToVirtualScreenSize);
-            m_firstMap = false;
-        }
-        break;
-    }
-    default:
-        break;
-    }
-    return false;
-}
-
-/**
- * @brief 检查窗口显示大小是否超出了屏幕显示大小，若超出了则进行限制。但保证后续还可以进行拉升
- * @since 2.1.2
- */
-void KiranTitlebarWindowPrivate::adaptToVirtualScreenSize()
-{
-    QWindow *window;
-    QSize    maxSize, minSize, virtualScreenSize;
-
-    window  = q_ptr->windowHandle();
-    maxSize = q_ptr->maximumSize();
-    minSize = q_ptr->minimumSize();
-
-    if( !window || !window->screen() )
-        return;
-
-    //获取屏幕虚拟大小，该大小包括所有的屏幕
-    virtualScreenSize = window->screen()->availableVirtualSize();
-
-    if (m_isCompositingManagerRunning)
-    {
-        QSize windowDisplayAreaSize;
-        //混成开启，绘制阴影，标题栏窗口占用部分透明区域绘制阴影，该部分需要排除
-        windowDisplayAreaSize = QSize(window->size().width() - (2 * SHADOW_BORDER_WIDTH),
-                                      window->size().height() - (2 * SHADOW_BORDER_WIDTH));
-
-        //窗口显示区域未超过屏幕显示区域
-        if (windowDisplayAreaSize.width() <= virtualScreenSize.width() && windowDisplayAreaSize.height() <= virtualScreenSize.height())
-        {
-            return;
-        }
-
-        //通过设置固定大小强制将窗口大小调整屏幕显示范围内
-        if (windowDisplayAreaSize.width() > virtualScreenSize.width())
-        {
-            windowDisplayAreaSize.setWidth(virtualScreenSize.width());
-        }
-        if (windowDisplayAreaSize.height() > virtualScreenSize.height())
-        {
-            windowDisplayAreaSize.setHeight(virtualScreenSize.height());
-        }
-
-        //混成开启,设置的大小需要再加上绘制阴影区域
-        QSize adaptWindowSize = QSize(windowDisplayAreaSize.width() + (2 * SHADOW_BORDER_WIDTH),
-                                      windowDisplayAreaSize.height() + (2 * SHADOW_BORDER_WIDTH));
-        q_ptr->setFixedSize(adaptWindowSize);
-        q_ptr->setGeometry(QRect(QPoint(-SHADOW_BORDER_WIDTH, -SHADOW_BORDER_WIDTH), adaptWindowSize));
-
-        if ((minSize.width() - (2 * SHADOW_BORDER_WIDTH)) > virtualScreenSize.width())
-        {
-            minSize.setWidth(virtualScreenSize.width() + (2 * SHADOW_BORDER_WIDTH));
-        }
-        if ((minSize.height() - (2 * SHADOW_BORDER_WIDTH)) > virtualScreenSize.height())
-        {
-            minSize.setHeight(virtualScreenSize.height() + (2 * SHADOW_BORDER_WIDTH));
-        }
-    }
-    else
-    {
-        QSize windowSize;
-        windowSize = window->size();
-
-        //窗口显示区域未超过屏幕显示区域
-        if (windowSize.width() <= virtualScreenSize.width() && windowSize.height() <= virtualScreenSize.height())
-        {
-            return;
-        }
-
-        //通过设置固定大小强制将窗口大小调整屏幕显示范围内
-        if (windowSize.width() > virtualScreenSize.width())
-        {
-            windowSize.setWidth(virtualScreenSize.width());
-        }
-        if (windowSize.height() > virtualScreenSize.height())
-        {
-            windowSize.setHeight(virtualScreenSize.height());
-        }
-
-        q_ptr->setFixedSize(windowSize);
-        q_ptr->setGeometry(QRect(QPoint(0, 0), windowSize));
-
-        if (minSize.width() > virtualScreenSize.width())
-        {
-            minSize.setWidth(virtualScreenSize.width());
-        }
-        if (minSize.height() > virtualScreenSize.height())
-        {
-            minSize.setHeight(virtualScreenSize.height());
-        }
-    }
-
-    //取消固定大小限制
-    q_ptr->setFixedSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
-    //重新设置最大大小限制
-    q_ptr->setMaximumSize(maxSize);
-    //计算更新最小大小限制
-    q_ptr->setMinimumSize(minSize);
-}
-
-void KiranTitlebarWindowPrivate::handlerPrimaryScreenChanged(QScreen *screen)
-{
-    //连接到主屏幕虚拟大小更改的情况
-    connect(screen, &QScreen::virtualGeometryChanged, this, &KiranTitlebarWindowPrivate::handlerPrimaryScreenVirtualGeometryChanged);
-}
-
-void KiranTitlebarWindowPrivate::handlerPrimaryScreenVirtualGeometryChanged(const QRect &rect)
-{
-    adaptToVirtualScreenSize();
 }

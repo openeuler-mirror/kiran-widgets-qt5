@@ -1,25 +1,25 @@
 /**
- * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd. 
+ * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
  * kiranwidgets-qt5 is licensed under Mulan PSL v2.
- * You can use this software according to the terms and conditions of the Mulan PSL v2. 
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
- *          http://license.coscl.org.cn/MulanPSL2 
- * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, 
- * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, 
- * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.  
- * See the Mulan PSL v2 for more details.  
- * 
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
  */
- 
+
 #include "draw-tab-bar-helper.h"
-#include "style.h"
 #include "draw-common-helper.h"
 #include "kiran-style-private-defines.h"
+#include "style.h"
 
+#include <QDebug>
 #include <QPainter>
 #include <QPainterPath>
-#include <QDebug>
 #include <QtWidgets/QStyleOption>
 
 using namespace Kiran;
@@ -27,21 +27,21 @@ using namespace Kiran;
 static bool isVertiacalTab(const QStyleOptionTab *option)
 {
     QTabBar::Shape shape = option->shape;
-    bool isVertiacal = ( shape == QTabBar::RoundedEast    ||
-                         shape == QTabBar::RoundedWest    ||
-                         shape == QTabBar::TriangularEast ||
-                         shape == QTabBar::TriangularWest  );
+    bool isVertiacal = (shape == QTabBar::RoundedEast ||
+                        shape == QTabBar::RoundedWest ||
+                        shape == QTabBar::TriangularEast ||
+                        shape == QTabBar::TriangularWest);
     return isVertiacal;
 }
 
-//FIXME:需要和sizeFromContents获取的大小对应
+// FIXME:需要和sizeFromContents获取的大小对应
 void tabLayout(const Style *style, const QStyleOptionTab *opt, const QWidget *widget, QRect *textRect, QRect *iconRect)
 {
     QRect tr = opt->rect;
     bool verticalTabs = isVertiacalTab(opt);
 
     if (verticalTabs)
-        tr.setRect(0, 0, tr.height(), tr.width()); // 0, 0 as we will have a translate transform
+        tr.setRect(0, 0, tr.height(), tr.width());  // 0, 0 as we will have a translate transform
 
     /// 垂直和水平偏移量,以突出当前选中的Tab标签
     int verticalShift = style->pixelMetric(QStyle::PM_TabBarTabShiftVertical, opt, widget);
@@ -55,26 +55,31 @@ void tabLayout(const Style *style, const QStyleOptionTab *opt, const QWidget *wi
 
     tr.adjust(hpadding, verticalShift - vpadding, horizontalShift - hpadding, vpadding);
     bool selected = opt->state & QStyle::State_Selected;
-    if (selected) {
+    if (selected)
+    {
         tr.setTop(tr.top() - verticalShift);
         tr.setRight(tr.right() - horizontalShift);
     }
 
     // left widget
-    if (!opt->leftButtonSize.isEmpty()) {
+    if (!opt->leftButtonSize.isEmpty())
+    {
         tr.setLeft(tr.left() + 4 +
                    (verticalTabs ? opt->leftButtonSize.height() : opt->leftButtonSize.width()));
     }
     // right widget
-    if (!opt->rightButtonSize.isEmpty()) {
+    if (!opt->rightButtonSize.isEmpty())
+    {
         tr.setRight(tr.right() - 4 -
                     (verticalTabs ? opt->rightButtonSize.height() : opt->rightButtonSize.width()));
     }
 
     // icon
-    if (!opt->icon.isNull()) {
+    if (!opt->icon.isNull())
+    {
         QSize iconSize = opt->iconSize;
-        if (!iconSize.isValid()) {
+        if (!iconSize.isValid())
+        {
             int iconExtent = style->pixelMetric(QStyle::PM_SmallIconSize);
             iconSize = QSize(iconExtent, iconExtent);
         }
@@ -104,23 +109,25 @@ bool DrawTabBarHelper::drawTabBarTabControl(const Style *style,
                                             const QWidget *widget)
 {
     const QStyleOptionTab *tabOption(qstyleoption_cast<const QStyleOptionTab *>(opt));
-    if (tabOption == nullptr) {
+    if (tabOption == nullptr)
+    {
         return true;
     }
 
     bool vertiacal = isVertiacalTab(tabOption);
     QStyleOptionTab newTabOption = *tabOption;
-    switch (tabOption->position) {
-        case QStyleOptionTab::Beginning:
-        case QStyleOptionTab::Middle:
-            if (vertiacal)
-                newTabOption.rect.adjust(0, 0, 0, -Metrics::TabBar_TabSpacing);
-            else
-                newTabOption.rect.adjust(0, 0, -Metrics::TabBar_TabSpacing, 0);
-            break;
-        case QStyleOptionTab::End:
-        case QStyleOptionTab::OnlyOneTab:
-            break;
+    switch (tabOption->position)
+    {
+    case QStyleOptionTab::Beginning:
+    case QStyleOptionTab::Middle:
+        if (vertiacal)
+            newTabOption.rect.adjust(0, 0, 0, -Metrics::TabBar_TabSpacing);
+        else
+            newTabOption.rect.adjust(0, 0, -Metrics::TabBar_TabSpacing, 0);
+        break;
+    case QStyleOptionTab::End:
+    case QStyleOptionTab::OnlyOneTab:
+        break;
     }
 
     style->drawControl(QStyle::CE_TabBarTabShape, &newTabOption, p, widget);
@@ -149,14 +156,18 @@ bool DrawTabBarHelper::drawTabBarTabLabelControl(const Style *style, const QStyl
 
     ///垂直Tabs的坐标系的旋转平移转换
     QTransform vertiacalTransform;
-    if (isVertiacal) {
+    if (isVertiacal)
+    {
         QPointF axisOriginPoint;
         qreal rotateAngle = 0.0;
         if (tabOption->shape == QTabBar::RoundedEast ||
-            tabOption->shape == QTabBar::TriangularEast) {/// tabs显示在右侧,以矩形位置右上为原点，顺时针旋转坐标系90°
+            tabOption->shape == QTabBar::TriangularEast)
+        {  /// tabs显示在右侧,以矩形位置右上为原点，顺时针旋转坐标系90°
             axisOriginPoint = rect.topRight();
             rotateAngle = 90;
-        } else {/// tabs显示在左侧,以矩形左下为原点，逆时针旋转坐标系90°
+        }
+        else
+        {  /// tabs显示在左侧,以矩形左下为原点，逆时针旋转坐标系90°
             axisOriginPoint = rect.bottomLeft();
             rotateAngle = -90;
         }
@@ -164,12 +175,14 @@ bool DrawTabBarHelper::drawTabBarTabLabelControl(const Style *style, const QStyl
         vertiacalTransform.rotate(rotateAngle);
     }
 
-    if (isVertiacal) {
+    if (isVertiacal)
+    {
         p->save();
         p->setTransform(vertiacalTransform);
     }
 
-    if (!tabOption->icon.isNull()) {
+    if (!tabOption->icon.isNull())
+    {
         QPixmap tabIcon = tabOption->icon.pixmap(tabOption->iconSize,
                                                  (tabOption->state & QStyle::State_Enabled) ? QIcon::Normal
                                                                                             : QIcon::Disabled,
@@ -178,10 +191,11 @@ bool DrawTabBarHelper::drawTabBarTabLabelControl(const Style *style, const QStyl
         p->drawPixmap(iconRect.x(), iconRect.y(), tabIcon);
     }
 
-    //NOTE:需加上Qt::TextShowMnemonic或Qt::TextHideMnemonic才会转换’&‘成下划线标记快捷键
-    style->drawItemText(p, textRect, textFlags|MnemonicTextFlag, opt->palette, enabled, tabOption->text, QPalette::WindowText);
+    // NOTE:需加上Qt::TextShowMnemonic或Qt::TextHideMnemonic才会转换’&‘成下划线标记快捷键
+    style->drawItemText(p, textRect, textFlags | MnemonicTextFlag, opt->palette, enabled, tabOption->text, QPalette::WindowText);
 
-    if (isVertiacal) {
+    if (isVertiacal)
+    {
         p->restore();
     }
 
@@ -204,25 +218,30 @@ bool DrawTabBarHelper::drawTabBarTabShapeControl(const Style *style, const QStyl
 
     int pseudoClass = QCss::PseudoClass_Unspecified;
 
-    if (!enabled) {
+    if (!enabled)
+    {
         pseudoClass = QCss::PseudoClass_Disabled;
-    } else if (selected) {
+    }
+    else if (selected)
+    {
         pseudoClass = QCss::PseudoClass_Selected;
-    } else if (mouseOver) {
+    }
+    else if (mouseOver)
+    {
         pseudoClass = QCss::PseudoClass_Hover;
     }
 
-    //NOTE:忽略了styleoption中的shape
+    // NOTE:忽略了styleoption中的shape
 
     QColor bgColor = fetcher->getColor(StyleDetailFetcher::TabBarTab_Background, pseudoClass);
-
 
     QPainterPath painterPath = DrawCommonHelper::getRoundedRectanglePath(opt->rect,
                                                                          Metrics::TabBar_TabItemRadius,
                                                                          Metrics::TabBar_TabItemRadius,
                                                                          0, 0);
 
-    if (bgColor.isValid()) {
+    if (bgColor.isValid())
+    {
         p->fillPath(painterPath, bgColor);
     }
 
@@ -240,31 +259,31 @@ QRect DrawTabBarHelper::tabBarTabLeftButtonElementRect(const Style *style,
     const QSize &buttonSize(tabOption->leftButtonSize);
     QRect buttonRect(QPoint(0, 0), buttonSize);
 
-    switch (tabOption->shape) {
+    switch (tabOption->shape)
+    {
+    case QTabBar::RoundedNorth:
+    case QTabBar::TriangularNorth:
+    case QTabBar::RoundedSouth:
+    case QTabBar::TriangularSouth:
+        buttonRect.moveLeft(tabRect.left() + Metrics::TabBar_TabItemSpacing);
+        buttonRect.moveTop((tabRect.height() - buttonSize.height()) / 2);
+        buttonRect = QStyle::visualRect(opt->direction, opt->rect, buttonRect);
+        break;
 
-        case QTabBar::RoundedNorth:
-        case QTabBar::TriangularNorth:
-        case QTabBar::RoundedSouth:
-        case QTabBar::TriangularSouth:
-            buttonRect.moveLeft(tabRect.left() + Metrics::TabBar_TabItemSpacing);
-            buttonRect.moveTop((tabRect.height() - buttonSize.height()) / 2);
-            buttonRect = QStyle::visualRect(opt->direction, opt->rect, buttonRect);
-            break;
+    case QTabBar::RoundedWest:
+    case QTabBar::TriangularWest:
+        buttonRect.moveBottom(tabRect.bottom() - Metrics::TabBar_TabMarginWidth);
+        buttonRect.moveLeft((tabRect.width() - buttonRect.width()) / 2);
+        break;
 
-        case QTabBar::RoundedWest:
-        case QTabBar::TriangularWest:
-            buttonRect.moveBottom(tabRect.bottom() - Metrics::TabBar_TabMarginWidth);
-            buttonRect.moveLeft((tabRect.width() - buttonRect.width()) / 2);
-            break;
+    case QTabBar::RoundedEast:
+    case QTabBar::TriangularEast:
+        buttonRect.moveTop(tabRect.top() + Metrics::TabBar_TabMarginWidth);
+        buttonRect.moveLeft((tabRect.width() - buttonRect.width()) / 2);
+        break;
 
-        case QTabBar::RoundedEast:
-        case QTabBar::TriangularEast:
-            buttonRect.moveTop(tabRect.top() + Metrics::TabBar_TabMarginWidth);
-            buttonRect.moveLeft((tabRect.width() - buttonRect.width()) / 2);
-            break;
-
-        default:
-            break;
+    default:
+        break;
     }
 
     return buttonRect;
@@ -282,30 +301,31 @@ QRect DrawTabBarHelper::tabBarTabRightButtonElementRect(const Style *style,
     QSize buttonSize(tabOption->rightButtonSize);
     QRect buttonRect(QPoint(0, 0), buttonSize);
 
-    switch (tabOption->shape) {
-        case QTabBar::RoundedNorth:
-        case QTabBar::TriangularNorth:
-        case QTabBar::RoundedSouth:
-        case QTabBar::TriangularSouth:
-            buttonRect.moveRight(tabRect.right() - Metrics::TabBar_TabMarginWidth);
-            buttonRect.moveTop((tabRect.height() - buttonRect.height()) / 2);
-            buttonRect = QStyle::visualRect(opt->direction, opt->rect, buttonRect);
-            break;
+    switch (tabOption->shape)
+    {
+    case QTabBar::RoundedNorth:
+    case QTabBar::TriangularNorth:
+    case QTabBar::RoundedSouth:
+    case QTabBar::TriangularSouth:
+        buttonRect.moveRight(tabRect.right() - Metrics::TabBar_TabMarginWidth);
+        buttonRect.moveTop((tabRect.height() - buttonRect.height()) / 2);
+        buttonRect = QStyle::visualRect(opt->direction, opt->rect, buttonRect);
+        break;
 
-        case QTabBar::RoundedWest:
-        case QTabBar::TriangularWest:
-            buttonRect.moveTop(tabRect.top() + Metrics::TabBar_TabMarginWidth);
-            buttonRect.moveLeft((tabRect.width() - buttonRect.width()) / 2);
-            break;
+    case QTabBar::RoundedWest:
+    case QTabBar::TriangularWest:
+        buttonRect.moveTop(tabRect.top() + Metrics::TabBar_TabMarginWidth);
+        buttonRect.moveLeft((tabRect.width() - buttonRect.width()) / 2);
+        break;
 
-        case QTabBar::RoundedEast:
-        case QTabBar::TriangularEast:
-            buttonRect.moveBottom(tabRect.bottom() - Metrics::TabBar_TabMarginWidth);
-            buttonRect.moveLeft((tabRect.width() - buttonRect.width()) / 2);
-            break;
+    case QTabBar::RoundedEast:
+    case QTabBar::TriangularEast:
+        buttonRect.moveBottom(tabRect.bottom() - Metrics::TabBar_TabMarginWidth);
+        buttonRect.moveLeft((tabRect.width() - buttonRect.width()) / 2);
+        break;
 
-        default:
-            break;
+    default:
+        break;
     }
 
     return buttonRect;
@@ -319,7 +339,8 @@ QRect DrawTabBarHelper::tabBarTabTabTextElementRect(const Style *style,
     QRect iconRect, textRect;
 
     const QStyleOptionTab *optionTab = qstyleoption_cast<const QStyleOptionTab *>(opt);
-    if (!optionTab) {
+    if (!optionTab)
+    {
         return QRect();
     }
 
@@ -329,12 +350,12 @@ QRect DrawTabBarHelper::tabBarTabTabTextElementRect(const Style *style,
 }
 
 //获取TabBarTab该有的大小
-QSize
-DrawTabBarHelper::tabBarTabSizeFromContents(const Style *style, const QStyleOption *opt, const QSize &contentsSize,
-                                            const QWidget *w, StyleDetailFetcher *fetcher)
+QSize DrawTabBarHelper::tabBarTabSizeFromContents(const Style *style, const QStyleOption *opt, const QSize &contentsSize,
+                                                  const QWidget *w, StyleDetailFetcher *fetcher)
 {
     const QStyleOptionTab *tabOption(qstyleoption_cast<const QStyleOptionTab *>(opt));
-    if (tabOption == nullptr) {
+    if (tabOption == nullptr)
+    {
         return contentsSize;
     }
 
@@ -350,18 +371,22 @@ DrawTabBarHelper::tabBarTabSizeFromContents(const Style *style, const QStyleOpti
     if (hasLeftButton && (hasText || hasIcon)) widthIncrement += Metrics::TabBar_TabItemSpacing;
     if (hasRightButton && (hasText || hasIcon || hasLeftButton)) widthIncrement += Metrics::TabBar_TabItemSpacing;
 
-    if (hasText) {
+    if (hasText)
+    {
         widthIncrement += opt->fontMetrics.width(tabOption->text) * 0.2;
     }
 
     QSize tabBarTabSize(contentsSize);
-    if (isVertiacalTab(tabOption)) {
+    if (isVertiacalTab(tabOption))
+    {
         tabBarTabSize.rheight() += widthIncrement;
         if (hasIcon && !hasText)
             tabBarTabSize = tabBarTabSize.expandedTo(QSize(Metrics::TabBar_TabMinHeight, 0));
         else
             tabBarTabSize = tabBarTabSize.expandedTo(QSize(Metrics::TabBar_TabMinHeight, Metrics::TabBar_TabMinWidth));
-    } else {
+    }
+    else
+    {
         tabBarTabSize.rwidth() += widthIncrement;
         if (hasIcon && !hasText)
             tabBarTabSize = tabBarTabSize.expandedTo(QSize(0, Metrics::TabBar_TabMinHeight));
@@ -392,13 +417,17 @@ bool DrawTabBarHelper::drawIndicatorTabClosePrimitive(const Style *style,
     // decide icon mode and state
     QIcon::Mode iconMode;
     QIcon::State iconState;
-    if (!enabled) {
+    if (!enabled)
+    {
         iconMode = QIcon::Disabled;
         iconState = QIcon::Off;
-
-    } else {
-        if (hover) iconMode = QIcon::Active;
-        else iconMode = QIcon::Normal;
+    }
+    else
+    {
+        if (hover)
+            iconMode = QIcon::Active;
+        else
+            iconMode = QIcon::Normal;
 
         iconState = sunken ? QIcon::On : QIcon::Off;
     }
@@ -442,14 +471,17 @@ QRect DrawTabBarHelper::tabBarScrollLeftButtonRect(const Style *style, const QSt
 {
     const bool vertical = opt->rect.width() < opt->rect.height();
     const Qt::LayoutDirection direction = w->layoutDirection();
-    const int buttonWidth = style->pixelMetric(QStyle::PM_TabBarScrollButtonWidth, nullptr,w);
+    const int buttonWidth = style->pixelMetric(QStyle::PM_TabBarScrollButtonWidth, nullptr, w);
 
     QRect rect;
-    if(vertical){
-        rect = QRect(0,0,opt->rect.width(),buttonWidth);
-    }else{//不是垂直的情况下，需要考虑是否是反向布局
-        rect = QRect(0,0,buttonWidth,opt->rect.height());
-        rect = QStyle::visualRect(opt->direction,opt->rect,rect);
+    if (vertical)
+    {
+        rect = QRect(0, 0, opt->rect.width(), buttonWidth);
+    }
+    else
+    {  //不是垂直的情况下，需要考虑是否是反向布局
+        rect = QRect(0, 0, buttonWidth, opt->rect.height());
+        rect = QStyle::visualRect(opt->direction, opt->rect, rect);
     }
 
     return rect;
@@ -459,14 +491,17 @@ QRect DrawTabBarHelper::tabBarScrollRightButtonRect(const Style *style, const QS
 {
     const bool vertical = opt->rect.width() < opt->rect.height();
     const Qt::LayoutDirection direction = w->layoutDirection();
-    const int buttonWidth = style->pixelMetric(QStyle::PM_TabBarScrollButtonWidth, nullptr,w);
+    const int buttonWidth = style->pixelMetric(QStyle::PM_TabBarScrollButtonWidth, nullptr, w);
 
     QRect rect;
-    if(vertical){
-        rect = QRect(0,opt->rect.height()-buttonWidth,opt->rect.width(),buttonWidth);
-    }else{//不是垂直的情况下，需要考虑是否是反向布局
-        rect = QRect(opt->rect.width()-buttonWidth,0,buttonWidth,opt->rect.height());
-        rect = QStyle::visualRect(opt->direction,opt->rect,rect);
+    if (vertical)
+    {
+        rect = QRect(0, opt->rect.height() - buttonWidth, opt->rect.width(), buttonWidth);
+    }
+    else
+    {  //不是垂直的情况下，需要考虑是否是反向布局
+        rect = QRect(opt->rect.width() - buttonWidth, 0, buttonWidth, opt->rect.height());
+        rect = QStyle::visualRect(opt->direction, opt->rect, rect);
     }
 
     return rect;

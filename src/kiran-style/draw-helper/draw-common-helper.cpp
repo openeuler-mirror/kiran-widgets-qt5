@@ -1,27 +1,27 @@
 /**
- * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd. 
+ * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
  * kiranwidgets-qt5 is licensed under Mulan PSL v2.
- * You can use this software according to the terms and conditions of the Mulan PSL v2. 
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
- *          http://license.coscl.org.cn/MulanPSL2 
- * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, 
- * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, 
- * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.  
- * See the Mulan PSL v2 for more details.  
- * 
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
  */
- 
+
 #include "draw-common-helper.h"
 #include "style.h"
 
-#include <QtMath>
-#include <QDebug>
 #include <QApplication>
-#include <QX11Info>
+#include <QDebug>
+#include <QPainterPath>
 #include <QStyle>
 #include <QSvgRenderer>
-#include <QPainterPath>
+#include <QX11Info>
+#include <QtMath>
 
 using namespace Kiran;
 
@@ -63,7 +63,6 @@ void DrawCommonHelper::drawFrame(QPainter *painter, const QRect &rect,
                                  int radius, int outlineWidth,
                                  const QColor &color, const QColor &outline)
 {
-
     painter->setRenderHint(QPainter::Antialiasing);
 
     double dwidthHalf = outlineWidth / 2.0;
@@ -72,33 +71,37 @@ void DrawCommonHelper::drawFrame(QPainter *painter, const QRect &rect,
     QRectF frameRect = rect.adjusted(widthHalf, widthHalf, -widthHalf, -widthHalf);
 
     // set pen
-    if (outline.isValid() && outlineWidth > 0) {
+    if (outline.isValid() && outlineWidth > 0)
+    {
         painter->setPen(QPen(outline, outlineWidth));
 
         radius = qMax(radius - 1.0, qreal(0.0));
-    } else {
+    }
+    else
+    {
         painter->setPen(Qt::NoPen);
     }
     frameRect.adjust(dwidthHalf, dwidthHalf, -dwidthHalf, -dwidthHalf);
 
     // set brush
-    if (color.isValid()) painter->setBrush(color);
-    else painter->setBrush(Qt::NoBrush);
+    if (color.isValid())
+        painter->setBrush(color);
+    else
+        painter->setBrush(Qt::NoBrush);
 
     // render
     painter->drawRoundedRect(frameRect, radius, radius);
 }
 
-void
-DrawCommonHelper::drawSpinboxArrow(QPainter *painter, const QRect &rect, const QRect &spinboxRect, int spinboxRadius,
-                                   QColor bgColor,
-                                   QColor signColor, bool isUp)
+void DrawCommonHelper::drawSpinboxArrow(QPainter *painter, const QRect &rect, const QRect &spinboxRect, int spinboxRadius,
+                                        QColor bgColor,
+                                        QColor signColor, bool isUp)
 {
     painter->setRenderHint(QPainter::Antialiasing);
 
     ///以SpinboxFrame作为裁切路径
     QPainterPath backgroundPath;
-    QRect arrowRect =  spinboxRect.adjusted(1, 1, 0, 0);
+    QRect arrowRect = spinboxRect.adjusted(1, 1, 0, 0);
     backgroundPath = getRoundedRectanglePath(arrowRect, spinboxRadius, spinboxRadius, spinboxRadius, spinboxRadius);
 
     painter->setClipPath(backgroundPath, Qt::ReplaceClip);
@@ -111,7 +114,8 @@ DrawCommonHelper::drawSpinboxArrow(QPainter *painter, const QRect &rect, const Q
     painter->setBrush(Qt::NoBrush);
     painter->drawLine(rect.center() - QPointF(4, 0), rect.center() + QPointF(4, 0));
 
-    if (isUp) {
+    if (isUp)
+    {
         painter->drawLine(rect.center() - QPointF(0, 4), rect.center() + QPointF(0, 4));
     }
 }
@@ -123,16 +127,20 @@ QPainterPath DrawCommonHelper::getRoundedRectanglePath(const QRect &rect,
     QPainterPath painterPath;
 
     /// 判断圆角半径是否合法,不合法调整参数
-    if (tlRadius + trRadius > rect.width()) {
+    if (tlRadius + trRadius > rect.width())
+    {
         tlRadius = trRadius = 0;
     }
-    if (tlRadius + blRadius > rect.height()) {
+    if (tlRadius + blRadius > rect.height())
+    {
         tlRadius = blRadius = 0;
     }
-    if (blRadius + brRadius > rect.width()) {
+    if (blRadius + brRadius > rect.width())
+    {
         blRadius = brRadius = 0;
     }
-    if (trRadius + brRadius > rect.height()) {
+    if (trRadius + brRadius > rect.height())
+    {
         trRadius = brRadius = 0;
     }
 
@@ -143,7 +151,8 @@ QPainterPath DrawCommonHelper::getRoundedRectanglePath(const QRect &rect,
     QSize blSize(blRadius, blRadius);
 
     // top left corner
-    if (!tlSize.isEmpty()) {
+    if (!tlSize.isEmpty())
+    {
         QRectF tlArcRect(rect.left(), rect.top(), tlRadius * 2, tlRadius * 2);
         painterPath.moveTo(rect.left(), rect.top() + tlRadius);
         painterPath.arcTo(tlArcRect, -180, -90);
@@ -153,7 +162,8 @@ QPainterPath DrawCommonHelper::getRoundedRectanglePath(const QRect &rect,
     painterPath.lineTo(rect.right() - trSize.width(), rect.top());
 
     // top right corner
-    if (!trSize.isEmpty()) {
+    if (!trSize.isEmpty())
+    {
         QRectF trArcRect(rect.right() - 2 * trRadius, rect.top(), trRadius * 2, trRadius * 2);
         painterPath.arcTo(trArcRect, 90, -90);
     }
@@ -162,7 +172,8 @@ QPainterPath DrawCommonHelper::getRoundedRectanglePath(const QRect &rect,
     painterPath.lineTo(rect.right(), rect.bottom() - brSize.height());
 
     // bottom right
-    if (!brSize.isEmpty()) {
+    if (!brSize.isEmpty())
+    {
         QRectF brArcRect(rect.right() - 2 * brRadius, rect.bottom() - 2 * brRadius, brRadius * 2, brRadius * 2);
         painterPath.arcTo(brArcRect, 0, -90);
     }
@@ -171,7 +182,8 @@ QPainterPath DrawCommonHelper::getRoundedRectanglePath(const QRect &rect,
     painterPath.lineTo(rect.left() + blSize.width(), rect.bottom());
 
     // bottom left
-    if (!blSize.isEmpty()) {
+    if (!blSize.isEmpty())
+    {
         QRectF blArcRect(rect.left(), rect.bottom() - 2 * blRadius, blRadius * 2, blRadius * 2);
         painterPath.arcTo(blArcRect, -90, -90);
     }
@@ -197,7 +209,8 @@ void DrawCommonHelper::drawRadioButtonIndicator(QPainter *painter, const QRect &
     QRectF contentRect(frameRect.adjusted(0.5, 0.5, -0.5, -0.5));
     painter->drawEllipse(contentRect);
 
-    if (isOn) {
+    if (isOn)
+    {
         painter->setBrush(IndicatorColor);
         painter->setPen(Qt::NoPen);
         QRectF markerRect(frameRect.adjusted(3, 3, -3, -3));
@@ -217,7 +230,8 @@ void DrawCommonHelper::drawCheckBoxIndicator(QPainter *painter, const QRect &rec
     drawFrame(painter, frameRect, 2, 1, bgColor, border);
     painter->restore();
 
-    if (indicatorState == CheckOn) {
+    if (indicatorState == CheckOn)
+    {
         painter->save();
         painter->setRenderHint(QPainter::Antialiasing);
         painter->setBrush(Qt::NoBrush);
@@ -235,7 +249,9 @@ void DrawCommonHelper::drawCheckBoxIndicator(QPainter *painter, const QRect &rec
         painter->setClipRect(markerRect);
         painter->drawPath(path);
         painter->restore();
-    } else if (indicatorState == CheckPartial) {
+    }
+    else if (indicatorState == CheckPartial)
+    {
         QPen pen(indicatorColor, 2);
         pen.setCapStyle(Qt::RoundCap);
         painter->setPen(pen);
@@ -258,10 +274,13 @@ void DrawCommonHelper::drawSeparator(QPainter *painter, const QRect &rect, QColo
     painter->setBrush(Qt::NoBrush);
     painter->setPen(color);
 
-    if (vertical) {
+    if (vertical)
+    {
         painter->translate(rect.width() / 2, 0);
         painter->drawLine(rect.topLeft(), rect.bottomLeft());
-    } else {
+    }
+    else
+    {
         painter->translate(0, rect.height() / 2);
         painter->drawLine(rect.topLeft(), rect.topRight());
     }
@@ -276,7 +295,8 @@ void DrawCommonHelper::drawMenuCheckedIndicator(QPainter *painter, const QRect &
 
     painter->setRenderHint(QPainter::Antialiasing, true);
 
-    if (bgColor.isValid()) {
+    if (bgColor.isValid())
+    {
         QPainterPath bgPath;
         bgPath.addEllipse(rect);
         painter->fillPath(bgPath, bgColor);
@@ -298,45 +318,48 @@ void DrawCommonHelper::drawMenuCheckedIndicator(QPainter *painter, const QRect &
     painter->restore();
 }
 
-void DrawCommonHelper::drawArrow(StyleDetailFetcher* fetcher,
+void DrawCommonHelper::drawArrow(StyleDetailFetcher *fetcher,
                                  QPainter *painter,
-                                 const QStyleOption* option,
-                                 const QWidget* widget,
+                                 const QStyleOption *option,
+                                 const QWidget *widget,
                                  ArrowOrientation orientation,
                                  int renderSize)
 {
     QRect rect(option->rect);
-    int markSize = qMin(rect.width(),rect.height());
-    if( renderSize!=0 && (renderSize<=qMin(rect.width(),rect.height())) ){
+    int markSize = qMin(rect.width(), rect.height());
+    if (renderSize != 0 && (renderSize <= qMin(rect.width(), rect.height())))
+    {
         markSize = renderSize;
     }
-    QRect markRect(0,0,markSize,markSize);
+    QRect markRect(0, 0, markSize, markSize);
     markRect.moveCenter(rect.center());
 
-    QString iconUrl = fetcher->getUrl(widget,option,StyleDetailFetcher::IndicatorArrow_Icon);
+    QString iconUrl = fetcher->getUrl(widget, option, StyleDetailFetcher::IndicatorArrow_Icon);
 
     qreal rorateAngle = 0.0;
-    switch (orientation) {
-        case ArrowNone:
-            return;
-        case ArrowUp:
-            rorateAngle = -90;
-            break;
-        case ArrowDown:
-            rorateAngle = 90;
-            break;
-        case ArrowLeft:
-            rorateAngle = 180;
-            break;
-        case ArrowRight:
-            rorateAngle = 0.0;
-            break;
-        default:
-            break;
+    switch (orientation)
+    {
+    case ArrowNone:
+        return;
+    case ArrowUp:
+        rorateAngle = -90;
+        break;
+    case ArrowDown:
+        rorateAngle = 90;
+        break;
+    case ArrowLeft:
+        rorateAngle = 180;
+        break;
+    case ArrowRight:
+        rorateAngle = 0.0;
+        break;
+    default:
+        break;
     }
 
     QSvgRenderer renderer(iconUrl);
-    if( !renderer.isValid() ){
+    if (!renderer.isValid())
+    {
         return;
     }
 
@@ -344,17 +367,16 @@ void DrawCommonHelper::drawArrow(StyleDetailFetcher* fetcher,
     painter->setRenderHint(QPainter::HighQualityAntialiasing, true);
     painter->translate(markRect.center());
     painter->rotate(rorateAngle);
-    markRect.moveLeft(-markRect.width()/2);
-    markRect.moveTop(-markRect.height()/2);
-    renderer.render(painter,markRect);
+    markRect.moveLeft(-markRect.width() / 2);
+    markRect.moveTop(-markRect.height() / 2);
+    renderer.render(painter, markRect);
     painter->restore();
 }
 
-void
-DrawCommonHelper::drawDecorationButton(QPainter *painter,
-                                       const QRect &rect,
-                                       const QColor &color,
-                                       TitleBarButtonType buttonType)
+void DrawCommonHelper::drawDecorationButton(QPainter *painter,
+                                            const QRect &rect,
+                                            const QColor &color,
+                                            TitleBarButtonType buttonType)
 {
     painter->save();
     painter->setViewport(rect);
@@ -371,47 +393,51 @@ DrawCommonHelper::drawDecorationButton(QPainter *painter,
     pen.setColor(color);
     pen.setCapStyle(Qt::RoundCap);
     pen.setJoinStyle(Qt::MiterJoin);
-    pen.setWidthF(1.5 * qMax(1.0,  rect.width()/18.0 ));
+    pen.setWidthF(1.5 * qMax(1.0, rect.width() / 18.0));
     painter->setPen(pen);
 
-    switch (buttonType) {
-        case ButtonClose: {
-            painter->setRenderHints(QPainter::Antialiasing, true);
-            painter->drawLine(QPointF(5, 5), QPointF(13, 13));
-            painter->drawLine(13, 5, 5, 13);
-            break;
-        }
+    switch (buttonType)
+    {
+    case ButtonClose:
+    {
+        painter->setRenderHints(QPainter::Antialiasing, true);
+        painter->drawLine(QPointF(5, 5), QPointF(13, 13));
+        painter->drawLine(13, 5, 5, 13);
+        break;
+    }
 
-        case ButtonMaximize: {
-            painter->drawPolyline(QPolygonF()
-                                          << QPointF(4, 4)
-                                          << QPointF(4, 14)
-                                          << QPointF(14, 14)
-                                          << QPointF(14, 4));
-            break;
-        }
+    case ButtonMaximize:
+    {
+        painter->drawPolyline(QPolygonF()
+                              << QPointF(4, 4)
+                              << QPointF(4, 14)
+                              << QPointF(14, 14)
+                              << QPointF(14, 4));
+        break;
+    }
 
-        case ButtonMinimize: {
+    case ButtonMinimize:
+    {
+        painter->drawPolyline(QPolygonF()
+                              << QPointF(4, 14)
+                              << QPointF(14, 14));
+        break;
+    }
 
-            painter->drawPolyline(QPolygonF()
-                                          << QPointF(4, 14)
-                                          << QPointF(14, 14));
-            break;
-        }
+    case ButtonRestore:
+    {
+        painter->setPen(pen);
+        QPolygonF rect = QPolygonF() << QPointF(0, 0)
+                                     << QPointF(8, 0)
+                                     << QPointF(8, 8)
+                                     << QPointF(0, 8);
+        painter->drawPolygon(rect.translated(7, 3));
+        painter->drawPolygon(rect.translated(3, 7));
+        break;
+    }
 
-        case ButtonRestore: {
-            painter->setPen(pen);
-            QPolygonF rect = QPolygonF() << QPointF(0, 0)
-                                         << QPointF(8, 0)
-                                         << QPointF(8, 8)
-                                         << QPointF(0, 8);
-            painter->drawPolygon(rect.translated(7, 3));
-            painter->drawPolygon(rect.translated(3, 7));
-            break;
-        }
-
-        default:
-            break;
+    default:
+        break;
     }
 
     painter->restore();
@@ -430,7 +456,6 @@ bool DrawCommonHelper::drawIndicatorArrowDownPrimitive(const Style *style, const
 {
     DrawCommonHelper::drawArrow(detailFetcher, painter, opt, widget, ArrowDown);
     return true;
-
 }
 
 bool DrawCommonHelper::drawIndicatorArrowLeftPrimitive(const Style *style, const QStyleOption *opt, QPainter *painter,
@@ -438,7 +463,6 @@ bool DrawCommonHelper::drawIndicatorArrowLeftPrimitive(const Style *style, const
 {
     DrawCommonHelper::drawArrow(detailFetcher, painter, opt, widget, ArrowLeft);
     return true;
-
 }
 
 bool DrawCommonHelper::drawIndicatorArrowRightPrimitive(const Style *style, const QStyleOption *opt, QPainter *painter,
@@ -446,42 +470,44 @@ bool DrawCommonHelper::drawIndicatorArrowRightPrimitive(const Style *style, cons
 {
     DrawCommonHelper::drawArrow(detailFetcher, painter, opt, widget, ArrowRight);
     return true;
-
 }
 
 void DrawCommonHelper::renderProgressBarBusyContents(QPainter *painter, const QRect &rect, const QColor &color,
                                                      const QColor &outline, bool horizontal, bool reverse, int progress)
 {
-    painter->setRenderHint( QPainter::Antialiasing, true );
+    painter->setRenderHint(QPainter::Antialiasing, true);
 
-    QRectF baseRect( rect );
+    QRectF baseRect(rect);
     QRectF contentRect;
-    if (horizontal) {
+    if (horizontal)
+    {
         contentRect = QRect(baseRect.left(), baseRect.top(), Metrics::ProgressBar_BusyIndicatorSize, baseRect.height());
         contentRect.translate(fabs(progress - 50) / 50.0 * (baseRect.width() - contentRect.width()), 0);
     }
-    else {
+    else
+    {
         contentRect = QRect(baseRect.left(), baseRect.top(), baseRect.width(), Metrics::ProgressBar_BusyIndicatorSize);
         contentRect.translate(0, fabs(progress - 50) / 50.0 * (baseRect.height() - contentRect.height()));
     }
 
     painter->setBrush(color);
-    painter->setPen(outline.isValid()?outline:Qt::transparent);
+    painter->setPen(outline.isValid() ? outline : Qt::transparent);
     painter->drawRect(contentRect.translated(0.5, 0.5));
 }
 
-void DrawCommonHelper::renderProgressBarGroove(QPainter* painter, const QRect& rect,
-                                     const QColor& color , const QColor& outline)
+void DrawCommonHelper::renderProgressBarGroove(QPainter *painter, const QRect &rect,
+                                               const QColor &color, const QColor &outline)
 {
     // setup painter
-    painter->setRenderHint( QPainter::SmoothPixmapTransform, true );
+    painter->setRenderHint(QPainter::SmoothPixmapTransform, true);
 
-    QRectF baseRect( rect );
+    QRectF baseRect(rect);
 
     // content
-    if( color.isValid() ){
-        painter->setPen( outline.isValid()?outline:Qt::transparent );
-        painter->setBrush( color );
-        painter->drawRect( baseRect.translated(0.5, 0.5) );
+    if (color.isValid())
+    {
+        painter->setPen(outline.isValid() ? outline : Qt::transparent);
+        painter->setBrush(color);
+        painter->drawRect(baseRect.translated(0.5, 0.5));
     }
 }
