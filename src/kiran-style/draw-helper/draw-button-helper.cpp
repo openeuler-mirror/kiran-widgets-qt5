@@ -11,10 +11,11 @@
  * 
  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
  */
-#include <QStyleOption>
 #include <QAbstractButton>
-#include <QPushButton>
 #include <QDebug>
+#include <QPainterPath>
+#include <QPushButton>
+#include <QStyleOption>
 
 #include "style.h"
 #include "draw-common-helper.h"

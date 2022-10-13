@@ -17,10 +17,11 @@
 #include "style-detail-fetcher.h"
 #include "draw-common-helper.h"
 
-#include <QStyleOption>
-#include <QPainter>
-#include <QWidget>
 #include <QDebug>
+#include <QPainter>
+#include <QPainterPath>
+#include <QStyleOption>
+#include <QWidget>
 
 void Kiran::DrawImageSelectorHelper::drawPEKiranImageSelector(const Kiran::Style *style, const QStyleOption *opt,
                                                               QPainter *p, Kiran::StyleDetailFetcher *fetcher,

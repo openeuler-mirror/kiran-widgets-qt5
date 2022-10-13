@@ -28,7 +28,8 @@
 
 class QGraphicsDropShadowEffect;
 
-class KiranTitlebarWindowPrivate : public QObject,QAbstractNativeEventFilter{
+class KiranTitlebarWindowPrivate : public QObject
+{
     Q_OBJECT
     Q_DECLARE_PUBLIC(KiranTitlebarWindow);
 public:
@@ -42,9 +43,6 @@ private:
     void setTitle(const QString &title);
     void setButtonHints(KiranTitlebarWindow::TitlebarButtonHintFlags hints);
     void setWindowContentWidget(QWidget *widget);
-
-    virtual bool nativeEventFilter(const QByteArray &eventType, void *message, long *result) override;
-    void adaptToVirtualScreenSize();
 
 private:
     void handlerHoverMoveEvent(QHoverEvent *ev);
@@ -63,9 +61,6 @@ protected:
 
 private slots:
     void updateTitleFont(QFont font);
-
-    void handlerPrimaryScreenChanged(QScreen* screen);
-    void handlerPrimaryScreenVirtualGeometryChanged(const QRect &rect);
 
 private:
     KiranTitlebarWindow *q_ptr;
@@ -99,8 +94,6 @@ private:
     bool m_isCompositingManagerRunning;
 
     FontMonitor *m_titleFontMonitor;
-
-    bool m_firstMap=true;
 };
 
 #endif // KIRANTITLEBARWINDOWPRIVATE_H
