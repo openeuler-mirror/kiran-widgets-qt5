@@ -27,6 +27,7 @@
 
 class QGraphicsDropShadowEffect;
 class FramelessBackgroundFrame;
+class KiranColorBlock;
 class KiranTitlebarWindowPrivate : public QObject{
     Q_OBJECT
     Q_DECLARE_PUBLIC(KiranTitlebarWindow);
@@ -40,6 +41,7 @@ private:
     void setTitle(const QString &title);
     void setButtonHints(KiranTitlebarWindow::TitlebarButtonHintFlags hints);
     void setWindowContentWidget(QWidget *widget);
+    void setTitlebarColorBlockEnable(bool enable);
 
 private:
     void handlerHoverMoveEvent(QHoverEvent *ev);
@@ -66,8 +68,11 @@ private:
     FramelessBackgroundFrame *m_frame; /** < 主背景 **/
     QLayout *m_frameLayout;          /** < 主背景布局 **/
 
-    QWidget *m_titlebarWidget;       /** < 标题栏窗口 **/
+    bool m_colorBlockEnable = false;
+    KiranColorBlock *m_titlebarColorBlock; /** < 标题栏色块 **/
+    QWidget *m_titlebarWidget;             /** < 标题栏窗口 **/
     TitlebarLayout *m_titleBarLayout;
+    QFrame *m_tittlebarSpliteLine; /** < 标题栏分隔线 **/
 
     QLabel *m_titleIcon;             /** < 标题栏图标 **/
     QLabel *m_title;                 /** < 标题栏文本 **/

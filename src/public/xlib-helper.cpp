@@ -36,7 +36,7 @@ bool sendWMMoveResizeEvent(Display* display,EwmhMoveResizeDirection direction,qu
     xEvent.xclient.data.l[1] = y;
     xEvent.xclient.data.l[2] = direction;
     xEvent.xclient.data.l[3] = Button1;
-    xEvent.xclient.data.l[4] = 0;
+    xEvent.xclient.data.l[4] = 1;
 
     XUngrabPointer(display, QX11Info::appTime());
     Status sendEvRes = XSendEvent(display, QX11Info::appRootWindow(QX11Info::appScreen()),

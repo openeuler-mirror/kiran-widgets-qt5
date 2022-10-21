@@ -13,6 +13,9 @@ public:
     int getRadius() const;
     void setRadius(int radius);
 
+    bool getDrawBorder();
+    void setDrawBorder(bool drawBorder);
+
 protected:
     void resizeEvent(QResizeEvent* event) override;
     void paintEvent(QPaintEvent* event) override;
@@ -22,4 +25,5 @@ protected:
 
 private:
     int m_radius;
+    bool m_drawBorder = true;
 };
