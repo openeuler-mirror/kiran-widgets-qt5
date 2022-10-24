@@ -30,29 +30,6 @@ private slots:
         }
     }
 
-    void testSetAndGetDrawBackground()
-    {
-        colorBlock->setDrawBackground(true);
-        QCOMPARE(colorBlock->getDrawBackground(), true);
-        QTest::qWait(500);
-        colorBlock->setDrawBackground(false);
-        QCOMPARE(colorBlock->getDrawBackground(), false);
-        QTest::qWait(500);
-    }
-
-    void testSetFixedBackgroundState()
-    {
-        colorBlock->setFixedBackgroundState(Kiran::StylePalette::Normal);
-        QTest::qWait(500);
-        colorBlock->setFixedBackgroundState(Kiran::StylePalette::Disabled);
-        QTest::qWait(500);
-    }
-
-    void testUnsetFixedBackgroundState()
-    {
-        colorBlock->unsetFixedBackgroundState();
-    }
-
 private:
     KiranColorBlock *colorBlock;
 };

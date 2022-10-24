@@ -161,6 +161,8 @@ public:
      */
     int transparentWidth();
 
+    void setTitlebarColorBlockEnable(bool enable);
+    bool getTitlebarColorBlockEnable();
 public slots:
     /**
      * @brief 设置内容窗口距底部边距

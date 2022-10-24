@@ -206,3 +206,13 @@ int KiranTitlebarWindow::transparentWidth()
 {
     return d_ptr->m_layout->margin();
 }
+
+void KiranTitlebarWindow::setTitlebarColorBlockEnable(bool enable)
+{
+    d_func()->setTitlebarColorBlockEnable(enable);
+}
+
+bool KiranTitlebarWindow::getTitlebarColorBlockEnable()
+{
+    return d_func()->m_colorBlockEnable;
+}

@@ -1,15 +1,27 @@
 #ifndef KIRAN_COLOR_BLOCK_H
 #define KIRAN_COLOR_BLOCK_H
 
-#include <style-palette.h>
 #include <QWidget>
 
 class KiranColorBlockPrivate;
 class KiranColorBlock : public QWidget
 {
     Q_OBJECT
-
 public:
+    enum Corner
+    {
+        CornerTopLeft = 0x1,
+        CornerTopRight = 0x2,
+        CornerBottomLeft = 0x4,
+        CornerBottomRight = 0x8,
+        CornersTop = CornerTopLeft | CornerTopRight,
+        CornersBottom = CornerBottomLeft | CornerBottomRight,
+        CornersLeft = CornerTopLeft | CornerBottomLeft,
+        CornersRight = CornerTopRight | CornerBottomRight,
+        AllCorners = CornerTopLeft | CornerTopRight | CornerBottomLeft | CornerBottomRight,
+    };
+    Q_DECLARE_FLAGS(Corners, Corner)
+
     explicit KiranColorBlock(QWidget *parent = nullptr);
     ~KiranColorBlock();
 
@@ -24,25 +36,11 @@ public:
      */
     int getRadius();
 
-    /**
-     * @brief 获取是否绘制背景
-     * @return 是否绘制背景
-     */
+    void setRoundedCorner(Corner corder);
+    Corner getRoundedCorner();
+
     bool getDrawBackground();
-    /**
-     * @brief 设置是否绘制背景
-     * @param 是否绘制背景
-     */
     void setDrawBackground(bool enable);
-    /**
-     * @brief 设置绘制背景固定的状态，不根据实际状态从KiranPalette之中取出颜色(除了disable状态，disable将还是从KiranPalette之中取出禁用色)
-     * @param state 希望固定的颜色状态
-     */
-    void setFixedBackgroundState(Kiran::StylePalette::ColorState state);
-    /**
-     * @brief 取消掉固定背景状态，背景色根据实际状态取出
-     */
-    void unsetFixedBackgroundState();
 
 protected:
     void paintEvent(QPaintEvent *event) override;
