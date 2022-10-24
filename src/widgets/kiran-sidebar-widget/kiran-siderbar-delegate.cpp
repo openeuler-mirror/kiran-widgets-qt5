@@ -56,7 +56,7 @@ void KiranSiderbarDelegate::paint(QPainter *painter, const QStyleOptionViewItem 
     //background
     QColor bgColor = kiranPalette->color(widget, &opt, StylePalette::Widget, StylePalette::Background);
     QPainterPath fillBackgroundPath;
-    fillBackgroundPath.addRoundedRect(opt.rect, 10,10);
+    fillBackgroundPath.addRoundedRect(opt.rect, 6, 6);
     fillBackgroundPath = WidgetDrawHelper::getRoundedRectanglePath(opt.rect, 5, 5, 5, 5);
     painter->fillPath(fillBackgroundPath, QBrush(bgColor));
 

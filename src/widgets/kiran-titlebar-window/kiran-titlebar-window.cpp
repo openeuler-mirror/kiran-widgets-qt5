@@ -30,6 +30,7 @@ KiranTitlebarWindow::KiranTitlebarWindow()
     setWindowFlags(Qt::FramelessWindowHint|Qt::Window);
     setAttribute(Qt::WA_TranslucentBackground);
     setAttribute(Qt::WA_Hover);
+    setAccessibleName("KiranTitlebarWindow");
 
     d_func()->init();
     QWidget::ensurePolished();
@@ -204,4 +205,14 @@ int KiranTitlebarWindow::titleBarHeight()
 int KiranTitlebarWindow::transparentWidth()
 {
     return d_ptr->m_layout->margin();
+}
+
+void KiranTitlebarWindow::setTitlebarColorBlockEnable(bool enable)
+{
+    d_func()->setTitlebarColorBlockEnable(enable);
+}
+
+bool KiranTitlebarWindow::getTitlebarColorBlockEnable()
+{
+    return d_func()->m_colorBlockEnable;
 }

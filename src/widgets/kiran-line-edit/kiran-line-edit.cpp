@@ -10,6 +10,8 @@ KiranLineEdit::KiranLineEdit(QWidget *parent)
     d_ptr = new KiranLineEditPrivate();
     d_ptr->q_ptr = this;
     d_ptr->init();
+
+    setAccessibleName("KiranLineEdit");
 }
 
 KiranLineEdit::~KiranLineEdit()

@@ -23,6 +23,7 @@ KiranSidebarWidget::KiranSidebarWidget(QWidget *parent)
       d_ptr(new KiranSidebarWidgetPrivate(this))
 {
     d_ptr->init(this);
+    setAccessibleName("KiranSidebarWidget");
     setIconSize(QSize(16,16));
 }
 

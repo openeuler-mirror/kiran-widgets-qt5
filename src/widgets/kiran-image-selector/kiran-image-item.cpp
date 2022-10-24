@@ -33,6 +33,7 @@ KiranImageItem::KiranImageItem(QWidget *parent, const QString &path)
           m_imagePath(path) {
     setAttribute(Qt::WA_Hover,true);
     setObjectName(QString("imgageItem_%1").arg(path));
+    setAccessibleName("KiranImageItem");
     setToolTip(path);
     connect(KiranImageLoadManager::instance(), &KiranImageLoadManager::imageLoaded,
             this, &KiranImageItem::loadPixmapFinished, Qt::QueuedConnection);

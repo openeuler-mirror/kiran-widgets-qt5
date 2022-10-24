@@ -34,6 +34,7 @@ KiranImageSelector::KiranImageSelector(QWidget *parent)
       d_ptr(new KiranImageSelectorPrivate(this))
 {
     d_ptr->init(this);
+    setAccessibleName("KiranImageSelector");
     connect(d_ptr->m_selectorList, &KiranImageList::selectedImageChanged, [this](QString imagePath) {
         emit selectedImageChanged(imagePath);
     });

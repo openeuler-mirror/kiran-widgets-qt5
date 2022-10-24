@@ -56,9 +56,13 @@ void FramelessBackgroundFrame::paintEvent(QPaintEvent *event)
 
     QPainterPath painterPath;
     painterPath.addRoundedRect(rect(), m_radius, m_radius);
-    painter.setPen(border);
-    painter.setBrush(background);
-    painter.drawPath(painterPath);
+
+    painter.fillPath(painterPath, background);
+    if (m_drawBorder)
+    {
+        painter.setPen(border);
+        painter.drawPath(painterPath);
+    }
 }
 
 void FramelessBackgroundFrame::resizeEvent(QResizeEvent *event)
@@ -82,4 +86,18 @@ void FramelessBackgroundFrame::updateMask()
     painterPath.addRoundedRect(rect(), m_radius, m_radius);
     bitMapPainter.fillPath(painterPath, Qt::black);
     setMask(maskBitMap);
+}
+
+bool FramelessBackgroundFrame::getDrawBorder()
+{
+    return m_drawBorder;
+}
+
+void FramelessBackgroundFrame::setDrawBorder(bool drawBorder)
+{
+    if (m_drawBorder != drawBorder)
+    {
+        m_drawBorder = drawBorder;
+        update();
+    }
 }
