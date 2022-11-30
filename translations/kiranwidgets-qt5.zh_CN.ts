@@ -101,6 +101,12 @@
         <source>Restore Defaults</source>
         <translation>恢复默认</translation>
     </message>
+    <message>
+        <location filename="../src/widgets/kiran-passwd-edit/kiran-passwd-edit.cpp" line="47"/>
+        <source>Change the visibility of the password</source>
+        <comment>@info:tooltip</comment>
+        <translation>更改密码的可见性</translation>
+    </message>
 </context>
 <context>
     <name>TitlebarWindowSimple</name>

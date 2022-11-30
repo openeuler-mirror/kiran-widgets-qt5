@@ -95,7 +95,7 @@ void KiranImageSelector::paintEvent(QPaintEvent *event)
 
     QStyleOption option;
     option.initFrom(this);
-
+    option.state &= ~QStyle::State_MouseOver;
     auto background = kiranPalette->color(this,&option,StylePalette::Window,StylePalette::Background);
     auto border = kiranPalette->color(this,&option,StylePalette::Window,StylePalette::Border);
 
