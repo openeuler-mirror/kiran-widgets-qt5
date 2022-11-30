@@ -21,6 +21,8 @@
         <file>images/hover-tips/tips-suc.svg</file>
         <file>images/hover-tips/tips-warning.svg</file>
         
+        <file>images/passwd-edit/reveal-passwd.svg</file>
+        <file>images/passwd-edit/unreveal-passwd.svg</file>
     </qresource>
 
     <!--主题样式细节-->
