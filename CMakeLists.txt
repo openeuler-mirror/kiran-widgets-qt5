@@ -69,12 +69,15 @@ set(DEVEL_HEADER
         "src/widgets/kiran-push-button/kiran-push-button.h"
         "src/widgets/kiran-hover-tips/kiran-hover-tips.h"
         "src/widgets/kiran-color-block/kiran-color-block.h"
+        "src/widgets/kiran-label/kiran-label.h"
+        "src/widgets/kiran-passwd-edit/kiran-passwd-edit.h"
+
         "src/kiran-style/widget-property-helper.h"
         "src/kiran-style/kiran-style-public-define.h" )
 
 include_directories("${CMAKE_BINARY_DIR}")
 
-find_package(Qt5 COMPONENTS Widgets Svg Network X11Extras Concurrent LinguistTools)
+find_package(Qt5 COMPONENTS Widgets Gui Svg Network X11Extras Concurrent LinguistTools)
 
 qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 

@@ -1,0 +1,9 @@
+待优化项目(影响兼容性,需要在升级接口升级大版本时考虑该问题):
+
+1. kiran-widgets-qt5 d-pointer结构优化,现在的所有私有类指针未携带一个统一的继承关系 (暂时没有必要,现在的kiran-widgets-qt5内部继承层级并不多,修改的话同时也带来了接口不兼容)
+eg: 例如  KiranButton --继承与--> KiranWidget , 在构造一个KiranButton时将创建一个KiranButtonPrivate的私有类,同时父类KiranWidget也会创建一个私有类KiranWidgetPrivate,如果继承层数过多时,分配内存的次数也会得到明显的提高,
+若后期有必要可以考虑和Qt一致,例如 QFrame --继承于--> QWidget , QFramePrivate --继承与--> QWidgetPrivate , 构造QFrame时,将会分类QFramePrivate内存, 然后将QFramePrivate作为QWidget构造函数的参数,进行隐式装换为QWidgetPrivate*.
+
+2. kiran-widgets-qt5 d-pointer 成员变量为d_ptr与 Qt d-pointer重复的同时也不便于理解,考虑后续重命名为k_d_ptr
+
+3. 剔除kiran-widgets-qt5中自带的KiranStyle源码以及安装的头文件接口
