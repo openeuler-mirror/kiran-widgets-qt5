@@ -548,7 +548,8 @@ bool KiranTitlebarWindowPrivate::eventFilter(QObject *obj, QEvent *event)
             // 在接近显示时进行处理设置_GTK_FRAME_EXTENTS属性
             if( m_isCompositingManagerRunning )
             {
-                XLibHelper::SetShadowWidth(QX11Info::display(),q_ptr->winId(),shadowWidth,shadowWidth,shadowWidth,shadowWidth);
+                int scaledShadowWidth = q_ptr->devicePixelRatio()*shadowWidth;
+                XLibHelper::SetShadowWidth(QX11Info::display(), q_ptr->winId(), scaledShadowWidth, scaledShadowWidth, scaledShadowWidth, scaledShadowWidth);
             }
             break;
         case QEvent::HoverMove:
