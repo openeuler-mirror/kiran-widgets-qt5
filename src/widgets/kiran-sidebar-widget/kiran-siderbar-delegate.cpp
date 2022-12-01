@@ -84,7 +84,9 @@ void KiranSiderbarDelegate::paint(QPainter *painter, const QStyleOptionViewItem 
     {
         //将存储的数据根据locale转换
         QString text = textForRole(Qt::DisplayRole, displayVar, option.locale);
-        drawDisplay(painter, opt, textRect, text);
+        //处理文本过宽,超出分配的空间时,对文本进行省略
+        QString elideText = option.fontMetrics.elidedText(text, Qt::ElideRight, textRect.width(),Qt::TextShowMnemonic);
+        drawDisplay(painter, opt, textRect, elideText);
     }
 
     //status desc
@@ -265,6 +267,13 @@ void KiranSiderbarDelegate::doLayout(const QStyleOptionViewItem &option, const Q
     int textSpaceX = pixmapSize.isEmpty() ? pixmapRectTemp.right() : pixmapRectTemp.right() + 10;
     int textSpaceWidth = statusDescRectTemp.left() - (statusDescSize.isEmpty() ? 0 : 10) - textSpaceX;
     QRect textRectTemp = QRect(textSpaceX, rect.y(), textSpaceWidth, rect.height());
+
+    //对TextSize进行限制,若文字大小超出了剩余的控空间大小,调整为剩余控件大小
+    if ( textSize.width() > textRectTemp.width() )
+    {
+        textSize.setWidth(textRectTemp.width());
+    }
+
     textRect.setSize(textSize);
     if (option.displayAlignment & Qt::AlignLeft)
     {
