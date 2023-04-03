@@ -52,7 +52,7 @@ file(GLOB_RECURSE STYLE_H   "src/kiran-style/*.h")
 file(GLOB_RECURSE RESOURCES "resources/*.qrc")
 
 #翻译
-set(TS_FILES "translations/kiranwidgets-qt5.zh_CN.ts")
+file(GLOB TS_FILES "translations/kiranwidgets-qt5.*.ts")
 
 #开发头文件,需提供到devel包的文件
 set(DEVEL_HEADER
