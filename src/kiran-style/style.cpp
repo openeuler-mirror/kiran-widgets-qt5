@@ -850,7 +850,8 @@ void Style::polish(QWidget *widget)
 
     if (QComboBox *comboBox = qobject_cast<QComboBox *>(widget)) {
         QAbstractItemView *itemView(comboBox->view());
-        if (itemView && itemView->itemDelegate() && itemView->itemDelegate()->inherits("QComboBoxDelegate")) {
+        if (itemView && itemView->itemDelegate() && 
+           (itemView->itemDelegate()->inherits("QComboBoxDelegate") || itemView->itemDelegate()->inherits("QComboMenuDelegate")) ) {
             comboBox->setItemDelegate(new ComboBoxItemDelegate(comboBox,comboBox));
         }
     }
