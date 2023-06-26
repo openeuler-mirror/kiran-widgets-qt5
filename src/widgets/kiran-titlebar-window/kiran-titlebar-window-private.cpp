@@ -585,6 +585,7 @@ bool KiranTitlebarWindowPrivate::eventFilter(QObject *obj, QEvent *event)
             {
                 m_frame->setRadius(radius);
             }
+            updateTitlebarButtonIcon();
             break;
         default:
             break;
