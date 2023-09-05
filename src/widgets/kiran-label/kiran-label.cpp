@@ -1,14 +1,14 @@
 /**
- * Copyright (c) 2020 ~ 2022 KylinSec Co., Ltd. 
+ * Copyright (c) 2020 ~ 2022 KylinSec Co., Ltd.
  * kiranwidgets-qt5 is licensed under Mulan PSL v2.
- * You can use this software according to the terms and conditions of the Mulan PSL v2. 
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
- *          http://license.coscl.org.cn/MulanPSL2 
- * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, 
- * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, 
- * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.  
- * See the Mulan PSL v2 for more details.  
- * 
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
  */
 
@@ -73,7 +73,11 @@ QRectF KiranLabelPrivate::documentRect(QLabelPrivate *ld)
                                               QFlag(ld->align));
     int m = ld->indent;
     if (m < 0 && q->frameWidth())  // no indent, but we do have a frame
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 11, 0))
         m = q->fontMetrics().horizontalAdvance(QLatin1Char('x')) / 2 - ld->margin;
+#else
+         m = q->fontMetrics().width(QLatin1Char('x')) / 2 - ld->margin;
+#endif
     if (m > 0)
     {
         if (align & Qt::AlignLeft)
