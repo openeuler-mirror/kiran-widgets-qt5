@@ -231,7 +231,11 @@ QSize KiranTips::getRightSize() const
     QFontMetrics fontMetrics(font);
     QMargins layoutContentMargins = this->layout()->contentsMargins();
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 11, 0))
     d_ptr->m_labelText->setFixedWidth(fontMetrics.horizontalAdvance(d_ptr->m_labelText->text()) + 10);
+#else
+    d_ptr->m_labelText->setFixedWidth(fontMetrics.width(d_ptr->m_labelText->text()) + 10);
+#endif
     d_ptr->m_labelText->setFixedHeight(fontMetrics.height());
 
     QSize size;
@@ -355,7 +359,7 @@ void KiranTipsPrivate::init()
     m_EnterAnimation->setEasingCurve(QEasingCurve::OutQuad);
 
     // clang-format off
-    connect(&m_fadeOutTimer, &QTimer::timeout, [this](){ 
+    connect(&m_fadeOutTimer, &QTimer::timeout, [this](){
         q_ptr->hideTip();
     });
     connect(m_EnterAnimation, &QPropertyAnimation::finished, [this](){

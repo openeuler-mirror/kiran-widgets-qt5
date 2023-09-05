@@ -43,8 +43,8 @@ private slots:
 
     void testItemSpacing()
     {
-        QList<int> itemSpacingSet = {5,10,15,20,25,50,100,150,300,10};
-        foreach ( const int& spacing, itemSpacingSet )
+        QList<quint64> itemSpacingSet = {5,10,15,20,25,50,100,150,300,10};
+        foreach ( const quint64& spacing, itemSpacingSet )
         {
             imageSelector->setItemSpacing(spacing);
             QCOMPARE(imageSelector->itemSpacing(),spacing);
