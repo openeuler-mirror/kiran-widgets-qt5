@@ -34,7 +34,7 @@ public:
     QLineEdit *passwordLineEdit = nullptr;
     QAction *toggleEchoModeAction = nullptr;
     bool isToggleEchoModeAvailable = true;
-    bool revealPasswordAvailable = true;
+    bool revealPasswordAvailable = false;
     KiranPasswdEdit *const q;
 };
 
