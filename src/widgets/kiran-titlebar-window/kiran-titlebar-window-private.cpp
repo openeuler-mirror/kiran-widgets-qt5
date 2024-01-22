@@ -1,14 +1,14 @@
 /**
- * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd. 
+ * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
  * kiranwidgets-qt5 is licensed under Mulan PSL v2.
- * You can use this software according to the terms and conditions of the Mulan PSL v2. 
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
- *          http://license.coscl.org.cn/MulanPSL2 
- * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, 
- * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, 
- * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.  
- * See the Mulan PSL v2 for more details.  
- * 
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
  */
 
@@ -30,21 +30,20 @@
 #include <QFontDatabase>
 #include <QGraphicsDropShadowEffect>
 #include <QMouseEvent>
+#include <QPainter>
+#include <QPainterPath>
 #include <QScreen>
 #include <QStyle>
 #include <QTimer>
 #include <QToolButton>
 #include <QWindow>
-#include <QPainter>
-#include <QPainterPath>
 
+const int KiranTitlebarWindowPrivate::radius = 8;
 
-const int    KiranTitlebarWindowPrivate::radius = 8;
-
-const int    KiranTitlebarWindowPrivate::shadowWidth = 15;
-const int    KiranTitlebarWindowPrivate::shadowRadius = 15;
-const QColor KiranTitlebarWindowPrivate::shadowActiveColor = QColor(0,0,0,150);
-const QColor KiranTitlebarWindowPrivate::shadowInactiveColor = QColor(0,0,0,75);
+const int KiranTitlebarWindowPrivate::shadowWidth = 15;
+const int KiranTitlebarWindowPrivate::shadowRadius = 15;
+const QColor KiranTitlebarWindowPrivate::shadowActiveColor = QColor(0, 0, 0, 150);
+const QColor KiranTitlebarWindowPrivate::shadowInactiveColor = QColor(0, 0, 0, 75);
 
 extern void qt_blurImage(QPainter *p, QImage &blurImage, qreal radius, bool quality, bool alphaOnly, int transposed = 0);
 
@@ -76,8 +75,8 @@ KiranTitlebarWindowPrivate::~KiranTitlebarWindowPrivate()
 
 void KiranTitlebarWindowPrivate::init()
 {
-    //app调色盘改变可以认为主题风格产生变化，需重新拿取图标更新
-    connect(qApp, &QApplication::paletteChanged, this,&KiranTitlebarWindowPrivate::updateTitlebarButtonIcon);
+    // app调色盘改变可以认为主题风格产生变化，需重新拿取图标更新
+    connect(qApp, &QApplication::paletteChanged, this, &KiranTitlebarWindowPrivate::updateTitlebarButtonIcon);
 
     initOtherWidget();
 
@@ -88,8 +87,8 @@ void KiranTitlebarWindowPrivate::init()
 
     /// 初始化阴影边框
     m_isCompositingManagerRunning = QX11Info::isCompositingManagerRunning();
-    
-    if( m_isCompositingManagerRunning )
+
+    if (m_isCompositingManagerRunning)
     {
         m_layout->setMargin(shadowWidth);
     }
@@ -212,7 +211,7 @@ void KiranTitlebarWindowPrivate::handlerMouseButtonPressEvent(QMouseEvent *ev)
     qDebug() << "titlebar frame contains:" << m_titlebarWidget->frameGeometry().contains(ev->pos());
 #endif
 
-    if (m_titlebarWidget->frameGeometry().contains(m_titlebarWidget->mapFrom(q_ptr,ev->pos())))
+    if (m_titlebarWidget->frameGeometry().contains(m_titlebarWidget->mapFrom(q_ptr, ev->pos())))
     {
         m_titlebarIsPressed = true;
     }
@@ -227,11 +226,18 @@ void KiranTitlebarWindowPrivate::handlerMouseButtonReleaseEvent(QMouseEvent *ev)
             m_titlebarIsPressed = false;
         }
     }
+    else if (ev->button() == Qt::RightButton)
+    {
+        QPoint pos = QCursor::pos();
+        XLibHelper::showWindowMenuRequest(QX11Info::display(),
+                                          q_func()->winId(),
+                                          pos.x(), pos.y());
+    }
 }
 
 void KiranTitlebarWindowPrivate::handlerMouseMoveEvent(QMouseEvent *ev)
 {
-    ///判断是否点击标题栏区域
+    /// 判断是否点击标题栏区域
     if (m_titlebarIsPressed)
     {
         QPoint pos = QCursor::pos();
@@ -240,7 +246,7 @@ void KiranTitlebarWindowPrivate::handlerMouseMoveEvent(QMouseEvent *ev)
                                     q_func()->winId(),
                                     pos.x(),
                                     pos.y());
-        ///NOTE:在此之后获取不到MouseRelease事件,需复位按钮按压
+        /// NOTE:在此之后获取不到MouseRelease事件,需复位按钮按压
         m_titlebarIsPressed = false;
         return;
     }
@@ -268,13 +274,13 @@ void KiranTitlebarWindowPrivate::handlerMouseDoubleClickEvent(QMouseEvent *ev)
 
 void KiranTitlebarWindowPrivate::initOtherWidget()
 {
-    ///主布局
+    /// 主布局
     m_layout = new QVBoxLayout(q_ptr);
     m_layout->setObjectName("KiranTitlebarMainLayout");
     m_layout->setMargin(0);
     m_layout->setSpacing(0);
 
-    ///背景
+    /// 背景
     m_frame = new FramelessBackgroundFrame(q_ptr);
     m_frame->setRadius(radius);
     m_frame->setAttribute(Qt::WA_Hover);
@@ -285,7 +291,7 @@ void KiranTitlebarWindowPrivate::initOtherWidget()
     m_frameLayout->setMargin(0);
     m_frameLayout->setSpacing(0);
 
-    ///标题栏
+    /// 标题栏
     m_titlebarColorBlock = new KiranColorBlock(m_frame);
     m_titlebarColorBlock->setDrawBackground(false);
     m_titlebarColorBlock->setRoundedCorner(KiranColorBlock::CornersTop);
@@ -306,8 +312,8 @@ void KiranTitlebarWindowPrivate::initOtherWidget()
     m_titleBarLayout->setSpacing(0);
     m_titleBarLayout->setObjectName("KiranTitlebarLayout");
 
-    ///标题栏居左部分
-    //标题栏图标
+    /// 标题栏居左部分
+    // 标题栏图标
     m_titleIcon = new QLabel(m_titlebarWidget);
     m_titleIcon->setObjectName("KiranTitlebarIcon");
     m_titleIcon->setAccessibleName("WindowTitlebarIcon");
@@ -315,7 +321,7 @@ void KiranTitlebarWindowPrivate::initOtherWidget()
     m_titleBarLayout->setTitleBarIconLabel(m_titleIcon);
     m_titleBarLayout->setTitleBarIconMargin(QMargins(12, 0, 0, 0));
 
-    //标题
+    // 标题
     m_title = new QLabel(m_titlebarWidget);
     m_title->setFont(QFontDatabase::systemFont(QFontDatabase::TitleFont));
     m_title->setObjectName("KiranTitlebarTitle");
@@ -325,8 +331,8 @@ void KiranTitlebarWindowPrivate::initOtherWidget()
     m_title->installEventFilter(this);
     m_titleBarLayout->setTitleBarTitleLabel(m_title);
 
-    ///标题栏居中部分
-    //自定义控件区域
+    /// 标题栏居中部分
+    // 自定义控件区域
     m_titlebarCenterWidget = new QWidget(m_titlebarWidget);
     m_titlebarCenterWidget->setObjectName("KiranTitlebarCenterWidget");
     m_titlebarCenterWidget->setAccessibleName("WindowTitlebarCenterWidget");
@@ -337,7 +343,7 @@ void KiranTitlebarWindowPrivate::initOtherWidget()
     m_customLayout->setSpacing(0);
     m_customLayout->setObjectName("KiranTitlebarCustomLayout");
 
-    ///标题栏居右部分
+    /// 标题栏居右部分
     m_titlebarRirghtWidget = new QWidget(m_titlebarWidget);
     m_titlebarRirghtWidget->setObjectName("KiranTitlebarRightWidget");
     m_titlebarRirghtWidget->setAccessibleName("WindowTitlebarRightWidget");
@@ -348,11 +354,11 @@ void KiranTitlebarWindowPrivate::initOtherWidget()
     titlebarRightlayout->setSpacing(0);
     titlebarRightlayout->setMargin(0);
 
-    //占位
+    // 占位
     QSpacerItem *spacerItem = new QSpacerItem(0, 20, QSizePolicy::Expanding);
     titlebarRightlayout->addItem(spacerItem);
 
-    //最小化
+    // 最小化
     m_btnMin = new QPushButton(m_titlebarWidget);
     m_btnMin->setObjectName("KiranTitlebarMinButton");
     m_btnMin->setAccessibleName("WindowTitlebarMinimizeButton");
@@ -363,11 +369,10 @@ void KiranTitlebarWindowPrivate::initOtherWidget()
     connect(m_btnMin, &QPushButton::clicked, [this](bool checked)
             {
                 Q_UNUSED(checked);
-                q_ptr->showMinimized();
-            });
+                q_ptr->showMinimized(); });
     titlebarRightlayout->addWidget(m_btnMin, 0, Qt::AlignVCenter);
 
-    //最大化
+    // 最大化
     m_btnMax = new QPushButton(m_titlebarWidget);
     m_btnMax->setObjectName("KiranTitlebarMaxButton");
     m_btnMax->setAccessibleName("WindowTitlebarMaximizeButton");
@@ -385,11 +390,10 @@ void KiranTitlebarWindowPrivate::initOtherWidget()
                 else
                 {
                     q_ptr->showMaximized();
-                }
-            });
+                } });
     titlebarRightlayout->addWidget(m_btnMax, 0, Qt::AlignVCenter);
 
-    //关闭
+    // 关闭
     m_btnClose = new QPushButton(m_titlebarWidget);
     m_btnClose->setObjectName("KiranTitlebarCloseButton");
     m_btnClose->setAccessibleName("WindowTitlebarCloseButton");
@@ -400,13 +404,12 @@ void KiranTitlebarWindowPrivate::initOtherWidget()
     connect(m_btnClose, &QPushButton::clicked, [this](bool checked)
             {
                 Q_UNUSED(checked);
-                q_ptr->close();
-            });
+                q_ptr->close(); });
     titlebarRightlayout->addWidget(m_btnClose, 0, Qt::AlignVCenter);
 
     setButtonHints(m_buttonHints);
 
-    ///分割线
+    /// 分割线
     m_tittlebarSpliteLine = new QFrame(m_frame);
     m_tittlebarSpliteLine->setFixedHeight(1);
     m_frameLayout->addWidget(m_tittlebarSpliteLine);
@@ -414,7 +417,7 @@ void KiranTitlebarWindowPrivate::initOtherWidget()
     m_tittlebarSpliteLine->setFrameShape(QFrame::HLine);
     m_tittlebarSpliteLine->setFrameShadow(QFrame::Sunken);
 
-    ///内容窗口包装
+    /// 内容窗口包装
     m_windowContentWidgetWrapper = new QWidget(m_frame);
     m_windowContentWidgetWrapper->setObjectName("KiranTitlebarContentWrapper");
     m_frameLayout->addWidget(m_windowContentWidgetWrapper);
@@ -461,47 +464,47 @@ CursorPositionEnums KiranTitlebarWindowPrivate::getCursorPosition(QPoint pos)
 
 void KiranTitlebarWindowPrivate::ensureShadowPixmapUpdated()
 {
-    if( !m_isCompositingManagerRunning )
+    if (!m_isCompositingManagerRunning)
     {
         return;
     }
-    
+
     bool isActiveWindow = q_ptr->isActiveWindow();
     auto windowSize = q_ptr->size();
     auto windowRect = q_ptr->rect();
 
-    if( ( isActiveWindow && (m_shadowActivePix.size() == windowSize) ) || 
-        ( !isActiveWindow && (m_shadowPix.size() == windowSize) ) )
+    if ((isActiveWindow && (m_shadowActivePix.size() == windowSize)) ||
+        (!isActiveWindow && (m_shadowPix.size() == windowSize)))
     {
-        //不需更新
+        // 不需更新
         return;
     }
 
     qDebug() << "update shadow pixmap..." << isActiveWindow << windowSize;
 
-    QPainterPath innerPath,outerPath;
-    innerPath.addRoundedRect(windowRect.adjusted(shadowWidth,shadowWidth,-shadowWidth,-shadowWidth),radius,radius);
-    outerPath.addRoundedRect(windowRect,radius,radius);
+    QPainterPath innerPath, outerPath;
+    innerPath.addRoundedRect(windowRect.adjusted(shadowWidth, shadowWidth, -shadowWidth, -shadowWidth), radius, radius);
+    outerPath.addRoundedRect(windowRect, radius, radius);
 
-    QImage img(windowSize,QImage::Format_ARGB32_Premultiplied);
+    QImage img(windowSize, QImage::Format_ARGB32_Premultiplied);
     img.fill(0);
 
     QPainter imgPainter(&img);
     imgPainter.setCompositionMode(QPainter::CompositionMode_Source);
-    imgPainter.fillPath(innerPath,QBrush(Qt::white));
+    imgPainter.fillPath(innerPath, QBrush(Qt::white));
     imgPainter.end();
 
-    QImage blurredImg(img.size(),img.format());
+    QImage blurredImg(img.size(), img.format());
     blurredImg.fill(0);
     QPainter blurPainter(&blurredImg);
-    qt_blurImage(&blurPainter,img,shadowRadius,false,true);
+    qt_blurImage(&blurPainter, img, shadowRadius, false, true);
     blurPainter.end();
 
     img = std::move(blurredImg);
 
     imgPainter.begin(&img);
     imgPainter.setCompositionMode(QPainter::CompositionMode_SourceIn);
-    imgPainter.fillRect(img.rect(),isActiveWindow?shadowActiveColor:shadowInactiveColor);
+    imgPainter.fillRect(img.rect(), isActiveWindow ? shadowActiveColor : shadowInactiveColor);
     imgPainter.end();
 
     QPixmap pixmap(img.size());
@@ -513,10 +516,10 @@ void KiranTitlebarWindowPrivate::ensureShadowPixmapUpdated()
 
     QPainter outputPainter(&pixmap);
     outputPainter.setClipPath(clipPath);
-    outputPainter.drawImage(img.rect(),img);
+    outputPainter.drawImage(img.rect(), img);
     outputPainter.end();
 
-    if( isActiveWindow )
+    if (isActiveWindow)
     {
         m_shadowActivePix = pixmap;
     }
@@ -532,7 +535,7 @@ void KiranTitlebarWindowPrivate::updateTitleFont(QFont font)
 
 bool KiranTitlebarWindowPrivate::eventFilter(QObject *obj, QEvent *event)
 {
-    //NOTE:用户标题栏暂时需要使用窗口管理器单独设置的字体，不和程序字体通用
+    // NOTE:用户标题栏暂时需要使用窗口管理器单独设置的字体，不和程序字体通用
     if (obj == m_title && event->type() == QEvent::ApplicationFontChange)
     {
         return true;
@@ -546,9 +549,9 @@ bool KiranTitlebarWindowPrivate::eventFilter(QObject *obj, QEvent *event)
         case QEvent::ShowToParent:
             // 若在初始化时 createWinId 再调用下列方法设置属性，设置属性成功，但窗口管理器未能成功识别
             // 在接近显示时进行处理设置_GTK_FRAME_EXTENTS属性
-            if( m_isCompositingManagerRunning )
+            if (m_isCompositingManagerRunning)
             {
-                int scaledShadowWidth = q_ptr->devicePixelRatio()*shadowWidth;
+                int scaledShadowWidth = q_ptr->devicePixelRatio() * shadowWidth;
                 XLibHelper::SetShadowWidth(QX11Info::display(), q_ptr->winId(), scaledShadowWidth, scaledShadowWidth, scaledShadowWidth, scaledShadowWidth);
             }
             break;
@@ -576,8 +579,8 @@ bool KiranTitlebarWindowPrivate::eventFilter(QObject *obj, QEvent *event)
         case QEvent::StyleChange:
             updateTitlebarButtonIcon();
             break;
-        case QEvent::WindowStateChange: 
-            if( q_ptr->windowState() == Qt::WindowMaximized )
+        case QEvent::WindowStateChange:
+            if (q_ptr->windowState() == Qt::WindowMaximized)
             {
                 m_frame->setRadius(0);
             }
