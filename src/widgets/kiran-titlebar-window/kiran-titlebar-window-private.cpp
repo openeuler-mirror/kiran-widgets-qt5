@@ -45,6 +45,8 @@ const int KiranTitlebarWindowPrivate::shadowRadius = 15;
 const QColor KiranTitlebarWindowPrivate::shadowActiveColor = QColor(0, 0, 0, 150);
 const QColor KiranTitlebarWindowPrivate::shadowInactiveColor = QColor(0, 0, 0, 75);
 
+const QSize KiranTitlebarWindowPrivate::iconSize = QSize(24,24);
+
 extern void qt_blurImage(QPainter *p, QImage &blurImage, qreal radius, bool quality, bool alphaOnly, int transposed = 0);
 
 using namespace Kiran;
@@ -99,7 +101,16 @@ void KiranTitlebarWindowPrivate::init()
 
 void KiranTitlebarWindowPrivate::setIcon(const QIcon &icon)
 {
-    m_titleIcon->setPixmap(icon.pixmap(16, 16));
+    QPixmap pixmap = icon.pixmap(16,16);
+    if( pixmap.isNull() )
+    {
+        m_titleIcon->setFixedSize(QSize(0,0));
+    }
+    else
+    {
+        m_titleIcon->setFixedSize(iconSize);
+    }
+    m_titleIcon->setPixmap(pixmap);
 }
 
 void KiranTitlebarWindowPrivate::setTitle(const QString &title)
@@ -317,7 +328,7 @@ void KiranTitlebarWindowPrivate::initOtherWidget()
     m_titleIcon = new QLabel(m_titlebarWidget);
     m_titleIcon->setObjectName("KiranTitlebarIcon");
     m_titleIcon->setAccessibleName("WindowTitlebarIcon");
-    m_titleIcon->setFixedSize(24, 24);
+    m_titleIcon->setFixedSize(QSize(0,0));
     m_titleBarLayout->setTitleBarIconLabel(m_titleIcon);
     m_titleBarLayout->setTitleBarIconMargin(QMargins(12, 0, 0, 0));
 
