@@ -124,7 +124,7 @@ void KiranColorBlock::paintEvent(QPaintEvent *event)
     QRectF frect = opt.rect;
 
     QPainterPath painterPath;
-    painterPath = roundedPath(frect, d_ptr->m_radiusCorner, 6);
+    painterPath = roundedPath(frect, d_ptr->m_radiusCorner, d_ptr->m_radius);
 
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
