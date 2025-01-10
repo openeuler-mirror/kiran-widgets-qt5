@@ -1,14 +1,14 @@
 /**
- * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd. 
+ * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
  * kiranwidgets-qt5 is licensed under Mulan PSL v2.
- * You can use this software according to the terms and conditions of the Mulan PSL v2. 
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
- *          http://license.coscl.org.cn/MulanPSL2 
- * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, 
- * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, 
- * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.  
- * See the Mulan PSL v2 for more details.  
- * 
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
  */
 
@@ -16,6 +16,7 @@
 #include "drop-shadow-color.h"
 #include "frameless-background-frame.h"
 #include "kiran-message-box.h"
+#include "kiran-push-button/kiran-push-button.h"
 #include "xlib-helper.h"
 
 #include <QApplication>
@@ -30,16 +31,14 @@
 #include <QTranslator>
 #include <QVBoxLayout>
 
-#include <style-property.h>
-
 const int KiranMessageBoxPrivate::shadowWidth = 15;
 const int KiranMessageBoxPrivate::shadowRadius = 15;
-const QColor KiranMessageBoxPrivate::shadowColor = QColor(0,0,0,75);
-const QColor KiranMessageBoxPrivate::shadowActiveColor = QColor(0,0,0,150);
+const QColor KiranMessageBoxPrivate::shadowColor = QColor(0, 0, 0, 75);
+const QColor KiranMessageBoxPrivate::shadowActiveColor = QColor(0, 0, 0, 150);
 
 using namespace Kiran;
 
-///默认按钮信息Map QMap<默认按钮枚举值,<按钮文本,按钮角色>>
+/// 默认按钮信息Map QMap<默认按钮枚举值,<按钮文本,按钮角色>>
 static QMap<KiranStandardButton, QPair<QString, ButtonRole>> standardButtonInfoMap;
 
 KiranMessageBoxPrivate::KiranMessageBoxPrivate(KiranMessageBox *ptr)
@@ -103,30 +102,29 @@ void KiranMessageBoxPrivate::init(const QString &title,
     m_layout->setMargin(0);
     m_layout->setSpacing(0);
 
-    m_topShadowSpacerItem = new QSpacerItem(20,0,QSizePolicy::Preferred,QSizePolicy::Fixed);
+    m_topShadowSpacerItem = new QSpacerItem(20, 0, QSizePolicy::Preferred, QSizePolicy::Fixed);
     m_layout->addItem(m_topShadowSpacerItem);
-    
+
     m_hlayout = new QHBoxLayout(q_ptr);
     m_hlayout->setMargin(0);
     m_hlayout->setSpacing(0);
     m_layout->addItem(m_hlayout);
-    
-    m_leftShadowSpacerItem = new QSpacerItem(0,20,QSizePolicy::Fixed,QSizePolicy::Preferred);
-    m_hlayout->addItem(m_leftShadowSpacerItem);
-    
-    m_hlayout->addWidget(initChildWidgets(title,text));
 
-    m_rightShadowSpacerItem = new QSpacerItem(0,20,QSizePolicy::Fixed,QSizePolicy::Preferred);
+    m_leftShadowSpacerItem = new QSpacerItem(0, 20, QSizePolicy::Fixed, QSizePolicy::Preferred);
+    m_hlayout->addItem(m_leftShadowSpacerItem);
+
+    m_hlayout->addWidget(initChildWidgets(title, text));
+
+    m_rightShadowSpacerItem = new QSpacerItem(0, 20, QSizePolicy::Fixed, QSizePolicy::Preferred);
     m_hlayout->addItem(m_rightShadowSpacerItem);
 
-
-    m_bottomShadowSpacerItem = new QSpacerItem(20,0,QSizePolicy::Preferred,QSizePolicy::Fixed);
+    m_bottomShadowSpacerItem = new QSpacerItem(20, 0, QSizePolicy::Preferred, QSizePolicy::Fixed);
     m_layout->addItem(m_bottomShadowSpacerItem);
 
     q_ptr->setMinimumSize(300, 180);
 }
 
-QWidget* KiranMessageBoxPrivate::initChildWidgets(const QString& title,const QString& text)
+QWidget *KiranMessageBoxPrivate::initChildWidgets(const QString &title, const QString &text)
 {
     m_frame = new FramelessBackgroundFrame(q_ptr);
     m_frame->setObjectName("KiranMessageBoxFrame");
@@ -135,7 +133,7 @@ QWidget* KiranMessageBoxPrivate::initChildWidgets(const QString& title,const QSt
     m_frameLayout->setSpacing(5);
     m_frameLayout->setContentsMargins(24, 0, 24, 24);
 
-    ///标题栏
+    /// 标题栏
     m_titleWidget = new QWidget(q_ptr);
     m_titleWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     m_titleWidget->setFixedHeight(40);
@@ -164,7 +162,7 @@ QWidget* KiranMessageBoxPrivate::initChildWidgets(const QString& title,const QSt
     spacingLabel->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     m_titleLayout->addWidget(spacingLabel);
 
-    ///正文
+    /// 正文
     m_textLabel = new QLabel(m_frame);
     m_textLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     m_textLabel->setWordWrap(true);
@@ -175,8 +173,8 @@ QWidget* KiranMessageBoxPrivate::initChildWidgets(const QString& title,const QSt
     m_frameLayout->addWidget(m_textLabel);
 
     // 自定义布局，提供给外部调用添加控件
-    QWidget* customWidget = new QWidget(m_frame);
-    customWidget->setSizePolicy(QSizePolicy::Expanding,QSizePolicy::Preferred);
+    QWidget *customWidget = new QWidget(m_frame);
+    customWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
     m_customLayout = new QHBoxLayout(customWidget);
     m_customLayout->setMargin(0);
     m_customLayout->setSpacing(0);
@@ -185,7 +183,7 @@ QWidget* KiranMessageBoxPrivate::initChildWidgets(const QString& title,const QSt
     QSpacerItem *spacerItem_1 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
     m_frameLayout->addItem(spacerItem_1);
 
-    ///按钮盒
+    /// 按钮盒
     m_dialogButtonBox = new QDialogButtonBox(Qt::Horizontal, m_frame);
     m_dialogButtonBox->setCenterButtons(true);
     m_dialogButtonBox->setFixedHeight(40);
@@ -217,14 +215,14 @@ void KiranMessageBoxPrivate::setText(const QString &text)
 
 QPushButton *KiranMessageBoxPrivate::addButton(KiranStandardButton standardButton)
 {
-    ///是否已经添加过该默认按钮
+    /// 是否已经添加过该默认按钮
     auto iter = m_standardButtonsMap.find(standardButton);
     if (iter != m_standardButtonsMap.end())
     {
         return iter.value();
     }
 
-    ///判断按钮类型正确
+    /// 判断按钮类型正确
     auto buttonInfoIter = standardButtonInfoMap.find(standardButton);
     if (buttonInfoIter == standardButtonInfoMap.end())
     {
@@ -238,10 +236,10 @@ QPushButton *KiranMessageBoxPrivate::addButton(KiranStandardButton standardButto
     if (buttonInfoIter.value().second == QDialogButtonBox::AcceptRole ||
         buttonInfoIter.value().second == QDialogButtonBox::YesRole)
     {
-        StylePropertyHelper::setButtonType(button, BUTTON_Default);
+        KiranPushButton::setButtonType(button, KiranPushButton::BUTTON_Default);
     }
 
-    ///生成ObjectName，eg:KiranStandardButton::Ok->btn_Ok
+    /// 生成ObjectName，eg:KiranStandardButton::Ok->btn_Ok
     QMetaEnum metaEnum = QMetaEnum::fromType<KiranStandardButton>();
     QString standardButtonString = metaEnum.valueToKey(standardButton);
     standardButtonString.replace(" ", "_");
@@ -263,7 +261,7 @@ QPushButton *KiranMessageBoxPrivate::addButton(const QString &text,
     if (role == QDialogButtonBox::AcceptRole ||
         role == QDialogButtonBox::YesRole)
     {
-        StylePropertyHelper::setButtonType(button, BUTTON_Default);
+        KiranPushButton::setButtonType(button, KiranPushButton::BUTTON_Default);
     }
     m_dialogButtonBox->addButton(button, role);
     return button;
@@ -328,15 +326,15 @@ void KiranMessageBoxPrivate::enableShadow(bool enable)
 {
     m_dropShadowEffect->setEnabled(enable);
 
-    m_topShadowSpacerItem->changeSize(20,enable?shadowWidth:0,QSizePolicy::Minimum,QSizePolicy::Fixed);
-    m_bottomShadowSpacerItem->changeSize(20,enable?shadowWidth:0,QSizePolicy::Minimum,QSizePolicy::Fixed);
+    m_topShadowSpacerItem->changeSize(20, enable ? shadowWidth : 0, QSizePolicy::Minimum, QSizePolicy::Fixed);
+    m_bottomShadowSpacerItem->changeSize(20, enable ? shadowWidth : 0, QSizePolicy::Minimum, QSizePolicy::Fixed);
 
-    m_leftShadowSpacerItem->changeSize(enable?shadowWidth:0,20,QSizePolicy::Fixed,QSizePolicy::Minimum);
-    m_rightShadowSpacerItem->changeSize(enable?shadowWidth:0,20,QSizePolicy::Fixed,QSizePolicy::Minimum);
-    
+    m_leftShadowSpacerItem->changeSize(enable ? shadowWidth : 0, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
+    m_rightShadowSpacerItem->changeSize(enable ? shadowWidth : 0, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
+
     q_ptr->adjustSize();
 
-    ///NOTE:获取缩放率x(阴影边框宽度+窗口边框)
+    /// NOTE:获取缩放率x(阴影边框宽度+窗口边框)
     int shadowBorderWidth = (shadowWidth + 1) * q_ptr->devicePixelRatio();
     XLibHelper::SetShadowWidth(QX11Info::display(),
                                q_ptr->winId(),
@@ -380,7 +378,7 @@ void KiranMessageBoxPrivate::handlerMouseMoveEvent(QMouseEvent *event)
                                     q_func()->winId(),
                                     pos.x(),
                                     pos.y());
-        ///NOTE:在此之后获取不到MouseRelease事件,需复位按钮按压
+        /// NOTE:在此之后获取不到MouseRelease事件,需复位按钮按压
         m_titlebarIsPressed = false;
         event->accept();
         return;
@@ -415,7 +413,7 @@ void KiranMessageBoxPrivate::addButton(QPushButton *button, QDialogButtonBox::Bu
     if (role == QDialogButtonBox::AcceptRole ||
         role == QDialogButtonBox::YesRole)
     {
-        StylePropertyHelper::setButtonType(button, BUTTON_Default);
+        KiranPushButton::setButtonType(button, KiranPushButton::BUTTON_Default);
     }
     m_dialogButtonBox->addButton(button, role);
 }

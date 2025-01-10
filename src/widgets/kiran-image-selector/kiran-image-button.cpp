@@ -1,27 +1,27 @@
 /**
- * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd. 
+ * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
  * kiranwidgets-qt5 is licensed under Mulan PSL v2.
- * You can use this software according to the terms and conditions of the Mulan PSL v2. 
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
- *          http://license.coscl.org.cn/MulanPSL2 
- * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, 
- * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, 
- * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.  
- * See the Mulan PSL v2 for more details.  
- * 
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
  */
 
 #include "kiran-image-button.h"
 #include "widget-draw-helper.h"
 
-#include <style-palette.h>
+#include <palette.h>
 #include <QEvent>
 #include <QPainter>
 #include <QResizeEvent>
 #include <QStyleOption>
 
-using namespace Kiran;
+using namespace Kiran::Theme;
 
 KiranImageButton::KiranImageButton(QWidget *parent, bool leftSide)
     : QPushButton(parent),
@@ -70,17 +70,17 @@ void KiranImageButton::paintEvent(QPaintEvent *event)
     }
 
     bool isAnchorLeft = mapToParent(QPoint(0, 0)).x() == 0;
-    QPainterPath painterPath = WidgetDrawHelper::getRoundedRectanglePath(option.rect.adjusted(0.5,0.5,-0.5,-0.5),
+    QPainterPath painterPath = WidgetDrawHelper::getRoundedRectanglePath(option.rect.adjusted(0.5, 0.5, -0.5, -0.5),
                                                                          isAnchorLeft ? 4 : 0,
                                                                          isAnchorLeft ? 0 : 4,
                                                                          isAnchorLeft ? 4 : 0,
                                                                          isAnchorLeft ? 0 : 4);
-    auto kiranPalette = StylePalette::instance();
-    auto background = kiranPalette->color(this, &option, StylePalette::Bare, StylePalette::Background);
+    // FIXME:暂时通过获取激活状态下的控件颜色代替
+    auto background = DEFAULT_PALETTE()->getColor(Palette::ColorGroup::ACTIVE, Palette::ColorRole::WIDGET);
     background.setAlphaF(0.48);
     painter.fillPath(painterPath, background);
 
-    style()->drawPrimitive(isAnchorLeft?QStyle::PE_IndicatorArrowLeft:QStyle::PE_IndicatorArrowRight,&option,&painter,this);
+    style()->drawPrimitive(isAnchorLeft ? QStyle::PE_IndicatorArrowLeft : QStyle::PE_IndicatorArrowRight, &option, &painter, this);
 }
 
 bool KiranImageButton::anchorParentLeftSide()

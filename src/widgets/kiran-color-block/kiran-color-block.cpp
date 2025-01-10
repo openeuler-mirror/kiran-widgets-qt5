@@ -1,11 +1,11 @@
 #include "kiran-color-block.h"
-#include <style-palette.h>
+#include <palette.h>
 #include <QPainter>
 #include <QPainterPath>
 #include <QStyleOption>
 #include "kiran-color-block-private.h"
 
-using namespace Kiran;
+using namespace Kiran::Theme;
 
 QPainterPath roundedPath(const QRectF &rect, KiranColorBlock::Corners corners, int radius)
 {
@@ -129,9 +129,10 @@ void KiranColorBlock::paintEvent(QPaintEvent *event)
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
-    auto kiranPalette = Kiran::StylePalette::instance();
     QColor background;
-    background = kiranPalette->getBulkColor();
+    // background = kiranPalette->getBulkColor();
+    // FIXME:暂时通过获取激活状态下的控件颜色代替
+    background = DEFAULT_PALETTE()->getColor(Palette::ColorGroup::ACTIVE, Palette::ColorRole::WIDGET);
     painter.fillPath(painterPath, background);
 
     QWidget::paintEvent(event);

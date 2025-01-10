@@ -1,8 +1,8 @@
 #include "kiran-line-edit.h"
+#include <palette.h>
 #include "kiran-line-edit-private.h"
-#include <style-palette.h>
 
-using namespace Kiran;
+using namespace Kiran::Theme;
 
 KiranLineEdit::KiranLineEdit(QWidget *parent)
     : QWidget(parent)
@@ -19,7 +19,7 @@ KiranLineEdit::~KiranLineEdit()
     delete d_ptr;
 }
 
-QLineEdit* KiranLineEdit::lineEdit() const
+QLineEdit *KiranLineEdit::lineEdit() const
 {
     return d_func()->m_lineEdit;
 }
@@ -27,7 +27,7 @@ QLineEdit* KiranLineEdit::lineEdit() const
 void KiranLineEdit::setAlert(bool alert)
 {
     Q_D(KiranLineEdit);
-    if( alert == d->m_isAlert )
+    if (alert == d->m_isAlert)
     {
         return;
     }
@@ -45,7 +45,7 @@ void KiranLineEdit::setTipsPosition(TipsPosition position)
 {
     Q_D(KiranLineEdit);
 
-    if( position == d->m_tipsPosition )
+    if (position == d->m_tipsPosition)
     {
         return;
     }
@@ -60,7 +60,7 @@ KiranLineEdit::TipsPosition KiranLineEdit::getTipsPosition() const
 
 void KiranLineEdit::paintEvent(QPaintEvent *event)
 {
-    StylePalette::instance();
+    DEFAULT_PALETTE();
     QWidget::paintEvent(event);
 }
 
