@@ -14,9 +14,10 @@
 #include <QSet>
 #include <QStyle>
 
-#include <style-palette.h>
+#include <palette.h>
+#include <style-helper.h>
 
-using namespace Kiran;
+using namespace Kiran::Theme;
 
 KiranSiderbarDelegate::KiranSiderbarDelegate(QObject *parent) : QItemDelegate(parent)
 {
@@ -51,25 +52,22 @@ void KiranSiderbarDelegate::paint(QPainter *painter, const QStyleOptionViewItem 
     QRect pixmapRect, textRect, statusDescRect, indicatorRect;
     doLayout(opt, index, pixmapRect, textRect, statusDescRect, indicatorRect);
 
-    const auto kiranPalette = StylePalette::instance();
-
-    //background
-    QColor bgColor = kiranPalette->color(widget, &opt, StylePalette::Widget, StylePalette::Background);
+    // background
+    QColor bgColor = DEFAULT_PALETTE()->getColor(Palette::ColorGroup::ACTIVE, Palette::ColorRole::WIDGET);
     QPainterPath fillBackgroundPath;
     fillBackgroundPath.addRoundedRect(opt.rect, 6, 6);
     fillBackgroundPath = WidgetDrawHelper::getRoundedRectanglePath(opt.rect, 5, 5, 5, 5);
     painter->fillPath(fillBackgroundPath, QBrush(bgColor));
 
-    //pixmap
+    // pixmap
     QPixmap pixmap;
     QSize pixmapSize;
     pixmap = getDecorationPixmap(option, index, pixmapSize);
     if (!pixmap.isNull())
     {
-        //默认侧边栏为白色图标，但是深浅色主题需要切换颜色，若为浅色主题，则反转颜色
-        //浅色主题，选中状态不反转，仍为白色
-        auto kiranPalette = StylePalette::instance();
-        if(  m_invertIconPixelsEnable && kiranPalette->paletteType() == PALETTE_LIGHT && !(opt.state & QStyle::State_Selected)  )
+        // 默认侧边栏为白色图标，但是深浅色主题需要切换颜色，若为浅色主题，则反转颜色
+        // 浅色主题，选中状态不反转，仍为白色
+        if (m_invertIconPixelsEnable && DEFAULT_STYLE_HELPER()->paletteType() == PALETTE_LIGHT && !(opt.state & QStyle::State_Selected))
         {
             auto image = pixmap.toImage();
             image.invertPixels(QImage::InvertRgb);
@@ -78,18 +76,18 @@ void KiranSiderbarDelegate::paint(QPainter *painter, const QStyleOptionViewItem 
         painter->drawPixmap(pixmapRect.topLeft(), pixmap);
     }
 
-    //text
+    // text
     QVariant displayVar = index.data(Qt::DisplayRole);
     if (displayVar.isValid() && !displayVar.isNull())
     {
-        //将存储的数据根据locale转换
+        // 将存储的数据根据locale转换
         QString text = textForRole(Qt::DisplayRole, displayVar, option.locale);
-        //处理文本过宽,超出分配的空间时,对文本进行省略
-        QString elideText = option.fontMetrics.elidedText(text, Qt::ElideRight, textRect.width(),Qt::TextShowMnemonic);
+        // 处理文本过宽,超出分配的空间时,对文本进行省略
+        QString elideText = option.fontMetrics.elidedText(text, Qt::ElideRight, textRect.width(), Qt::TextShowMnemonic);
         drawDisplay(painter, opt, textRect, elideText);
     }
 
-    //status desc
+    // status desc
     QVariant statusDescVar = index.data(ItemStatus_Role);
     if (statusDescVar.isValid() && !statusDescVar.isNull())
     {
@@ -109,7 +107,7 @@ void KiranSiderbarDelegate::paint(QPainter *painter, const QStyleOptionViewItem 
         painter->restore();
     }
 
-    //indicator
+    // indicator
     if (option.state & QStyle::State_Selected)
     {
         QPixmap indicatorPixmap = style->standardPixmap(QStyle::SP_ArrowRight, &opt, widget);
@@ -160,7 +158,7 @@ QPixmap KiranSiderbarDelegate::getDecorationPixmap(const QStyleOptionViewItem &o
     return pixmap;
 }
 
-//提取存储于model之中的数据进行本地转换
+// 提取存储于model之中的数据进行本地转换
 QString KiranSiderbarDelegate::textForRole(Qt::ItemDataRole role, const QVariant &value, const QLocale &locale) const
 {
     static const int precision = 10;
@@ -236,8 +234,8 @@ QRect KiranSiderbarDelegate::textLayoutBounds(const QStyleOptionViewItem &option
 
 // NOTE:不考虑option之中decorationPosition、decorationAlignment、direction,以及不考虑不绘制勾选框
 void KiranSiderbarDelegate::doLayout(const QStyleOptionViewItem &option, const QModelIndex &index,
-                                      QRect &pixmapRect, QRect &textRect,
-                                      QRect &statusDescRect, QRect &indicatorRect) const
+                                     QRect &pixmapRect, QRect &textRect,
+                                     QRect &statusDescRect, QRect &indicatorRect) const
 {
     const QStyle::State &styleState = option.state;
     const QWidget *widget = option.widget;
@@ -248,28 +246,28 @@ void KiranSiderbarDelegate::doLayout(const QStyleOptionViewItem &option, const Q
 
     QRect rect = option.rect.adjusted(10, 0, -10, 0);
 
-    //最左
+    // 最左
     QRect pixmapRectTemp = QRect(rect.x(), rect.y(), pixmapSize.width(), rect.height());
     pixmapRect.setSize(pixmapSize);
     pixmapRect.moveCenter(pixmapRectTemp.center());
 
-    //最右
+    // 最右
     QRect indicatorRectTemp = QRect(rect.right() - indicatorSize.width(), rect.y(), indicatorSize.width(), rect.height());
     indicatorRect.setSize(indicatorSize);
     indicatorRect.moveCenter(indicatorRectTemp.center());
 
-    //状态描述文本靠右布局
+    // 状态描述文本靠右布局
     QRect statusDescRectTemp = QRect(indicatorRectTemp.left() - statusDescSize.width() - 10, rect.y(), statusDescSize.width(), rect.height());
     statusDescRect.setSize(statusDescSize);
     statusDescRect.moveCenter(statusDescRectTemp.center());
 
-    //文本扩张
+    // 文本扩张
     int textSpaceX = pixmapSize.isEmpty() ? pixmapRectTemp.right() : pixmapRectTemp.right() + 10;
     int textSpaceWidth = statusDescRectTemp.left() - (statusDescSize.isEmpty() ? 0 : 10) - textSpaceX;
     QRect textRectTemp = QRect(textSpaceX, rect.y(), textSpaceWidth, rect.height());
 
-    //对TextSize进行限制,若文字大小超出了剩余的控空间大小,调整为剩余控件大小
-    if ( textSize.width() > textRectTemp.width() )
+    // 对TextSize进行限制,若文字大小超出了剩余的控空间大小,调整为剩余控件大小
+    if (textSize.width() > textRectTemp.width())
     {
         textSize.setWidth(textRectTemp.width());
     }
@@ -341,6 +339,6 @@ QSize KiranSiderbarDelegate::sizeFromContents(const QStyleOptionViewItem &opt, c
 
 void KiranSiderbarDelegate::setInvertIconPixelsEnable(bool enable)
 {
-    if( enable != m_invertIconPixelsEnable )
+    if (enable != m_invertIconPixelsEnable)
         m_invertIconPixelsEnable = enable;
 }

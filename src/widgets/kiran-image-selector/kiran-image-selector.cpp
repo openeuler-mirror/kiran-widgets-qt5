@@ -1,14 +1,14 @@
 /**
- * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd. 
+ * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
  * kiranwidgets-qt5 is licensed under Mulan PSL v2.
- * You can use this software according to the terms and conditions of the Mulan PSL v2. 
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
- *          http://license.coscl.org.cn/MulanPSL2 
- * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, 
- * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, 
- * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.  
- * See the Mulan PSL v2 for more details.  
- * 
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
  */
 
@@ -17,6 +17,7 @@
 #include "kiran-image-list.h"
 #include "kiran-image-selector-private.h"
 
+#include <palette.h>
 #include <QApplication>
 #include <QBoxLayout>
 #include <QDateTime>
@@ -25,9 +26,8 @@
 #include <QPaintEvent>
 #include <QPainter>
 #include <QScrollBar>
-#include <style-palette.h>
 
-using namespace Kiran;
+using namespace Kiran::Theme;
 
 KiranImageSelector::KiranImageSelector(QWidget *parent)
     : QWidget(parent),
@@ -35,9 +35,8 @@ KiranImageSelector::KiranImageSelector(QWidget *parent)
 {
     d_ptr->init(this);
     setAccessibleName("KiranImageSelector");
-    connect(d_ptr->m_selectorList, &KiranImageList::selectedImageChanged, [this](QString imagePath) {
-        emit selectedImageChanged(imagePath);
-    });
+    connect(d_ptr->m_selectorList, &KiranImageList::selectedImageChanged, [this](QString imagePath)
+            { emit selectedImageChanged(imagePath); });
 }
 
 KiranImageSelector::~KiranImageSelector()
@@ -88,19 +87,17 @@ bool KiranImageSelector::setSelectedImage(const QString &imagePath)
 
 void KiranImageSelector::paintEvent(QPaintEvent *event)
 {
-    QPainter     painter(this);
+    QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
-
-    StylePalette* kiranPalette = StylePalette::instance();
 
     QStyleOption option;
     option.initFrom(this);
     option.state &= ~QStyle::State_MouseOver;
-    auto background = kiranPalette->color(this,&option,StylePalette::Window,StylePalette::Background);
-    auto border = kiranPalette->color(this,&option,StylePalette::Window,StylePalette::Border);
+    auto background = DEFAULT_PALETTE()->getColor(Palette::ACTIVE, Palette::WINDOW);
+    auto border = DEFAULT_PALETTE()->getColor(Palette::ACTIVE, Palette::BORDER);
 
     QRectF rectf = option.rect;
-    rectf.adjust(0.5,0.5,-0.5,-0.5);
+    rectf.adjust(0.5, 0.5, -0.5, -0.5);
 
     QPen pen = painter.pen();
     pen.setJoinStyle(Qt::MiterJoin);
@@ -109,7 +106,7 @@ void KiranImageSelector::paintEvent(QPaintEvent *event)
 
     painter.setPen(pen);
     painter.setBrush(background);
-    painter.drawRoundRect(rectf,4);
+    painter.drawRoundRect(rectf, 4);
 }
 
 bool KiranImageSelector::event(QEvent *event)

@@ -1,6 +1,5 @@
 
 #include "kiran-color-block/kiran-color-block.h"
-#include <style-palette.h>
 #include <QTest>
 
 class KiranColorBlockTest : public QObject

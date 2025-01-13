@@ -26,7 +26,7 @@ set(KIRANWIDGETS_API_VERSION 2)
 
 find_package(PkgConfig REQUIRED)
 pkg_search_module(GSETTINGS_QT REQUIRED gsettings-qt)
-pkg_search_module(KIRAN_STYLE_HELPER REQUIRED kiran-style-helper)
+pkg_search_module(KIRAN_INTEGRATION_THEME REQUIRED kiran-integration-theme)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -43,10 +43,6 @@ file(GLOB_RECURSE PUBLIC_H "src/public/*.h")
 #widgets源码
 file(GLOB_RECURSE WIDGET_CPP "src/widgets/*.cpp")
 file(GLOB_RECURSE WIDGET_H "src/widgets/*.h")
-
-#style源码
-file(GLOB_RECURSE STYLE_CPP "src/kiran-style/*.cpp")
-file(GLOB_RECURSE STYLE_H   "src/kiran-style/*.h")
 
 #资源文件
 file(GLOB_RECURSE RESOURCES "resources/*.qrc")
@@ -70,10 +66,7 @@ set(DEVEL_HEADER
         "src/widgets/kiran-hover-tips/kiran-hover-tips.h"
         "src/widgets/kiran-color-block/kiran-color-block.h"
         "src/widgets/kiran-label/kiran-label.h"
-        "src/widgets/kiran-passwd-edit/kiran-passwd-edit.h"
-
-        "src/kiran-style/widget-property-helper.h"
-        "src/kiran-style/kiran-style-public-define.h" )
+        "src/widgets/kiran-passwd-edit/kiran-passwd-edit.h")
 
 include_directories("${CMAKE_BINARY_DIR}")
 
@@ -86,8 +79,6 @@ add_library(${PROJECT_NAME} SHARED
         ${PUBLIC_H}
         ${WIDGET_CPP}
         ${WIDGET_H}
-        ${STYLE_CPP}
-        ${STYLE_H}
         ${RESOURCES}
         ${QM_FILES})
 
@@ -101,11 +92,10 @@ target_include_directories(${PROJECT_NAME} PRIVATE
         src/widgets/common/
         src/public/
         src/widgets/kiran-application/
-        src/kiran-style/
         ${GSETTINGS_QT_INCLUDE_DIRS}
         ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
         ${Qt5Widgets_PRIVATE_INCLUDE_DIRS}
-        ${KIRAN_STYLE_HELPER_INCLUDE_DIRS})
+        ${KIRAN_INTEGRATION_THEME_INCLUDE_DIRS})
 
 target_include_directories(${PROJECT_NAME} PUBLIC
         src/widgets)
@@ -120,7 +110,7 @@ target_link_libraries(${PROJECT_NAME}
         xcb
         xcb-util
         ${GSETTINGS_QT_LIBRARIES}
-        ${KIRAN_STYLE_HELPER_LIBRARIES})
+        ${KIRAN_INTEGRATION_THEME_LIBRARIES})
 
 #安装SO
 set(KIRANWIDGETS_LIB_DIR ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR})

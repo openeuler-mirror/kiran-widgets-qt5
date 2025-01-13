@@ -7,15 +7,15 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 find_package(Qt5Test REQUIRED)
 
 find_package(PkgConfig REQUIRED)
-pkg_search_module(KIRAN_STYLE_HELPER REQUIRED kiran-style-helper)
+pkg_search_module(KIRAN_INTEGRATION_THEME REQUIRED kiran-integration-theme)
 
 macro(ADD_TEST_ENTRY ENTRY_NAME)
     add_executable(${ENTRY_NAME} ${ENTRY_NAME}.cpp)
     add_test(NAME ${ENTRY_NAME} COMMAND ${ENTRY_NAME})
-    target_link_libraries(${ENTRY_NAME} Qt5::Test kiranwidgets-qt5  ${KIRAN_STYLE_HELPER_LIBRARIES})
+    target_link_libraries(${ENTRY_NAME} Qt5::Test kiranwidgets-qt5  ${KIRAN_INTEGRATION_THEME_LIBRARIES})
 
     target_include_directories(${ENTRY_NAME} PRIVATE
-        ${KIRAN_STYLE_HELPER_INCLUDE_DIRS}
+        ${KIRAN_INTEGRATION_THEME_INCLUDE_DIRS}
     )
 endmacro()
 
