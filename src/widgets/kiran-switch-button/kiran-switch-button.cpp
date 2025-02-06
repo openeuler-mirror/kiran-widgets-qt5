@@ -62,7 +62,14 @@ void KiranSwitchButton::paintEvent(QPaintEvent *e)
 
     QColor indicatorBackgroundColor, indicatorCircularColor, textColor;
 
-    indicatorBackgroundColor = DEFAULT_PALETTE()->getColor(Palette::ColorGroup::ACTIVE, Palette::ColorRole::WIDGET);
+    if (isChecked())
+    {
+        indicatorBackgroundColor = DEFAULT_PALETTE()->getColor(Palette::ColorGroup::SELECTED, Palette::ColorRole::WIDGET);
+    }
+    else
+    {
+        indicatorBackgroundColor = DEFAULT_PALETTE()->getColor(Palette::ColorGroup::ACTIVE, Palette::ColorRole::BORDER);
+    }
     indicatorCircularColor = enable ? "white" : DEFAULT_PALETTE()->getColor(Palette::ColorGroup::DISABLED, Palette::ColorRole::WIDGET);
     textColor = DEFAULT_PALETTE()->getColor(enable ? Palette::ColorGroup::ACTIVE : Palette::ColorGroup::DISABLED, Palette::ColorRole::WIDGET);
 
