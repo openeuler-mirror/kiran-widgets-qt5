@@ -130,9 +130,8 @@ void KiranColorBlock::paintEvent(QPaintEvent *event)
     painter.setRenderHint(QPainter::Antialiasing);
 
     QColor background;
-    // background = kiranPalette->getBulkColor();
-    // FIXME:暂时通过获取激活状态下的控件颜色代替
-    background = DEFAULT_PALETTE()->getColor(Palette::ColorGroup::ACTIVE, Palette::ColorRole::WIDGET);
+    // 背景颜色需设置为容器颜色
+    background = DEFAULT_PALETTE()->getBaseColors().containerBackground;
     painter.fillPath(painterPath, background);
 
     QWidget::paintEvent(event);
