@@ -53,7 +53,8 @@ void KiranSiderbarDelegate::paint(QPainter *painter, const QStyleOptionViewItem 
     doLayout(opt, index, pixmapRect, textRect, statusDescRect, indicatorRect);
 
     // background
-    QColor bgColor = DEFAULT_PALETTE()->getColor(Palette::ColorGroup::ACTIVE, Palette::ColorRole::WIDGET);
+    // 获取不同状态下的控件背景颜色
+    QColor bgColor = DEFAULT_PALETTE()->getColor(option.state, Palette::ColorRole::WIDGET);
     QPainterPath fillBackgroundPath;
     fillBackgroundPath.addRoundedRect(opt.rect, 6, 6);
     fillBackgroundPath = WidgetDrawHelper::getRoundedRectanglePath(opt.rect, 5, 5, 5, 5);
@@ -84,6 +85,13 @@ void KiranSiderbarDelegate::paint(QPainter *painter, const QStyleOptionViewItem 
         QString text = textForRole(Qt::DisplayRole, displayVar, option.locale);
         // 处理文本过宽,超出分配的空间时,对文本进行省略
         QString elideText = option.fontMetrics.elidedText(text, Qt::ElideRight, textRect.width(), Qt::TextShowMnemonic);
+
+        // 设置item选中时文字高亮色透明
+        if (option.state & QStyle::State_Selected)
+        {
+            opt.palette.setColor(QPalette::Highlight, Qt::transparent);
+        }
+
         drawDisplay(painter, opt, textRect, elideText);
     }
 

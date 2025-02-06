@@ -75,7 +75,6 @@ void KiranImageButton::paintEvent(QPaintEvent *event)
                                                                          isAnchorLeft ? 0 : 4,
                                                                          isAnchorLeft ? 4 : 0,
                                                                          isAnchorLeft ? 0 : 4);
-    // FIXME:暂时通过获取激活状态下的控件颜色代替
     auto background = DEFAULT_PALETTE()->getColor(Palette::ColorGroup::ACTIVE, Palette::ColorRole::WIDGET);
     background.setAlphaF(0.48);
     painter.fillPath(painterPath, background);
