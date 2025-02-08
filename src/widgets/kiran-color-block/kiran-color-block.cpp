@@ -128,10 +128,21 @@ void KiranColorBlock::paintEvent(QPaintEvent *event)
 
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
-
-    QColor background;
+    
     // 背景颜色需设置为容器颜色
+    QColor background;
+    bool mouseOver = state & QStyle::State_MouseOver;
+
     background = DEFAULT_PALETTE()->getBaseColors().containerBackground;
+    if (  d_ptr->m_normalColor.isValid() )
+    {
+        background = d_ptr->m_normalColor;
+    }
+    if( mouseOver && d_ptr->m_hoverColor.isValid() )
+    {
+        background = d_ptr->m_hoverColor;
+    }
+
     painter.fillPath(painterPath, background);
 
     QWidget::paintEvent(event);
@@ -149,4 +160,16 @@ void KiranColorBlock::setDrawBackground(bool enable)
         d_func()->m_drawBackground = enable;
         update();
     }
+}
+
+void KiranColorBlock::specifyColor(const QColor &normal, const QColor &hover)
+{
+    d_ptr->m_normalColor = normal;
+    d_ptr->m_hoverColor = hover;
+    update();
+}
+
+void KiranColorBlock::unsetSpecifiedColor()
+{
+    specifyColor(QColor(),QColor());
 }

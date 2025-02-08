@@ -15,6 +15,8 @@ private:
     int m_radius = 6;
     bool m_drawBackground = true;
     KiranColorBlock::Corner m_radiusCorner = KiranColorBlock::AllCorners;
+    QColor m_normalColor;
+    QColor m_hoverColor;
 };
 
 #endif  // KIRAN_BACKGROUND_WIDGET_PRIVATE_H
