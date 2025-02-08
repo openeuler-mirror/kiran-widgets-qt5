@@ -42,6 +42,9 @@ public:
     bool getDrawBackground();
     void setDrawBackground(bool enable);
 
+    void specifyColor(const QColor &normal,const QColor &hover);
+    void unsetSpecifiedColor();
+
 protected:
     void paintEvent(QPaintEvent *event) override;
 

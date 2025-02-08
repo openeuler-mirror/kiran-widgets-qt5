@@ -29,6 +29,21 @@ private slots:
         }
     }
 
+    void testSpecifyColor()
+    {
+        QColor normalColor(Qt::red);
+        QColor hoverColor(Qt::blue);
+        colorBlock->setAttribute(Qt::WA_Hover);
+        colorBlock->specifyColor(normalColor, hoverColor);
+        QTest::qWait(2000);
+
+        colorBlock->specifyColor(normalColor, QColor());
+        QTest::qWait(2000);
+
+        colorBlock->unsetSpecifiedColor();
+        QTest::qWait(2000);
+    }
+
 private:
     KiranColorBlock *colorBlock;
 };
