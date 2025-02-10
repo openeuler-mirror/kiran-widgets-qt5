@@ -9,8 +9,6 @@ public:
     explicit KiranSiderbarDelegate(QObject *parent = nullptr);
     ~KiranSiderbarDelegate();
 
-    void setInvertIconPixelsEnable(bool enable);
-
     QSize sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const override;
     void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override;
 
@@ -41,7 +39,4 @@ private:
     void doLayout(const QStyleOptionViewItem &option, const QModelIndex &index,
                   QRect &pixmapRect, QRect &textRect,
                   QRect &statusDescRect, QRect &indicatorRect) const;
-
-private:
-    bool m_invertIconPixelsEnable = false;
 };
