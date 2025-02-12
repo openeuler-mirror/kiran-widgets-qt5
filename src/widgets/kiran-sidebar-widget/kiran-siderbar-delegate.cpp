@@ -66,14 +66,6 @@ void KiranSiderbarDelegate::paint(QPainter *painter, const QStyleOptionViewItem 
     pixmap = getDecorationPixmap(option, index, pixmapSize);
     if (!pixmap.isNull())
     {
-        // 默认侧边栏为白色图标，但是深浅色主题需要切换颜色，若为浅色主题，则反转颜色
-        // 浅色主题，选中状态不反转，仍为白色
-        if (m_invertIconPixelsEnable && DEFAULT_STYLE_HELPER()->paletteType() == PALETTE_LIGHT && !(opt.state & QStyle::State_Selected))
-        {
-            auto image = pixmap.toImage();
-            image.invertPixels(QImage::InvertRgb);
-            pixmap = QPixmap::fromImage(image);
-        }
         painter->drawPixmap(pixmapRect.topLeft(), pixmap);
     }
 
@@ -343,10 +335,4 @@ QSize KiranSiderbarDelegate::sizeFromContents(const QStyleOptionViewItem &opt, c
     }
     totalSize.rwidth() += (itemCount - 1) * 10;
     return totalSize;
-}
-
-void KiranSiderbarDelegate::setInvertIconPixelsEnable(bool enable)
-{
-    if (enable != m_invertIconPixelsEnable)
-        m_invertIconPixelsEnable = enable;
 }
