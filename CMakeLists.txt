@@ -60,6 +60,7 @@ set(DEVEL_HEADER
         "src/widgets/kiran-single-application/kiran-single-application.h"
         "src/widgets/kiran-sidebar-widget/kiran-sidebar-widget.h"
         "src/widgets/kiran-sidebar-widget/kiran-sidebar-item.h"
+        "src/widgets/kiran-icon/kiran-icon.h"
         "src/widgets/kiran-icon-line-edit/kiran-icon-line-edit.h"
         "src/widgets/kiran-image-selector/kiran-image-selector.h"
         "src/widgets/kiran-push-button/kiran-push-button.h"
