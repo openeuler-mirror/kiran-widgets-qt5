@@ -140,3 +140,5 @@ endif()
 if( build-tests )
     add_subdirectory(test)
 endif()
+
+add_subdirectory(data)

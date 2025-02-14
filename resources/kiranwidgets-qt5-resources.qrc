@@ -14,30 +14,9 @@
         <file>images/image-selector/loading.svg</file>
         <file>images/image-selector/selected.svg</file>
 
-        <file>images/search-box/search.svg</file>
-
         <file>images/hover-tips/tips-err.svg</file>
         <file>images/hover-tips/tips-info.svg</file>
         <file>images/hover-tips/tips-suc.svg</file>
         <file>images/hover-tips/tips-warning.svg</file>
-        
-        <file>images/passwd-edit/reveal-passwd.svg</file>
-        <file>images/passwd-edit/unreveal-passwd.svg</file>
-    </qresource>
-
-    <!--主题样式细节-->
-    <qresource prefix="/kiran-style">
-        <file>style-detail/kiran-dark.css</file>
-    </qresource>
-
-    <!--主题图标-->
-    <qresource prefix="/kiran-style">
-        <file>style-detail/search.svg</file>
-        <file>style-detail/search_disabled.svg</file>
-
-        <file>style-detail/arrow.svg</file>
-        <file>style-detail/arrow_hover.svg</file>
-        <file>style-detail/arrow_pressed.svg</file>
-        <file>style-detail/arrow_disabled.svg</file>
     </qresource>
 </RCC>

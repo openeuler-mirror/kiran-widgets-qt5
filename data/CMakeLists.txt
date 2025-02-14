@@ -1,0 +1,2 @@
+# 主题图标
+install(DIRECTORY hicolor DESTINATION ${CMAKE_INSTALL_FULL_DATADIR}/icons)
