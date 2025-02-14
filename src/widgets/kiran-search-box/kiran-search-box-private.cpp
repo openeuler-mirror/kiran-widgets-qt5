@@ -16,18 +16,13 @@
 
 #include <QHBoxLayout>
 #include <QIcon>
-#include <QLabel>
 #include <QLineEdit>
 
-#include <palette.h>
-#include <style-helper.h>
-
-using namespace Kiran::Theme;
+#include "kiran-icon/kiran-icon.h"
 
 KiranSearchBoxPrivate::KiranSearchBoxPrivate(QObject* parent)
     : QObject(parent)
 {
-    connect(DEFAULT_PALETTE(), &Palette::baseColorsChanged, this, &KiranSearchBoxPrivate::updateSearchPixmap);
 }
 
 KiranSearchBoxPrivate::~KiranSearchBoxPrivate()
@@ -39,22 +34,11 @@ void KiranSearchBoxPrivate::init(KiranSearchBox* ptr)
     q_ptr = ptr;
 
     auto layout = new QHBoxLayout(q_ptr);
-    m_searchLabel = new QLabel(q_ptr);
-    layout->addWidget(m_searchLabel, 0, Qt::AlignLeft | Qt::AlignVCenter);
+    m_searchIcon = new KiranIcon(q_ptr);
+    m_searchIcon->setFixedSize(16, 16);
+    m_searchIcon->setIcon(QIcon::fromTheme("ksvg-search"));
+
+    layout->addWidget(m_searchIcon, 0, Qt::AlignLeft | Qt::AlignVCenter);
 
     q_ptr->setTextMargins(24, 0, 0, 0);
-    updateSearchPixmap();
-}
-
-void KiranSearchBoxPrivate::updateSearchPixmap()
-{
-    QIcon icon(":/kiranwidgets-qt5/images/search-box/search.svg");
-    QPixmap pixmap = icon.pixmap(16, 16);
-    if (DEFAULT_STYLE_HELPER()->paletteType() != PaletteType::PALETTE_DARK)
-    {
-        QImage image = pixmap.toImage();
-        image.invertPixels(QImage::InvertRgb);
-        pixmap = QPixmap::fromImage(image);
-    }
-    m_searchLabel->setPixmap(pixmap);
 }

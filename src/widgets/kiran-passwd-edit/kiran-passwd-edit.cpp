@@ -70,7 +70,7 @@ void KiranPasswdEditPrivate::echoModeToggled()
         passwordLineEdit->setEchoMode(QLineEdit::Normal);
         if (passwordIcon.isNull())
         {
-            passwordIcon = QIcon(":/kiranwidgets-qt5/images/passwd-edit/reveal-passwd.svg");
+            passwordIcon = QIcon::fromTheme("ksvg-reveal-passwd");
         }
         toggleEchoModeAction->setIcon(passwordIcon);
     }
@@ -78,7 +78,7 @@ void KiranPasswdEditPrivate::echoModeToggled()
     {
         if (visibleIcon.isNull())
         {
-            visibleIcon = QIcon(":/kiranwidgets-qt5/images/passwd-edit/unreveal-passwd.svg");
+            visibleIcon = QIcon::fromTheme("ksvg-unreveal-passwd");
         }
         passwordLineEdit->setEchoMode(QLineEdit::Password);
         toggleEchoModeAction->setIcon(visibleIcon);
