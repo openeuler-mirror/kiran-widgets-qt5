@@ -52,7 +52,6 @@ protected:
     void paintEvent(QPaintEvent *event) override;
 
 private:
-    QIcon m_icon;
     KiranIconPrivate *d_ptr;
 };
 
