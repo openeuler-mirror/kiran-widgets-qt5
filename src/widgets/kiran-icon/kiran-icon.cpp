@@ -24,13 +24,13 @@ KiranIcon::KiranIcon(QWidget *parent)
 
 void KiranIcon::setIcon(const QIcon &icon)
 {
-    m_icon = icon;
+    d_ptr->m_icon = icon;
     update();
 }
 
 QIcon KiranIcon::icon()
 {
-    return m_icon;
+    return d_ptr->m_icon;
 }
 
 void KiranIcon::paintEvent(QPaintEvent *event)
@@ -38,8 +38,8 @@ void KiranIcon::paintEvent(QPaintEvent *event)
     Q_UNUSED(event);
 
     QPainter painter(this);
-    if (!m_icon.isNull())
+    if (!d_ptr->m_icon.isNull())
     {
-        m_icon.paint(&painter, rect());
+        d_ptr->m_icon.paint(&painter, rect());
     }
 }

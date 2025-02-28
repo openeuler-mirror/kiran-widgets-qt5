@@ -29,6 +29,7 @@ public:
     ~KiranIconPrivate() = default;
 
 private:
+    QIcon m_icon;
     KiranIcon* q_ptr;
 };
 
