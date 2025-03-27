@@ -34,6 +34,7 @@ using ButtonRole = QDialogButtonBox::ButtonRole;
 class KiranMessageBoxPrivate
 {
     Q_DECLARE_PUBLIC(KiranMessageBox);
+    Q_DISABLE_COPY(KiranMessageBoxPrivate)
 
 private:
     KiranMessageBoxPrivate(KiranMessageBox *ptr);
@@ -57,7 +58,7 @@ private:
 
     void setStandarButtons(KiranStandardButtons buttons);
     KiranStandardButtons standardButtons();
-    KiranStandardButton standardButton(QAbstractButton *button);
+    KiranStandardButton standardButton(const QAbstractButton *button);
     QPushButton *button(KiranStandardButton which);
 
 private:

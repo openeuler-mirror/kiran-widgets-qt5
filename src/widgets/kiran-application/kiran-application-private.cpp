@@ -17,7 +17,7 @@
 #include <QLibraryInfo>
 #include <QTranslator>
 
-KiranApplicationPrivate::KiranApplicationPrivate(KiranApplication* ptr)
+KiranApplicationPrivate::KiranApplicationPrivate(KiranApplication* ptr) : q_ptr(ptr)
 {
 }
 
