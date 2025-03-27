@@ -46,7 +46,7 @@ KiranSidebarWidget::selectionCommand(const QModelIndex &index, const QEvent *eve
     }
     if ((event != nullptr) && (event->type() == QEvent::MouseButtonPress))
     {
-        const QMouseEvent *mouseEvent = (QMouseEvent *)event;
+        auto mouseEvent = dynamic_cast<const QMouseEvent *>(event);
         if ((mouseEvent->modifiers() & Qt::ControlModifier) != 0)
         {
             return QItemSelectionModel::NoUpdate;

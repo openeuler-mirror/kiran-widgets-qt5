@@ -35,8 +35,8 @@ public:
 
 private:
     KiranTips *q_ptr;
-    bool m_hideOnClicked;
-    bool m_animationEnable;
+    bool m_hideOnClicked = true;
+    bool m_animationEnable = false;
 
     KiranTips::ShowPostionHint m_showPostion = KiranTips::POSITION_RIGHT;
     QPropertyAnimation *m_EnterAnimation = nullptr;
