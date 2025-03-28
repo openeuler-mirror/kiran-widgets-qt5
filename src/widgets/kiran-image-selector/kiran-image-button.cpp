@@ -70,7 +70,8 @@ void KiranImageButton::paintEvent(QPaintEvent *event)
     }
 
     bool isAnchorLeft = mapToParent(QPoint(0, 0)).x() == 0;
-    QPainterPath painterPath = WidgetDrawHelper::getRoundedRectanglePath(option.rect.adjusted(0.5, 0.5, -0.5, -0.5),
+    QRectF rectF(option.rect);
+    QPainterPath painterPath = WidgetDrawHelper::getRoundedRectanglePath(rectF.adjusted(0.5, 0.5, -0.5, -0.5),
                                                                          isAnchorLeft ? 4 : 0,
                                                                          isAnchorLeft ? 0 : 4,
                                                                          isAnchorLeft ? 4 : 0,

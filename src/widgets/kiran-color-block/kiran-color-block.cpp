@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2020 ~ 2025 KylinSec Co., Ltd.
+ * kiranwidgets-qt5 is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
+ * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
+ */
+
 #include "kiran-color-block.h"
 #include <palette.h>
 #include <QPainter>
@@ -128,17 +142,17 @@ void KiranColorBlock::paintEvent(QPaintEvent *event)
 
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
-    
+
     // 背景颜色需设置为容器颜色
     QColor background;
     bool mouseOver = state & QStyle::State_MouseOver;
 
     background = DEFAULT_PALETTE()->getBaseColors().containerBackground;
-    if (  d_ptr->m_normalColor.isValid() )
+    if (d_ptr->m_normalColor.isValid())
     {
         background = d_ptr->m_normalColor;
     }
-    if( mouseOver && d_ptr->m_hoverColor.isValid() )
+    if (mouseOver && d_ptr->m_hoverColor.isValid())
     {
         background = d_ptr->m_hoverColor;
     }
@@ -171,5 +185,5 @@ void KiranColorBlock::specifyColor(const QColor &normal, const QColor &hover)
 
 void KiranColorBlock::unsetSpecifiedColor()
 {
-    specifyColor(QColor(),QColor());
+    specifyColor(QColor(), QColor());
 }

@@ -1,38 +1,51 @@
+/**
+ * Copyright (c) 2020 ~ 2025 KylinSec Co., Ltd.
+ * kiranwidgets-qt5 is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
+ * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
+ */
+
 #include "kiran-label/kiran-label.h"
 
-#include <QTest>
-#include <QWindow>
 #include <QEventLoop>
 #include <QLineEdit>
+#include <QTest>
+#include <QWindow>
 
-#define TEST_TEXT_1 "hello, my friend."\
-                    "hello, my friend."\
-                    "hello, my friend."\
-                    "hello, my friend."\
-                    "hello, my friend."\
-                    "hello, my friend."\
-                    "hello, my friend."\
-                    "hello, my friend."\
-                    "hello, my friend."\
-                    "hello, my friend."\
-                    "hello, my friend."\
-                    "hello, my friend."\
-                    "hello, my friend."\
-                    "hello, my friend."\
-                    "hello, my friend."\
-                    "hello, my friend."\
+#define TEST_TEXT_1 "hello, my friend." \
+                    "hello, my friend." \
+                    "hello, my friend." \
+                    "hello, my friend." \
+                    "hello, my friend." \
+                    "hello, my friend." \
+                    "hello, my friend." \
+                    "hello, my friend." \
+                    "hello, my friend." \
+                    "hello, my friend." \
+                    "hello, my friend." \
+                    "hello, my friend." \
+                    "hello, my friend." \
+                    "hello, my friend." \
+                    "hello, my friend." \
+                    "hello, my friend." \
                     "hello, my friend."
 
+#define TEST_TEXT_2 "wow!!!!" \
+                    "wow!!!!" \
+                    "wow!!!!" \
+                    "wow!!!!" \
+                    "wow!!!!" \
+                    "wow!!!!" \
+                    "wow!!!!"
 
-#define TEST_TEXT_2 "wow!!!!"\
-                    "wow!!!!"\
-                    "wow!!!!"\
-                    "wow!!!!"\
-                    "wow!!!!"\
-                    "wow!!!!"\
-                    "wow!!!!"\
-
-class KiranLabelTest: public QObject
+class KiranLabelTest : public QObject
 {
     Q_OBJECT
 private slots:

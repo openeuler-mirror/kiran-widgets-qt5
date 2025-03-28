@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2020 ~ 2025 KylinSec Co., Ltd.
+ * kiranwidgets-qt5 is licensed under Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
+ * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
+ */
+
 #include "widget-draw-helper.h"
 
 QRect WidgetDrawHelper::centerRect(const QRect& rect, int width, int height)
@@ -30,21 +44,25 @@ QSize WidgetDrawHelper::expandSize(const QSize& size, int marginWidth, int margi
     return size + 2 * QSize(marginWidth, marginHeight);
 }
 
-QPainterPath WidgetDrawHelper::getRoundedRectanglePath(const QRect& rect, int tlRadius, int trRadius, int blRadius, int brRadius)
+QPainterPath WidgetDrawHelper::getRoundedRectanglePath(const QRectF& rect, int tlRadius, int trRadius, int blRadius, int brRadius)
 {
     QPainterPath painterPath;
 
     /// 判断圆角半径是否合法,不合法调整参数
-    if (tlRadius + trRadius > rect.width()) {
+    if (tlRadius + trRadius > rect.width())
+    {
         tlRadius = trRadius = 0;
     }
-    if (tlRadius + blRadius > rect.height()) {
+    if (tlRadius + blRadius > rect.height())
+    {
         tlRadius = blRadius = 0;
     }
-    if (blRadius + brRadius > rect.width()) {
+    if (blRadius + brRadius > rect.width())
+    {
         blRadius = brRadius = 0;
     }
-    if (trRadius + brRadius > rect.height()) {
+    if (trRadius + brRadius > rect.height())
+    {
         trRadius = brRadius = 0;
     }
 
@@ -55,7 +73,8 @@ QPainterPath WidgetDrawHelper::getRoundedRectanglePath(const QRect& rect, int tl
     QSize blSize(blRadius, blRadius);
 
     // top left corner
-    if (!tlSize.isEmpty()) {
+    if (!tlSize.isEmpty())
+    {
         QRectF tlArcRect(rect.left(), rect.top(), tlRadius * 2, tlRadius * 2);
         painterPath.moveTo(rect.left(), rect.top() + tlRadius);
         painterPath.arcTo(tlArcRect, -180, -90);
@@ -65,7 +84,8 @@ QPainterPath WidgetDrawHelper::getRoundedRectanglePath(const QRect& rect, int tl
     painterPath.lineTo(rect.right() - trSize.width(), rect.top());
 
     // top right corner
-    if (!trSize.isEmpty()) {
+    if (!trSize.isEmpty())
+    {
         QRectF trArcRect(rect.right() - 2 * trRadius, rect.top(), trRadius * 2, trRadius * 2);
         painterPath.arcTo(trArcRect, 90, -90);
     }
@@ -74,7 +94,8 @@ QPainterPath WidgetDrawHelper::getRoundedRectanglePath(const QRect& rect, int tl
     painterPath.lineTo(rect.right(), rect.bottom() - brSize.height());
 
     // bottom right
-    if (!brSize.isEmpty()) {
+    if (!brSize.isEmpty())
+    {
         QRectF brArcRect(rect.right() - 2 * brRadius, rect.bottom() - 2 * brRadius, brRadius * 2, brRadius * 2);
         painterPath.arcTo(brArcRect, 0, -90);
     }
@@ -83,7 +104,8 @@ QPainterPath WidgetDrawHelper::getRoundedRectanglePath(const QRect& rect, int tl
     painterPath.lineTo(rect.left() + blSize.width(), rect.bottom());
 
     // bottom left
-    if (!blSize.isEmpty()) {
+    if (!blSize.isEmpty())
+    {
         QRectF blArcRect(rect.left(), rect.bottom() - 2 * blRadius, blRadius * 2, blRadius * 2);
         painterPath.arcTo(blArcRect, -90, -90);
     }

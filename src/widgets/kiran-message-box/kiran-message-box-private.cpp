@@ -230,13 +230,13 @@ QPushButton *KiranMessageBoxPrivate::addButton(KiranStandardButton standardButto
         return nullptr;
     }
 
-    QPushButton *button = new QPushButton(q_ptr);
-    button->setFixedSize(QSize(100, 40));
-    button->setText(buttonInfoIter.value().first);
+    QPushButton *btn = new QPushButton(q_ptr);
+    btn->setFixedSize(QSize(100, 40));
+    btn->setText(buttonInfoIter.value().first);
     if (buttonInfoIter.value().second == QDialogButtonBox::AcceptRole ||
         buttonInfoIter.value().second == QDialogButtonBox::YesRole)
     {
-        KiranPushButton::setButtonType(button, KiranPushButton::BUTTON_Default);
+        KiranPushButton::setButtonType(btn, KiranPushButton::BUTTON_Default);
     }
 
     /// 生成ObjectName，eg:KiranStandardButton::Ok->btn_Ok
@@ -244,27 +244,27 @@ QPushButton *KiranMessageBoxPrivate::addButton(KiranStandardButton standardButto
     QString standardButtonString = metaEnum.valueToKey(standardButton);
     standardButtonString.replace(" ", "_");
     QString objectName = QString("btn_%1").arg(standardButtonString);
-    button->setObjectName(objectName);
+    btn->setObjectName(objectName);
 
     m_standardButtons |= standardButton;
-    m_standardButtonsMap.insert(standardButton, button);
-    m_dialogButtonBox->addButton(button, buttonInfoIter.value().second);
-    return button;
+    m_standardButtonsMap.insert(standardButton, btn);
+    m_dialogButtonBox->addButton(btn, buttonInfoIter.value().second);
+    return btn;
 }
 
 QPushButton *KiranMessageBoxPrivate::addButton(const QString &text,
                                                QDialogButtonBox::ButtonRole role)
 {
-    QPushButton *button = new QPushButton(m_dialogButtonBox);
-    button->setFixedSize(100, 40);
-    button->setText(text);
+    QPushButton *btn = new QPushButton(m_dialogButtonBox);
+    btn->setFixedSize(100, 40);
+    btn->setText(text);
     if (role == QDialogButtonBox::AcceptRole ||
         role == QDialogButtonBox::YesRole)
     {
-        KiranPushButton::setButtonType(button, KiranPushButton::BUTTON_Default);
+        KiranPushButton::setButtonType(btn, KiranPushButton::BUTTON_Default);
     }
-    m_dialogButtonBox->addButton(button, role);
-    return button;
+    m_dialogButtonBox->addButton(btn, role);
+    return btn;
 }
 
 void KiranMessageBoxPrivate::removeButton(QPushButton *button)
@@ -278,9 +278,9 @@ void KiranMessageBoxPrivate::setStandarButtons(KiranStandardButtons standardButt
          iter != m_standardButtonsMap.end();
          iter++)
     {
-        QPushButton *button = iter.value();
-        m_dialogButtonBox->removeButton(button);
-        delete button;
+        QPushButton *btn = iter.value();
+        m_dialogButtonBox->removeButton(btn);
+        delete btn;
     }
 
     m_standardButtons = KiranMessageBox::NoButton;
@@ -296,7 +296,7 @@ void KiranMessageBoxPrivate::setStandarButtons(KiranStandardButtons standardButt
     }
 }
 
-KiranStandardButton KiranMessageBoxPrivate::standardButton(QAbstractButton *button)
+KiranStandardButton KiranMessageBoxPrivate::standardButton(const QAbstractButton *button)
 {
     KiranStandardButton findButton = KiranStandardButton::NoButton;
     for (auto iter = m_standardButtonsMap.begin();
