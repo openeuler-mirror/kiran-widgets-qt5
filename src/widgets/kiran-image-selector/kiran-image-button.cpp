@@ -1,14 +1,14 @@
 /**
- * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd. 
+ * Copyright (c) 2020 ~ 2021 KylinSec Co., Ltd.
  * kiranwidgets-qt5 is licensed under Mulan PSL v2.
- * You can use this software according to the terms and conditions of the Mulan PSL v2. 
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
  * You may obtain a copy of Mulan PSL v2 at:
- *          http://license.coscl.org.cn/MulanPSL2 
- * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, 
- * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, 
- * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.  
- * See the Mulan PSL v2 for more details.  
- * 
+ *          http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND,
+ * EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT,
+ * MERCHANTABILITY OR FIT FOR A PARTICULAR PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ *
  * Author:     liuxinhao <liuxinhao@kylinos.com.cn>
  */
 
@@ -70,7 +70,8 @@ void KiranImageButton::paintEvent(QPaintEvent *event)
     }
 
     bool isAnchorLeft = mapToParent(QPoint(0, 0)).x() == 0;
-    QPainterPath painterPath = WidgetDrawHelper::getRoundedRectanglePath(option.rect.adjusted(0.5,0.5,-0.5,-0.5),
+    QRectF rectF = option.rect;
+    QPainterPath painterPath = WidgetDrawHelper::getRoundedRectanglePath(rectF.adjusted(0.5, 0.5, -0.5, -0.5),
                                                                          isAnchorLeft ? 4 : 0,
                                                                          isAnchorLeft ? 0 : 4,
                                                                          isAnchorLeft ? 4 : 0,
@@ -80,7 +81,7 @@ void KiranImageButton::paintEvent(QPaintEvent *event)
     background.setAlphaF(0.48);
     painter.fillPath(painterPath, background);
 
-    style()->drawPrimitive(isAnchorLeft?QStyle::PE_IndicatorArrowLeft:QStyle::PE_IndicatorArrowRight,&option,&painter,this);
+    style()->drawPrimitive(isAnchorLeft ? QStyle::PE_IndicatorArrowLeft : QStyle::PE_IndicatorArrowRight, &option, &painter, this);
 }
 
 bool KiranImageButton::anchorParentLeftSide()
