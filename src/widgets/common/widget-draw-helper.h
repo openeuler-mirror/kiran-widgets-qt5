@@ -1,7 +1,7 @@
 #pragma once
 
-#include <QRect>
 #include <QPainterPath>
+#include <QRect>
 
 namespace WidgetDrawHelper
 {
@@ -21,5 +21,5 @@ QSize expandSize(const QSize &size, int margin);
 QSize expandSize(const QSize &size, int marginWidth, int marginHeight);
 
 /* 获取绘制圆角矩形路径 */
-QPainterPath getRoundedRectanglePath(const QRect &rect, int tlRadius,int trRadius, int blRadius, int brRadius);
+QPainterPath getRoundedRectanglePath(const QRectF &rect, int tlRadius, int trRadius, int blRadius, int brRadius);
 };  // namespace WidgetDrawHelper
