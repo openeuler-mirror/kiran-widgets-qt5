@@ -96,6 +96,8 @@ void KiranHoverTips::setTimeout(quint32 ms)
 KiranHoverTipsPrivate::KiranHoverTipsPrivate(KiranHoverTips *ptr) : QObject(ptr)
 {
     q_ptr = ptr;
+    m_iconLabel = nullptr;
+    m_textLabel = nullptr;
 }
 
 KiranHoverTipsPrivate::~KiranHoverTipsPrivate()
@@ -125,7 +127,6 @@ void KiranHoverTipsPrivate::init()
 
 bool KiranHoverTipsPrivate::event(QEvent *event)
 {
-    QEvent::Type eventType = event->type();
     if (event->type() == QEvent::Timer)
     {
         auto timerEvent = dynamic_cast<QTimerEvent *>(event);

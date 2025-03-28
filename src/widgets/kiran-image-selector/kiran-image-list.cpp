@@ -99,7 +99,7 @@ void KiranImageList::removeImageItem(const QString &imagePath) {
 
     for( QList<KiranImageItem*>::iterator iter=m_itemList.begin();
          iter!=m_itemList.end();
-         iter++ ){
+         ++iter ){
         if((*iter)->imagePath()==imagePath){
             deletePos = iter;
             break;
@@ -123,7 +123,7 @@ void KiranImageList::removeImageItem(KiranImageItem *item) {
     auto deletePos = m_itemList.end();
     for( QList<KiranImageItem*>::iterator iter=m_itemList.begin();
          iter!=m_itemList.end();
-         iter++){
+         ++iter ){
         if( *iter == item ){
             deletePos = iter;
             break;
