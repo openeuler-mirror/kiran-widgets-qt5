@@ -12,92 +12,98 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/widgets/kiran-message-box/kiran-message-box-private.cpp" line="81"/>
+        <location filename="../src/widgets/kiran-message-box/kiran-message-box-private.cpp" line="80"/>
         <source>OK</source>
         <translation>是</translation>
     </message>
     <message>
-        <location filename="../src/widgets/kiran-message-box/kiran-message-box-private.cpp" line="82"/>
+        <location filename="../src/widgets/kiran-message-box/kiran-message-box-private.cpp" line="81"/>
         <source>Save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../src/widgets/kiran-message-box/kiran-message-box-private.cpp" line="83"/>
+        <location filename="../src/widgets/kiran-message-box/kiran-message-box-private.cpp" line="82"/>
         <source>Save All</source>
         <translation>全部保存</translation>
     </message>
     <message>
-        <location filename="../src/widgets/kiran-message-box/kiran-message-box-private.cpp" line="84"/>
+        <location filename="../src/widgets/kiran-message-box/kiran-message-box-private.cpp" line="83"/>
         <source>Open</source>
         <translation>打开</translation>
     </message>
     <message>
-        <location filename="../src/widgets/kiran-message-box/kiran-message-box-private.cpp" line="85"/>
+        <location filename="../src/widgets/kiran-message-box/kiran-message-box-private.cpp" line="84"/>
         <source>Yes</source>
         <translation>是</translation>
     </message>
     <message>
-        <location filename="../src/widgets/kiran-message-box/kiran-message-box-private.cpp" line="86"/>
+        <location filename="../src/widgets/kiran-message-box/kiran-message-box-private.cpp" line="85"/>
         <source>Yes to All</source>
         <translation>全部是</translation>
     </message>
     <message>
-        <location filename="../src/widgets/kiran-message-box/kiran-message-box-private.cpp" line="87"/>
+        <location filename="../src/widgets/kiran-message-box/kiran-message-box-private.cpp" line="86"/>
         <source>No</source>
         <translation>否</translation>
     </message>
     <message>
-        <location filename="../src/widgets/kiran-message-box/kiran-message-box-private.cpp" line="88"/>
+        <location filename="../src/widgets/kiran-message-box/kiran-message-box-private.cpp" line="87"/>
         <source>No to All</source>
         <translation>全部否</translation>
     </message>
     <message>
-        <location filename="../src/widgets/kiran-message-box/kiran-message-box-private.cpp" line="89"/>
+        <location filename="../src/widgets/kiran-message-box/kiran-message-box-private.cpp" line="88"/>
         <source>Abort</source>
         <translation>中止</translation>
     </message>
     <message>
-        <location filename="../src/widgets/kiran-message-box/kiran-message-box-private.cpp" line="90"/>
+        <location filename="../src/widgets/kiran-message-box/kiran-message-box-private.cpp" line="89"/>
         <source>Retry</source>
         <translation>重试</translation>
     </message>
     <message>
-        <location filename="../src/widgets/kiran-message-box/kiran-message-box-private.cpp" line="91"/>
+        <location filename="../src/widgets/kiran-message-box/kiran-message-box-private.cpp" line="90"/>
         <source>Ignore</source>
         <translation>忽略</translation>
     </message>
     <message>
-        <location filename="../src/widgets/kiran-message-box/kiran-message-box-private.cpp" line="92"/>
+        <location filename="../src/widgets/kiran-message-box/kiran-message-box-private.cpp" line="91"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
     <message>
-        <location filename="../src/widgets/kiran-message-box/kiran-message-box-private.cpp" line="93"/>
+        <location filename="../src/widgets/kiran-input-dialog/kiran-input-dialog.cpp" line="94"/>
+        <source>Confirm</source>
+        <translation>确认</translation>
+    </message>
+    <message>
+        <location filename="../src/widgets/kiran-input-dialog/kiran-input-dialog.cpp" line="107"/>
+        <location filename="../src/widgets/kiran-message-box/kiran-message-box-private.cpp" line="92"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
     <message>
-        <location filename="../src/widgets/kiran-message-box/kiran-message-box-private.cpp" line="94"/>
+        <location filename="../src/widgets/kiran-message-box/kiran-message-box-private.cpp" line="93"/>
         <source>Discard</source>
         <translation>丢弃</translation>
     </message>
     <message>
-        <location filename="../src/widgets/kiran-message-box/kiran-message-box-private.cpp" line="95"/>
+        <location filename="../src/widgets/kiran-message-box/kiran-message-box-private.cpp" line="94"/>
         <source>Help</source>
         <translation>帮助</translation>
     </message>
     <message>
-        <location filename="../src/widgets/kiran-message-box/kiran-message-box-private.cpp" line="96"/>
+        <location filename="../src/widgets/kiran-message-box/kiran-message-box-private.cpp" line="95"/>
         <source>Apply</source>
         <translation>应用</translation>
     </message>
     <message>
-        <location filename="../src/widgets/kiran-message-box/kiran-message-box-private.cpp" line="97"/>
+        <location filename="../src/widgets/kiran-message-box/kiran-message-box-private.cpp" line="96"/>
         <source>Reset</source>
         <translation>复位</translation>
     </message>
     <message>
-        <location filename="../src/widgets/kiran-message-box/kiran-message-box-private.cpp" line="98"/>
+        <location filename="../src/widgets/kiran-message-box/kiran-message-box-private.cpp" line="97"/>
         <source>Restore Defaults</source>
         <translation>恢复默认</translation>
     </message>
