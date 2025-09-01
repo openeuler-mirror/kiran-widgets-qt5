@@ -67,7 +67,9 @@ set(DEVEL_HEADER
         "src/widgets/kiran-hover-tips/kiran-hover-tips.h"
         "src/widgets/kiran-color-block/kiran-color-block.h"
         "src/widgets/kiran-label/kiran-label.h"
-        "src/widgets/kiran-passwd-edit/kiran-passwd-edit.h")
+        "src/widgets/kiran-passwd-edit/kiran-passwd-edit.h"
+        "src/widgets/kiran-input-dialog/kiran-input-dialog.h"
+        "src/widgets/kiran-collapse/kiran-collapse.h")
 
 include_directories("${CMAKE_BINARY_DIR}")
 
