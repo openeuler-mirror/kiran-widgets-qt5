@@ -69,13 +69,6 @@ void KiranMessageBoxPrivate::init(const QString &title,
 {
     if (standardButtonInfoMap.isEmpty())
     {
-        QTranslator tsor;
-        tsor.load(QLocale(),
-                  "kiranwidgets-qt5",
-                  ".",
-                  "/usr/share/kiranwidgets-qt5/translations/",
-                  ".qm");
-        QApplication::installTranslator(&tsor);
         standardButtonInfoMap = {
             {KiranMessageBox::Ok, {QObject::tr("OK"), ButtonRole::AcceptRole}},
             {KiranMessageBox::Save, {QObject::tr("Save"), ButtonRole::AcceptRole}},
@@ -95,7 +88,6 @@ void KiranMessageBoxPrivate::init(const QString &title,
             {KiranMessageBox::Apply, {QObject::tr("Apply"), ButtonRole::ApplyRole}},
             {KiranMessageBox::Reset, {QObject::tr("Reset"), ButtonRole::ResetRole}},
             {KiranMessageBox::RestoreDefaults, {QObject::tr("Restore Defaults"), ButtonRole::ResetRole}}};
-        QApplication::removeTranslator(&tsor);
     }
 
     m_layout = new QVBoxLayout(q_ptr);
