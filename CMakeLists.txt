@@ -50,6 +50,16 @@ file(GLOB_RECURSE RESOURCES "resources/*.qrc")
 #翻译
 file(GLOB TS_FILES "translations/kiranwidgets-qt5.*.ts")
 
+#各个控件头文件目录
+file(GLOB WIDGETS_SUBDIRS RELATIVE "${CMAKE_SOURCE_DIR}/src/widgets" "${CMAKE_SOURCE_DIR}/src/widgets/*")
+set(WIDGETS_INCLUDE_DIRS "")
+foreach(subdir ${WIDGETS_SUBDIRS})
+    if(IS_DIRECTORY "${CMAKE_SOURCE_DIR}/src/widgets/${subdir}")
+        list(APPEND WIDGETS_INCLUDE_DIRS "${CMAKE_SOURCE_DIR}/src/widgets/${subdir}")
+    endif()
+endforeach()
+
+
 #开发头文件,需提供到devel包的文件
 set(DEVEL_HEADER
         "src/widgets/kiran-titlebar-window/kiran-titlebar-window.h"
@@ -91,17 +101,15 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 
 target_include_directories(${PROJECT_NAME} PRIVATE
         src/
-        src/widgets/
-        src/widgets/common/
         src/public/
-        src/widgets/kiran-application/
         ${GSETTINGS_QT_INCLUDE_DIRS}
         ${Qt5Gui_PRIVATE_INCLUDE_DIRS}
         ${Qt5Widgets_PRIVATE_INCLUDE_DIRS}
         ${KIRAN_INTEGRATION_THEME_INCLUDE_DIRS})
 
 target_include_directories(${PROJECT_NAME} PUBLIC
-        src/widgets)
+        src/widgets
+        ${WIDGETS_INCLUDE_DIRS})
 
 target_link_libraries(${PROJECT_NAME}
         Qt5::Widgets
