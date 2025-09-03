@@ -12,7 +12,7 @@
  * Author:     liuxinhao <liuxinhao@kylinsec.com.cn>
  */
 #pragma once
-#include <kiranwidgets-qt5/kiran-titlebar-window.h>
+#include <kiran-titlebar-window.h>
 #include <QLineEdit>
 
 class KiranInputDialogPrivate;
