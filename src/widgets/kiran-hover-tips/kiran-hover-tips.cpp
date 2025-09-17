@@ -53,7 +53,9 @@ void KiranHoverTips::showTips(HoverTipsTypeEnum typeEnum, const QString &msg)
     d_ptr->m_iconLabel->setPixmap(pixmapPath);
     d_ptr->m_textLabel->setText(msg);
 
+    QWidget::raise();
     QWidget::show();
+
     d_ptr->startHideTimer();
 }
 
