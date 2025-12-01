@@ -42,6 +42,7 @@ private:
     void setButtonHints(KiranTitlebarWindow::TitlebarButtonHintFlags hints);
     void setWindowContentWidget(QWidget *widget);
     void setTitlebarColorBlockEnable(bool enable);
+    bool isTitlebarWidgetContains(QPoint globalPos);
 
 private:
     void handlerHoverMoveEvent(QHoverEvent *ev);
