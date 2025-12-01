@@ -150,6 +150,10 @@ void KiranTitlebarWindowPrivate::setTitlebarColorBlockEnable(bool enable)
     m_tittlebarSpliteLine->setVisible(!enable);
     m_frame->setDrawBorder(!enable);
 }
+bool KiranTitlebarWindowPrivate::isTitlebarWidgetContains(QPoint globalPos)
+{
+    return m_titlebarWidget->geometry().contains(m_titlebarWidget->mapFromGlobal(globalPos));
+}
 
 void KiranTitlebarWindowPrivate::handlerHoverMoveEvent(QHoverEvent *ev)
 {
@@ -222,7 +226,7 @@ void KiranTitlebarWindowPrivate::handlerMouseButtonPressEvent(QMouseEvent *ev)
     qDebug() << "titlebar frame contains:" << m_titlebarWidget->frameGeometry().contains(ev->pos());
 #endif
 
-    if (m_titlebarWidget->frameGeometry().contains(m_titlebarWidget->mapFrom(q_ptr, ev->pos())))
+    if (isTitlebarWidgetContains(ev->globalPos()))
     {
         m_titlebarIsPressed = true;
     }
@@ -239,6 +243,10 @@ void KiranTitlebarWindowPrivate::handlerMouseButtonReleaseEvent(QMouseEvent *ev)
     }
     else if (ev->button() == Qt::RightButton)
     {
+        if (!isTitlebarWidgetContains(ev->globalPos()))
+        {
+            return;
+        }
         QPoint pos = QCursor::pos();
         XLibHelper::showWindowMenuRequest(QX11Info::display(),
                                           q_func()->winId(),
