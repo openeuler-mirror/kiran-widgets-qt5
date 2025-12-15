@@ -20,7 +20,7 @@
 
 #include <QApplication>
 #include <QDebug>
-#include <QDesktopWidget>
+#include <QGuiApplication>
 #include <QIcon>
 #include <QLabel>
 #include <QMetaEnum>
@@ -170,8 +170,18 @@ QWidget* KiranMessageBoxPrivate::initChildWidgets(const QString& title,const QSt
     m_textLabel->setWordWrap(true);
     m_textLabel->setScaledContents(false);
     m_textLabel->setText(text);
-    m_textLabel->setMaximumWidth(qApp->desktop()->width() / 4);
-    m_textLabel->setMaximumHeight(qApp->desktop()->height() / 4);
+    updateTextLabelMaximumSize();
+    // 仅监听当前屏幕 geometry 变化，变化时重算最大宽高
+    if (QScreen *screen = q_ptr->screen() ? q_ptr->screen() : QGuiApplication::primaryScreen())
+    {
+        QObject::connect(
+            screen,
+            &QScreen::geometryChanged,
+            q_ptr,
+            [this]()
+            { updateTextLabelMaximumSize(); },
+            Qt::UniqueConnection);
+    }
     m_frameLayout->addWidget(m_textLabel);
 
     // 自定义布局，提供给外部调用添加控件
@@ -423,4 +433,24 @@ void KiranMessageBoxPrivate::addButton(QPushButton *button, QDialogButtonBox::Bu
 void KiranMessageBoxPrivate::cleanButton()
 {
     m_dialogButtonBox->clear();
+}
+
+void KiranMessageBoxPrivate::updateTextLabelMaximumSize()
+{
+    if (!m_textLabel)
+    {
+        return;
+    }
+
+    QScreen *screen = q_ptr->screen() ? q_ptr->screen() : QGuiApplication::primaryScreen();
+    if (!screen)
+    {
+        return;
+    }
+
+    const QSize size = screen->availableGeometry().size();
+    const int maxWidth = size.width() / 4;
+    const int maxHeight = size.height() / 4;
+    m_textLabel->setMaximumWidth(maxWidth);
+    m_textLabel->setMaximumHeight(maxHeight);
 }
