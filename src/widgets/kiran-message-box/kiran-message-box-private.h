@@ -53,6 +53,7 @@ private:
     void addButton(QPushButton* button,QDialogButtonBox::ButtonRole role);
     void removeButton(QPushButton* button);
     void cleanButton();
+    void updateTextLabelMaximumSize();
 
     void setStandarButtons(KiranStandardButtons buttons);
     KiranStandardButtons standardButtons();
