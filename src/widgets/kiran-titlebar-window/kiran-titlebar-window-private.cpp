@@ -254,6 +254,7 @@ void KiranTitlebarWindowPrivate::handlerMouseButtonReleaseEvent(QMouseEvent *ev)
             return;
         }
         QPoint pos = QCursor::pos();
+        pos *= q_func()->devicePixelRatio();
         XLibHelper::showWindowMenuRequest(QX11Info::display(),
                                           q_func()->winId(),
                                           pos.x(), pos.y());
