@@ -104,7 +104,10 @@ KiranPasswdEdit::KiranPasswdEdit(QWidget *parent)
     setStyleSheet("QLineEdit[echoMode=\"2\"]{ lineedit-password-character: 9679; }");
 }
 
-KiranPasswdEdit::~KiranPasswdEdit() = default;
+KiranPasswdEdit::~KiranPasswdEdit()
+{
+    delete d_ptr;
+}
 
 void KiranPasswdEdit::setPassword(const QString &password)
 {
