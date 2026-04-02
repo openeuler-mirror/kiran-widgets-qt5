@@ -27,10 +27,34 @@
 #include <QMouseEvent>
 #include <QPushButton>
 #include <QScreen>
+#include <QWindow>
 #include <QTranslator>
 #include <QVBoxLayout>
 
 #include <style-property.h>
+
+namespace {
+
+QScreen *windowScreen(QWidget *widget)
+{
+    if (!widget)
+    {
+        return QGuiApplication::primaryScreen();
+    }
+    QScreen *screen = nullptr;
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+    screen = widget->screen();
+#else
+    QWindow *window = widget->windowHandle();
+    if (window)
+    {
+        screen = window->screen();
+    }
+#endif
+    return screen ? screen : QGuiApplication::primaryScreen();
+}
+
+} // namespace
 
 const int KiranMessageBoxPrivate::shadowWidth = 15;
 const int KiranMessageBoxPrivate::shadowRadius = 15;
@@ -172,7 +196,7 @@ QWidget* KiranMessageBoxPrivate::initChildWidgets(const QString& title,const QSt
     m_textLabel->setText(text);
     updateTextLabelMaximumSize();
     // 仅监听当前屏幕 geometry 变化，变化时重算最大宽高
-    if (QScreen *screen = q_ptr->screen() ? q_ptr->screen() : QGuiApplication::primaryScreen())
+    if (QScreen *screen = windowScreen(q_ptr))
     {
         QObject::connect(
             screen,
@@ -442,7 +466,7 @@ void KiranMessageBoxPrivate::updateTextLabelMaximumSize()
         return;
     }
 
-    QScreen *screen = q_ptr->screen() ? q_ptr->screen() : QGuiApplication::primaryScreen();
+    QScreen *screen = windowScreen(q_ptr);
     if (!screen)
     {
         return;
