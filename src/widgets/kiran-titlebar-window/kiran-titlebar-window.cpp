@@ -15,7 +15,7 @@
 #include "kiran-titlebar-window.h"
 #include "kiran-titlebar-window-private.h"
 #include "global_define.h"
-#include "../../public/xlib-helper.h"
+#include "public/xlib-helper.h"
 
 #include <QDebug>
 #include <QMouseEvent>

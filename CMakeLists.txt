@@ -76,6 +76,7 @@ set(DEVEL_HEADER
         "src/kiran-style/kiran-style-public-define.h" )
 
 include_directories("${CMAKE_BINARY_DIR}")
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 find_package(Qt5 COMPONENTS Widgets Gui Svg Network X11Extras Concurrent LinguistTools)
 

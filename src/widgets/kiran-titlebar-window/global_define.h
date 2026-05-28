@@ -18,7 +18,9 @@
 #include <QObject>
 
 namespace Kiran {
+#if QT_VERSION >= QT_VERSION_CHECK(5, 8, 0)
     Q_NAMESPACE
+#endif
     enum CursorPositionEnum{
         CursorPosition_None        = 0x00000000,
         CursorPosition_Top         = 0x00000001,

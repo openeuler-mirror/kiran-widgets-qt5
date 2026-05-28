@@ -17,6 +17,7 @@
 #include "frameless-background-frame.h"
 #include "kiran-message-box.h"
 #include "xlib-helper.h"
+#include "kiran-style/draw-helper/draw-common-helper.h"
 
 #include <QApplication>
 #include <QDebug>
@@ -423,7 +424,7 @@ void KiranMessageBoxPrivate::handlerMouseMoveEvent(QMouseEvent *event)
 
 void KiranMessageBoxPrivate::handlerActivationChangeEvent(bool active)
 {
-    bool showShadow = (QX11Info::isCompositingManagerRunning() && (!(q_func()->windowState() & Qt::WindowFullScreen)));
+    bool showShadow = (DrawCommonHelper::isCompositingManagerRunning() && (!(q_func()->windowState() & Qt::WindowFullScreen)));
     if (Q_LIKELY(m_dropShadowEffect && showShadow))
     {
         m_dropShadowEffect->setColor(active ? shadowActiveColor : shadowColor);

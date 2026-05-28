@@ -60,6 +60,27 @@
 
 using namespace Kiran;
 
+#if QT_VERSION < QT_VERSION_CHECK(5, 7, 0)
+#ifndef PE_IndicatorTabTearLeft
+#define PE_IndicatorTabTearLeft (QStyle::PrimitiveElement)0xffffff01
+#endif
+#ifndef PE_IndicatorTabTearRight
+#define PE_IndicatorTabTearRight (QStyle::PrimitiveElement)0xffffff02
+#endif
+#ifndef SE_TabBarTearIndicatorLeft
+#define SE_TabBarTearIndicatorLeft (QStyle::SubElement)0xffffff01
+#endif
+#ifndef SE_TabBarTearIndicatorRight
+#define SE_TabBarTearIndicatorRight (QStyle::SubElement)0xffffff02
+#endif
+#ifndef SE_TabBarScrollLeftButton
+#define SE_TabBarScrollLeftButton (QStyle::SubElement)0xffffff03
+#endif
+#ifndef SE_TabBarScrollRightButton
+#define SE_TabBarScrollRightButton (QStyle::SubElement)0xffffff04
+#endif
+#endif
+
 Style::Style(StyleEnum type)
         : ParentStyleClass("fusion"),
           m_styleType(type),

@@ -21,6 +21,17 @@
 #include <QPainter>
 #include <QStyleOption>
 
+// 参考 qt5.6.3源码，在没有QT_CONFIG前使用的是QT_NO_MOVIE
+#if QT_VERSION >= QT_VERSION_CHECK(5, 8, 0)
+#  if QT_CONFIG(movie)
+#    define HAVE_QMOVIE
+#  endif
+#else
+#  ifndef QT_NO_MOVIE
+#    define HAVE_QMOVIE
+#  endif
+#endif
+
 KiranLabelPrivate::KiranLabelPrivate(KiranLabel *ptr, QObject *parent)
     : QObject(parent),
       q_ptr(ptr)
@@ -214,7 +225,7 @@ void KiranLabel::paintEvent(QPaintEvent *event)
     cr.adjust(d->margin, d->margin, d->margin, d->margin);
     int align = QStyle::visualAlignment(d->isTextLabel ? KiranLabelPrivate::textDirection(d) : layoutDirection(), QFlag(d->align));
 
-#if QT_CONFIG(movie)
+#ifdef HAVE_QMOVIE
     if (d->movie && !d->movie->currentPixmap().isNull())
     {
         if (d->scaledcontents)

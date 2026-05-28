@@ -14,6 +14,7 @@
 
 #include "kiran-message-box.h"
 #include "kiran-message-box-private.h"
+#include "kiran-style/draw-helper/draw-common-helper.h"
 #include "xlib-helper.h"
 
 #include <QApplication>
@@ -24,11 +25,13 @@
 #include <QPushButton>
 #include <QX11Info>
 
+using namespace Kiran;
+
 KiranMessageBox::KiranMessageBox(QWidget *parent)
     : QDialog(parent),
       d_ptr(new KiranMessageBoxPrivate(this))
 {
-    setWindowFlag(Qt::FramelessWindowHint);      //无边框
+    setWindowFlags(windowFlags() | Qt::FramelessWindowHint);      //无边框
     setAttribute(Qt::WA_TranslucentBackground);  //背景透明
     setAccessibleName("KiranMessageBox");
     d_ptr->init();
@@ -59,7 +62,7 @@ bool KiranMessageBox::event(QEvent *event)
     switch (event->type())
     {
     case QEvent::ShowToParent:
-        d_func()->enableShadow(QX11Info::isCompositingManagerRunning());
+        d_func()->enableShadow(DrawCommonHelper::isCompositingManagerRunning());
         break;
     case QEvent::MouseButtonPress:
         d_func()->handleMouseButtonPressEvent(dynamic_cast<QMouseEvent *>(event));
@@ -124,7 +127,7 @@ QSize KiranMessageBox::sizeHint() const
 {
     QSize size = QDialog::sizeHint();
     QSize buttonBoxSizeHint = d_ptr->m_dialogButtonBox->sizeHint();
-    bool showShadow = QX11Info::isCompositingManagerRunning();
+    bool showShadow = DrawCommonHelper::isCompositingManagerRunning();
     QMargins margins = d_ptr->m_frameLayout->contentsMargins();
 
     int minimumWidth = buttonBoxSizeHint.width() + margins.left() + margins.right() + (showShadow ? (2 * d_ptr->shadowWidth) : 0);
