@@ -30,7 +30,7 @@ namespace Kiran {
      */
     namespace DrawCommonHelper {
         /* 基于QX11Info获取窗口管理器混成开关 */
-        bool isCompositingManagerRuning();
+        bool isCompositingManagerRunning();
 
         /* 通过指定宽高获取矩形中的居中区域 */
         QRect centerRect(const QRect &rect, int width, int height);

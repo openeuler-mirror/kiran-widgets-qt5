@@ -13,12 +13,13 @@
  */
 
 #include "kiran-titlebar-window-private.h"
-#include "../../public/xlib-helper.h"
+#include "public/xlib-helper.h"
 #include "drop-shadow-color.h"
 #include "frameless-background-frame.h"
 #include "global_define.h"
 #include "kiran-color-block/kiran-color-block.h"
 #include "title-bar-layout.h"
+#include "kiran-style/draw-helper/draw-common-helper.h"
 
 #include <xcb/xcb.h>
 #include <QApplication>
@@ -88,7 +89,7 @@ void KiranTitlebarWindowPrivate::init()
     setWindowContentWidget(contentWidget);
 
     /// 初始化阴影边框
-    m_isCompositingManagerRunning = QX11Info::isCompositingManagerRunning();
+    m_isCompositingManagerRunning = DrawCommonHelper::isCompositingManagerRunning();
 
     if (m_isCompositingManagerRunning)
     {

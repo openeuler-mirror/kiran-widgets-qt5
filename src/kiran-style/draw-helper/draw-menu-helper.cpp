@@ -341,7 +341,7 @@ bool DrawMenuHelper::drawPanelMenuPrimitive(const Style *style, const QStyleOpti
 
     DrawCommonHelper::drawFrame(p,
                                 opt->rect,
-                                DrawCommonHelper::isCompositingManagerRuning()?borderRadius:0,
+                                DrawCommonHelper::isCompositingManagerRunning()?borderRadius:0,
                                 borderWidth,
                                 bgColor,borderColor);
 

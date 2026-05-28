@@ -341,7 +341,7 @@ void KiranTipsPrivate::init()
 
     q_ptr->setAttribute(Qt::WA_TranslucentBackground);
     q_ptr->setAttribute(Qt::WA_AlwaysStackOnTop);
-    q_ptr->setWindowFlag(Qt::FramelessWindowHint);
+    q_ptr->setWindowFlags(q_ptr->windowFlags() | Qt::FramelessWindowHint);
     m_labelText->setAttribute(Qt::WA_TranslucentBackground);
 
     // QGraphicsDropShadowEffect *shadowEffect = new QGraphicsDropShadowEffect(q_ptr);

@@ -22,6 +22,8 @@
 #include <QStyle>
 #include <QSvgRenderer>
 #include <QPainterPath>
+#include <X11/Xlib.h>
+#include <X11/Xatom.h>
 
 using namespace Kiran;
 
@@ -245,9 +247,28 @@ void DrawCommonHelper::drawCheckBoxIndicator(QPainter *painter, const QRect &rec
     }
 }
 
-bool DrawCommonHelper::isCompositingManagerRuning()
+bool DrawCommonHelper::isCompositingManagerRunning()
 {
+#if QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)
     return QX11Info::isCompositingManagerRunning();
+#else
+    // 参考 qt-everywhere-src-5.15.2/qtwebengine/src/3rdparty/chromium/ui/base/x/x11_util.cc 中的 IsCompositingManagerRunning 实现
+    Display *dpy = QX11Info::display();
+    if (!dpy)
+        return false;
+
+    int screen = QX11Info::appScreen();
+    char atom_name[32];
+    snprintf(atom_name, sizeof(atom_name), "_NET_WM_CM_S%d", screen);
+    Atom net_wm_cm = XInternAtom(dpy, atom_name, False);
+    if (XGetSelectionOwner(dpy, net_wm_cm) != None)
+        return true;
+
+    // 兼容老式合成管理器
+    // 参考 https://github.com/xfce-mirror/xfwm4/blob/master/src/compositor.c 中的compositorCheckCMSelection 实现
+    Atom comp_mgr = XInternAtom(dpy, "COMPOSITING_MANAGER", False);
+    return XGetSelectionOwner(dpy, comp_mgr) != None;
+#endif
 }
 
 void DrawCommonHelper::drawSeparator(QPainter *painter, const QRect &rect, QColor color, bool vertical)

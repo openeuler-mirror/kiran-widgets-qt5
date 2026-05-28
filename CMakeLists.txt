@@ -51,8 +51,6 @@ file(GLOB_RECURSE STYLE_H   "src/kiran-style/*.h")
 #资源文件
 file(GLOB_RECURSE RESOURCES "resources/*.qrc")
 
-#翻译
-file(GLOB TS_FILES "translations/kiranwidgets-qt5.*.ts")
 
 #开发头文件,需提供到devel包的文件
 set(DEVEL_HEADER
@@ -76,10 +74,9 @@ set(DEVEL_HEADER
         "src/kiran-style/kiran-style-public-define.h" )
 
 include_directories("${CMAKE_BINARY_DIR}")
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 find_package(Qt5 COMPONENTS Widgets Gui Svg Network X11Extras Concurrent LinguistTools)
-
-qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 
 add_library(${PROJECT_NAME} SHARED
         ${PUBLIC_CPP}
@@ -149,3 +146,5 @@ endif()
 if( build-tests )
     add_subdirectory(test)
 endif()
+
+add_subdirectory(translations)

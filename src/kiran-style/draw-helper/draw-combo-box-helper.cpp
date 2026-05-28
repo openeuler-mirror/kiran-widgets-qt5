@@ -155,7 +155,7 @@ bool DrawComboBoxHelper::drawComboBoxMenuItem(const Kiran::Style *style, const Q
         p->save();
         if (isFirstItem || isLastItem) {
             int radius = 0;
-            if (DrawCommonHelper::isCompositingManagerRuning()) {
+            if (DrawCommonHelper::isCompositingManagerRunning()) {
                 radius = fetcher->getInt(widget, opt, StyleDetailFetcher::ComboBox_BorderRadius);
             }
             QPainterPath painterPath = DrawCommonHelper::getRoundedRectanglePath(opt->rect,
