@@ -1,18 +1,14 @@
-[TOC]
-
-
-
 # kiranwidgets-qt5
 
 kiran桌面环境的相关**Qt控件**的封装
 
 ## 编译
 
-1.  安装编译依赖  
+1. 安装编译依赖  
     `sudo yum install cmake gcc-c++ qt5-qtbase-devel qt5-linguist qt5-qtsvg-devel qt5-qtx11extras-devel libX11-devel xcb-util-devel gsettings-qt-devel`
-2.  **源码根目录**下创建**build**目录`mkdir build`
-3.  进行**build**目录,执行`cmake -DCMAKE_INSTALL_PREFIX=/usr ..`生成**Makefile**
-4.  执行`make`进行编译
+2. **源码根目录**下创建**build**目录`mkdir build`
+3. 进行**build**目录,执行`cmake -DCMAKE_INSTALL_PREFIX=/usr ..`生成**Makefile**
+4. 执行`make`进行编译
 
 ## 安装
 
@@ -51,8 +47,6 @@ kiran桌面环境的相关**Qt控件**的封装
 
 略
 
-
-
 ### KiranSingleApplication
 
 集成的Qt进程单例第三方代码，修改其基类为KiranApplicaiton
@@ -64,8 +58,6 @@ kiran桌面环境的相关**Qt控件**的封装
 #### 例子
 
 略
-
-
 
 ### kiran-titlebar-window
 
@@ -83,7 +75,7 @@ kiran桌面环境的相关**Qt控件**的封装
 
 使用UI文件来生成界面的示例代码
 
-###### 注意事项:
+###### 注意事项
 
 因为传入**setupUI**的参数为**KiranTitlebarWindow**创建的**QWidget**(专门用于显示窗口内容的区域 )，而不是**this**
 
@@ -102,8 +94,6 @@ kiran桌面环境的相关**Qt控件**的封装
 ##### KiranTitlebarWindow_Simple
 
 单纯使用面向过程,不通过派生来使用KiranTitlebarWindow
-
-
 
 ### KiranMessageBox
 
@@ -125,8 +115,6 @@ kiran桌面环境的相关**Qt控件**的封装
 
 实例化定制按钮，使用KiranMessageBox
 
-
-
 ### KiranSearchBox
 
 <img src="docs/snapshots/kiran-search-box.png" alt="kiran-search-box" style="zoom:75%;" />
@@ -141,11 +129,7 @@ kiran桌面环境的相关**Qt控件**的封装
 
 略
 
-
-
 ### KiranSwitchButton
-
-
 
 <img src="docs/snapshots/kiran-switch-button.png" alt="kiran-switch-button" style="zoom:90%;" />
 
@@ -158,8 +142,6 @@ kiran桌面环境的相关**Qt控件**的封装
 #### 例子
 
 略
-
-
 
 ## Kiran Style
 
@@ -185,7 +167,7 @@ kiran桌面环境的相关**Qt控件**的封装
 
 QSpinBox、QTimeEdit、QDateEdit、QDateTimeEdit KiranStyle中提供类似于SpinBox的控件按钮绘制位置四种选项
 
-- **ARROW_HORIZONTAL_STACK **   水平堆叠
+- **ARROW_HORIZONTAL_STACK**   水平堆叠
 
 <img src="docs/snapshots/kiran-spinbox-hor-stack.png" alt="kiran-spinbox-hor-stack" style="zoom:80%;" />
 
