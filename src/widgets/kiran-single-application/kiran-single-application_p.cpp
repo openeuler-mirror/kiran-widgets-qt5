@@ -186,13 +186,9 @@ void KiranSingleApplicationPrivate::startPrimary()
     QLocalServer::removeServer( blockServerName );
     server = new QLocalServer();
 
-    // Restrict access to the socket according to the
-    // KiranSingleApplication::Mode::User flag on User level or no restrictions
-    if( options & KiranSingleApplication::Mode::User ){
-        server->setSocketOptions( QLocalServer::UserAccessOption );
-    } else {
-        server->setSocketOptions( QLocalServer::WorldAccessOption );
-    }
+    // 只允许同 UID 的进程连接：跨 UID 的 secondary 本来也建立不起来
+    // （共享内存段由主实例以 0600 创建，其他 UID attach 会失败）
+    server->setSocketOptions( QLocalServer::UserAccessOption );
 
     server->listen( blockServerName );
     QObject::connect(
