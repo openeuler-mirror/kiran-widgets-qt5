@@ -44,6 +44,9 @@ public:
      * Whether the block should be user-wide or system-wide and whether the
      * primary instance should be notified when a secondary instance had been
      * started.
+     * @warning Do not use System mode: QSharedMemory creates the shared memory
+     * block with 0600 permissions, so other users cannot attach and the block
+     * is effectively user-wide.
      * @note Operating system can restrict the shared memory blocks to the same
      * user, in which case the User/System modes will have no effect and the
      * block will be user wide.

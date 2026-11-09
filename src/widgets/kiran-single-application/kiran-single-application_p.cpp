@@ -186,13 +186,11 @@ void KiranSingleApplicationPrivate::startPrimary()
     QLocalServer::removeServer( blockServerName );
     server = new QLocalServer();
 
-    // Restrict access to the socket according to the
-    // KiranSingleApplication::Mode::User flag on User level or no restrictions
-    if( options & KiranSingleApplication::Mode::User ){
-        server->setSocketOptions( QLocalServer::UserAccessOption );
-    } else {
-        server->setSocketOptions( QLocalServer::WorldAccessOption );
-    }
+    // System 模式无法实现"整机单实例"：QSharedMemory 由 Qt 固定以 0600 创建，
+    // 跨 UID 的二次实例在 attach 阶段就会失败退出。
+    // 若沿用 WorldAccessOption，套接字会对本机所有用户开放，而握手不校验对端身份，
+    // 等于留下跨 UID 注入的入口，因此统一使用 UserAccessOption。
+    server->setSocketOptions( QLocalServer::UserAccessOption );
 
     server->listen( blockServerName );
     QObject::connect(
