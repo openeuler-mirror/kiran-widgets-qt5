@@ -260,6 +260,24 @@ bool KiranSingleApplication::sendMessage( const QByteArray &message, int timeout
 }
 
 /**
+ * 设置主实例接收的初始化消息长度上限，默认 64 KiB。
+ * 小于 sizeof(quint16) 或为负的值会被拒绝：负值按无符号解释会回绕成极大的长度，
+ * 等于重新放开接收缓冲的无界增长。
+ */
+bool KiranSingleApplication::setMaxInitMessageSize( qint64 size )
+{
+    Q_D(KiranSingleApplication);
+
+    if( size < ( qint64 )sizeof( quint16 ) ){
+        qWarning() << "KiranSingleApplication: ignoring invalid init message size limit:" << size;
+        return false;
+    }
+
+    d->maxInitMessageSize = size;
+    return true;
+}
+
+/**
  * Cleans up the shared memory block and exits with a failure.
  * This function halts program execution.
  */

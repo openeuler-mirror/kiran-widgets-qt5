@@ -130,6 +130,15 @@ public:
     bool sendMessage( const QByteArray &message, int timeout = 100 );
 
     /**
+     * @brief 设置初始化消息的长度上限
+     * 二次实例连上主实例后发送的第一帧即初始化消息，该值限制它的长度，默认 64 KiB。
+     * 值小于 sizeof(quint16) 或为负时不做修改。
+     * @param {qint64} size - 上限字节数
+     * @returns {bool} 上限已生效返回 true，值被拒绝返回 false
+     */
+    bool setMaxInitMessageSize( qint64 size );
+
+    /**
      * @brief Get the set user data.
      * @returns {QStringList}
      */

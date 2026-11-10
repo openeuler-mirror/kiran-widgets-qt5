@@ -34,6 +34,7 @@
 
 #include <QtCore/QDir>
 #include <QtCore/QThread>
+#include <QtCore/QTimer>
 #include <QtCore/QByteArray>
 #include <QtCore/QDataStream>
 #include <QtCore/QElapsedTimer>
@@ -63,6 +64,11 @@
     #include <windows.h>
     #include <lmcons.h>
 #endif
+
+// 最多同时保持的连接数，每个连接占用一个 fd
+static const int MAX_CONNECTION_COUNT = 256;
+// 新连接必须在该时长内完成握手，否则断开
+static const int HANDSHAKE_TIMEOUT_MS = 5000;
 
 KiranSingleApplicationPrivate::KiranSingleApplicationPrivate(KiranSingleApplication *q_ptr )
     : q_ptr( q_ptr )
@@ -317,6 +323,17 @@ QString KiranSingleApplicationPrivate::primaryUser() const
 void KiranSingleApplicationPrivate::slotConnectionEstablished()
 {
     QLocalSocket *nextConnSocket = server->nextPendingConnection();
+    if( nextConnSocket == nullptr ){
+        return;
+    }
+
+    // 连接数达到上限时直接断开，避免耗尽 fd 导致监听失效
+    if( connectionMap.size() >= MAX_CONNECTION_COUNT ){
+        nextConnSocket->close();
+        nextConnSocket->deleteLater();
+        return;
+    }
+
     connectionMap.insert(nextConnSocket, ConnectionInfo());
 
     QObject::connect(nextConnSocket, &QLocalSocket::aboutToClose, this,
@@ -352,6 +369,14 @@ void KiranSingleApplicationPrivate::slotConnectionEstablished()
                        };
                      }
     );
+
+    // 握手未在超时时间内完成则断开，避免连接被长期占用
+    QTimer::singleShot( HANDSHAKE_TIMEOUT_MS, nextConnSocket, [nextConnSocket, this](){
+        auto iter = connectionMap.find( nextConnSocket );
+        if( iter != connectionMap.end() && iter->stage != StageConnected ){
+            nextConnSocket->close();
+        }
+    });
 }
 
 void KiranSingleApplicationPrivate::readInitMessageHeader( QLocalSocket *sock )
@@ -373,6 +398,16 @@ void KiranSingleApplicationPrivate::readInitMessageHeader( QLocalSocket *sock )
     // Read the header to know the message length
     quint64 msgLen = 0;
     headerStream >> msgLen;
+
+    // 长度必须落在 [sizeof(quint16), maxInitMessageSize] 之间：
+    // 过短时，下文 msgBytes.length() - sizeof(quint16) 中的 int 会先转成无符号，
+    // 相减结果为负就回绕成极大的数，qChecksum 再按该长度遍历缓冲区即造成越界读；
+    // 过长则会让接收缓冲随报文长度无界增长
+    if( msgLen < ( quint64 )sizeof( quint16 ) || msgLen > ( quint64 )maxInitMessageSize ){
+        sock->close();
+        return;
+    }
+
     ConnectionInfo &info = connectionMap[sock];
     info.stage = StageBody;
     info.msgLen = msgLen;
@@ -397,6 +432,14 @@ void KiranSingleApplicationPrivate::readInitMessageBody( QLocalSocket *sock )
 
     // Read the message body
     QByteArray msgBytes = sock->read(info.msgLen);
+
+    // 头部已保证长度不小于 sizeof(quint16)，这里再兜一次底，
+    // 避免短读时下面计算校验和的减法再次回绕
+    if( msgBytes.size() < ( int )sizeof( quint16 ) ){
+        sock->close();
+        return;
+    }
+
     QDataStream readStream(msgBytes);
 
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 6, 0))
@@ -459,7 +502,10 @@ void KiranSingleApplicationPrivate::slotDataAvailable( QLocalSocket *dataSocket,
 
 void KiranSingleApplicationPrivate::slotClientConnectionClosed( QLocalSocket *closedSocket, quint32 instanceId )
 {
-    if( closedSocket->bytesAvailable() > 0 )
+    // 只转发已完成握手的连接的残留数据
+    auto iter = connectionMap.find( closedSocket );
+    if( iter != connectionMap.end() && iter->stage == StageConnected &&
+        closedSocket->bytesAvailable() > 0 )
         slotDataAvailable( closedSocket, instanceId  );
 }
 
