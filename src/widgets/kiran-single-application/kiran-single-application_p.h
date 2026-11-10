@@ -92,6 +92,8 @@ public:
     KiranSingleApplication::Options options;
     QMap<QLocalSocket*, ConnectionInfo> connectionMap;
     QStringList appDataList;
+    // 初始化消息的长度上限，正常只有几十字节
+    qint64 maxInitMessageSize = 64 * 1024;
 
 public Q_SLOTS:
     void slotConnectionEstablished();

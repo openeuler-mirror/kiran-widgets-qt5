@@ -44,6 +44,9 @@ public:
      * Whether the block should be user-wide or system-wide and whether the
      * primary instance should be notified when a secondary instance had been
      * started.
+     * @warning Do not use System mode: QSharedMemory creates the shared memory
+     * block with 0600 permissions, so other users cannot attach and the block
+     * is effectively user-wide.
      * @note Operating system can restrict the shared memory blocks to the same
      * user, in which case the User/System modes will have no effect and the
      * block will be user wide.
@@ -125,6 +128,15 @@ public:
      * instance.
      */
     bool sendMessage( const QByteArray &message, int timeout = 100 );
+
+    /**
+     * @brief 设置初始化消息的长度上限
+     * 二次实例连上主实例后发送的第一帧即初始化消息，该值限制它的长度，默认 64 KiB。
+     * 值小于 sizeof(quint16) 或为负时不做修改。
+     * @param {qint64} size - 上限字节数
+     * @returns {bool} 上限已生效返回 true，值被拒绝返回 false
+     */
+    bool setMaxInitMessageSize( qint64 size );
 
     /**
      * @brief Get the set user data.
